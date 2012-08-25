@@ -1,0 +1,41 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace MetroPassLib
+{
+    public enum Kdb4Format
+    {
+        /// <summary>
+        /// The default, encrypted file format.
+        /// </summary>
+        Default = 0,
+
+        /// <summary>
+        /// Use this flag when exporting data to a plain-text XML file.
+        /// </summary>
+        PlainXml
+    }
+
+    public partial class Kdb4File
+    {
+        private Kdb4Format m_format = Kdb4Format.Default;
+    }
+
+    public enum Kdb4HeaderFieldID : byte
+    {
+        EndOfHeader = 0,
+        Comment = 1,
+        CipherID = 2,
+        CompressionFlags = 3,
+        MasterSeed = 4,
+        TransformSeed = 5,
+        TransformRounds = 6,
+        EncryptionIV = 7,
+        ProtectedStreamKey = 8,
+        StreamStartBytes = 9,
+        InnerRandomStreamID = 10
+    }
+}
