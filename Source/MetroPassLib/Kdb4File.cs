@@ -21,7 +21,16 @@ namespace MetroPassLib
 
     public partial class Kdb4File
     {
-        private Kdb4Format m_format = Kdb4Format.Default;
+        private Kdb4Format kdb4Format = Kdb4Format.Default;
+
+        private PwDatabase pwDatabase;
+
+        public byte[] pbMasterSeed { get; set; }
+
+        public Kdb4File(PwDatabase pwDatabase)
+        {
+            this.pwDatabase = pwDatabase;
+        }
     }
 
     public enum Kdb4HeaderFieldID : byte

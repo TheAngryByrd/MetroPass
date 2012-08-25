@@ -20,7 +20,7 @@ namespace MetroLibTests
         [TestMethod]
         public async Task TestMethod1()
         {
-         
+            
             var database = await Package.Current.InstalledLocation.GetFileAsync("Data\\DemoData.kdbx");//await KnownFolders.DocumentsLibrary.GetFileAsync("Data.kdbx");
             
             DataReader reader = new DataReader(await database.OpenSequentialReadAsync());
@@ -44,7 +44,7 @@ namespace MetroLibTests
             reader.UnicodeEncoding = Windows.Storage.Streams.UnicodeEncoding.Utf8;
             reader.ReadBytes(new byte[12]);
            
-            Kdb4File kdb = new Kdb4File();
+            Kdb4File kdb = new Kdb4File(new PwDatabase());
             while (true)
             {
                 if (kdb.ReadHeaderField(reader) == false) { break; }

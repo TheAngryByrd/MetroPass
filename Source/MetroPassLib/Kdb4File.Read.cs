@@ -18,7 +18,7 @@ namespace MetroPassLib
             Debug.Assert(sSource != null);
             if (sSource == null) throw new ArgumentNullException("sSource");
 
-            m_format = kdbFormat;
+            kdb4Format = kdbFormat;
 
             var hashAlgorithmProvider = HashAlgorithmProvider.OpenAlgorithm(HashAlgorithmNames.Sha256);
             var hash = hashAlgorithmProvider.CreateHash();
@@ -26,22 +26,15 @@ namespace MetroPassLib
            
         }
 
-        public static ushort BytesToUInt16(byte[] pb)
-        {
-            Debug.Assert((pb != null) && (pb.Length == 2));
-            if (pb == null) throw new ArgumentNullException("pb");
-            if (pb.Length != 2) throw new ArgumentException();
-
-            return (ushort)((ushort)pb[0] | ((ushort)pb[1] << 8));
-        }
+      
 
         public bool ReadHeaderField(IDataReader reader)
         {
             byte btFieldID = reader.ReadByte();
             var btSize = new byte[2];
             reader.ReadBytes(btSize);
-           // btSize = new byte[2] { btSize[1], btSize[0] };
-            var uSize = BytesToUInt16(btSize);
+
+            var uSize = BitConverter.ToUInt16(btSize, 0);
             Kdb4HeaderFieldID kdbID = (Kdb4HeaderFieldID)btFieldID;
             byte[] pbData = null;
             if (uSize > 0)
@@ -58,15 +51,15 @@ namespace MetroPassLib
                     break;
 
                 case Kdb4HeaderFieldID.CipherID:
-                    //SetCipher(pbData);
+                    SetCipher(pbData);
                     break;
 
                 case Kdb4HeaderFieldID.CompressionFlags:
-                    //SetCompressionFlags(pbData);
+                    SetCompressionFlags(pbData);
                     break;
 
                 case Kdb4HeaderFieldID.MasterSeed:
-                    //m_pbMasterSeed = pbData;
+                    pbMasterSeed = pbData;
                     //CryptoRandom.Instance.AddEntropy(pbData);
                     break;
 
@@ -76,24 +69,24 @@ namespace MetroPassLib
                     break;
 
                 case Kdb4HeaderFieldID.TransformRounds:
-                    //m_pwDatabase.KeyEncryptionRounds = MemUtil.BytesToUInt64(pbData);
+                    pwDatabase.KeyEncryptionRounds = BitConverter.ToUInt64(pbData, 0);
                     break;
 
                 case Kdb4HeaderFieldID.EncryptionIV:
-                    //m_pbEncryptionIV = pbData;
+                    pbEncryptionIV = pbData;
                     break;
 
                 case Kdb4HeaderFieldID.ProtectedStreamKey:
-                    //m_pbProtectedStreamKey = pbData;
+                    pbProtectedStreamKey = pbData;
                     //CryptoRandom.Instance.AddEntropy(pbData);
                     break;
 
                 case Kdb4HeaderFieldID.StreamStartBytes:
-                    //m_pbStreamStartBytes = pbData;
+                    pbStreamStartBytes = pbData;
                     break;
 
                 case Kdb4HeaderFieldID.InnerRandomStreamID:
-                    //SetInnerRandomStreamID(pbData);
+                    SetInnerRandomStreamID(pbData);
                     break;
 
                 default:
@@ -101,5 +94,41 @@ namespace MetroPassLib
             }
             return bResult;
         }
+
+        private void SetInnerRandomStreamID(byte[] pbID)
+        {
+            uint uID = BitConverter.ToUInt32(pbID, 0);
+            if (uID >= (uint)CrsAlgorithm.Count)
+                throw new FormatException();
+
+            craInnerRandomStream = (CrsAlgorithm)uID;
+        }
+
+        private void SetCompressionFlags(byte[] pbFlags)
+        {
+            int nID = (int)BitConverter.ToUInt32(pbFlags, 0);
+            if ((nID < 0) || (nID >= (int)PwCompressionAlgorithm.Count))
+                throw new FormatException();
+
+            pwDatabase.Compression = (PwCompressionAlgorithm)nID;
+        }
+
+        private void SetCipher(byte[] pbID)
+        {
+            if ((pbID == null) || (pbID.Length != 16))
+                throw new FormatException();
+
+            pwDatabase.DataCipherUuid = new PwUuid(pbID);
+        }
+
+
+
+        public byte[] pbEncryptionIV { get; set; }
+
+        public byte[] pbProtectedStreamKey { get; set; }
+
+        public byte[] pbStreamStartBytes { get; set; }
+
+        public CrsAlgorithm craInnerRandomStream { get; set; }
     }
 }
