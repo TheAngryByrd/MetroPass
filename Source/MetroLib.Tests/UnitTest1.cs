@@ -10,6 +10,7 @@ using Windows.Security;
 using Windows.Security.Cryptography.Core;
 using Windows.Security.Cryptography;
 using MetroPassLib;
+using Windows.ApplicationModel;
 
 namespace MetroLibTests
 {
@@ -19,7 +20,9 @@ namespace MetroLibTests
         [TestMethod]
         public async Task TestMethod1()
         {
-            var database = await KnownFolders.DocumentsLibrary.GetFileAsync("Data.kdbx");
+         
+            var database = await Package.Current.InstalledLocation.GetFileAsync("Data\\DemoData.kdbx");//await KnownFolders.DocumentsLibrary.GetFileAsync("Data.kdbx");
+            
             DataReader reader = new DataReader(await database.OpenSequentialReadAsync());
             
             var buffer =await  Windows.Storage.FileIO.ReadBufferAsync(database);
@@ -33,8 +36,8 @@ namespace MetroLibTests
         [TestMethod]
         public async Task ShouldReadHeaders()
         {
-            
-            var database = await KnownFolders.DocumentsLibrary.GetFileAsync("Data.kdbx");
+
+            var database = await Package.Current.InstalledLocation.GetFileAsync("Data\\DemoData.kdbx");//await KnownFolders.DocumentsLibrary.GetFileAsync("Data.kdbx");
             var buffer = await Windows.Storage.FileIO.ReadBufferAsync(database);
             IDataReader reader =  DataReader.FromBuffer(buffer);
             reader.ByteOrder = ByteOrder.LittleEndian;
