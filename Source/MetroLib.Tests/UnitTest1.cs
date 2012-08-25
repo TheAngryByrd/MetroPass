@@ -11,6 +11,7 @@ using Windows.Security.Cryptography.Core;
 using Windows.Security.Cryptography;
 using MetroPassLib;
 using Windows.ApplicationModel;
+using System.IO;
 
 namespace MetroLibTests
 {
@@ -34,14 +35,31 @@ namespace MetroLibTests
         }
 
         [TestMethod]
+        public async Task ShouldCreateAESKey()
+        {
+             var kdb = new Kdb4File(new PwDatabase());
+             var database = await GetDatabaseAsDatareader();
+             kdb.ReadHeader(database);
+             MemoryStream ms = new MemoryStream();
+             ms.Write(kdb.pbMasterSeed, 0, 32);
+        }
+
+        [TestMethod]
+        public async Task ShouldGenerate32BitKeyFromCompositeKey()
+        {
+            var pwDataBase = new PwDatabase();
+            var kdb = new Kdb4File(pwDataBase);
+
+            var database = await GetDatabaseAsDatareader();
+            kdb.ReadHeader(database);
+         
+        }
+
+        [TestMethod]
         public async Task ShouldReadHeaders()
         {
 
-            var database = await Package.Current.InstalledLocation.GetFileAsync("Data\\DemoData.kdbx");//await KnownFolders.DocumentsLibrary.GetFileAsync("Data.kdbx");
-            var buffer = await Windows.Storage.FileIO.ReadBufferAsync(database);
-            IDataReader reader =  DataReader.FromBuffer(buffer);
-            reader.ByteOrder = ByteOrder.LittleEndian;
-            reader.UnicodeEncoding = Windows.Storage.Streams.UnicodeEncoding.Utf8;
+            IDataReader reader = await GetDatabaseAsDatareader();
             reader.ReadBytes(new byte[12]);
            
             Kdb4File kdb = new Kdb4File(new PwDatabase());
@@ -49,6 +67,16 @@ namespace MetroLibTests
             {
                 if (kdb.ReadHeaderField(reader) == false) { break; }
             }
+        }
+
+        private static async Task<IDataReader> GetDatabaseAsDatareader()
+        {
+            var database = await Package.Current.InstalledLocation.GetFileAsync("Data\\DemoData.kdbx");//await KnownFolders.DocumentsLibrary.GetFileAsync("Data.kdbx");
+            var buffer = await Windows.Storage.FileIO.ReadBufferAsync(database);
+            IDataReader reader = DataReader.FromBuffer(buffer);
+            reader.ByteOrder = ByteOrder.LittleEndian;
+            reader.UnicodeEncoding = Windows.Storage.Streams.UnicodeEncoding.Utf8;
+            return reader;
         }
         
     }

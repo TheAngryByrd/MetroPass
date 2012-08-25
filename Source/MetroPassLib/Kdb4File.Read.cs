@@ -35,6 +35,7 @@ namespace MetroPassLib
             {
                 if (kdb.ReadHeaderField(reader) == false) { break; }
             }    
+            
         }
 
         public bool ReadHeaderField(IDataReader reader)

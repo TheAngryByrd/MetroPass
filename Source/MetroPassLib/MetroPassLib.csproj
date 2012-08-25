@@ -106,9 +106,12 @@
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CompositeKey.cs" />
     <Compile Include="CryptoRandomStream.cs" />
+    <Compile Include="IUserKey.cs" />
     <Compile Include="Kdb4File.cs" />
     <Compile Include="Kdb4File.Read.cs" />
+    <Compile Include="Security\ProtectedBuffer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PwDatabase.cs" />
     <Compile Include="PwEnums.cs" />
