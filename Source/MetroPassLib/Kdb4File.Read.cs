@@ -26,7 +26,16 @@ namespace MetroPassLib
            
         }
 
-      
+        public void ReadHeader(IDataReader reader)
+        {
+            reader.ReadBytes(new byte[12]);
+
+            Kdb4File kdb = new Kdb4File(new PwDatabase());
+            while (true)
+            {
+                if (kdb.ReadHeaderField(reader) == false) { break; }
+            }    
+        }
 
         public bool ReadHeaderField(IDataReader reader)
         {

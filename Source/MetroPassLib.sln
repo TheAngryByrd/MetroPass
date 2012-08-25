@@ -6,6 +6,18 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetroLib.Tests", "MetroLib.Tests\MetroLib.Tests.csproj", "{581F1A89-D014-4340-8A85-854ED107D0E8}"
 EndProject
 Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 3
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://theangrybyrd.tfspreview.com/defaultcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = MetroLib.Tests\\MetroLib.Tests.csproj
+		SccProjectName1 = MetroLib.Tests
+		SccLocalPath1 = MetroLib.Tests
+		SccProjectUniqueName2 = MetroPassLib\\MetroPassLib.csproj
+		SccProjectName2 = MetroPassLib
+		SccLocalPath2 = MetroPassLib
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|ARM = Debug|ARM
