@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace MetroPassLib
+namespace MetroPassLib.Keys
 {
     public interface IUserKey
     {

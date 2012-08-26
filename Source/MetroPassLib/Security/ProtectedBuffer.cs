@@ -30,7 +30,7 @@ namespace MetroPassLib.Security
             IBuffer unprotectedBuffer)
         {
             // Create a DataProtectionProvider object for the specified descriptor.
-            DataProtectionProvider Provider = new DataProtectionProvider();
+            DataProtectionProvider Provider = new DataProtectionProvider("LOCAL=user");
             
             // Encrypt the message.
             IBuffer buffProtected = await Provider.ProtectAsync(unprotectedBuffer);

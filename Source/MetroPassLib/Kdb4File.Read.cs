@@ -30,10 +30,10 @@ namespace MetroPassLib
         {
             reader.ReadBytes(new byte[12]);
 
-            Kdb4File kdb = new Kdb4File(new PwDatabase());
+
             while (true)
             {
-                if (kdb.ReadHeaderField(reader) == false) { break; }
+                if (this.ReadHeaderField(reader) == false) { break; }
             }    
             
         }
@@ -74,7 +74,7 @@ namespace MetroPassLib
                     break;
 
                 case Kdb4HeaderFieldID.TransformSeed:
-                    //m_pbTransformSeed = pbData;
+                    pbTransformSeed = pbData;
                     //CryptoRandom.Instance.AddEntropy(pbData);
                     break;
 
@@ -140,5 +140,7 @@ namespace MetroPassLib
         public byte[] pbStreamStartBytes { get; set; }
 
         public CrsAlgorithm craInnerRandomStream { get; set; }
+
+        public byte[] pbTransformSeed { get; set; }
     }
 }

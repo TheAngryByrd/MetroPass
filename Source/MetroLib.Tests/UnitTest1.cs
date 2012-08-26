@@ -12,9 +12,13 @@ using Windows.Security.Cryptography;
 using MetroPassLib;
 using Windows.ApplicationModel;
 using System.IO;
+using MetroPassLib.Security;
+using MetroPassLib.Keys;
 
 namespace MetroLibTests
 {
+   
+
     [TestClass]
     public class UnitTest1
     {
@@ -32,13 +36,37 @@ namespace MetroLibTests
             hash.Append(buffer);
             var hashedBuffer = hash.GetValueAndReset();
             
+            
+            
         }
+
+        [TestMethod]
+        public async Task ShouldTransformKey()
+        {
+            var kdb = new Kdb4File(new PwDatabase());
+            var database = await GetDatabaseAsDatareaderAsync();
+            kdb.ReadHeader(database);
+
+            var composite = new CompositeKey();
+            composite.UserKeys.Add(new KcpPassword("UniquePassword"));
+            var rawCompositeKey = await composite.CreateRawCompositeKey32();
+            var rawCompositeKeyBytes = rawCompositeKey.AsBytes();
+            SymmetricKeyAlgorithmProvider symKeyProvider = SymmetricKeyAlgorithmProvider.OpenAlgorithm(SymmetricAlgorithmNames.AesEcb);
+            var transformSeedKey = symKeyProvider.CreateSymmetricKey( kdb.pbTransformSeed.AsBuffer());
+
+
+            IBuffer iv = null;
+
+            var decryptedKey = await CompositeKey.TransformKeyManagedAsync(rawCompositeKey, transformSeedKey, iv, 6000);
+            var actual = decryptedKey.AsBytes();
+        }
+
 
         [TestMethod]
         public async Task ShouldCreateAESKey()
         {
              var kdb = new Kdb4File(new PwDatabase());
-             var database = await GetDatabaseAsDatareader();
+             var database = await GetDatabaseAsDatareaderAsync();
              kdb.ReadHeader(database);
              MemoryStream ms = new MemoryStream();
              ms.Write(kdb.pbMasterSeed, 0, 32);
@@ -50,7 +78,7 @@ namespace MetroLibTests
             var pwDataBase = new PwDatabase();
             var kdb = new Kdb4File(pwDataBase);
 
-            var database = await GetDatabaseAsDatareader();
+            var database = await GetDatabaseAsDatareaderAsync();
             kdb.ReadHeader(database);
          
         }
@@ -59,7 +87,7 @@ namespace MetroLibTests
         public async Task ShouldReadHeaders()
         {
 
-            IDataReader reader = await GetDatabaseAsDatareader();
+            IDataReader reader = await GetDatabaseAsDatareaderAsync();
             reader.ReadBytes(new byte[12]);
            
             Kdb4File kdb = new Kdb4File(new PwDatabase());
@@ -69,9 +97,9 @@ namespace MetroLibTests
             }
         }
 
-        private static async Task<IDataReader> GetDatabaseAsDatareader()
+        private static async Task<IDataReader> GetDatabaseAsDatareaderAsync()
         {
-            var database = await Package.Current.InstalledLocation.GetFileAsync("Data\\DemoData.kdbx");//await KnownFolders.DocumentsLibrary.GetFileAsync("Data.kdbx");
+            var database = await Package.Current.InstalledLocation.GetFileAsync("Data\\Pass.kdbx");//await KnownFolders.DocumentsLibrary.GetFileAsync("Data.kdbx");
             var buffer = await Windows.Storage.FileIO.ReadBufferAsync(database);
             IDataReader reader = DataReader.FromBuffer(buffer);
             reader.ByteOrder = ByteOrder.LittleEndian;
