@@ -1,4 +1,5 @@
-﻿using MetroPassLib.Security;
+﻿using MetroPassLib.Helpers;
+using MetroPassLib.Security;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -20,33 +21,29 @@ namespace MetroPassLib.Keys
             UserKeys = new List<IUserKey>();
         }
 
-        //public static bool TransformKeyManaged(byte[] pbNewKey32, byte[] pbKeySeed32,
-        //    ulong uNumRounds)
-        //{
-        //    var newKeyBuffer = CryptographicBuffer.CreateFromByteArray(pbNewKey32);
+        public async Task<IBuffer> GenerateKeyAsync(IBuffer transformSeed, ulong rounds)
+        {
+            IBuffer rawCompositeKey = await CreateRawCompositeKey32();
 
-        //    SymmetricKeyAlgorithmProvider symKeyProvider = SymmetricKeyAlgorithmProvider.OpenAlgorithm(SymmetricAlgorithmNames.AesEcb);
-        //    var symetricKey = symKeyProvider.CreateSymmetricKey(CryptographicBuffer.CreateFromByteArray(pbKeySeed32));
+            SymmetricKeyAlgorithmProvider symKeyProvider = SymmetricKeyAlgorithmProvider.OpenAlgorithm(SymmetricAlgorithmNames.AesEcb);
+            var transformSeedKey = symKeyProvider.CreateSymmetricKey(transformSeed);
 
-            
-        //    byte[] pbIV = new byte[16];
-        //    Array.Clear(pbIV, 0, pbIV.Length);
-        //    var iv = CryptographicBuffer.CreateFromByteArray(pbIV);
+            return await TransformKeyAsync(rawCompositeKey, transformSeedKey, rounds);
+        }
 
-        //    bool success = TransformKeyManaged(newKeyBuffer, symetricKey, iv, uNumRounds);
-        //    CryptographicBuffer.CopyToByteArray(newKeyBuffer, out pbNewKey32);
-        //    return success;
-        //}
+        public static async Task<IBuffer> TransformKeyAsync(IBuffer rawCompositeKey, CryptographicKey transFormKey, ulong rounds)
+        {
+            var transformedCompositeKey = await TransformKeyManagedAsync(rawCompositeKey, transFormKey, null, rounds);
+            return SHA256Hasher.Hash(transformedCompositeKey);
+        }
 
         public static IBuffer TransformKeyManaged(IBuffer rawCompositeKey, CryptographicKey transFormKey, IBuffer iv, ulong rounds)
-        {
-           
-                for (ulong i = 0; i < rounds; ++i)
-                {
-                    rawCompositeKey = CryptographicEngine.Decrypt(transFormKey, rawCompositeKey, iv);
-                }
-                return rawCompositeKey;
-         
+        {           
+            for (ulong i = 0; i < rounds; ++i)
+            {
+                rawCompositeKey = CryptographicEngine.Decrypt(transFormKey, rawCompositeKey, iv);
+            }
+            return rawCompositeKey;         
         }
 
         public static Task<IBuffer> TransformKeyManagedAsync(IBuffer rawCompositeKey, CryptographicKey transFormKey, IBuffer iv, ulong rounds) { 

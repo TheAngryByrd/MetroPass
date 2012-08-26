@@ -14,6 +14,7 @@ using Windows.ApplicationModel;
 using System.IO;
 using MetroPassLib.Security;
 using MetroPassLib.Keys;
+using MetroPassLib.Helpers;
 
 namespace MetroLibTests
 {

@@ -106,7 +106,8 @@
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Helpers.cs" />
+    <Compile Include="Helpers\BufferHelpers.cs" />
+    <Compile Include="Helpers\SHA256Hasher.cs" />
     <Compile Include="Keys\CompositeKey.cs" />
     <Compile Include="CryptoRandomStream.cs" />
     <Compile Include="Keys\IUserKey.cs" />

@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using Windows.Security.Cryptography;
 using Windows.Storage.Streams;
 
-namespace MetroPassLib
+namespace MetroPassLib.Helpers
 {
-    public static class Helpers
+    public static class BufferHelpers
     {
         public static byte[] AsBytes(this IBuffer buffer)
         {

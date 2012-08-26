@@ -1,4 +1,5 @@
-﻿using MetroPassLib.Security;
+﻿using MetroPassLib.Helpers;
+using MetroPassLib.Security;
 using System;
 using System.Collections.Generic;
 using System.Linq;
