@@ -25,8 +25,8 @@ namespace MetroLibTests
         [TestMethod]
         public async Task TestMethod1()
         {
-            
-            var database = await Package.Current.InstalledLocation.GetFileAsync("Data\\DemoData.kdbx");//await KnownFolders.DocumentsLibrary.GetFileAsync("Data.kdbx");
+
+            var database = await Package.Current.InstalledLocation.GetFileAsync("Data\\Pass.kdbx");
             
             DataReader reader = new DataReader(await database.OpenSequentialReadAsync());
             
