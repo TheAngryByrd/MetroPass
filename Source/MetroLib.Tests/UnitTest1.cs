@@ -42,6 +42,19 @@ namespace MetroLibTests
         }
 
         [TestMethod]
+        public async Task ShouldDecryptDatabase()
+        {
+            var pwDatabase = new PwDatabase();
+            var password = new KcpPassword("UniquePassword");
+            
+            pwDatabase.MasterKey.UserKeys.Add(password);
+            var kdb = new Kdb4File(pwDatabase);
+            var database = await GetDatabaseAsDatareaderAsync();
+
+            await kdb.Load(database, Kdb4Format.Default);
+        }
+
+        [TestMethod]
         public async Task ShouldTransformKey()
         {
             var kdb = new Kdb4File(new PwDatabase());
@@ -53,7 +66,7 @@ namespace MetroLibTests
             var rawCompositeKey = await composite.CreateRawCompositeKey32();
             var rawCompositeKeyBytes = rawCompositeKey.AsBytes();
             SymmetricKeyAlgorithmProvider symKeyProvider = SymmetricKeyAlgorithmProvider.OpenAlgorithm(SymmetricAlgorithmNames.AesEcb);
-            var transformSeedKey = symKeyProvider.CreateSymmetricKey( kdb.pbTransformSeed.AsBuffer());
+            var transformSeedKey = symKeyProvider.CreateSymmetricKey( kdb.pbTransformSeed);
 
 
             IBuffer iv = null;
@@ -69,8 +82,8 @@ namespace MetroLibTests
              var kdb = new Kdb4File(new PwDatabase());
              var database = await GetDatabaseAsDatareaderAsync();
              kdb.ReadHeader(database);
-             MemoryStream ms = new MemoryStream();
-             ms.Write(kdb.pbMasterSeed, 0, 32);
+
+            
         }
 
         [TestMethod]
@@ -103,7 +116,7 @@ namespace MetroLibTests
             var database = await Package.Current.InstalledLocation.GetFileAsync("Data\\Pass.kdbx");//await KnownFolders.DocumentsLibrary.GetFileAsync("Data.kdbx");
             var buffer = await Windows.Storage.FileIO.ReadBufferAsync(database);
             IDataReader reader = DataReader.FromBuffer(buffer);
-            reader.ByteOrder = ByteOrder.LittleEndian;
+            //reader.ByteOrder = ByteOrder.LittleEndian;
             reader.UnicodeEncoding = Windows.Storage.Streams.UnicodeEncoding.Utf8;
             return reader;
         }

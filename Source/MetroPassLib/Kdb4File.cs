@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Storage.Streams;
 
 namespace MetroPassLib
 {
@@ -25,12 +26,22 @@ namespace MetroPassLib
 
         private PwDatabase pwDatabase;
 
-        public byte[] pbMasterSeed { get; set; }
+        public IBuffer pbMasterSeed { get; set; }
 
         public Kdb4File(PwDatabase pwDatabase)
         {
             this.pwDatabase = pwDatabase;
         }
+
+        public IBuffer pbEncryptionIV { get; set; }
+
+        public IBuffer pbProtectedStreamKey { get; set; }
+
+        public IBuffer pbStreamStartBytes { get; set; }
+
+        public CrsAlgorithm craInnerRandomStream { get; set; }
+
+        public IBuffer pbTransformSeed { get; set; }
     }
 
     public enum Kdb4HeaderFieldID : byte

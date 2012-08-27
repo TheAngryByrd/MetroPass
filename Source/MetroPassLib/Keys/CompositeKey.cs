@@ -21,14 +21,16 @@ namespace MetroPassLib.Keys
             UserKeys = new List<IUserKey>();
         }
 
-        public async Task<IBuffer> GenerateKeyAsync(IBuffer transformSeed, ulong rounds)
+        public async Task<ProtectedBuffer> GenerateKeyAsync(IBuffer transformSeed, ulong rounds)
         {
             IBuffer rawCompositeKey = await CreateRawCompositeKey32();
 
             SymmetricKeyAlgorithmProvider symKeyProvider = SymmetricKeyAlgorithmProvider.OpenAlgorithm(SymmetricAlgorithmNames.AesEcb);
             var transformSeedKey = symKeyProvider.CreateSymmetricKey(transformSeed);
-
-            return await TransformKeyAsync(rawCompositeKey, transformSeedKey, rounds);
+            var transformedMasterKey = await TransformKeyAsync(rawCompositeKey, transformSeedKey, rounds);
+            var protectedMasterKey = await ProtectedBuffer.CreateProtectedBuffer(transformedMasterKey);
+            
+            return protectedMasterKey;
         }
 
         public static async Task<IBuffer> TransformKeyAsync(IBuffer rawCompositeKey, CryptographicKey transFormKey, ulong rounds)

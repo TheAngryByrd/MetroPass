@@ -7,25 +7,44 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.Security.Cryptography.Core;
 using Windows.Storage.Streams;
+using MetroPassLib.Helpers;
 
 namespace MetroPassLib
 {
 
     public partial class Kdb4File
     {
-        public void Load(Stream sSource, Kdb4Format kdbFormat)
+        public async Task Load(IDataReader source, Kdb4Format kdbFormat)
         {
-            Debug.Assert(sSource != null);
-            if (sSource == null) throw new ArgumentNullException("sSource");
+            Debug.Assert(source != null);
+            if (source == null) throw new ArgumentNullException("sSource");
 
             kdb4Format = kdbFormat;
 
+            ReadHeader(source);
+            var aesKey = await GenerateAESKey();
+
+            var symKeyProvider = SymmetricKeyAlgorithmProvider.OpenAlgorithm(SymmetricAlgorithmNames.AesCbcPkcs7);
+            var aesCryptoKey = symKeyProvider.CreateSymmetricKey(aesKey);
+            var unreadData = source.ReadBuffer(source.UnconsumedBufferLength);
+            var decryptedDatabase = CryptographicEngine.Decrypt(aesCryptoKey, unreadData, pbEncryptionIV);
+            
+        }
+
+
+        public async Task<IBuffer> GenerateAESKey()
+        {
             var hashAlgorithmProvider = HashAlgorithmProvider.OpenAlgorithm(HashAlgorithmNames.Sha256);
             var hash = hashAlgorithmProvider.CreateHash();
 
-           
-        }
+            hash.Append(pbMasterSeed);
+            var generatedKey = await pwDatabase.MasterKey.GenerateKeyAsync(pbTransformSeed, pwDatabase.KeyEncryptionRounds);
+            var masterKey = await generatedKey.UnProtectAsync();
+            hash.Append(masterKey);
 
+            var aesKey = hash.GetValueAndReset();
+            return aesKey;
+        }
         public void ReadHeader(IDataReader reader)
         {
             reader.ReadBytes(new byte[12]);
@@ -69,12 +88,12 @@ namespace MetroPassLib
                     break;
 
                 case Kdb4HeaderFieldID.MasterSeed:
-                    pbMasterSeed = pbData;
+                    pbMasterSeed = pbData.AsBuffer();
                     //CryptoRandom.Instance.AddEntropy(pbData);
                     break;
 
                 case Kdb4HeaderFieldID.TransformSeed:
-                    pbTransformSeed = pbData;
+                    pbTransformSeed = pbData.AsBuffer();
                     //CryptoRandom.Instance.AddEntropy(pbData);
                     break;
 
@@ -83,16 +102,16 @@ namespace MetroPassLib
                     break;
 
                 case Kdb4HeaderFieldID.EncryptionIV:
-                    pbEncryptionIV = pbData;
+                    pbEncryptionIV = pbData.AsBuffer();
                     break;
 
                 case Kdb4HeaderFieldID.ProtectedStreamKey:
-                    pbProtectedStreamKey = pbData;
+                    pbProtectedStreamKey = pbData.AsBuffer();
                     //CryptoRandom.Instance.AddEntropy(pbData);
                     break;
 
                 case Kdb4HeaderFieldID.StreamStartBytes:
-                    pbStreamStartBytes = pbData;
+                    pbStreamStartBytes = pbData.AsBuffer();
                     break;
 
                 case Kdb4HeaderFieldID.InnerRandomStreamID:
@@ -133,14 +152,5 @@ namespace MetroPassLib
 
 
 
-        public byte[] pbEncryptionIV { get; set; }
-
-        public byte[] pbProtectedStreamKey { get; set; }
-
-        public byte[] pbStreamStartBytes { get; set; }
-
-        public CrsAlgorithm craInnerRandomStream { get; set; }
-
-        public byte[] pbTransformSeed { get; set; }
     }
 }
