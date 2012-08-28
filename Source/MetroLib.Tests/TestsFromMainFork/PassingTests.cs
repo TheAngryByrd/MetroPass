@@ -130,5 +130,18 @@ namespace MetroLib.Tests.TestsFromMainFork
 
             Assert.AreEqual("6ZC0KkygMGm19gMMqOQLGihZ47kXf+Iy0ucrM6UTyEY=", Convert.ToBase64String(aesKey.AsBytes()));
         }
+
+        [TestMethod]
+        public async Task CanDecryptDatabase()
+        {
+            var pwDatabase = new PwDatabase();
+            var password = new KcpPassword("UniquePassword");
+
+            pwDatabase.MasterKey.UserKeys.Add(password);
+            var kdb = new Kdb4File(pwDatabase);
+            var realDatabase = await Helpers.GetDatabaseAsDatareaderAsync();
+
+            await kdb.Load(realDatabase, Kdb4Format.Default);
+        }
     }
 }

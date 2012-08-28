@@ -14,19 +14,19 @@ namespace MetroPassLib
 
     public partial class Kdb4File
     {
-        public async Task Load(IBuffer source, Kdb4Format kdbFormat)
+        public async Task Load(IDataReader source, Kdb4Format kdbFormat)
         {
             Debug.Assert(source != null);
             if (source == null) throw new ArgumentNullException("sSource");
 
             kdb4Format = kdbFormat;
             
-            ReadHeader(DataReader.FromBuffer(source));
+            ReadHeader(source);
             var aesKey = await GenerateAESKey();
 
             var symKeyProvider = SymmetricKeyAlgorithmProvider.OpenAlgorithm(SymmetricAlgorithmNames.AesCbcPkcs7);
             var aesCryptoKey = symKeyProvider.CreateSymmetricKey(aesKey);
-            var unreadData = source;
+            var unreadData = source.DetachBuffer();
             var decryptedDatabase = CryptographicEngine.Decrypt(aesCryptoKey, unreadData, pbEncryptionIV);
             
         }
