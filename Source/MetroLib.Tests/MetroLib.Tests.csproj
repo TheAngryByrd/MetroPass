@@ -114,7 +114,9 @@
     <SDKReference Include="TestPlatform, Version=11.0" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers.cs" />
     <Compile Include="Security\ProtectedBufferTests.cs" />
+    <Compile Include="TestsFromMainFork\PassingTests.cs" />
     <Compile Include="UnitTest1.cs">
       <SubType>
       </SubType>

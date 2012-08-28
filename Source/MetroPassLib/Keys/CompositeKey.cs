@@ -21,34 +21,43 @@ namespace MetroPassLib.Keys
             UserKeys = new List<IUserKey>();
         }
 
-        public async Task<ProtectedBuffer> GenerateKeyAsync(IBuffer transformSeed, ulong rounds)
+        public async Task<IBuffer> GenerateKeyAsync(IBuffer transformSeed, ulong rounds)
         {
             IBuffer rawCompositeKey = await CreateRawCompositeKey32();
 
             SymmetricKeyAlgorithmProvider symKeyProvider = SymmetricKeyAlgorithmProvider.OpenAlgorithm(SymmetricAlgorithmNames.AesEcb);
             var transformSeedKey = symKeyProvider.CreateSymmetricKey(transformSeed);
             var transformedMasterKey = await TransformKeyAsync(rawCompositeKey, transformSeedKey, rounds);
-            var protectedMasterKey = await ProtectedBuffer.CreateProtectedBuffer(transformedMasterKey);
-            
-            return protectedMasterKey;
+
+
+            return transformedMasterKey;
         }
 
-        public static async Task<IBuffer> TransformKeyAsync(IBuffer rawCompositeKey, CryptographicKey transFormKey, ulong rounds)
+        public  async Task<IBuffer> TransformKeyAsync(IBuffer rawCompositeKey, CryptographicKey transFormKey, ulong rounds)
         {
             var transformedCompositeKey = await TransformKeyManagedAsync(rawCompositeKey, transFormKey, null, rounds);
             return SHA256Hasher.Hash(transformedCompositeKey);
         }
 
-        public static IBuffer TransformKeyManaged(IBuffer rawCompositeKey, CryptographicKey transFormKey, IBuffer iv, ulong rounds)
-        {           
+        public  IBuffer TransformKeyManaged(IBuffer rawCompositeKey, CryptographicKey transFormKey, IBuffer iv, ulong rounds)
+        {
+            var raw1 = new byte[16];
+            Array.Copy(rawCompositeKey.AsBytes(), 0, raw1, 0, 16);
+            var raw2 = new byte[16];
+            Array.Copy(rawCompositeKey.AsBytes(), 16, raw1, 0, 16);
+
+            var raw1Buffer = raw1.AsBuffer();
+            var raw2Buffer = raw2.AsBuffer();
             for (ulong i = 0; i < rounds; ++i)
             {
-                rawCompositeKey = CryptographicEngine.Decrypt(transFormKey, rawCompositeKey, iv);
+                rawCompositeKey = CryptographicEngine.Encrypt(transFormKey, rawCompositeKey, iv);
             }
-            return rawCompositeKey;         
+            return rawCompositeKey;  
+
+
         }
 
-        public static Task<IBuffer> TransformKeyManagedAsync(IBuffer rawCompositeKey, CryptographicKey transFormKey, IBuffer iv, ulong rounds) { 
+        public  Task<IBuffer> TransformKeyManagedAsync(IBuffer rawCompositeKey, CryptographicKey transFormKey, IBuffer iv, ulong rounds) { 
             return Task.Run( () => 
             {
                 return TransformKeyManaged(rawCompositeKey, transFormKey, iv, rounds);
@@ -70,10 +79,10 @@ namespace MetroPassLib.Keys
             // Concatenate user key data
             foreach (IUserKey pKey in UserKeys)
             {
-                ProtectedBuffer b = pKey.KeyData;
+                IBuffer b = pKey.KeyData;
                 if (b != null)
-                {                    
-                    var pbKeyData = await b.UnProtectAsync();
+                {
+                    var pbKeyData = pKey.KeyData; 
                     hash.Append(pbKeyData);
                     pbKeyData = null;
                 }

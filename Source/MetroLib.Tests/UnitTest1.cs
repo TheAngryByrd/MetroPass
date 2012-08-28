@@ -1,125 +1,119 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-using Windows.Storage;
-using System.Threading.Tasks;
-using Windows.Storage.Streams;
-using Windows.Security;
-using Windows.Security.Cryptography.Core;
-using Windows.Security.Cryptography;
-using MetroPassLib;
-using Windows.ApplicationModel;
-using System.IO;
-using MetroPassLib.Security;
-using MetroPassLib.Keys;
-using MetroPassLib.Helpers;
+﻿//using System;
+//using System.Collections.Generic;
+//using System.Linq;
+//using System.Text;
+//using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+//using Windows.Storage;
+//using System.Threading.Tasks;
+//using Windows.Storage.Streams;
+//using Windows.Security;
+//using Windows.Security.Cryptography.Core;
+//using Windows.Security.Cryptography;
+//using MetroPassLib;
+//using Windows.ApplicationModel;
+//using System.IO;
+//using MetroPassLib.Security;
+//using MetroPassLib.Keys;
+//using MetroPassLib.Helpers;
+//using MetroLib.Tests;
 
-namespace MetroLibTests
-{
+//namespace MetroLibTests
+//{
    
 
-    [TestClass]
-    public class UnitTest1
-    {
-        [TestMethod]
-        public async Task TestMethod1()
-        {
+//    [TestClass]
+//    public class UnitTest1
+//    {
+//        [TestMethod]
+//        public async Task TestMethod1()
+//        {
 
-            var database = await Package.Current.InstalledLocation.GetFileAsync("Data\\Pass.kdbx");
+//            var database = await Package.Current.InstalledLocation.GetFileAsync("Data\\Pass.kdbx");
             
-            DataReader reader = new DataReader(await database.OpenSequentialReadAsync());
+//            DataReader reader = new DataReader(await database.OpenSequentialReadAsync());
             
-            var buffer =await  Windows.Storage.FileIO.ReadBufferAsync(database);
-            var x = HashAlgorithmProvider.OpenAlgorithm(HashAlgorithmNames.Sha256);
-            var hash = x.CreateHash();
-            hash.Append(buffer);
-            var hashedBuffer = hash.GetValueAndReset();
+//            var buffer =await  Windows.Storage.FileIO.ReadBufferAsync(database);
+//            var x = HashAlgorithmProvider.OpenAlgorithm(HashAlgorithmNames.Sha256);
+//            var hash = x.CreateHash();
+//            hash.Append(buffer);
+//            var hashedBuffer = hash.GetValueAndReset();
             
             
             
-        }
+//        }
 
-        [TestMethod]
-        public async Task ShouldDecryptDatabase()
-        {
-            var pwDatabase = new PwDatabase();
-            var password = new KcpPassword("UniquePassword");
+//        [TestMethod]
+//        public async Task ShouldDecryptDatabase()
+//        {
+//            var pwDatabase = new PwDatabase();
+//            var password = new KcpPassword("UniquePassword");
             
-            pwDatabase.MasterKey.UserKeys.Add(password);
-            var kdb = new Kdb4File(pwDatabase);
-            var database = await GetDatabaseAsDatareaderAsync();
+//            pwDatabase.MasterKey.UserKeys.Add(password);
+//            var kdb = new Kdb4File(pwDatabase);
+//            var database = await Helpers.GetDatabaseAsBuffer();
 
-            await kdb.Load(database, Kdb4Format.Default);
-        }
+//            await kdb.Load(database, Kdb4Format.Default);
+//        }
 
-        [TestMethod]
-        public async Task ShouldTransformKey()
-        {
-            var kdb = new Kdb4File(new PwDatabase());
-            var database = await GetDatabaseAsDatareaderAsync();
-            kdb.ReadHeader(database);
+//        //[TestMethod]
+//        //public async Task ShouldTransformKey()
+//        //{
+//        //    var kdb = new Kdb4File(new PwDatabase());
+//        //    var database = await Helpers.GetDatabaseAsDatareaderAsync();
+//        //    kdb.ReadHeader(database);
 
-            var composite = new CompositeKey();
-            composite.UserKeys.Add(new KcpPassword("UniquePassword"));
-            var rawCompositeKey = await composite.CreateRawCompositeKey32();
-            var rawCompositeKeyBytes = rawCompositeKey.AsBytes();
-            SymmetricKeyAlgorithmProvider symKeyProvider = SymmetricKeyAlgorithmProvider.OpenAlgorithm(SymmetricAlgorithmNames.AesEcb);
-            var transformSeedKey = symKeyProvider.CreateSymmetricKey( kdb.pbTransformSeed);
-
-
-            IBuffer iv = null;
-
-            var decryptedKey = await CompositeKey.TransformKeyManagedAsync(rawCompositeKey, transformSeedKey, iv, 6000);
-            var actual = decryptedKey.AsBytes();
-        }
+//        //    var composite = new CompositeKey();
+//        //    composite.UserKeys.Add(new KcpPassword("UniquePassword"));
+//        //    var rawCompositeKey = await composite.CreateRawCompositeKey32();
+//        //    var rawCompositeKeyBytes = rawCompositeKey.AsBytes();
+//        //    SymmetricKeyAlgorithmProvider symKeyProvider = SymmetricKeyAlgorithmProvider.OpenAlgorithm(SymmetricAlgorithmNames.AesEcb);
+//        //    var transformSeedKey = symKeyProvider.CreateSymmetricKey( kdb.pbTransformSeed);
 
 
-        [TestMethod]
-        public async Task ShouldCreateAESKey()
-        {
-             var kdb = new Kdb4File(new PwDatabase());
-             var database = await GetDatabaseAsDatareaderAsync();
-             kdb.ReadHeader(database);
+//        //    IBuffer iv = null;
+
+//        //    var decryptedKey = await CompositeKey.TransformKeyManagedAsync(rawCompositeKey, transformSeedKey, iv, 6000);
+//        //    var actual = decryptedKey.AsBytes();
+//        //}
+
+
+//        [TestMethod]
+//        public async Task ShouldCreateAESKey()
+//        {
+//             var kdb = new Kdb4File(new PwDatabase());
+//             var database = await Helpers.GetDatabaseAsDatareaderAsync();
+//             kdb.ReadHeader(database);
 
             
-        }
+//        }
 
-        [TestMethod]
-        public async Task ShouldGenerate32BitKeyFromCompositeKey()
-        {
-            var pwDataBase = new PwDatabase();
-            var kdb = new Kdb4File(pwDataBase);
+//        [TestMethod]
+//        public async Task ShouldGenerate32BitKeyFromCompositeKey()
+//        {
+//            var pwDataBase = new PwDatabase();
+//            var kdb = new Kdb4File(pwDataBase);
 
-            var database = await GetDatabaseAsDatareaderAsync();
-            kdb.ReadHeader(database);
+//            var database = await Helpers.GetDatabaseAsDatareaderAsync();
+//            kdb.ReadHeader(database);
          
-        }
+//        }
 
-        [TestMethod]
-        public async Task ShouldReadHeaders()
-        {
+//        [TestMethod]
+//        public async Task ShouldReadHeadersFields()
+//        {
 
-            IDataReader reader = await GetDatabaseAsDatareaderAsync();
-            reader.ReadBytes(new byte[12]);
+//            IDataReader reader = await Helpers.GetDatabaseAsDatareaderAsync();
+//            reader.ReadBytes(new byte[12]);
            
-            Kdb4File kdb = new Kdb4File(new PwDatabase());
-            while (true)
-            {
-                if (kdb.ReadHeaderField(reader) == false) { break; }
-            }
-        }
+//            Kdb4File kdb = new Kdb4File(new PwDatabase());
+//            while (true)
+//            {
+//                if (kdb.ReadHeaderField(reader) == false) { break; }
+//            }
+//        }
 
-        private static async Task<IDataReader> GetDatabaseAsDatareaderAsync()
-        {
-            var database = await Package.Current.InstalledLocation.GetFileAsync("Data\\Pass.kdbx");//await KnownFolders.DocumentsLibrary.GetFileAsync("Data.kdbx");
-            var buffer = await Windows.Storage.FileIO.ReadBufferAsync(database);
-            IDataReader reader = DataReader.FromBuffer(buffer);
-            //reader.ByteOrder = ByteOrder.LittleEndian;
-            reader.UnicodeEncoding = Windows.Storage.Streams.UnicodeEncoding.Utf8;
-            return reader;
-        }
+
+
         
-    }
-}
+//    }
+//}

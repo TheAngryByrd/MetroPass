@@ -24,7 +24,7 @@ namespace MetroPassLib
     {
         private Kdb4Format kdb4Format = Kdb4Format.Default;
 
-        private PwDatabase pwDatabase;
+        public PwDatabase pwDatabase;
 
         public IBuffer pbMasterSeed { get; set; }
 
