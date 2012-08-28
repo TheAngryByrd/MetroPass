@@ -12,8 +12,8 @@ namespace MetroPassLib.Keys
 {
     public class KcpPassword : IUserKey
     {
-        private ProtectedBuffer keyData = null;
-        public ProtectedBuffer KeyData
+        private IBuffer keyData = null;
+        public IBuffer KeyData
         {
             get { return keyData; }
         }
@@ -30,7 +30,7 @@ namespace MetroPassLib.Keys
             var hash = hashProvider.CreateHash();
             hash.Append(passwordInUTF8);
             var hashedBuffer = hash.GetValueAndReset();
-            keyData = await ProtectedBuffer.CreateProtectedBuffer(hashedBuffer);
+            keyData = hashedBuffer;
         }
     }
 }
