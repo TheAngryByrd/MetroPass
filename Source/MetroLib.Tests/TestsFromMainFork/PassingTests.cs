@@ -134,14 +134,15 @@ namespace MetroLib.Tests.TestsFromMainFork
         [TestMethod]
         public async Task CanDecryptDatabase()
         {
-            var pwDatabase = new PwDatabase();
-            var password = new KcpPassword("UniquePassword");
+            var composite = new CompositeKey();
+            composite.UserKeys.Add(new KcpPassword("UniquePassword"));
+            database.MasterKey = composite;
+            kdb.ReadHeader(reader);
 
-            pwDatabase.MasterKey.UserKeys.Add(password);
-            var kdb = new Kdb4File(pwDatabase);
-            var realDatabase = await Helpers.GetDatabaseAsDatareaderAsync();
+            var aesKey = await kdb.GenerateAESKey();
 
-            await kdb.Load(realDatabase, Kdb4Format.Default);
+
+            var decrypedDatabase = kdb.DecryptDatabase(reader.DetachBuffer(), aesKey);
         }
     }
 }

@@ -23,14 +23,29 @@ namespace MetroPassLib
             
             ReadHeader(source);
             var aesKey = await GenerateAESKey();
+            var decryoptedDatabaseBuffer = DecryptDatabase(source.DetachBuffer(), aesKey);
 
-            var symKeyProvider = SymmetricKeyAlgorithmProvider.OpenAlgorithm(SymmetricAlgorithmNames.AesCbcPkcs7);
-            var aesCryptoKey = symKeyProvider.CreateSymmetricKey(aesKey);
-            var unreadData = source.DetachBuffer();
-            var decryptedDatabase = CryptographicEngine.Decrypt(aesCryptoKey, unreadData, pbEncryptionIV);
+        
             
         }
 
+        public IDataReader DecryptDatabase(IBuffer source, IBuffer aesKey)
+        {
+            var symKeyProvider = SymmetricKeyAlgorithmProvider.OpenAlgorithm(SymmetricAlgorithmNames.AesCbcPkcs7);
+            var aesCryptoKey = symKeyProvider.CreateSymmetricKey(aesKey);
+            var unreadData = source;
+            var decryptedDatabase = CryptographicEngine.Decrypt(aesCryptoKey, unreadData, pbEncryptionIV);
+            var databaseReader = DataReader.FromBuffer(decryptedDatabase);
+
+            var startBytes = databaseReader.ReadBuffer(32).AsBytes();
+            var headerStartBytes = this.pbStreamStartBytes.AsBytes();
+            for (int iStart = 0; iStart < 32; ++iStart)
+            {
+                if (startBytes[iStart] != headerStartBytes[iStart])
+                    throw new Exception();
+            }
+            return databaseReader;
+        }
 
         public async Task<IBuffer> GenerateAESKey()
         {
