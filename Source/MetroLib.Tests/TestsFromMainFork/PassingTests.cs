@@ -11,6 +11,7 @@ using MetroPassLib.Keys;
 using Windows.Security.Cryptography;
 using Windows.Security.Cryptography.Core;
 using System.Diagnostics;
+using System.IO;
 
 namespace MetroLib.Tests.TestsFromMainFork
 {
@@ -140,7 +141,7 @@ namespace MetroLib.Tests.TestsFromMainFork
             kdb.ReadHeader(reader);
 
             var aesKey = await kdb.GenerateAESKey();
-
+            
 
             var decrypedDatabase = kdb.DecryptDatabase(reader.DetachBuffer(), aesKey);
         }

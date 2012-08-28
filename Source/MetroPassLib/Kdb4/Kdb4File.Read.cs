@@ -8,6 +8,10 @@ using System.Threading.Tasks;
 using Windows.Security.Cryptography.Core;
 using Windows.Storage.Streams;
 using MetroPassLib.Helpers;
+using System.IO.Compression;
+using MetroPassLib.Cryptography;
+using MetroPassLib.Security;
+using System.Security;
 
 namespace MetroPassLib
 {
@@ -25,7 +29,30 @@ namespace MetroPassLib
             var aesKey = await GenerateAESKey();
             var decryoptedDatabaseBuffer = DecryptDatabase(source.DetachBuffer(), aesKey);
 
+          
         
+            
+        }
+
+        public CryptoRandomStream GenerateCryptoRandomStream()
+        {
+            if (pbProtectedStreamKey == null)
+            {
+                throw new SecurityException("Invalid protected stream key!");
+            }
+            return new CryptoRandomStream(craInnerRandomStream, pbProtectedStreamKey.AsBytes());
+        }
+
+        public IDataReader ConfigureStream(IDataReader decryptedDatabase)
+        {
+            var decryptedStream = decryptedDatabase.DetachStream();
+            Stream inputStream = new HashedBlockStream(decryptedStream.AsStreamForRead(), false);
+
+            if (pwDatabase.Compression == PwCompressionAlgorithm.GZip)
+            {
+                inputStream = new GZipStream(inputStream, CompressionMode.Decompress);
+            }
+            return new DataReader(inputStream.AsInputStream());
             
         }
 

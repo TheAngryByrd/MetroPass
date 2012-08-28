@@ -106,19 +106,23 @@
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cryptography\Cipher\Salsa20Cipher.cs" />
     <Compile Include="Helpers\BufferHelpers.cs" />
     <Compile Include="Helpers\SHA256Hasher.cs" />
+    <Compile Include="Kdb4\Kdb4Parser.cs" />
     <Compile Include="Keys\CompositeKey.cs" />
-    <Compile Include="CryptoRandomStream.cs" />
+    <Compile Include="Cryptography\CryptoRandomStream.cs" />
     <Compile Include="Keys\IUserKey.cs" />
-    <Compile Include="Kdb4File.cs" />
-    <Compile Include="Kdb4File.Read.cs" />
+    <Compile Include="Kdb4\Kdb4File.cs" />
+    <Compile Include="Kdb4\Kdb4File.Read.cs" />
     <Compile Include="Keys\KcpPassword.cs" />
+    <Compile Include="Security\HashedBlockStream.cs" />
     <Compile Include="Security\ProtectedBuffer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PwDatabase.cs" />
     <Compile Include="PwEnums.cs" />
     <Compile Include="PwUuid.cs" />
+    <Compile Include="Utils\MemUtil.cs" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">
     <VisualStudioVersion>11.0</VisualStudioVersion>
