@@ -19,7 +19,7 @@ namespace MetroPassLib
 
     public partial class Kdb4File
     {
-        public async Task Load(IDataReader source, Kdb4Format kdbFormat)
+        public async Task<Kdb4Tree> Load(IDataReader source, Kdb4Format kdbFormat)
         {
             Debug.Assert(source != null);
             if (source == null) throw new ArgumentNullException("sSource");
@@ -32,7 +32,8 @@ namespace MetroPassLib
            var decompressEdDatabase = ConfigureStream(decryptedDatabase);
             var crypto = GenerateCryptoRandomStream();
             var parser = new Kdb4Parser(crypto);
-            
+
+            return parser.Parse(decompressEdDatabase);
         }
 
         public CryptoRandomStream GenerateCryptoRandomStream()
