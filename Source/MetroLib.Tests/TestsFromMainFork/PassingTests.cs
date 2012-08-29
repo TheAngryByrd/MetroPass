@@ -185,5 +185,26 @@ namespace MetroLib.Tests.TestsFromMainFork
 
             Assert.IsNotNull(xml);
         }
+
+        [TestMethod]
+        public async Task CanParseTree()
+        {
+
+            database.MasterKey = composite;
+            kdb.ReadHeader(reader);
+
+            var aesKey = await kdb.GenerateAESKey();
+
+
+            var decrypedDatabase = kdb.DecryptDatabase(reader.DetachBuffer(), aesKey);
+
+            var decompressed = kdb.ConfigureStream(decrypedDatabase);
+
+            var crypto = kdb.GenerateCryptoRandomStream();
+
+            var kdb4Parser = new Kdb4Parser(crypto);
+
+            var tree = kdb4Parser.Parse(decompressed);
+        }
     }
 }

@@ -117,6 +117,8 @@
     <Compile Include="Kdb4\Kdb4File.cs" />
     <Compile Include="Kdb4\Kdb4File.Read.cs" />
     <Compile Include="Keys\KcpPassword.cs" />
+    <Compile Include="PwEntry.cs" />
+    <Compile Include="PwGroup.cs" />
     <Compile Include="Security\HashedBlockStream.cs" />
     <Compile Include="Security\ProtectedBuffer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
