@@ -29,7 +29,7 @@ namespace MetroPassLib
             ReadHeader(source);
             var aesKey = await GenerateAESKey();
             var decryptedDatabase = DecryptDatabase(source.DetachBuffer(), aesKey);
-            decryptedDatabase = ConfigureStream(decryptedDatabase);
+           var decompressEdDatabase = ConfigureStream(decryptedDatabase);
             var crypto = GenerateCryptoRandomStream();
             var parser = new Kdb4Parser(crypto);
             
@@ -44,17 +44,17 @@ namespace MetroPassLib
             return new CryptoRandomStream(craInnerRandomStream, pbProtectedStreamKey.AsBytes());
         }
 
-        public IDataReader ConfigureStream(IDataReader decryptedDatabase)
+        public Stream ConfigureStream(IDataReader decryptedDatabase)
         {
+            var memStream = decryptedDatabase.AsStream();
 
-
-            Stream inputStream = new HashedBlockStream(decryptedDatabase.AsStream(), false);
+            Stream inputStream = new HashedBlockStream(memStream, false,0,false);
 
             if (pwDatabase.Compression == PwCompressionAlgorithm.GZip)
             {
                 inputStream = new GZipStream(inputStream, CompressionMode.Decompress);
             }
-            return new DataReader(inputStream.AsInputStream());
+            return inputStream;
             
         }
 

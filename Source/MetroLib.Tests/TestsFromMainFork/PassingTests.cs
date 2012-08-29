@@ -12,6 +12,7 @@ using Windows.Security.Cryptography;
 using Windows.Security.Cryptography.Core;
 using System.Diagnostics;
 using System.IO;
+using MetroPassLib.Kdb4;
 
 namespace MetroLib.Tests.TestsFromMainFork
 {
@@ -21,12 +22,15 @@ namespace MetroLib.Tests.TestsFromMainFork
         IDataReader reader;
         Kdb4File kdb;
         PwDatabase database;
+        CompositeKey composite;
         [TestInitialize]
         public async Task Init()
         {
              database = new PwDatabase();
             reader = await Helpers.GetDatabaseAsDatareaderAsync();
             kdb = new Kdb4File(database);
+             composite = new CompositeKey();
+            composite.UserKeys.Add(new KcpPassword("UniquePassword"));
         }
 
         [TestCleanup]
@@ -62,9 +66,7 @@ namespace MetroLib.Tests.TestsFromMainFork
         [TestMethod]
         public async Task CanCreateRawCompositeKey32()
         {
-            var composite = new CompositeKey();
-            composite.UserKeys.Add(new KcpPassword("UniquePassword"));
-
+     
             var key = await composite.CreateRawCompositeKey32();
 
             Assert.AreEqual("8qJAUrflDYhubJ/yBlHYsf7Pqh9PDL52MPqsm6ARtFw=", Convert.ToBase64String(key.AsBytes()));
@@ -75,8 +77,6 @@ namespace MetroLib.Tests.TestsFromMainFork
         public async Task CanTransformKeyManaged()
         {
   
-            var composite = new CompositeKey();
-            composite.UserKeys.Add(new KcpPassword("UniquePassword"));
 
             var key = await composite.CreateRawCompositeKey32();
 
@@ -93,8 +93,7 @@ namespace MetroLib.Tests.TestsFromMainFork
         [TestMethod]
         public async Task CanTransformKey()
         {
-            var composite = new CompositeKey();
-            composite.UserKeys.Add(new KcpPassword("UniquePassword"));
+
 
             var key = await composite.CreateRawCompositeKey32();
             kdb.ReadHeader(reader);
@@ -109,8 +108,7 @@ namespace MetroLib.Tests.TestsFromMainFork
         [TestMethod]
         public async Task CanGenerateKey()
         {
-            var composite = new CompositeKey();
-            composite.UserKeys.Add(new KcpPassword("UniquePassword"));
+
 
             kdb.ReadHeader(reader);
 
@@ -122,8 +120,7 @@ namespace MetroLib.Tests.TestsFromMainFork
         [TestMethod]
         public async Task CanGenerateAesKey()
         {
-            var composite = new CompositeKey();
-            composite.UserKeys.Add(new KcpPassword("UniquePassword"));
+
             database.MasterKey = composite;
             kdb.ReadHeader(reader);
 
@@ -135,8 +132,7 @@ namespace MetroLib.Tests.TestsFromMainFork
         [TestMethod]
         public async Task CanDecryptDatabase()
         {
-            var composite = new CompositeKey();
-            composite.UserKeys.Add(new KcpPassword("UniquePassword"));
+
             database.MasterKey = composite;
             kdb.ReadHeader(reader);
 
@@ -149,8 +145,7 @@ namespace MetroLib.Tests.TestsFromMainFork
         [TestMethod]
         public async Task CanDecompressDatabase()
         {
-            var composite = new CompositeKey();
-            composite.UserKeys.Add(new KcpPassword("UniquePassword"));
+
             database.MasterKey = composite;
             kdb.ReadHeader(reader);
 
@@ -165,12 +160,30 @@ namespace MetroLib.Tests.TestsFromMainFork
         [TestMethod]
         public async Task CanGenerateCryptoStream()
         {
-            var composite = new CompositeKey();
-            composite.UserKeys.Add(new KcpPassword("UniquePassword"));
+
             database.MasterKey = composite;
             kdb.ReadHeader(reader);
 
             var crypto = kdb.GenerateCryptoRandomStream();
+        }
+
+        [TestMethod]
+        public async Task CanCreateXmlDocumentFromDecompressedDatabase()
+        {
+
+            database.MasterKey = composite;
+            kdb.ReadHeader(reader);
+
+            var aesKey = await kdb.GenerateAESKey();
+
+
+            var decrypedDatabase = kdb.DecryptDatabase(reader.DetachBuffer(), aesKey);
+
+            var decompressed = kdb.ConfigureStream(decrypedDatabase);
+
+            var xml = Kdb4Parser.CreateXmlReader(decompressed);
+
+            Assert.IsNotNull(xml);
         }
     }
 }
