@@ -53,12 +53,12 @@ namespace MetroPass.UI
                 if (file != null)
                 {
                     // Application now has read/write access to the picked file
-                    OutputTextBlockDatabaseFile.Text = "Database: " + file.Name;
+                    OutputTextBlockKeyFile.Text = "Database: " + file.Name;
                     database = file;
                 }
                 else
                 {
-                    OutputTextBlockDatabaseFile.Text = "Operation cancelled.";
+                    OutputTextBlockKeyFile.Text = "Operation cancelled.";
                 }
 
 

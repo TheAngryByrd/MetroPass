@@ -13,7 +13,7 @@
     <Page.Resources>
 
         <!-- TODO: Delete this line if the key AppName is declared in App.xaml -->
-        <x:String x:Key="AppName">My Application</x:String>
+        <x:String x:Key="AppName">MetroPass</x:String>
     </Page.Resources>
 
     <!--
@@ -27,37 +27,44 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Grid Margin="0,0,0,378" Grid.Row="1" >
-            <StackPanel VerticalAlignment="Top" HorizontalAlignment="Left"  Grid.Row="2">
-                <TextBlock TextWrapping="Wrap" Style="{StaticResource BasicTextStyle}" HorizontalAlignment="Left" >
-                Prompt the user to pick one or more files.
-                </TextBlock>
-                <Button x:Name="FilePickerDatabaseButton" Content="Pick database file" />
-                <TextBlock x:Name="OutputTextBlockDatabaseFile" Style="{StaticResource BasicTextStyle}" TextWrapping="Wrap" />
+       
+            <StackPanel VerticalAlignment="Top" HorizontalAlignment="Left"  Grid.Row="1" Margin="125,10,0,0">
+                <StackPanel Margin="0,0,0,25">
+                    <Button x:Name="FilePickerDatabaseButton" Content="Pick database file" />
+                    <TextBlock x:Name="OutputTextBlockDatabaseFile" Style="{StaticResource BasicTextStyle}" TextWrapping="Wrap" />
+                </StackPanel>
+                <StackPanel Margin="0,0,0,25">
+                    <TextBlock Style="{StaticResource BasicTextStyle}">Password:</TextBlock>
+                    <PasswordBox x:Name="DatabasePassword" />
+                </StackPanel>
 
-                <TextBlock Style="{StaticResource BasicTextStyle}">Password:</TextBlock>
-                <PasswordBox x:Name="DatabasePassword" />
+                <StackPanel Margin="0,0,0,25">
+                    <Button x:Name="FilePickerKeyFileButton" Content="Pick key file" />
+                    <TextBlock x:Name="OutputTextBlockKeyFile" Style="{StaticResource BasicTextStyle}" TextWrapping="Wrap" />
+                </StackPanel>
 
-                <Button x:Name="FilePickerKeyFileButton" Content="Pick key file" />
-                <TextBlock x:Name="OutputTextBlockKeyFile" Style="{StaticResource BasicTextStyle}" TextWrapping="Wrap" />
 
+                
 
-                <Button x:Name="OpenDatabase" Content="Open Database"/>
+                
+                <Button Background="Orange" Foreground="White" x:Name="OpenDatabase" Content="Open Database"/>
             </StackPanel>
-        </Grid>
+  
         <!-- Back button and page title -->
-        <Grid>
+        <Grid >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            
-            
+
+            <Button x:Name="backButton" Click="GoBack" IsEnabled="{Binding Frame.CanGoBack, ElementName=pageRoot}" Style="{StaticResource BackButtonStyle}"/>
             <TextBlock x:Name="pageTitle" Grid.Column="1" Text="{StaticResource AppName}" Style="{StaticResource PageHeaderTextStyle}"/>
       
 
         </Grid>
+
         
+
         <VisualStateManager.VisualStateGroups>
 
             <!-- Visual states reflect the application's view state -->
