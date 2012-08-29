@@ -161,5 +161,16 @@ namespace MetroLib.Tests.TestsFromMainFork
 
             var decompressed = kdb.ConfigureStream(decrypedDatabase);
         }
+
+        [TestMethod]
+        public async Task CanGenerateCryptoStream()
+        {
+            var composite = new CompositeKey();
+            composite.UserKeys.Add(new KcpPassword("UniquePassword"));
+            database.MasterKey = composite;
+            kdb.ReadHeader(reader);
+
+            var crypto = kdb.GenerateCryptoRandomStream();
+        }
     }
 }
