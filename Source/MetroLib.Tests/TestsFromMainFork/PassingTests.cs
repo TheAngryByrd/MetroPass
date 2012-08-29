@@ -145,5 +145,21 @@ namespace MetroLib.Tests.TestsFromMainFork
 
             var decrypedDatabase = kdb.DecryptDatabase(reader.DetachBuffer(), aesKey);
         }
+
+        [TestMethod]
+        public async Task CanDecompressDatabase()
+        {
+            var composite = new CompositeKey();
+            composite.UserKeys.Add(new KcpPassword("UniquePassword"));
+            database.MasterKey = composite;
+            kdb.ReadHeader(reader);
+
+            var aesKey = await kdb.GenerateAESKey();
+
+
+            var decrypedDatabase = kdb.DecryptDatabase(reader.DetachBuffer(), aesKey);
+
+            var decompressed = kdb.ConfigureStream(decrypedDatabase);
+        }
     }
 }

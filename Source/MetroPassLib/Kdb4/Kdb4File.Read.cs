@@ -12,6 +12,7 @@ using System.IO.Compression;
 using MetroPassLib.Cryptography;
 using MetroPassLib.Security;
 using System.Security;
+using MetroPassLib.Kdb4;
 
 namespace MetroPassLib
 {
@@ -27,10 +28,10 @@ namespace MetroPassLib
             
             ReadHeader(source);
             var aesKey = await GenerateAESKey();
-            var decryoptedDatabaseBuffer = DecryptDatabase(source.DetachBuffer(), aesKey);
-
-          
-        
+            var decryptedDatabase = DecryptDatabase(source.DetachBuffer(), aesKey);
+            decryptedDatabase = ConfigureStream(decryptedDatabase);
+            var crypto = GenerateCryptoRandomStream();
+            var parser = new Kdb4Parser(crypto);
             
         }
 
@@ -45,8 +46,9 @@ namespace MetroPassLib
 
         public IDataReader ConfigureStream(IDataReader decryptedDatabase)
         {
-            var decryptedStream = decryptedDatabase.DetachStream();
-            Stream inputStream = new HashedBlockStream(decryptedStream.AsStreamForRead(), false);
+
+
+            Stream inputStream = new HashedBlockStream(decryptedDatabase.AsStream(), false);
 
             if (pwDatabase.Compression == PwCompressionAlgorithm.GZip)
             {

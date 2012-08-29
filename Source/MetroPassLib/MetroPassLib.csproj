@@ -110,6 +110,7 @@
     <Compile Include="Helpers\BufferHelpers.cs" />
     <Compile Include="Helpers\SHA256Hasher.cs" />
     <Compile Include="Kdb4\Kdb4Parser.cs" />
+    <Compile Include="Kdb4\Kdb4Tree.cs" />
     <Compile Include="Keys\CompositeKey.cs" />
     <Compile Include="Cryptography\CryptoRandomStream.cs" />
     <Compile Include="Keys\IUserKey.cs" />
