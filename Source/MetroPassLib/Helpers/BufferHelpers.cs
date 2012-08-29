@@ -27,9 +27,11 @@ namespace MetroPassLib.Helpers
 
         public static Stream AsStream(this IDataReader reader)
         {
+            
             MemoryStream stream = new MemoryStream();
             var bytes = reader.DetachBuffer().AsBytes();
             stream.Write(bytes, 0, bytes.Length);
+            stream.Position = 0;
             return stream;
         }
     }
