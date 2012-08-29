@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml.Controls;
 
-namespace App1
+namespace MetroPass.UI
 {
-    public partial class MainPage : Page
+    public partial class DatabaseLoad : MetroPass.UI.Common.LayoutAwarePage
     {
   
 

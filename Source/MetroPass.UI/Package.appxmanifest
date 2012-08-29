@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest">
 
-  <Identity Name="2ee6a593-bad9-40d9-bc69-b4a16b5340b5"
+  <Identity Name="8b94f3d1-fa2e-4b06-af45-725d343d91c6"
             Publisher="CN=jimmy_000"
             Version="1.0.0.0" />
 
   <Properties>
-    <DisplayName>App1</DisplayName>
+    <DisplayName>MetroPass.UI</DisplayName>
     <PublisherDisplayName>jimmy_000</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -23,12 +23,12 @@
   <Applications>
     <Application Id="App"
         Executable="$targetnametoken$.exe"
-        EntryPoint="App1.App">
+        EntryPoint="MetroPass.UI.App">
         <VisualElements
-            DisplayName="App1"
+            DisplayName="MetroPass.UI"
             Logo="Assets\Logo.png"
             SmallLogo="Assets\SmallLogo.png"
-            Description="App1"
+            Description="MetroPass.UI"
             ForegroundText="light"
             BackgroundColor="#464646">
             <DefaultTile ShowName="allLogos" />
