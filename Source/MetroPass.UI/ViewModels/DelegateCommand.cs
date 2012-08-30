@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 
@@ -8,12 +9,19 @@ namespace MetroPass.UI.ViewModels
 {
     public class DelegateCommand : ICommand
     {
-        private Action _action;
+        private Action<object> _action;
+        private Func<object, Task> _asyncAction;
 
-        public DelegateCommand(Action action)
+        public DelegateCommand(Action<object> action)
         {
             _action = action;
         }
+
+        public DelegateCommand(Func<object, Task> asyncAction)
+        {
+            _asyncAction = asyncAction;
+        }
+
 
         public bool CanExecute(object parameter)
         {
@@ -22,9 +30,18 @@ namespace MetroPass.UI.ViewModels
 
         public event EventHandler CanExecuteChanged;
 
-        public void Execute(object parameter)
+        public async void Execute(object parameter)
         {
-            _action();
+            if (_action != null)
+            {
+                _action(parameter);
+            }
+            else if(_asyncAction !=null)
+            {
+                await _asyncAction(parameter);
+            }
+           
+          
         }
     }
 }
