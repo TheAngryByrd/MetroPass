@@ -15,8 +15,8 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="MetroPass.UI.App">
-      <VisualElements DisplayName="MetroPass.UI" Logo="Assets\Logo.png" SmallLogo="Assets\SmallLogo.png" Description="MetroPass.UI" ForegroundText="light" BackgroundColor="#464646">
-        <DefaultTile ShowName="allLogos" />
+      <VisualElements DisplayName="MetroPass" Logo="Assets\Logo.png" SmallLogo="Assets\SmallLogo.png" Description="MetroPass" ForegroundText="light" BackgroundColor="#464646">
+        <DefaultTile ShowName="allLogos" ShortName="MetroPass" />
         <SplashScreen Image="Assets\SplashScreen.png" />
       </VisualElements>
       <Extensions>

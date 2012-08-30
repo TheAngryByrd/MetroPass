@@ -28,7 +28,7 @@
         </Grid.RowDefinitions>
 
        
-            <StackPanel VerticalAlignment="Top" HorizontalAlignment="Left"  Grid.Row="1" Margin="125,10,0,0">
+            <StackPanel x:Name="StackPanelDatabaseLoader" VerticalAlignment="Top" HorizontalAlignment="Left"  Grid.Row="1" Margin="125,10,0,0">
                 <StackPanel Margin="0,0,0,25">
                     <Button x:Name="FilePickerDatabaseButton" Content="Pick database file" />
                     <TextBlock x:Name="OutputTextBlockDatabaseFile" Style="{StaticResource BasicTextStyle}" TextWrapping="Wrap" />
@@ -89,6 +89,9 @@
                         </ObjectAnimationUsingKeyFrames>
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="pageTitle" Storyboard.TargetProperty="Style">
                             <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource SnappedPageHeaderTextStyle}"/>
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="StackPanelDatabaseLoader" Storyboard.TargetProperty="Margin">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="18,0,0,0"/>
                         </ObjectAnimationUsingKeyFrames>
                     </Storyboard>
                 </VisualState>
