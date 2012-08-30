@@ -30,7 +30,7 @@
        
             <StackPanel x:Name="StackPanelDatabaseLoader" VerticalAlignment="Top" HorizontalAlignment="Left"  Grid.Row="1" Margin="125,10,0,0">
                 <StackPanel Margin="0,0,0,25">
-                    <Button x:Name="FilePickerDatabaseButton" Content="Pick database file" />
+                <Button x:Name="FilePickerDatabaseButton" Content="Pick database file" Command="{Binding PickDatabase}" />
                     <TextBlock x:Name="OutputTextBlockDatabaseFile" Style="{StaticResource BasicTextStyle}" TextWrapping="Wrap" />
                 </StackPanel>
                 <StackPanel Margin="0,0,0,25">

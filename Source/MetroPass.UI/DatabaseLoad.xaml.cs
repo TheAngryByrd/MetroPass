@@ -1,4 +1,5 @@
 ﻿
+using MetroPass.UI.ViewModels;
 using MetroPassLib;
 using MetroPassLib.Keys;
 using System;
@@ -35,9 +36,10 @@ namespace MetroPass.UI
         {
             Current = this;
             this.InitializeComponent();
-            FilePickerDatabaseButton.Click += new RoutedEventHandler(PickFileDatabaseButton_Click);
-            FilePickerKeyFileButton.Click += FilePickerKeyFileButton_Click;
-            OpenDatabase.Click += OpenDatabase_Click;
+            this.DataContext = new DatabaseLoadViewModel();
+            //FilePickerDatabaseButton.Click += new RoutedEventHandler(PickFileDatabaseButton_Click);
+            //FilePickerKeyFileButton.Click += FilePickerKeyFileButton_Click;
+            //OpenDatabase.Click += OpenDatabase_Click;
         }
 
 
