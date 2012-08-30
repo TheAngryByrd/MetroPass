@@ -79,15 +79,11 @@ namespace MetroPassLib
 
         public async Task<IBuffer> GenerateAESKey()
         {
-            var hashAlgorithmProvider = HashAlgorithmProvider.OpenAlgorithm(HashAlgorithmNames.Sha256);
-            var hash = hashAlgorithmProvider.CreateHash();
-
-            hash.Append(pbMasterSeed);
+ 
             var generatedKey = await pwDatabase.MasterKey.GenerateKeyAsync(pbTransformSeed, pwDatabase.KeyEncryptionRounds);
-            var masterKey = generatedKey;
-            hash.Append(masterKey);
 
-            var aesKey = hash.GetValueAndReset();
+            var aesKey = SHA256Hasher.Hash(pbMasterSeed, generatedKey);
+
             return aesKey;
         }
         public void ReadHeader(IDataReader reader)

@@ -10,11 +10,15 @@ namespace MetroPassLib.Helpers
 {
     public class SHA256Hasher
     {
-        public static IBuffer Hash(IBuffer bufferToHash)
+        public static IBuffer Hash(params IBuffer[] bufferToHash)
         {
             var hashProvider = HashAlgorithmProvider.OpenAlgorithm(HashAlgorithmNames.Sha256);
             var hash = hashProvider.CreateHash();
-            hash.Append(bufferToHash);
+            foreach (var item in bufferToHash)
+            {
+                hash.Append(item);
+            }
+           
             var hashedBuffer = hash.GetValueAndReset();
             return hashedBuffer;
         }

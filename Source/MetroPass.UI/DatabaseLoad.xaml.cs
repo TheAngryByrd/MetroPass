@@ -53,8 +53,8 @@ namespace MetroPass.UI
                 if (file != null)
                 {
                     // Application now has read/write access to the picked file
-                    OutputTextBlockKeyFile.Text = "Database: " + file.Name;
-                    database = file;
+                    OutputTextBlockKeyFile.Text = "Keyfile: " + file.Name;
+                    keyFile = file;
                 }
                 else
                 {
@@ -70,7 +70,12 @@ namespace MetroPass.UI
             var bufferedData = await Windows.Storage.FileIO.ReadBufferAsync(database);
             PwDatabase pwDatabase = new PwDatabase();
             var composite = new CompositeKey();
-            composite.UserKeys.Add(new KcpPassword(DatabasePassword.Password));
+            composite.UserKeys.Add(await KcpPassword.Create(DatabasePassword.Password));
+            if(keyFile != null)
+            {
+                composite.UserKeys.Add(await KcpKeyFile.Create(keyFile));
+            }
+      
             pwDatabase.MasterKey = composite;
             Kdb4File kdb4 = new Kdb4File(pwDatabase);
             var tree = await kdb4.Load(DataReader.FromBuffer(bufferedData), Kdb4Format.Default);

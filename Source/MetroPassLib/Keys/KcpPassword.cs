@@ -18,13 +18,22 @@ namespace MetroPassLib.Keys
             get { return keyData; }
         }
 
-        public KcpPassword(string strPassword)
+        private KcpPassword()
         {
             
-            SetKey(UTF8Encoding.UTF8.GetBytes(strPassword).AsBuffer());
+          
         }
 
-        private async void SetKey(IBuffer passwordInUTF8)
+        public async static Task<KcpPassword> Create(string password)
+        {
+            var kcpPassword = new KcpPassword();
+  
+            await kcpPassword.Init(UTF8Encoding.UTF8.GetBytes(password).AsBuffer());
+
+            return kcpPassword;
+        }
+
+        private async Task Init(IBuffer passwordInUTF8)
         {
             var hashProvider = HashAlgorithmProvider.OpenAlgorithm(HashAlgorithmNames.Sha256);
             var hash = hashProvider.CreateHash();

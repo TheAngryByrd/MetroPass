@@ -30,7 +30,7 @@ namespace MetroLib.Tests.TestsFromMainFork
             reader = await Helpers.GetDatabaseAsDatareaderAsync();
             kdb = new Kdb4File(database);
              composite = new CompositeKey();
-            composite.UserKeys.Add(new KcpPassword("UniquePassword"));
+            composite.UserKeys.Add(await KcpPassword.Create("UniquePassword"));
         }
 
         [TestCleanup]

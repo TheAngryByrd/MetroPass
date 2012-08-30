@@ -111,6 +111,7 @@
     <Compile Include="Helpers\SHA256Hasher.cs" />
     <Compile Include="Kdb4\Kdb4Parser.cs" />
     <Compile Include="Kdb4\Kdb4Tree.cs" />
+    <Compile Include="Keys\KcpKeyFile.cs" />
     <Compile Include="Keys\CompositeKey.cs" />
     <Compile Include="Cryptography\CryptoRandomStream.cs" />
     <Compile Include="Keys\IUserKey.cs" />
@@ -126,6 +127,7 @@
     <Compile Include="PwEnums.cs" />
     <Compile Include="PwUuid.cs" />
     <Compile Include="Utils\MemUtil.cs" />
+    <Compile Include="Utils\StrUtil.cs" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">
     <VisualStudioVersion>11.0</VisualStudioVersion>
