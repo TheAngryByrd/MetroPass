@@ -70,7 +70,10 @@ namespace MetroPass.UI
             var bufferedData = await Windows.Storage.FileIO.ReadBufferAsync(database);
             PwDatabase pwDatabase = new PwDatabase();
             var composite = new CompositeKey();
-            composite.UserKeys.Add(await KcpPassword.Create(DatabasePassword.Password));
+            if(!string.IsNullOrEmpty(DatabasePassword.Password))
+            {
+                composite.UserKeys.Add(await KcpPassword.Create(DatabasePassword.Password));
+            }
             if(keyFile != null)
             {
                 composite.UserKeys.Add(await KcpKeyFile.Create(keyFile));
