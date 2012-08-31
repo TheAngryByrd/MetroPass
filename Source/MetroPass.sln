@@ -12,16 +12,16 @@ Global
 		SccNumberOfProjects = 4
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://theangrybyrd.tfspreview.com/defaultcollection
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = MetroLib.Tests\\MetroLib.Tests.csproj
-		SccProjectName1 = MetroLib.Tests
-		SccLocalPath1 = MetroLib.Tests
-		SccProjectUniqueName2 = MetroPassLib\\MetroPassLib.csproj
-		SccProjectName2 = MetroPassLib
-		SccLocalPath2 = MetroPassLib
-		SccProjectUniqueName3 = MetroPass.UI\\MetroPass.UI.csproj
-		SccProjectName3 = MetroPass.UI
-		SccLocalPath3 = MetroPass.UI
+		SccProjectUniqueName0 = MetroLib.Tests\\MetroLib.Tests.csproj
+		SccProjectName0 = MetroLib.Tests
+		SccLocalPath0 = MetroLib.Tests
+		SccProjectUniqueName1 = MetroPassLib\\MetroPassLib.csproj
+		SccProjectName1 = MetroPassLib
+		SccLocalPath1 = MetroPassLib
+		SccProjectUniqueName2 = MetroPass.UI\\MetroPass.UI.csproj
+		SccProjectName2 = MetroPass.UI
+		SccLocalPath2 = MetroPass.UI
+		SccLocalPath3 = .
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

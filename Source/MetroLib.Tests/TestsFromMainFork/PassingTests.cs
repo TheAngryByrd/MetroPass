@@ -27,7 +27,7 @@ namespace MetroLib.Tests.TestsFromMainFork
         public async Task Init()
         {
              database = new PwDatabase();
-            reader = await Helpers.GetDatabaseAsDatareaderAsync();
+             reader = await Helpers.GetDatabaseAsDatareaderAsync("Data\\Pass.kdbx");
             kdb = new Kdb4File(database);
              composite = new CompositeKey();
             composite.UserKeys.Add(await KcpPassword.Create("UniquePassword"));

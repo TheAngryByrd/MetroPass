@@ -115,6 +115,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Helpers.cs" />
+    <Compile Include="LibTests\PasswordAndKeyFileTests.cs" />
+    <Compile Include="LibTests\PasswordOnlyDatabase.cs" />
+    <Compile Include="Scenarios.cs" />
     <Compile Include="Security\ProtectedBufferTests.cs" />
     <Compile Include="TestsFromMainFork\PassingTests.cs" />
     <Compile Include="UnitTest1.cs">
