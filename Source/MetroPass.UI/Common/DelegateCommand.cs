@@ -5,7 +5,8 @@ using System.Windows.Input;
 
 
 
-namespace MetroPass.UI.ViewModels
+namespace  MetroPass.UI.Common
+
 {
     public class DelegateCommand : ICommand
     {

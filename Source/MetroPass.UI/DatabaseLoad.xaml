@@ -35,19 +35,19 @@
                 </StackPanel>
                 <StackPanel Margin="0,0,0,25">
                     <TextBlock Style="{StaticResource BasicTextStyle}">Password:</TextBlock>
-                    <PasswordBox x:Name="DatabasePassword" />
+                <PasswordBox x:Name="DatabasePassword" Password="{Binding Password,Mode=TwoWay}"  IsPasswordRevealButtonEnabled="True" />
                 </StackPanel>
 
                 <StackPanel Margin="0,0,0,25">
-                    <Button x:Name="FilePickerKeyFileButton" Content="Pick key file" />
+                <Button x:Name="FilePickerKeyFileButton" Content="Pick key file" Command="{Binding PickKeyFile}" />
                     <TextBlock x:Name="OutputTextBlockKeyFile" Style="{StaticResource BasicTextStyle}" TextWrapping="Wrap" />
                 </StackPanel>
 
 
-                
 
-                
-                <Button Background="Orange" Foreground="White" x:Name="OpenDatabase" Content="Open Database"/>
+
+
+            <Button Background="Orange" Foreground="White" x:Name="OpenDatabase" Content="Open Database" Command="{Binding LoadDatabase}" />
             </StackPanel>
   
         <!-- Back button and page title -->

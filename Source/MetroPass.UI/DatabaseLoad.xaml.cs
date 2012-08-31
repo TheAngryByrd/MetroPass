@@ -1,4 +1,5 @@
 ﻿
+using MetroPass.UI.Common;
 using MetroPass.UI.ViewModels;
 using MetroPassLib;
 using MetroPassLib.Keys;
@@ -11,6 +12,7 @@ using Windows.Foundation.Collections;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.Storage.Streams;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -36,7 +38,7 @@ namespace MetroPass.UI
         {
             Current = this;
             this.InitializeComponent();
-            this.DataContext = new DatabaseLoadViewModel();
+            this.DataContext = new DatabaseLoadViewModel(new DialogService());
             //FilePickerDatabaseButton.Click += new RoutedEventHandler(PickFileDatabaseButton_Click);
             //FilePickerKeyFileButton.Click += FilePickerKeyFileButton_Click;
             //OpenDatabase.Click += OpenDatabase_Click;
@@ -84,6 +86,8 @@ namespace MetroPass.UI
             pwDatabase.MasterKey = composite;
             Kdb4File kdb4 = new Kdb4File(pwDatabase);
             var tree = await kdb4.Load(DataReader.FromBuffer(bufferedData), Kdb4Format.Default);
+
+                        
         }
 
         private async void PickFileDatabaseButton_Click(object sender, RoutedEventArgs e)
