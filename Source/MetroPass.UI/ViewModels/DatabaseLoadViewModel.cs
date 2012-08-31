@@ -17,18 +17,20 @@ namespace MetroPass.UI.ViewModels
     public class DatabaseLoadViewModel : BindableBase
     {
         public IStorageFile Database { get; private set; }
-
         private string _password;
         public string Password
         {
             get { return _password; }
             set { SetProperty<string>(ref _password, value); }
         }
-
         public IStorageFile KeyFile { get; private set; }
-
         private IDialogService _dialogService { get; set; }
-
+        private double _progress;
+        public double Progress
+        {
+            get { return _progress; }
+            set { SetProperty<double>(ref _progress, value); }
+        }
         public ICommand PickDatabase
         {
             get
@@ -99,8 +101,12 @@ namespace MetroPass.UI.ViewModels
             Kdb4File kdb4 = new Kdb4File(pwDatabase);
             try
             {
+                var progress = new Progress<double>(percent => {
+                    percent = Math.Round(percent, 2);
+                    Progress = percent;
+                });
+                var tree = await kdb4.Load(DataReader.FromBuffer(bufferedData), Kdb4Format.Default,progress);
 
-                var tree = await kdb4.Load(DataReader.FromBuffer(bufferedData), Kdb4Format.Default);
                await _dialogService.Show("Decrypted database");
             }
             catch(Exception e)

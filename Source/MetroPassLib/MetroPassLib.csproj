@@ -22,11 +22,12 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
+    <Optimize>true</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE;NETFX_CORE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -108,6 +109,7 @@
   <ItemGroup>
     <Compile Include="Cryptography\Cipher\Salsa20Cipher.cs" />
     <Compile Include="Helpers\BufferHelpers.cs" />
+    <Compile Include="Helpers\NullableProgress.cs" />
     <Compile Include="Helpers\SHA256Hasher.cs" />
     <Compile Include="Kdb4\Kdb4Parser.cs" />
     <Compile Include="Kdb4\Kdb4Tree.cs" />

@@ -19,9 +19,17 @@ namespace MetroPassLib
 
     public partial class Kdb4File
     {
+        public IProgress<double> ProgressPercent { get; set; }
+
         public async Task<Kdb4Tree> Load(IDataReader source, Kdb4Format kdbFormat)
         {
-            Debug.Assert(source != null);
+            return await Load(source, kdb4Format, new NullableProgress<double>());
+        }
+
+        public async Task<Kdb4Tree> Load(IDataReader source, Kdb4Format kdbFormat, IProgress<double> percentComplete)
+        {
+            pwDatabase.MasterKey.PercentComplete = percentComplete;
+            
             if (source == null) throw new ArgumentNullException("sSource");
 
             kdb4Format = kdbFormat;

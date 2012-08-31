@@ -48,7 +48,14 @@
 
 
             <Button Background="Orange" Foreground="White" x:Name="OpenDatabase" Content="Open Database" Command="{Binding LoadDatabase}" />
+            <StackPanel  Margin="0,20">
+                <TextBlock>Decrypting Progress</TextBlock>
+
+                <ProgressBar x:Name="databaseDecryptProgress" Value="{Binding Progress}" Height="20"></ProgressBar>
+                <TextBlock Text="{Binding Progress}"></TextBlock>
             </StackPanel>
+                
+        </StackPanel>
   
         <!-- Back button and page title -->
         <Grid >

@@ -35,7 +35,9 @@ namespace MetroPass.UI
         public static StorageFile database;
         public static StorageFile keyFile;
         public DatabaseLoad()
+      
         {
+           
             Current = this;
             this.InitializeComponent();
             this.DataContext = new DatabaseLoadViewModel(new DialogService());

@@ -15,10 +15,11 @@ namespace MetroPassLib.Keys
 {
     public class CompositeKey
     {
-
+        public IProgress<double> PercentComplete { get; set; }
         public CompositeKey()
         {
             UserKeys = new List<IUserKey>();
+            PercentComplete = new NullableProgress<double>();
         }
 
         public async Task<IBuffer> GenerateKeyAsync(IBuffer transformSeed, ulong rounds)
@@ -41,17 +42,21 @@ namespace MetroPassLib.Keys
 
         public  IBuffer TransformKeyManaged(IBuffer rawCompositeKey, CryptographicKey transFormKey, IBuffer iv, ulong rounds)
         {
-            var raw1 = new byte[16];
-            Array.Copy(rawCompositeKey.AsBytes(), 0, raw1, 0, 16);
-            var raw2 = new byte[16];
-            Array.Copy(rawCompositeKey.AsBytes(), 16, raw1, 0, 16);
 
-            var raw1Buffer = raw1.AsBuffer();
-            var raw2Buffer = raw2.AsBuffer();
-            for (ulong i = 0; i < rounds; ++i)
+
+            var roundsInDouble = (double)rounds;
+            for (var i = 0; i < roundsInDouble; ++i)
             {
+                if (i % 1000 == 0)
+                {
+                    PercentComplete.Report(i / roundsInDouble * 100);
+                
+                }
+             
                 rawCompositeKey = CryptographicEngine.Encrypt(transFormKey, rawCompositeKey, iv);
+
             }
+            PercentComplete.Report(100);
             return rawCompositeKey;  
 
 
