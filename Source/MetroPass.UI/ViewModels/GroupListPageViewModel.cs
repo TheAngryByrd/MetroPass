@@ -11,44 +11,92 @@ namespace MetroPass.UI.ViewModels
 {
     public class GroupListPageViewModel :BindableBase
     {
-        List<A> Animals = new List<A> { new A("Cat"),new A("Dog"), new A("Moose") };
-        List<B> Numbers = new List<B> { new B(15), new B(40), new B(80) };
-        ObservableCollection<object> list = new ObservableCollection<object>();
-        public ObservableCollection<object> MyList
+
+        EntryGroup _root = new EntryGroup();
+        public EntryGroup Root 
         {
             get
             {
 
-                return list;
+                return _root;
+            }
+            set
+            {
+                SetProperty(ref _root, value);
             }
         }
 
         public GroupListPageViewModel()
         {
-            
-                var xlist = new ObservableCollection<object>();
-                
-                xlist.AddRange(Animals);
-                xlist.AddRange(Numbers.Cast<object>());
+            var root = new EntryGroup() { Name = "Root" };
+            var email = new EntryGroup(){Name="Email"};
+            var gmailAccounts = new EntryGroup(){Name="Gmail"};
+            gmailAccounts.AddEntry(new Entry() { Title = "Main gmail", Username = "Something@gmail.com" });
+            email.EntryGroups.Add(gmailAccounts);
+            email.AddEntry(new Entry() { Title = "Yahoo", Username = "Something@yahoo.com" });
+            root.AddEntryGroup(email);
 
-                SetProperty(ref list, xlist);
+            var homebanking = new EntryGroup(){Name="Banking"};
+            root.AddEntryGroup(homebanking);
+
+
+            Root = root; 
                 
         }
+
+        
     }
-    public class A
+    public abstract class EntryDataCommon : BindableBase
     {
-        public string Name { get; private set; }
-        public A(string value)
-        {
-            this.Name = value;
-        }
+        public DateTime CreationDate { get; set; }
+        public DateTime LastModifiedDate { get; set; }
+        public DateTime LastAccessTime { get; set; }
+        public DateTime ExpireTime { get; set; }
+
+        public EntryGroup Parent { get; set; }
     }
-    public class B
+
+    public class EntryGroup : EntryDataCommon
     {
-        public int Value { get; private set; }
-        public B(int value)
-        {
-            this.Value = value;
+        public string Name { get;  set; }
+
+        public ObservableCollection<EntryGroup> EntryGroups { get; set; }
+        public ObservableCollection<Entry> Entries { get; set; }
+        public ObservableCollection<object> AllTogetherNow 
+        { 
+            get 
+            {
+                var temp = new ObservableCollection<object>();
+
+                temp.AddRange(EntryGroups);
+                temp.AddRange(Entries);
+                return temp;
+            }
         }
+        public EntryGroup()
+        {
+            EntryGroups = new ObservableCollection<EntryGroup>();
+            Entries = new ObservableCollection<Entry>();
+        }
+        
+        public void AddEntryGroup(EntryGroup entryGroup)
+        {
+            this.EntryGroups.Add(entryGroup);
+            entryGroup.Parent = this;
+        }
+        public void AddEntry(Entry entry)
+        {
+            this.Entries.Add(entry);
+            entry.Parent = this;
+        }
+     
+    }
+    public class Entry : EntryDataCommon
+    {
+        public string Title { get; set; }
+        public string Username { get; set; }
+        public string Password { get; set; }
+
+
     }
 }

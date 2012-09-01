@@ -51,5 +51,30 @@ namespace MetroPass.UI
         protected override void SaveState(Dictionary<String, Object> pageState)
         {
         }
+
+        private void itemListView_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
+        {
+            if(e.AddedItems.Count> 0)
+            {
+                var selectedItem = e.AddedItems.FirstOrDefault();
+                if (selectedItem is Entry)
+                {
+                    EntryAppBar.Visibility = Visibility.Visible;
+                    EntryAppBar.IsOpen = true;
+                }
+                else if (selectedItem is EntryGroup)
+                {
+                 
+                }
+            }
+           
+        }
+
+        private void itemListView_ItemClick_1(object sender, ItemClickEventArgs e)
+        {
+            this.itemListView.SelectedItem = null;
+            this.itemListView.SelectedItem = e.ClickedItem;
+        }
+
     }
 }

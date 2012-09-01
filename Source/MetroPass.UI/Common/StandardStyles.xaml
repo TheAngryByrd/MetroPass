@@ -399,6 +399,7 @@
         </Setter>
     </Style>
 
+    
     <!-- 
         Standard AppBarButton Styles for use with Button and ToggleButton
     
@@ -929,7 +930,7 @@
     </Style>
     -->
 
-    <!--
+    
     <Style x:Key="CutAppBarButtonStyle" TargetType="ButtonBase" BasedOn="{StaticResource AppBarButtonStyle}">
         <Setter Property="AutomationProperties.AutomationId" Value="CutAppBarButton"/>
         <Setter Property="AutomationProperties.Name" Value="Cut"/>
@@ -1036,9 +1037,9 @@
         <Setter Property="Content" Value="&#xE185;"/>
     </Style>
 
-    -->
+   
 
-    <!--
+    
 
     <Style x:Key="FontColorAppBarButtonStyle" TargetType="ButtonBase" BasedOn="{StaticResource AppBarButtonStyle}">
         <Setter Property="AutomationProperties.AutomationId" Value="FontColorAppBarButton"/>
@@ -1130,7 +1131,7 @@
         <Setter Property="AutomationProperties.Name" Value="Italic"/>
         <Setter Property="Content" Value="&#xE199;"/>
     </Style>
-    -->
+    
 
     <!--
     <Style x:Key="UnderlineAppBarButtonStyle" TargetType="ButtonBase" BasedOn="{StaticResource AppBarButtonStyle}">

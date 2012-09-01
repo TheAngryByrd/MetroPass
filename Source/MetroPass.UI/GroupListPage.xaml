@@ -10,18 +10,57 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
+    <Page.BottomAppBar>
+        <AppBar  VerticalAlignment="Bottom" x:Name="EntryAppBar">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" >
+                <Button Style="{StaticResource CopyAppBarButtonStyle}"  AutomationProperties.Name="Copy Username"></Button>
+                <Button Style="{StaticResource PermissionsAppBarButtonStyle}" AutomationProperties.Name="Copy Password"></Button>
+            </StackPanel>
+
+        </AppBar>
+        
+    </Page.BottomAppBar>
     <Page.Resources>
         <common:TypedTemplateSelector x:Key="typedTemplateSelector"
                                  DefaultTemplateKey="Standard250x250ItemTemplate" />
         <!-- TODO: Delete this line if the key AppName is declared in App.xaml -->
         <x:String x:Key="AppName">My Application</x:String>
         
-        <DataTemplate x:Key="Type:A">
-            <TextBlock Text="{Binding Name}"></TextBlock>
+        <DataTemplate x:Key="Type:EntryGroup">
+            <Grid Height="70" Margin="6" Width="200" Background="Blue">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,0,0,0" >
+                    <TextBlock Text="{Binding Name}" Style="{StaticResource TitleTextStyle}" TextWrapping="NoWrap"/>
+
+
+                </StackPanel>
+            </Grid>
         </DataTemplate>
-        <DataTemplate x:Key="Type:B">
-            <ProgressBar Value="{Binding Value}"></ProgressBar>
+        <DataTemplate x:Key="Type:Entry" >
+            <Grid Height="70" Margin="6" Width="200" Background="Teal">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,0,0,0" >
+                    <TextBlock Text="{Binding Title}" Style="{StaticResource TitleTextStyle}" TextWrapping="NoWrap"/>
+                    <TextBlock Text="{Binding Username}" Style="{StaticResource CaptionTextStyle}" TextWrapping="NoWrap"/>
+
+                </StackPanel>
+            </Grid>
+
         </DataTemplate>
+
+        <CollectionViewSource
+            x:Name="groupedItemsViewSource"
+            Source="{Binding Root.EntryGroups}"
+            IsSourceGrouped="true"
+            ItemsPath="AllTogetherNow"/>
     </Page.Resources>
 
     <!--
@@ -34,48 +73,47 @@
             <RowDefinition Height="140"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-
-        <!--<GridView Grid.Row="1">
-            <GridView.ItemTemplate>
-                <DataTemplate>
-                    
-                </DataTemplate>
-            </GridView.ItemTemplate>
-            
-        </GridView>-->
-
- 
+       
 
 
-        <ListView x:Name="itemListView" 
+        <ListView x:Name="itemListView"  Margin="0,0,1000,0"
                   Grid.RowSpan="2"
                   Padding="116,137,40,46"
-                  IsItemClickEnabled="True"
+                  
                     ItemTemplateSelector="{StaticResource typedTemplateSelector}"
-                  ItemsSource="{Binding MyList}">
+                  ItemsSource="{Binding Source={StaticResource groupedItemsViewSource}}" SelectionMode="Single" SelectionChanged="itemListView_SelectionChanged_1" ItemClick="itemListView_ItemClick_1" IsItemClickEnabled="true">
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <VirtualizingStackPanel Orientation="Vertical"/>
+                    <VirtualizingStackPanel Orientation="Horizontal"/>
                 </ItemsPanelTemplate>
+                
             </ListView.ItemsPanel>
-            <!--<ListView.GroupStyle>
+   
+            <ListView.ItemContainerStyle>
+                <Style TargetType="FrameworkElement">
+                    <Setter Property="Margin" Value="0,0,80,0"/>
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.GroupStyle>
                 <GroupStyle>
                     <GroupStyle.HeaderTemplate>
                         <DataTemplate>
-                            <Button
+                            <Button 
                                     AutomationProperties.Name="Group Title"                                    
                                     Style="{StaticResource TextPrimaryButtonStyle}" >
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding Title}" Margin="3,-7,10,10" Style="{StaticResource GroupHeaderTextStyle}" />
+                                    <TextBlock Text="{Binding Name}" Margin="3,-7,10,10" Style="{StaticResource GroupHeaderTextStyle}" />
                                     <TextBlock Text="{StaticResource ChevronGlyph}" FontFamily="Segoe UI Symbol" Margin="0,-7,0,10" Style="{StaticResource GroupHeaderTextStyle}"/>
                                 </StackPanel>
                             </Button>
                         </DataTemplate>
                     </GroupStyle.HeaderTemplate>
                 </GroupStyle>
-            </ListView.GroupStyle>-->
+            </ListView.GroupStyle>
      
         </ListView>
+        
+   
         
         <!-- Back button and page title -->
         <Grid>
@@ -86,6 +124,8 @@
             <Button x:Name="backButton" Click="GoBack" IsEnabled="{Binding Frame.CanGoBack, ElementName=pageRoot}" Style="{StaticResource BackButtonStyle}"/>
             <TextBlock x:Name="pageTitle" Grid.Column="1" Text="{StaticResource AppName}" Style="{StaticResource PageHeaderTextStyle}"/>
         </Grid>
+
+
 
         <VisualStateManager.VisualStateGroups>
 
