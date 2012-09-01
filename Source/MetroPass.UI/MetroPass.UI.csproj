@@ -114,7 +114,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Common\CompositeCollection.cs" />
     <Compile Include="Common\DialogService.cs" />
+    <Compile Include="Common\TemplateSelector.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="DatabaseLoad.xaml.cs">
       <DependentUpon>DatabaseLoad.xaml</DependentUpon>
@@ -125,6 +127,10 @@
     <Compile Include="GroupDetailPage.xaml.cs">
       <DependentUpon>GroupDetailPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GroupListPage.xaml.cs">
+      <DependentUpon>GroupListPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\Extensions.cs" />
     <Compile Include="ItemDetailPage.xaml.cs">
       <DependentUpon>ItemDetailPage.xaml</DependentUpon>
     </Compile>
@@ -138,6 +144,7 @@
     <Compile Include="Common\SuspensionManager.cs" />
     <Compile Include="ViewModels\DatabaseLoadViewModel.cs" />
     <Compile Include="Common\DelegateCommand.cs" />
+    <Compile Include="ViewModels\GroupListPageViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -175,6 +182,10 @@
     <Page Include="GroupDetailPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GroupListPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ItemDetailPage.xaml">
       <Generator>MSBuild:Compile</Generator>

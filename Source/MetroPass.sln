@@ -7,21 +7,30 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetroLib.Tests", "MetroLib.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetroPass.UI", "MetroPass.UI\MetroPass.UI.csproj", "{548AA016-790E-461D-BFF4-37159931E5CB}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3CF8B200-69CB-45BE-B3D8-E2DDD6AC841C}"
+	ProjectSection(SolutionItems) = preProject
+		Local.testsettings = Local.testsettings
+		MetroPass.vsmdi = MetroPass.vsmdi
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
 		SccNumberOfProjects = 4
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://theangrybyrd.tfspreview.com/defaultcollection
-		SccProjectUniqueName0 = MetroLib.Tests\\MetroLib.Tests.csproj
-		SccProjectName0 = MetroLib.Tests
-		SccLocalPath0 = MetroLib.Tests
-		SccProjectUniqueName1 = MetroPassLib\\MetroPassLib.csproj
-		SccProjectName1 = MetroPassLib
-		SccLocalPath1 = MetroPassLib
-		SccProjectUniqueName2 = MetroPass.UI\\MetroPass.UI.csproj
-		SccProjectName2 = MetroPass.UI
-		SccLocalPath2 = MetroPass.UI
-		SccLocalPath3 = .
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = MetroLib.Tests\\MetroLib.Tests.csproj
+		SccProjectName1 = MetroLib.Tests
+		SccLocalPath1 = MetroLib.Tests
+		SccProjectUniqueName2 = MetroPassLib\\MetroPassLib.csproj
+		SccProjectName2 = MetroPassLib
+		SccLocalPath2 = MetroPassLib
+		SccProjectUniqueName3 = MetroPass.UI\\MetroPass.UI.csproj
+		SccProjectName3 = MetroPass.UI
+		SccLocalPath3 = MetroPass.UI
+	EndGlobalSection
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = MetroPass.vsmdi
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -101,8 +110,5 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(Performance) = preSolution
-		HasPerformanceSessions = true
 	EndGlobalSection
 EndGlobal

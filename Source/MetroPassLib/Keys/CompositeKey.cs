@@ -45,6 +45,9 @@ namespace MetroPassLib.Keys
 
 
             var roundsInDouble = (double)rounds;
+
+            GC.SuppressFinalize(rawCompositeKey);
+
             for (var i = 0; i < roundsInDouble; ++i)
             {
                 if (i % 1000 == 0)

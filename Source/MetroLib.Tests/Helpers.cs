@@ -14,7 +14,7 @@ namespace MetroLib.Tests
 
         public static async Task<IDataReader> GetDatabaseAsDatareaderAsync(string path)
         {
-            var database = await Package.Current.InstalledLocation.GetFileAsync(path);//await KnownFolders.DocumentsLibrary.GetFileAsync("Data.kdbx");
+            var database = await Package.Current.InstalledLocation.GetFileAsync(path);
             var buffer = await Windows.Storage.FileIO.ReadBufferAsync(database);         
             IDataReader reader = DataReader.FromBuffer(buffer);
             reader.UnicodeEncoding = Windows.Storage.Streams.UnicodeEncoding.Utf8;

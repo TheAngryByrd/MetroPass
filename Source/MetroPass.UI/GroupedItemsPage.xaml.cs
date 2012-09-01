@@ -1,5 +1,5 @@
 ﻿using MetroPass.UI.Data;
-
+using MetroPass.UI.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -26,6 +26,7 @@ namespace MetroPass.UI
         public GroupedItemsPage()
         {
             this.InitializeComponent();
+            this.DataContext = new GroupListPageViewModel();
         }
 
         /// <summary>

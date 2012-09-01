@@ -139,5 +139,11 @@ namespace MetroPass.UI
         protected override void SaveState(Dictionary<String, Object> pageState)
         {
         }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            Frame rootFrame = Window.Current.Content as Frame;
+            rootFrame.Navigate(typeof(GroupListPage));
+        }
     }
 }
