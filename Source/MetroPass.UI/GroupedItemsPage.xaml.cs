@@ -26,7 +26,7 @@ namespace MetroPass.UI
         public GroupedItemsPage()
         {
             this.InitializeComponent();
-            this.DataContext = new GroupListPageViewModel();
+
         }
 
         /// <summary>

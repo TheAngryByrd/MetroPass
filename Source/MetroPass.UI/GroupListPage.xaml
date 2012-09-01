@@ -23,8 +23,7 @@
     <Page.Resources>
         <common:TypedTemplateSelector x:Key="typedTemplateSelector"
                                  DefaultTemplateKey="Standard250x250ItemTemplate" />
-        <!-- TODO: Delete this line if the key AppName is declared in App.xaml -->
-        <x:String x:Key="AppName">My Application</x:String>
+        
         
         <DataTemplate x:Key="Type:EntryGroup">
             <Grid Height="70" Margin="6" Width="200" Background="Blue">
@@ -58,9 +57,10 @@
 
         <CollectionViewSource
             x:Name="groupedItemsViewSource"
-            Source="{Binding Root.EntryGroups}"
+            Source="{Binding Root.EntryGroupsWithEntries}"
             IsSourceGrouped="true"
-            ItemsPath="AllTogetherNow"/>
+            ItemsPath="AllTogetherNow"
+            />
     </Page.Resources>
 
     <!--
@@ -76,28 +76,33 @@
        
 
 
-        <ListView x:Name="itemListView"  Margin="0,0,1000,0"
+        <ListView x:Name="itemListView" 
                   Grid.RowSpan="2"
                   Padding="116,137,40,46"
                   
                     ItemTemplateSelector="{StaticResource typedTemplateSelector}"
-                  ItemsSource="{Binding Source={StaticResource groupedItemsViewSource}}" SelectionMode="Single" SelectionChanged="itemListView_SelectionChanged_1" ItemClick="itemListView_ItemClick_1" IsItemClickEnabled="true">
+                  ItemsSource="{Binding Source={StaticResource groupedItemsViewSource}}" SelectionMode="Single"  SelectionChanged="itemListView_SelectionChanged_1" ItemClick="itemListView_ItemClick_1" IsItemClickEnabled="true">
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <VirtualizingStackPanel Orientation="Horizontal"/>
                 </ItemsPanelTemplate>
                 
             </ListView.ItemsPanel>
-   
-            <ListView.ItemContainerStyle>
-                <Style TargetType="FrameworkElement">
-                    <Setter Property="Margin" Value="0,0,80,0"/>
-                </Style>
-            </ListView.ItemContainerStyle>
+            
+        
             <ListView.GroupStyle>
+                
                 <GroupStyle>
+                    <GroupStyle.ContainerStyle>
+                        <Style TargetType="FrameworkElement">
+                            <Setter Property="Width" Value="200"></Setter>
+                            <Setter Property="Margin" Value="0,0,100,0"/>
+                        </Style>
+                    </GroupStyle.ContainerStyle>
                     <GroupStyle.HeaderTemplate>
+                        
                         <DataTemplate>
+                            
                             <Button 
                                     AutomationProperties.Name="Group Title"                                    
                                     Style="{StaticResource TextPrimaryButtonStyle}" >
@@ -112,8 +117,7 @@
             </ListView.GroupStyle>
      
         </ListView>
-        
-   
+
         
         <!-- Back button and page title -->
         <Grid>

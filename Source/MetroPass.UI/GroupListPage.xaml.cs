@@ -1,4 +1,5 @@
-﻿using MetroPass.UI.ViewModels;
+﻿using MetroPass.UI.DataModel;
+using MetroPass.UI.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -22,11 +23,12 @@ namespace MetroPass.UI
     /// </summary>
     public sealed partial class GroupListPage : MetroPass.UI.Common.LayoutAwarePage
     {
+        bool isNavigatedTo = false;
         public GroupListPage()
         {
             this.InitializeComponent();
-            this.DataContext = new GroupListPageViewModel();
-            //this.listView1.ItemsSource = new GroupListPageViewModel().MyList;
+        
+
         }
 
         /// <summary>
@@ -40,6 +42,9 @@ namespace MetroPass.UI
         /// session.  This will be null the first time a page is visited.</param>
         protected override void LoadState(Object navigationParameter, Dictionary<String, Object> pageState)
         {
+            isNavigatedTo = true;
+            this.DataContext = navigationParameter as GroupListPageViewModel;
+           
         }
 
         /// <summary>
@@ -54,27 +59,41 @@ namespace MetroPass.UI
 
         private void itemListView_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
         {
-            if(e.AddedItems.Count> 0)
+            if (!isNavigatedTo)
             {
-                var selectedItem = e.AddedItems.FirstOrDefault();
-                if (selectedItem is Entry)
+
+                if (e.AddedItems.Count > 0)
                 {
-                    EntryAppBar.Visibility = Visibility.Visible;
-                    EntryAppBar.IsOpen = true;
+                    var selectedItem = e.AddedItems.FirstOrDefault();
+                    if (selectedItem is Entry)
+                    {
+                        EntryAppBar.Visibility = Visibility.Visible;
+                        EntryAppBar.IsOpen = true;
+                    }
+                    else if (selectedItem is EntryGroup)
+                    {
+                        Frame rootFrame = Window.Current.Content as Frame;
+                        rootFrame.Navigate(typeof(GroupListPage), new GroupListPageViewModel((EntryGroup)selectedItem));
+                    }
                 }
-                else if (selectedItem is EntryGroup)
-                {
-                 
-                }
+            }
+            else
+            {
+                this.itemListView.SelectedItem = null;
+                isNavigatedTo = false;
             }
            
         }
 
         private void itemListView_ItemClick_1(object sender, ItemClickEventArgs e)
         {
+            
             this.itemListView.SelectedItem = null;
             this.itemListView.SelectedItem = e.ClickedItem;
+
+            
         }
+
 
     }
 }

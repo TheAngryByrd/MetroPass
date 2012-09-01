@@ -17,5 +17,13 @@ namespace MetroPass.UI.Helpers
                 o.Add(item as object);
             }
         }
+
+        public static void AddRange<T>(this ObservableCollection<T> o, IEnumerable<T> items)
+        {
+            foreach (var item in items)
+            {
+                o.Add(item);
+            }
+        }
     }
 }

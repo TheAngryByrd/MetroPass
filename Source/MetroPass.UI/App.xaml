@@ -21,7 +21,7 @@
 
             <!-- Application-specific resources -->
 
-            <x:String x:Key="AppName">MetroPass.UI</x:String>
+            <x:String x:Key="AppName">MetroPass</x:String>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

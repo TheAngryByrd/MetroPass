@@ -11,6 +11,7 @@ using Windows.Security;
 using MetroPassLib;
 using MetroPassLib.Keys;
 using Windows.Storage.Streams;
+using MetroPass.UI.DataModel;
 
 namespace MetroPass.UI.ViewModels
 {
@@ -26,6 +27,8 @@ namespace MetroPass.UI.ViewModels
         public IStorageFile KeyFile { get; private set; }
         private IDialogService _dialogService { get; set; }
         private double _progress;
+        private IDialogService dialogService;
+        private INavigationService navigationService;
         public double Progress
         {
             get { return _progress; }
@@ -56,9 +59,13 @@ namespace MetroPass.UI.ViewModels
         }
 
 
-        public DatabaseLoadViewModel(IDialogService dialogService)
+   
+
+        public DatabaseLoadViewModel(IDialogService dialogService, INavigationService navigationService)
         {
-            _dialogService = dialogService;
+            // TODO: Complete member initialization
+            this.dialogService = dialogService;
+            this.navigationService = navigationService;
         }
 
         public async Task ExecutePickDatabase(object parameter)
@@ -85,34 +92,54 @@ namespace MetroPass.UI.ViewModels
 
         private async Task ExecuteLoadBase(object arg)
         {
-            var bufferedData = await FileIO.ReadBufferAsync(Database);
-            PwDatabase pwDatabase = new PwDatabase();
-            var composite = new CompositeKey();
+
+            var userKeys = new List<IUserKey>();
+
             if (!string.IsNullOrEmpty(Password))
             {
-                composite.UserKeys.Add(await KcpPassword.Create(Password));
+                userKeys.Add(await KcpPassword.Create(Password));
             }
             if (KeyFile != null)
             {
-                composite.UserKeys.Add(await KcpKeyFile.Create(KeyFile));
+                userKeys.Add(await KcpKeyFile.Create(KeyFile));
             }
-
-            pwDatabase.MasterKey = composite;
-            Kdb4File kdb4 = new Kdb4File(pwDatabase);
-            try
-            {
-                var progress = new Progress<double>(percent => {
+         
+          
+            var progress = new Progress<double>(percent => {
                     percent = Math.Round(percent, 2);
                     Progress = percent;
                 });
-                var tree = await kdb4.Load(DataReader.FromBuffer(bufferedData), Kdb4Format.Default,progress);
+            await PWDatabaseDataSource.LoadPwDatabase(Database, userKeys, progress);
+            navigationService.Navigate<GroupListPage>(new GroupListPageViewModel(PWDatabaseDataSource.Root));
 
-               await _dialogService.Show("Decrypted database");
-            }
-            catch(Exception e)
-            {
-                 _dialogService.Show("Decryption failed");
-            }
+            //var bufferedData = await FileIO.ReadBufferAsync(Database);
+            //PwDatabase pwDatabase = new PwDatabase();
+            //var composite = new CompositeKey();
+            //if (!string.IsNullOrEmpty(Password))
+            //{
+            //    composite.UserKeys.Add(await KcpPassword.Create(Password));
+            //}
+            //if (KeyFile != null)
+            //{
+            //    composite.UserKeys.Add(await KcpKeyFile.Create(KeyFile));
+            //}
+
+            //pwDatabase.MasterKey = composite;
+            //Kdb4File kdb4 = new Kdb4File(pwDatabase);
+            //try
+            //{
+            //    var progress = new Progress<double>(percent => {
+            //        percent = Math.Round(percent, 2);
+            //        Progress = percent;
+            //    });
+            //    var tree = await kdb4.Load(DataReader.FromBuffer(bufferedData), Kdb4Format.Default,progress);
+
+            //   await _dialogService.Show("Decrypted database");
+            //}
+            //catch(Exception e)
+            //{
+            //     _dialogService.Show("Decryption failed");
+            //}
         }
 
     }

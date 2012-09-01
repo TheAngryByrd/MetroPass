@@ -1,5 +1,6 @@
 ﻿
 using MetroPass.UI.Common;
+using MetroPass.UI.DataModel;
 using MetroPass.UI.ViewModels;
 using MetroPassLib;
 using MetroPassLib.Keys;
@@ -40,7 +41,7 @@ namespace MetroPass.UI
            
             Current = this;
             this.InitializeComponent();
-            this.DataContext = new DatabaseLoadViewModel(new DialogService());
+            this.DataContext = new DatabaseLoadViewModel(new DialogService(), App.NavigationService);
             //FilePickerDatabaseButton.Click += new RoutedEventHandler(PickFileDatabaseButton_Click);
             //FilePickerKeyFileButton.Click += FilePickerKeyFileButton_Click;
             //OpenDatabase.Click += OpenDatabase_Click;
@@ -143,7 +144,9 @@ namespace MetroPass.UI
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             Frame rootFrame = Window.Current.Content as Frame;
-            rootFrame.Navigate(typeof(GroupListPage));
+
+            PWDatabaseDataSource.SetupDemoData();
+            rootFrame.Navigate(typeof(GroupListPage), new GroupListPageViewModel(PWDatabaseDataSource.Root));
         }
     }
 }

@@ -68,7 +68,7 @@
       
 
         </Grid>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="933,177,0,0" Grid.Row="1" VerticalAlignment="Top" Click="Button_Click_1"/>
+        <Button Content="Demo" HorizontalAlignment="Left" Margin="946,10,0,0" Grid.Row="1" VerticalAlignment="Top" Click="Button_Click_1"/>
 
 
 

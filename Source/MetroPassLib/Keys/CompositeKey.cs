@@ -46,7 +46,6 @@ namespace MetroPassLib.Keys
 
             var roundsInDouble = (double)rounds;
 
-            GC.SuppressFinalize(rawCompositeKey);
 
             for (var i = 0; i < roundsInDouble; ++i)
             {
@@ -72,7 +71,7 @@ namespace MetroPassLib.Keys
             });
         }
 
-        public List<IUserKey> UserKeys { get; set; }
+        public IList<IUserKey> UserKeys { get; set; }
 
         /// <summary>
         /// Creates the composite key from the supplied user key sources (password,

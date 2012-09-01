@@ -71,13 +71,16 @@ namespace MetroPass.UI
 
             //    // Place the frame in the current Window
                 Window.Current.Content = rootFrame;
+                App.NavigationService = new NavigationService(rootFrame);
+
+ 
             }
             if (rootFrame.Content == null)
             {
                 // When the navigation stack isn't restored navigate to the first page,
                 // configuring the new page by passing required information as a navigation
                 // parameter
-                if (!rootFrame.Navigate(typeof(DatabaseLoad),args.Arguments))
+                if (!NavigationService.Navigate<DatabaseLoad>())
                 {
                     throw new Exception("Failed to create initial page");
                 }
@@ -101,5 +104,7 @@ namespace MetroPass.UI
             await SuspensionManager.SaveAsync();
             deferral.Complete();
         }
+
+        public static NavigationService NavigationService { get; set; }
     }
 }

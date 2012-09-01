@@ -114,6 +114,8 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Common\INavigationService.cs" />
+    <Compile Include="Common\NavigationService.cs" />
     <Compile Include="Common\CompositeCollection.cs" />
     <Compile Include="Common\DialogService.cs" />
     <Compile Include="Common\TemplateSelector.cs" />
@@ -121,6 +123,7 @@
     <Compile Include="DatabaseLoad.xaml.cs">
       <DependentUpon>DatabaseLoad.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DataModel\PWDatabaseDataSource.cs" />
     <Compile Include="GroupedItemsPage.xaml.cs">
       <DependentUpon>GroupedItemsPage.xaml</DependentUpon>
     </Compile>
