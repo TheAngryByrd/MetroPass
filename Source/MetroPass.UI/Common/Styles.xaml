@@ -19,4 +19,11 @@
         </Grid>
     </DataTemplate>
 
+    <ItemsPanelTemplate x:Key="HorizontalItemPanelTemplate">
+        <VirtualizingStackPanel Orientation="Horizontal"/>
+    </ItemsPanelTemplate>
+    <ItemsPanelTemplate x:Key="VerticalItemPanelTemplate">
+        <VirtualizingStackPanel Orientation="Vertical"/>
+    </ItemsPanelTemplate>
+
 </ResourceDictionary>

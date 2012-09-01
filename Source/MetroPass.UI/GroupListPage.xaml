@@ -73,21 +73,16 @@
             <RowDefinition Height="140"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-       
+      
 
 
         <ListView x:Name="itemListView" 
                   Grid.RowSpan="2"
                   Padding="116,137,40,46"
-                  
+                  ItemsPanel="{StaticResource HorizontalItemPanelTemplate}"
                     ItemTemplateSelector="{StaticResource typedTemplateSelector}"
                   ItemsSource="{Binding Source={StaticResource groupedItemsViewSource}}" SelectionMode="Single"  SelectionChanged="itemListView_SelectionChanged_1" ItemClick="itemListView_ItemClick_1" IsItemClickEnabled="true">
-            <ListView.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <VirtualizingStackPanel Orientation="Horizontal"/>
-                </ItemsPanelTemplate>
-                
-            </ListView.ItemsPanel>
+
             
         
             <ListView.GroupStyle>
@@ -144,6 +139,7 @@
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="backButton" Storyboard.TargetProperty="Style">
                             <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource PortraitBackButtonStyle}"/>
                         </ObjectAnimationUsingKeyFrames>
+                       
                     </Storyboard>
                 </VisualState>
 
@@ -156,7 +152,11 @@
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="pageTitle" Storyboard.TargetProperty="Style">
                             <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource SnappedPageHeaderTextStyle}"/>
                         </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="itemListView" Storyboard.TargetProperty="ItemsPanel">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource VerticalItemPanelTemplate}"/>
+                        </ObjectAnimationUsingKeyFrames>
                     </Storyboard>
+                    
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
