@@ -67,10 +67,10 @@ namespace MetroPass.UI
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            Frame rootFrame = Window.Current.Content as Frame;
-
             PWDatabaseDataSource.Instance.SetupDemoData();
-            rootFrame.Navigate(typeof(EntryGroupListPage), new EntryGroupListPageViewModel(PWDatabaseDataSource.Instance.Tree.Group));
+           App.NavigationService.Navigate<EntryGroupListPage>( new EntryGroupListPageViewModel(PWDatabaseDataSource.Instance.Tree.Group));
+
+  
         }
     }
 }
