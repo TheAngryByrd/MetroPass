@@ -72,7 +72,17 @@ namespace MetroPass.Core.Services
             var symKeyProvider = SymmetricKeyAlgorithmProvider.OpenAlgorithm(SymmetricAlgorithmNames.AesCbcPkcs7);
             var aesCryptoKey = symKeyProvider.CreateSymmetricKey(aesKey);
             var unreadData = source;
-            var decryptedDatabase = CryptographicEngine.Decrypt(aesCryptoKey, unreadData, file.pbEncryptionIV);
+            IBuffer decryptedDatabase = null;
+            try
+            {
+                 decryptedDatabase = CryptographicEngine.Decrypt(aesCryptoKey, unreadData, file.pbEncryptionIV);
+            }
+            catch (Exception e)
+            {
+                throw new SecurityException("Seems like the password is incorrect dude", e);
+               
+            }
+           
             var databaseReader = DataReader.FromBuffer(decryptedDatabase);
 
             var startBytes = databaseReader.ReadBuffer(32).AsBytes();

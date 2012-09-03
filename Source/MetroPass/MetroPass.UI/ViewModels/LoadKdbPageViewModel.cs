@@ -5,6 +5,7 @@ using MetroPass.UI.DataModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -71,24 +72,31 @@ namespace MetroPass.UI.ViewModels
 
         public async Task ExecutePickDatabase(object parameter)
         {
-            FileOpenPicker openPicker = new FileOpenPicker();
-            openPicker.ViewMode = PickerViewMode.List;
-            openPicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
-            openPicker.FileTypeFilter.Add(".kdbx");
-            var file = await openPicker.PickSingleFileAsync();
-            if (file != null)
-                Database = file;
+            if (await pageServices.EnsureUnsnapped())
+            {
+                FileOpenPicker openPicker = new FileOpenPicker();
+                openPicker.ViewMode = PickerViewMode.List;
+                openPicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
+                openPicker.FileTypeFilter.Add(".kdbx");
+                var file = await openPicker.PickSingleFileAsync();
+                if (file != null)
+                    Database = file;
+            }
+  
         }
 
         public async Task ExecutePickKeyFile(object obj)
         {
-            FileOpenPicker openPicker = new FileOpenPicker();
-            openPicker.ViewMode = PickerViewMode.List;
-            openPicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
-            openPicker.FileTypeFilter.Add(".key");
-            var file = await openPicker.PickSingleFileAsync();
-            if (file != null)
-                KeyFile = file;
+            if (await pageServices.EnsureUnsnapped())
+            {
+                FileOpenPicker openPicker = new FileOpenPicker();
+                openPicker.ViewMode = PickerViewMode.List;
+                openPicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
+                openPicker.FileTypeFilter.Add(".key");
+                var file = await openPicker.PickSingleFileAsync();
+                if (file != null)
+                    KeyFile = file;
+            }
         }
 
         private async Task ExecuteLoadBase(object arg)
@@ -105,43 +113,26 @@ namespace MetroPass.UI.ViewModels
                 userKeys.Add(await KcpKeyFile.Create(KeyFile));
             }
 
-
             var progress = new Progress<double>(percent =>
             {
                 percent = Math.Round(percent, 2);
                 Progress = percent;
             });
-            await PWDatabaseDataSource.Instance.LoadPwDatabase(Database, userKeys, progress);
-            navigationService.Navigate<EntryGroupListPage>(new EntryGroupListPageViewModel(PWDatabaseDataSource.Instance.Tree.Group));
 
-            //var bufferedData = await FileIO.ReadBufferAsync(Database);
-            //PwDatabase pwDatabase = new PwDatabase();
-            //var composite = new CompositeKey();
-            //if (!string.IsNullOrEmpty(Password))
-            //{
-            //    composite.UserKeys.Add(await KcpPassword.Create(Password));
-            //}
-            //if (KeyFile != null)
-            //{
-            //    composite.UserKeys.Add(await KcpKeyFile.Create(KeyFile));
-            //}
+            try
+            {
+                await PWDatabaseDataSource.Instance.LoadPwDatabase(Database, userKeys, progress);
 
-            //pwDatabase.MasterKey = composite;
-            //Kdb4File kdb4 = new Kdb4File(pwDatabase);
-            //try
-            //{
-            //    var progress = new Progress<double>(percent => {
-            //        percent = Math.Round(percent, 2);
-            //        Progress = percent;
-            //    });
-            //    var tree = await kdb4.Load(DataReader.FromBuffer(bufferedData), Kdb4Format.Default,progress);
+                navigationService.Navigate<EntryGroupListPage>(new EntryGroupListPageViewModel(PWDatabaseDataSource.Instance.Tree.Group));
+            }
+            catch (SecurityException se)
+            {
 
-            //   await _dialogService.Show("Decrypted database");
-            //}
-            //catch(Exception e)
-            //{
-            //     _dialogService.Show("Decryption failed");
-            //}
+                pageServices.Show(se.Message);
+            }
+          
+
+      
         }
     }
 }

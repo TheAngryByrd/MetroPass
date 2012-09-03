@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Security.Cryptography;
+using Windows.Storage;
+using Windows.Storage.Streams;
 
 namespace MetroPass.Core.Tests.Security
 {
@@ -35,5 +37,7 @@ namespace MetroPass.Core.Tests.Security
 
             Assert.AreEqual("Hello World", actualString);
         }
+
+      
     }
 }

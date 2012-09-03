@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -24,6 +25,20 @@ namespace MetroPass.Core.Tests.Services
         public async Task CanOpenPasswordOnlyDatabase()
         {
             var kdb4Tree = await Scenarios.LoadDatabase(PasswordDatabasePath, PasswordDatabasePassword,null);
+        }
+
+        [TestMethod]
+        public async Task CantOpenWithBadPassword()
+        {
+            try
+            {
+                  var kdb4Tree = await Scenarios.LoadDatabase(PasswordDatabasePath, "NotPassword" ,null);
+            }
+            catch (Exception e)
+            {
+                
+                throw;
+            }
         }
 
 
