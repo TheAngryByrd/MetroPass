@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Windows.Security.Cryptography;
 using Windows.Storage.Streams;
 
-namespace MetroPass.Core.Helpers
+namespace Framework
 {
     public static class BufferHelpers
     {

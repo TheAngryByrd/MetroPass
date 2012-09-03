@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MetroPass.Core.Helpers
+namespace Framework
 {
     public class NullableProgress<T> : IProgress<T>
     {

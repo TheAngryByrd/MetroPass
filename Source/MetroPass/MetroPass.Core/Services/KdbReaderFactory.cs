@@ -1,4 +1,5 @@
-﻿using MetroPass.Core.Helpers;
+﻿using Framework;
+using MetroPass.Core.Helpers;
 using MetroPass.Core.Interfaces;
 using MetroPass.Core.Model;
 using MetroPass.Core.Model.Kdb4;

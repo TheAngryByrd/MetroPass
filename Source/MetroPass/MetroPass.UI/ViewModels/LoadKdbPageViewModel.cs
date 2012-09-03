@@ -1,4 +1,4 @@
-﻿using MetroPass.Core.Common;
+﻿using Framework;
 using MetroPass.Core.Model.Keys;
 using MetroPass.UI.Common;
 using MetroPass.UI.DataModel;
