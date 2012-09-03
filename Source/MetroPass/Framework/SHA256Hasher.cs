@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Windows.Security.Cryptography.Core;
 using Windows.Storage.Streams;
 
-namespace MetroPass.Core.Helpers
+namespace Framework
 {
     public class SHA256Hasher
     {

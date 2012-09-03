@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MetroPass.UI.Helpers
+namespace Framework
 {
     public static class Extend
     {

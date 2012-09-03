@@ -10,7 +10,7 @@ namespace MetroPass.Core.Model.Kdb4
 {
     public class Kdb4Tree : IKdbTree
     {
-        public XDocument Document { get; private set; }
+        public XDocument Document { get;  set; }
         public PwGroup Group { get; set; }
         public Kdb4Tree(XDocument document)
         {

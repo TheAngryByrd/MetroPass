@@ -25,7 +25,7 @@
                                  DefaultTemplateKey="Standard250x250ItemTemplate" />
 
 
-        <DataTemplate x:Key="Type:EntryGroup">
+        <DataTemplate x:Key="Type:PwGroup">
             <Grid Height="70" Margin="6" Width="250" Background="Blue">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
@@ -39,7 +39,7 @@
                 </StackPanel>
             </Grid>
         </DataTemplate>
-        <DataTemplate x:Key="Type:Entry" >
+        <DataTemplate x:Key="Type:PwEntry" >
             <Grid Height="70" Margin="6" Width="250" Background="Teal">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
@@ -57,7 +57,7 @@
 
         <CollectionViewSource
             x:Name="groupedItemsViewSource"
-            Source="{Binding Root.EntryGroupsWithEntries}"
+            Source="{Binding EntryGroupsWithEntries}"
             IsSourceGrouped="true"
             ItemsPath="AllTogetherNow"
             />

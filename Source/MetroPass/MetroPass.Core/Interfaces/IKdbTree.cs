@@ -7,9 +7,9 @@ using System.Xml.Linq;
 
 namespace MetroPass.Core.Interfaces
 {
-    public class IKdbTree
+    public interface IKdbTree
     {
-        public XDocument Document { get; private set; }
-        public PwGroup Group { get; set; }
+         XDocument Document { get;  set; }
+         PwGroup Group { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using MetroPass.UI.DataModel;
+﻿using MetroPass.Core.Model;
+using MetroPass.UI.DataModel;
 using MetroPass.UI.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -64,15 +65,15 @@ namespace MetroPass.UI
                 if (e.AddedItems.Count > 0)
                 {
                     var selectedItem = e.AddedItems.FirstOrDefault();
-                    if (selectedItem is Entry)
+                    if (selectedItem is PwEntry)
                     {
                         EntryAppBar.Visibility = Visibility.Visible;
                         EntryAppBar.IsOpen = true;
                     }
-                    else if (selectedItem is EntryGroup)
+                    else if (selectedItem is PwGroup)
                     {
                         Frame rootFrame = Window.Current.Content as Frame;
-                        rootFrame.Navigate(typeof(EntryGroupListPage), new EntryGroupListPageViewModel((EntryGroup)selectedItem));
+                        rootFrame.Navigate(typeof(EntryGroupListPage), new EntryGroupListPageViewModel((PwGroup)selectedItem));
                     }
                 }
             }
@@ -116,7 +117,7 @@ namespace MetroPass.UI
             if (selectedItem != null)
             {
                 var datapackage = new DataPackage();
-                datapackage.SetText(((Entry)selectedItem).Username);
+                datapackage.SetText(((PwEntry)selectedItem).Username);
                 Clipboard.SetContent(datapackage);
             }
 
@@ -128,7 +129,7 @@ namespace MetroPass.UI
             if (selectedItem != null)
             {
                 var datapackage = new DataPackage();
-                datapackage.SetText(((Entry)selectedItem).Password);
+                datapackage.SetText(((PwEntry)selectedItem).Password);
                 Clipboard.SetContent(datapackage);
             }
         }

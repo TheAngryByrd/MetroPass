@@ -4,6 +4,7 @@ using MetroPass.Core.Model.Kdb4;
 using MetroPass.Core.Model.Keys;
 using MetroPass.Core.Security;
 using MetroPass.Core.Helpers;
+using Framework;
 using System;
 using System.Collections.Generic;
 using System.IO;

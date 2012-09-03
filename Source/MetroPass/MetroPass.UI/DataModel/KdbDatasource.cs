@@ -1,8 +1,10 @@
-﻿using MetroPass.Core.Model;
+﻿using MetroPass.Core.Common;
+using MetroPass.Core.Interfaces;
+using MetroPass.Core.Model;
+using MetroPass.Core.Model.Kdb4;
 using MetroPass.Core.Model.Keys;
 using MetroPass.Core.Services;
 using MetroPass.UI.Common;
-using MetroPass.UI.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,135 +12,55 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
+using Framework;
 
 namespace MetroPass.UI.DataModel
 {
 
-    public sealed class PWDatabaseDataSource
+    public sealed class PWDatabaseDataSource : BindableBase
     {
-
-
-        public static EntryGroup Root
+        private static PWDatabaseDataSource instance = new PWDatabaseDataSource();
+        private PWDatabaseDataSource()
         {
-            get;
-            set;
+
+        }
+        public static PWDatabaseDataSource Instance { get { return instance; } }
+
+        private IKdbTree _tree;
+        public IKdbTree Tree
+        {
+            get { return _tree; }
+            set
+            {
+                SetProperty(ref _tree, value);
+            }
         }
 
-        public static void SetupDemoData()
+        public void SetupDemoData()
         {
-            var root = new EntryGroup() { Name = "Root" };
-            var email = new EntryGroup() { Name = "Email" };
-            var gmailAccounts = new EntryGroup() { Name = "Gmail" };
-            gmailAccounts.AddEntry(new Entry() { Title = "Main gmail", Username = "Something@gmail.com" });
-            email.EntryGroups.Add(gmailAccounts);
-            email.AddEntry(new Entry() { Title = "Yahoo", Username = "Something@yahoo.com" });
-            root.AddEntryGroup(email);
+            var root = new PwGroup(null) { Name = "Root" };
+            var email = new PwGroup(null) { Name = "Email" };
+            var gmailAccounts = new PwGroup(null) { Name = "Gmail" };
+            gmailAccounts.Entries.Add(new PwEntry(null) { Title = "Main gmail", Username = "Something@gmail.com" });
+            email.SubGroups.Add(gmailAccounts);
+            email.Entries.Add(new PwEntry(null) { Title = "Yahoo", Username = "Something@yahoo.com" });
+            root.SubGroups.Add(email);
 
-            var homebanking = new EntryGroup() { Name = "Banking" };
-            root.AddEntryGroup(homebanking);
+            var homebanking = new PwGroup(null) { Name = "Banking" };
+            root.SubGroups.Add(homebanking);
+            var tree = new Kdb4Tree(null);
+            tree.Group = root;
 
-
-            Root = root;
+            this._tree = tree;
         }
 
-        public static async Task LoadPwDatabase(IStorageFile pwDatabaseFile, IList<IUserKey> userKeys, IProgress<double> percentComplete)
+        public async Task LoadPwDatabase(IStorageFile pwDatabaseFile, IList<IUserKey> userKeys, IProgress<double> percentComplete)
         {
             var factory = new KdbReaderFactory();
-            var treeView = await factory.LoadAsync(pwDatabaseFile, userKeys, percentComplete);
-            Root = ParseGroup(treeView.Group);
-
-        }
-
-        private static EntryGroup ParseGroup(PwGroup group)
-        {
-            EntryGroup eGroup = new EntryGroup();
-            eGroup.Name = group.Name;
-
-
-            foreach (var element in group.Entries)
-            {
-                eGroup.AddEntry(ParseEntry(element));
-            }
-
-            foreach (var element in group.SubGroups)
-            {
-                eGroup.AddEntryGroup(ParseGroup(element));
-            }
-
-            return eGroup;
+            this.Tree = await factory.LoadAsync(pwDatabaseFile, userKeys, percentComplete);
 
 
         }
 
-        private static Entry ParseEntry(PwEntry element)
-        {
-            return new Entry { Title = element.Title, Username = element.Username, Password = element.Password };
-        }
-    }
-    public abstract class EntryDataCommon : BindableBase
-    {
-        public DateTime CreationDate { get; set; }
-        public DateTime LastModifiedDate { get; set; }
-        public DateTime LastAccessTime { get; set; }
-        public DateTime ExpireTime { get; set; }
-
-        public EntryGroup Parent { get; set; }
-    }
-
-    public class EntryGroup : EntryDataCommon
-    {
-        public string Name { get; set; }
-
-        public ObservableCollection<EntryGroup> EntryGroups { get; set; }
-        public ObservableCollection<EntryGroup> EntryGroupsWithEntries
-        {
-            get
-            {
-                var temp = new ObservableCollection<EntryGroup>();
-
-                temp.AddRange(EntryGroups);
-                temp.Add(new EntryGroup() { Name = "Entries", Entries = this.Entries });
-
-                return temp;
-            }
-        }
-        public ObservableCollection<Entry> Entries { get; set; }
-        public ObservableCollection<object> AllTogetherNow
-        {
-            get
-            {
-                var temp = new ObservableCollection<object>();
-
-                temp.AddRange(EntryGroups);
-                temp.AddRange(Entries);
-
-                return temp;
-            }
-        }
-        public EntryGroup()
-        {
-            EntryGroups = new ObservableCollection<EntryGroup>();
-            Entries = new ObservableCollection<Entry>();
-        }
-
-        public void AddEntryGroup(EntryGroup entryGroup)
-        {
-            this.EntryGroups.Add(entryGroup);
-            entryGroup.Parent = this;
-        }
-        public void AddEntry(Entry entry)
-        {
-            this.Entries.Add(entry);
-            entry.Parent = this;
-        }
-
-    }
-    public class Entry : EntryDataCommon
-    {
-        public string Title { get; set; }
-        public string Username { get; set; }
-        public string Password { get; set; }
-
-
-    }
+    } 
 }

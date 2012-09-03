@@ -1,4 +1,5 @@
-﻿using MetroPass.Core.Model.Keys;
+﻿using MetroPass.Core.Common;
+using MetroPass.Core.Model.Keys;
 using MetroPass.UI.Common;
 using MetroPass.UI.DataModel;
 using System;
@@ -110,8 +111,8 @@ namespace MetroPass.UI.ViewModels
                 percent = Math.Round(percent, 2);
                 Progress = percent;
             });
-            await PWDatabaseDataSource.LoadPwDatabase(Database, userKeys, progress);
-            navigationService.Navigate<EntryGroupListPage>(new EntryGroupListPageViewModel(PWDatabaseDataSource.Root));
+            await PWDatabaseDataSource.Instance.LoadPwDatabase(Database, userKeys, progress);
+            navigationService.Navigate<EntryGroupListPage>(new EntryGroupListPageViewModel(PWDatabaseDataSource.Instance.Tree.Group));
 
             //var bufferedData = await FileIO.ReadBufferAsync(Database);
             //PwDatabase pwDatabase = new PwDatabase();

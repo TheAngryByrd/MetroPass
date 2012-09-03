@@ -69,8 +69,8 @@ namespace MetroPass.UI
         {
             Frame rootFrame = Window.Current.Content as Frame;
 
-            PWDatabaseDataSource.SetupDemoData();
-            rootFrame.Navigate(typeof(EntryGroupListPage), new EntryGroupListPageViewModel(PWDatabaseDataSource.Root));
+            PWDatabaseDataSource.Instance.SetupDemoData();
+            rootFrame.Navigate(typeof(EntryGroupListPage), new EntryGroupListPageViewModel(PWDatabaseDataSource.Instance.Tree.Group));
         }
     }
 }

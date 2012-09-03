@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using Framework;
 
 namespace MetroPass.Core.Model
 {
@@ -27,6 +28,19 @@ namespace MetroPass.Core.Model
 
         public ObservableCollection<PwEntry> Entries { get; set; }
         public ObservableCollection<PwGroup> SubGroups { get; set; }
+
+        public ObservableCollection<object> AllTogetherNow
+        {
+            get
+            {
+                var temp = new ObservableCollection<object>();
+
+                temp.AddRange(this.SubGroups);
+                temp.AddRange(this.Entries);
+
+                return temp;
+            }
+        }
 
         public PwGroup(XElement element)
         {

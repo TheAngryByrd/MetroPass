@@ -1,7 +1,11 @@
-﻿using MetroPass.UI.Common;
+﻿using MetroPass.Core.Common;
+using MetroPass.Core.Model;
+using MetroPass.UI.Common;
 using MetroPass.UI.DataModel;
+using Framework;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,8 +14,8 @@ namespace MetroPass.UI.ViewModels
 {
     public class EntryGroupListPageViewModel : BindableBase
     {
-        EntryGroup _root = new EntryGroup();
-        public EntryGroup Root
+        PwGroup _root = null;
+        public PwGroup Root
         {
             get
             {
@@ -24,10 +28,36 @@ namespace MetroPass.UI.ViewModels
             }
         }
 
-        public EntryGroupListPageViewModel(DataModel.EntryGroup entryGroup)
+        public EntryGroupListPageViewModel(PwGroup entryGroup)
         {
             // TODO: Complete member initialization
-            this._root = entryGroup;
+            this.Root = entryGroup;
+        }
+
+        public ObservableCollection<PwGroup> EntryGroupsWithEntries
+        {
+            get
+            {
+                var temp = new ObservableCollection<PwGroup>();
+
+                temp.AddRange(Root.SubGroups);
+                temp.Add(new PwGroup(null) { Name = "Entries", Entries = this.Root.Entries });
+
+                return temp;
+            }
+        }
+
+        public ObservableCollection<object> AllTogetherNow
+        {
+            get
+            {
+                var temp = new ObservableCollection<object>();
+
+                temp.AddRange(Root.SubGroups);
+                temp.AddRange(Root.Entries);
+
+                return temp;
+            }
         }
     }
 }

@@ -17,9 +17,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetroPass.Core.Tests", "Met
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetroPass.UI", "MetroPass.UI\MetroPass.UI.csproj", "{CE338F45-5EAA-49E1-A6C7-25DC4654C3CE}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4. Framework", "4. Framework", "{970C800E-C43C-4E08-9651-A6FDDBBD680E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Framework", "Framework\Framework.csproj", "{7F4C7DCB-9379-459B-9D8B-191804A5D3D6}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 5
+		SccNumberOfProjects = 6
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://theangrybyrd.tfspreview.com/defaultcollection
 		SccLocalPath0 = .
@@ -39,6 +43,10 @@ Global
 		SccProjectTopLevelParentUniqueName4 = MetroPass.sln
 		SccProjectName4 = MetroPass.UI
 		SccLocalPath4 = MetroPass.UI
+		SccProjectUniqueName5 = Framework\\Framework.csproj
+		SccProjectTopLevelParentUniqueName5 = MetroPass.sln
+		SccProjectName5 = Framework
+		SccLocalPath5 = Framework
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -131,6 +139,22 @@ Global
 		{CE338F45-5EAA-49E1-A6C7-25DC4654C3CE}.Release|x86.ActiveCfg = Release|x86
 		{CE338F45-5EAA-49E1-A6C7-25DC4654C3CE}.Release|x86.Build.0 = Release|x86
 		{CE338F45-5EAA-49E1-A6C7-25DC4654C3CE}.Release|x86.Deploy.0 = Release|x86
+		{7F4C7DCB-9379-459B-9D8B-191804A5D3D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F4C7DCB-9379-459B-9D8B-191804A5D3D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F4C7DCB-9379-459B-9D8B-191804A5D3D6}.Debug|ARM.ActiveCfg = Debug|ARM
+		{7F4C7DCB-9379-459B-9D8B-191804A5D3D6}.Debug|ARM.Build.0 = Debug|ARM
+		{7F4C7DCB-9379-459B-9D8B-191804A5D3D6}.Debug|x64.ActiveCfg = Debug|x64
+		{7F4C7DCB-9379-459B-9D8B-191804A5D3D6}.Debug|x64.Build.0 = Debug|x64
+		{7F4C7DCB-9379-459B-9D8B-191804A5D3D6}.Debug|x86.ActiveCfg = Debug|x86
+		{7F4C7DCB-9379-459B-9D8B-191804A5D3D6}.Debug|x86.Build.0 = Debug|x86
+		{7F4C7DCB-9379-459B-9D8B-191804A5D3D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F4C7DCB-9379-459B-9D8B-191804A5D3D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F4C7DCB-9379-459B-9D8B-191804A5D3D6}.Release|ARM.ActiveCfg = Release|ARM
+		{7F4C7DCB-9379-459B-9D8B-191804A5D3D6}.Release|ARM.Build.0 = Release|ARM
+		{7F4C7DCB-9379-459B-9D8B-191804A5D3D6}.Release|x64.ActiveCfg = Release|x64
+		{7F4C7DCB-9379-459B-9D8B-191804A5D3D6}.Release|x64.Build.0 = Release|x64
+		{7F4C7DCB-9379-459B-9D8B-191804A5D3D6}.Release|x86.ActiveCfg = Release|x86
+		{7F4C7DCB-9379-459B-9D8B-191804A5D3D6}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -140,5 +164,6 @@ Global
 		{C08EEC72-CB2E-4CB9-B6EE-D2C5D070D95C} = {0F787990-A4B8-4E7F-8C36-4C6049C96E76}
 		{EDE8AAA4-7F20-4CD3-8B8D-31D639943509} = {74D31189-6733-471C-B378-C71B72A8FBB8}
 		{C96EA1D6-D7D7-4347-8A1B-1C0EC4A6D0B4} = {34CD0521-0870-4CCB-811F-A1021E4A36ED}
+		{7F4C7DCB-9379-459B-9D8B-191804A5D3D6} = {970C800E-C43C-4E08-9651-A6FDDBBD680E}
 	EndGlobalSection
 EndGlobal

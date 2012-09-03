@@ -6,11 +6,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{C08EEC72-CB2E-4CB9-B6EE-D2C5D070D95C}</ProjectGuid>
+    <ProjectGuid>{7F4C7DCB-9379-459B-9D8B-191804A5D3D6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MetroPass.Core</RootNamespace>
-    <AssemblyName>MetroPass.Core</AssemblyName>
+    <RootNamespace>Framework</RootNamespace>
+    <AssemblyName>Framework</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{BC8A1FFA-BEE3-4634-8014-F334798102B3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -104,36 +104,14 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
-    <ProjectReference Include="..\Framework\Framework.csproj">
-      <Project>{7f4c7dcb-9379-459b-9d8b-191804a5d3d6}</Project>
-      <Name>Framework</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Helpers\Cipher\Salsa20Cipher.cs" />
-    <Compile Include="Helpers\Cipher\CryptoRandomStream.cs" />
-    <Compile Include="Helpers\MemUtil.cs" />
-    <Compile Include="Helpers\StrUtil.cs" />
-    <Compile Include="Interfaces\IKdbReader.cs" />
-    <Compile Include="Model\Kdb4\Kdb4File.cs" />
-    <Compile Include="Model\Kdb4\Kdb4Tree.cs" />
-    <Compile Include="Model\Keys\CompositeKey.cs" />
-    <Compile Include="Model\Keys\IUserKey.cs" />
-    <Compile Include="Model\Keys\KcpKeyfile.cs" />
-    <Compile Include="Model\Keys\KcpPassword.cs" />
-    <Compile Include="Model\PwCommon.cs" />
-    <Compile Include="Model\PwDatabase.cs" />
-    <Compile Include="Model\PwEntry.cs" />
-    <Compile Include="Model\PwEnums.cs" />
-    <Compile Include="Model\PwGroup.cs" />
-    <Compile Include="Model\PwUuid.cs" />
+    <Compile Include="BindableBase.cs" />
+    <Compile Include="BufferHelpers.cs" />
+    <Compile Include="Extend.cs" />
+    <Compile Include="NullableProgress.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Security\HashedBlockStream.cs" />
-    <Compile Include="Security\ProtectedBuffer.cs" />
-    <Compile Include="Interfaces\IKdbTree.cs" />
-    <Compile Include="Services\Kdb4Parser.cs" />
-    <Compile Include="Services\Kdb4Reader.cs" />
-    <Compile Include="Services\KdbReaderFactory.cs" />
+    <Compile Include="SHA256Hasher.cs" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">
     <VisualStudioVersion>11.0</VisualStudioVersion>
