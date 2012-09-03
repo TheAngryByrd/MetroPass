@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -107,6 +108,30 @@ namespace MetroPass.UI
             else
             {
                 EntryCommands.Visibility = Windows.UI.Xaml.Visibility.Visible;
+            }
+        }
+
+
+        private void CopyUsernameButton_Click_1(object sender, RoutedEventArgs e)
+        {
+            var selectedItem = itemListView.SelectedItem;
+            if (selectedItem != null)
+            {
+                var datapackage = new DataPackage();
+                datapackage.SetText(((Entry)selectedItem).Username);
+                Clipboard.SetContent(datapackage);
+            }
+            
+        }
+
+        private void CopyPasswordButton_Click_1(object sender, RoutedEventArgs e)
+        {
+            var selectedItem = itemListView.SelectedItem;
+            if (selectedItem != null)
+            {
+                var datapackage = new DataPackage();
+                datapackage.SetText(((Entry)selectedItem).Password);
+                Clipboard.SetContent(datapackage);
             }
         }
 

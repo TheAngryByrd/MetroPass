@@ -13,8 +13,8 @@
     <Page.BottomAppBar>
         <AppBar  VerticalAlignment="Bottom" x:Name="EntryAppBar" Closed="EntryAppBar_Closed_1" Opened="EntryAppBar_Opened_1">
             <StackPanel x:Name="EntryCommands" Orientation="Horizontal" HorizontalAlignment="Right" >
-                <Button Style="{StaticResource CopyAppBarButtonStyle}"  AutomationProperties.Name="Copy Username"></Button>
-                <Button Style="{StaticResource PermissionsAppBarButtonStyle}" AutomationProperties.Name="Copy Password"></Button>
+                <Button x:Name="CopyUsernameButton" Click="CopyUsernameButton_Click_1" Style="{StaticResource CopyAppBarButtonStyle}" AutomationProperties.Name="Copy Username"></Button>
+                <Button x:Name="CopyPasswordButton" Click="CopyPasswordButton_Click_1" Style="{StaticResource PermissionsAppBarButtonStyle}" AutomationProperties.Name="Copy Password"></Button>
             </StackPanel>
 
         </AppBar>
