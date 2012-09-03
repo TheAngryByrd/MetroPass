@@ -24,19 +24,43 @@ namespace MetroPass.UI.ViewModels
             // TODO: Complete member initialization
             this.pageServices = pageServices;
             this.navigationService = navigationService;
+            
         }
 
-        public IStorageFile Database { get; private set; }
+        private IStorageFile _database;
+        public IStorageFile Database
+        {
+            get
+            {
+                return _database;
+            }
+            set
+            {
+                SetProperty(ref _database, value);
+            }
+        }
+
         private string _password;
         public string Password
         {
             get { return _password; }
             set { SetProperty<string>(ref _password, value); }
         }
-        public IStorageFile KeyFile { get; private set; }
+
+        private IStorageFile _keyFile;
+        public IStorageFile KeyFile {
+
+            get
+            {
+                return _keyFile;
+            }
+            set
+            {
+                SetProperty(ref _keyFile, value);
+            }
+        }
   
-        private double _progress;
-    
+        private double _progress;    
         public double Progress
         {
             get { return _progress; }

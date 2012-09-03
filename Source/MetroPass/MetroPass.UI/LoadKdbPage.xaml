@@ -28,10 +28,11 @@
         </Grid.RowDefinitions>
 
 
-        <StackPanel x:Name="StackPanelDatabaseLoader" VerticalAlignment="Top" HorizontalAlignment="Left"  Grid.Row="1" Margin="125,10,0,0">
+        <StackPanel x:Name="StackPanelDatabaseLoader" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.RowSpan="1" Grid.Row="1" Margin="125,0,0,0">
             <StackPanel Margin="0,0,0,25">
+                <TextBlock x:Name="OutputTextBlockDatabaseFile" Style="{StaticResource TitleTextStyle}" TextWrapping="Wrap" Text="{Binding Path=Database.Name}" />
                 <Button x:Name="FilePickerDatabaseButton" Content="Pick database file" Command="{Binding PickDatabase}" />
-                <TextBlock x:Name="OutputTextBlockDatabaseFile" Style="{StaticResource BasicTextStyle}" TextWrapping="Wrap" />
+       
             </StackPanel>
             <StackPanel Margin="0,0,0,25">
                 <TextBlock Style="{StaticResource BasicTextStyle}">Password:</TextBlock>
@@ -39,8 +40,10 @@
             </StackPanel>
 
             <StackPanel Margin="0,0,0,25">
+                <TextBlock x:Name="OutputTextBlockKeyFile" Style="{StaticResource TitleTextStyle}" TextWrapping="Wrap"  Text="{Binding Path=KeyFile.Name}"/>
                 <Button x:Name="FilePickerKeyFileButton" Content="Pick key file" Command="{Binding PickKeyFile}" />
-                <TextBlock x:Name="OutputTextBlockKeyFile" Style="{StaticResource BasicTextStyle}" TextWrapping="Wrap" />
+          
+                
             </StackPanel>
 
 
@@ -55,7 +58,6 @@
             </StackPanel>
 
         </StackPanel>
-
         <!-- Back button and page title -->
         <Grid >
             <Grid.ColumnDefinitions>
