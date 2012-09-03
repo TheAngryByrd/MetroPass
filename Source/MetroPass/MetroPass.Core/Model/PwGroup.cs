@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,17 +13,26 @@ namespace MetroPass.Core.Model
 
         public XElement Element { get; private set; }
         public int IconId { get; set; }
-        public string Name { get; set; }
+        public string _name;
+        public string Name { 
+            get { 
+                return _name; 
+            } 
+            set 
+            {
+                SetProperty(ref _name, value);
+            } 
+        }
 
 
-        public List<PwEntry> Entries { get; set; }
-        public List<PwGroup> SubGroups { get; set; }
+        public ObservableCollection<PwEntry> Entries { get; set; }
+        public ObservableCollection<PwGroup> SubGroups { get; set; }
 
         public PwGroup(XElement element)
         {
             Element = element;
-            Entries = new List<PwEntry>();
-            SubGroups = new List<PwGroup>();
+            Entries = new ObservableCollection<PwEntry>();
+            SubGroups = new ObservableCollection<PwGroup>();
         }
     }
 }

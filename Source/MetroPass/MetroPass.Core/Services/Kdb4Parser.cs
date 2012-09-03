@@ -3,6 +3,7 @@ using MetroPass.Core.Model;
 using MetroPass.Core.Model.Kdb4;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -35,9 +36,9 @@ namespace MetroPass.Core.Services
             return kdb4Tree;
         }
 
-        public List<PwGroup> ParseGroups(IEnumerable<XElement> elementGroups)
+        public ObservableCollection<PwGroup> ParseGroups(IEnumerable<XElement> elementGroups)
         {
-            var groups = new List<PwGroup>();
+            var groups = new ObservableCollection<PwGroup>();
 
             foreach (var element in elementGroups)
             {
