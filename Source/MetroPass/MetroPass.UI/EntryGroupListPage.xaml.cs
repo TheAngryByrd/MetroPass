@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -111,7 +113,7 @@ namespace MetroPass.UI
         }
 
 
-        private void CopyUsernameButton_Click_1(object sender, RoutedEventArgs e)
+        private async void CopyUsernameButton_Click_1(object sender, RoutedEventArgs e)
         {
             var selectedItem = itemListView.SelectedItem;
             if (selectedItem != null)
@@ -119,11 +121,12 @@ namespace MetroPass.UI
                 var datapackage = new DataPackage();
                 datapackage.SetText(((PwEntry)selectedItem).Username);
                 Clipboard.SetContent(datapackage);
+                await ClearClipboard();
             }
 
         }
 
-        private void CopyPasswordButton_Click_1(object sender, RoutedEventArgs e)
+        private async void CopyPasswordButton_Click_1(object sender, RoutedEventArgs e)
         {
             var selectedItem = itemListView.SelectedItem;
             if (selectedItem != null)
@@ -131,8 +134,20 @@ namespace MetroPass.UI
                 var datapackage = new DataPackage();
                 datapackage.SetText(((PwEntry)selectedItem).Password);
                 Clipboard.SetContent(datapackage);
+                await ClearClipboard();
             }
         }
 
+        private Task ClearClipboard()
+        {
+            var uiScheduler = TaskScheduler.FromCurrentSynchronizationContext();
+            return Task.Factory.StartNew(async () =>
+                {
+                    await Task.Delay(10000);
+                    Clipboard.Clear();
+                }, CancellationToken.None, TaskCreationOptions.None, uiScheduler);
+
+           
+        }
     }
 }

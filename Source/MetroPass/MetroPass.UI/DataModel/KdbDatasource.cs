@@ -12,7 +12,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
-using Framework;
 
 namespace MetroPass.UI.DataModel
 {
