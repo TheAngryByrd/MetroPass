@@ -85,13 +85,29 @@ namespace MetroPass.UI
            
         }
 
+    
         private void itemListView_ItemClick_1(object sender, ItemClickEventArgs e)
         {
-            
-            this.itemListView.SelectedItem = null;
-            this.itemListView.SelectedItem = e.ClickedItem;
+            this.itemListView.SelectedItem = e.ClickedItem;  
+        }
 
-            
+
+        private void EntryAppBar_Closed_1(object sender, object e)
+        {
+
+            this.itemListView.SelectedItem = null;
+        }
+
+        private void EntryAppBar_Opened_1(object sender, object e)
+        {
+            if (this.itemListView.SelectedItem == null)
+            {
+                EntryCommands.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+            }
+            else
+            {
+                EntryCommands.Visibility = Windows.UI.Xaml.Visibility.Visible;
+            }
         }
 
 
