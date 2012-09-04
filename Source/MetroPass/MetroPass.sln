@@ -22,32 +22,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Framework", "Framework\Framework.csproj", "{7F4C7DCB-9379-459B-9D8B-191804A5D3D6}"
 EndProject
 Global
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 6
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://theangrybyrd.tfspreview.com/defaultcollection
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = MetroPass..Infrastructure\\MetroPass..Infrastructure.csproj
-		SccProjectTopLevelParentUniqueName1 = MetroPass.sln
-		SccProjectName1 = MetroPass..Infrastructure
-		SccLocalPath1 = MetroPass..Infrastructure
-		SccProjectUniqueName2 = MetroPass.Core\\MetroPass.Core.csproj
-		SccProjectTopLevelParentUniqueName2 = MetroPass.sln
-		SccProjectName2 = MetroPass.Core
-		SccLocalPath2 = MetroPass.Core
-		SccProjectUniqueName3 = MetroPass.Core.Tests\\MetroPass.Core.Tests.csproj
-		SccProjectTopLevelParentUniqueName3 = MetroPass.sln
-		SccProjectName3 = MetroPass.Core.Tests
-		SccLocalPath3 = MetroPass.Core.Tests
-		SccProjectUniqueName4 = MetroPass.UI\\MetroPass.UI.csproj
-		SccProjectTopLevelParentUniqueName4 = MetroPass.sln
-		SccProjectName4 = MetroPass.UI
-		SccLocalPath4 = MetroPass.UI
-		SccProjectUniqueName5 = Framework\\Framework.csproj
-		SccProjectTopLevelParentUniqueName5 = MetroPass.sln
-		SccProjectName5 = Framework
-		SccLocalPath5 = Framework
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|ARM = Debug|ARM
