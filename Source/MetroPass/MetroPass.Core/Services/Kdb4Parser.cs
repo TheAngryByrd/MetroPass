@@ -93,26 +93,26 @@ namespace MetroPass.Core.Services
 
             foreach (var item in meta)
             {
-                var key = item.Element("Key").Value;
+                var key = item.Element("Key").Value.ToLower();
                 var value = item.Element("Value").Value;
 
-                if (key == "Title")
+                if (key == "title")
                 {
                     entry.Title = value;
                 }
-                else if (key == "Username")
+                else if (key == "username")
                 {
                     entry.Username = value;
                 }
-                else if (key == "Password")
+                else if (key == "password")
                 {
                     entry.Password = value;
                 }
-                else if (key == "URL")
+                else if (key == "url")
                 {
                     entry.Url = value;
                 }
-                else if (key == "Notes")
+                else if (key == "notes")
                 {
                     entry.Notes = value;
                 }
