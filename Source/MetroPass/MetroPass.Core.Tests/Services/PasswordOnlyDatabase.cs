@@ -30,15 +30,20 @@ namespace MetroPass.Core.Tests.Services
         [TestMethod]
         public async Task CantOpenWithBadPassword()
         {
+            
             try
             {
-                  var kdb4Tree = await Scenarios.LoadDatabase(PasswordDatabasePath, "NotPassword" ,null);
+                await Scenarios.LoadDatabase(PasswordDatabasePath, "NotPassword", null);
+            }
+            catch (SecurityException se)
+            {
+              //Passes Test
             }
             catch (Exception e)
             {
-                
-                throw;
+                Assert.Fail();
             }
+     
         }
 
 
