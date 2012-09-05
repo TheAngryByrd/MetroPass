@@ -44,6 +44,7 @@ namespace MetroPass.UI.ViewModels
             {
                 _database = value;
                 NotifyOfPropertyChange(() => Database);
+                NotifyOfPropertyChange(() => CanOpenDatabase);
             }
         }
 
@@ -107,7 +108,10 @@ namespace MetroPass.UI.ViewModels
                     KeyFile = file;
             }
         }
-
+        public bool CanOpenDatabase
+        {
+            get { return Database != null; }
+        }
         public async void OpenDatabase()
         {
             var userKeys = new List<IUserKey>();
