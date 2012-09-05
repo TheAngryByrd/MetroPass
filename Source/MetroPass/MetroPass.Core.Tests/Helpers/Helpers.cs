@@ -38,7 +38,7 @@ namespace MetroPass.Core.Tests.Helpers
 
             try
             {
-                await task();
+                 task().Wait();
             }
             catch (AggregateException ex)
             {
