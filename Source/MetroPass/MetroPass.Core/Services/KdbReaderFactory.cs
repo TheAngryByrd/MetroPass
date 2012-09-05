@@ -16,17 +16,12 @@ namespace MetroPass.Core.Services
 {
     public class KdbReaderFactory
     {
-        /// <summary>
-        /// File identifier, first 32-bit value.
-        /// </summary>
-        private const uint FileSignature1 = 0x9AA2D903;
 
-        /// <summary>
-        /// File identifier, second 32-bit value.
-        /// </summary>
+        // KeePass 2.x signatures
+        private const uint FileSignature1 = 0x9AA2D903;
         private const uint FileSignature2 = 0xB54BFB67;
 
-        // KeePass 1.x signature
+        // KeePass 1.x signatures
         private const uint FileSignatureOld1 = 0x9AA2D903;
         private const uint FileSignatureOld2 = 0xB54BFB65;
 
@@ -35,7 +30,7 @@ namespace MetroPass.Core.Services
         {
             return LoadAsync(database, userKeys, new NullableProgress<double>());
         }
-
+ 
         public async Task<IKdbTree> LoadAsync(IStorageFile kdbDatabase, IList<IUserKey> userKeys, IProgress<double> percentComplete)
         {
             

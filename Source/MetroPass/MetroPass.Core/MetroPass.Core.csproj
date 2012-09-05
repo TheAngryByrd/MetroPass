@@ -119,6 +119,7 @@
     <Compile Include="Helpers\MemUtil.cs" />
     <Compile Include="Helpers\StrUtil.cs" />
     <Compile Include="Interfaces\IKdbReader.cs" />
+    <Compile Include="Interfaces\IKdbWriter.cs" />
     <Compile Include="Model\Kdb4\Kdb4File.cs" />
     <Compile Include="Model\Kdb4\Kdb4Tree.cs" />
     <Compile Include="Model\Keys\CompositeKey.cs" />
@@ -135,9 +136,11 @@
     <Compile Include="Security\HashedBlockStream.cs" />
     <Compile Include="Security\ProtectedBuffer.cs" />
     <Compile Include="Interfaces\IKdbTree.cs" />
-    <Compile Include="Services\Kdb4Parser.cs" />
-    <Compile Include="Services\Kdb4Reader.cs" />
+    <Compile Include="Services\Kdb4\Kdb4Parser.cs" />
+    <Compile Include="Services\Kdb4\Kdb4Reader.cs" />
+    <Compile Include="Services\Kdb4\Kdb4Writer.cs" />
     <Compile Include="Services\KdbReaderFactory.cs" />
+    <Compile Include="Services\KdbWriterFactory.cs" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">
     <VisualStudioVersion>11.0</VisualStudioVersion>
