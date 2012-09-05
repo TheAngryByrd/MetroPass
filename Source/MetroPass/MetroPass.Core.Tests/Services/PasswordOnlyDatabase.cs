@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+﻿using MetroPass.Core.Tests.Helpers;
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,19 +31,8 @@ namespace MetroPass.Core.Tests.Services
         [TestMethod]
         public async Task CantOpenWithBadPassword()
         {
-            
-            try
-            {
-                await Scenarios.LoadDatabase(PasswordDatabasePath, "NotPassword", null);
-            }
-            catch (SecurityException se)
-            {
-              //Passes Test
-            }
-            catch (Exception e)
-            {
-                Assert.Fail();
-            }
+            AssertEx.ThrowsException<SecurityException>(() => Scenarios.LoadDatabase(PasswordDatabasePath, "NotPassword", null));
+     
      
         }
 

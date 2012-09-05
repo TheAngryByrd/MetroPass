@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,5 +28,27 @@ namespace MetroPass.Core.Tests.Helpers
             return await Package.Current.InstalledLocation.GetFileAsync(path);
         }
 
+    }
+
+    public static class AssertEx
+    {
+        public async static void ThrowsException<T>(Func<Task> task)
+        {
+            bool exceptionRaised = false;
+
+            try
+            {
+                await task();
+            }
+            catch (AggregateException ex)
+            {
+                if (ex.Flatten().InnerException is T)
+                    exceptionRaised = true;
+            }
+
+            if (!exceptionRaised)
+                Assert.Fail("Did not receive exception {0}", typeof(T).Name);
+        }
+      
     }
 }
