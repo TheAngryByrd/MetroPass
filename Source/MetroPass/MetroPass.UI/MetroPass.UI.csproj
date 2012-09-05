@@ -125,11 +125,12 @@
     <Compile Include="Common\DelegateCommand.cs" />
     <Compile Include="Common\TypedTemplateSelector.cs" />
     <Compile Include="DataModel\KdbDatasource.cs" />
-    <Compile Include="EntryGroupListPage.xaml.cs">
+    <Compile Include="Services\IPageServices.cs" />
+    <Compile Include="Views\EntryGroupListPage.xaml.cs">
       <DependentUpon>EntryGroupListPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="LoadKdbPage.xaml.cs">
-      <DependentUpon>LoadKdbPage.xaml</DependentUpon>
+    <Compile Include="Views\LoadKdbView.xaml.cs">
+      <DependentUpon>LoadKdbView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Common\BooleanToVisibilityConverter.cs" />
@@ -140,7 +141,7 @@
     <Compile Include="Services\NavigationServices.cs" />
     <Compile Include="Services\PageServices.cs" />
     <Compile Include="ViewModels\EntryGroupListPageViewModel.cs" />
-    <Compile Include="ViewModels\LoadKdbPageViewModel.cs" />
+    <Compile Include="ViewModels\LoadKdbViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -173,16 +174,26 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="EntryGroupListPage.xaml">
+    <Page Include="Views\EntryGroupListPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="LoadKdbPage.xaml">
+    <Page Include="Views\LoadKdbView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Reference Include="Caliburn.Micro">
+      <HintPath>..\..\..\Libs\Caliburn.Micro.dll</HintPath>
+    </Reference>
+    <Reference Include="Caliburn.Micro.Extensions">
+      <HintPath>..\..\..\Libs\Caliburn.Micro.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Windows.UI.Interactivity">
+      <HintPath>..\..\..\Libs\Windows.UI.Interactivity.dll</HintPath>
+    </Reference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">
     <VisualStudioVersion>11.0</VisualStudioVersion>
   </PropertyGroup>

@@ -1,14 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
 
 namespace MetroPass.UI.Services
 {
-    public class PageServices
+    public class PageServices : IPageServices
     {
         public async Task Show(string title, string message)
         {
