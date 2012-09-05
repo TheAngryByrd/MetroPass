@@ -1,94 +1,50 @@
-﻿using MetroPass.UI.Common;
-using MetroPass.UI.Services;
+﻿using System.Collections.Generic;
+using Caliburn.Micro;
+using MetroPass.UI.Common;
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
+using MetroPass.UI.Services;
+using MetroPass.UI.Views;
 using Windows.ApplicationModel;
-using Windows.ApplicationModel.Activation;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
-
-// The Grid App template is documented at http://go.microsoft.com/fwlink/?LinkId=234226
 
 namespace MetroPass.UI
 {
-    /// <summary>
-    /// Provides application-specific behavior to supplement the default Application class.
-    /// </summary>
-    sealed partial class App : Application
+    public sealed partial class App
     {
-        /// <summary>
-        /// Initializes the singleton Application object.  This is the first line of authored code
-        /// executed, and as such is the logical equivalent of main() or WinMain().
-        /// </summary>
+        private WinRTContainer container;
         public App()
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
         }
 
-        /// <summary>
-        /// Invoked when the application is launched normally by the end user.  Other entry points
-        /// will be used when the application is launched to open a specific file, to display
-        /// search results, and so forth.
-        /// </summary>
-        /// <param name="args">Details about the launch request and process.</param>
-        protected override async void OnLaunched(LaunchActivatedEventArgs args)
+        protected override void Configure()
         {
-            Frame rootFrame = Window.Current.Content as Frame;
+            base.Configure();
 
-            //// Do not repeat app initialization when the Window already has content,
-            //// just ensure that the window is active
+            container = new WinRTContainer(RootFrame);
+            container.RegisterWinRTServices();
+            container.PerRequest<IPageServices, PageServices>();
+        }
 
-            if (rootFrame == null)
-            {
-                // Create a Frame to act as the navigation context and navigate to the first page
-                rootFrame = new Frame();
-                //Associate the frame with a SuspensionManager key                                
-                SuspensionManager.RegisterFrame(rootFrame, "AppFrame");
+        protected override object GetInstance(Type service, string key)
+        {
+            return container.GetInstance(service, key);
+        }
 
-                if (args.PreviousExecutionState == ApplicationExecutionState.Terminated)
-                {
-                    // Restore the saved session state only when appropriate
-                    try
-                    {
-                        await SuspensionManager.RestoreAsync();
-                    }
-                    catch (SuspensionManagerException)
-                    {
-                        //Something went wrong restoring state.
-                        //Assume there is no state and continue
-                    }
-                }
+        protected override IEnumerable<object> GetAllInstances(Type service)
+        {
+            return container.GetAllInstances(service);
+        }
 
-                //    // Place the frame in the current Window
-                Window.Current.Content = rootFrame;
-                App.NavigationService = new NavigationService(rootFrame);
+        protected override void BuildUp(object instance)
+        {
+            container.BuildUp(instance);
+        }
 
-
-            }
-            if (rootFrame.Content == null)
-            {
-                // When the navigation stack isn't restored navigate to the first page,
-                // configuring the new page by passing required information as a navigation
-                // parameter
-                if (!NavigationService.Navigate<LoadKdbPage>())
-                {
-                    throw new Exception("Failed to create initial page");
-                }
-            }
-            // Ensure the current window is active
-
-
-            Window.Current.Activate();
+        protected override Type GetDefaultView()
+        {
+            return typeof(LoadKdbView);
         }
 
         /// <summary>
@@ -104,7 +60,5 @@ namespace MetroPass.UI
             await SuspensionManager.SaveAsync();
             deferral.Complete();
         }
-
-        public static NavigationService NavigationService { get; set; }
     }
 }

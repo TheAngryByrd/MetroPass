@@ -1,4 +1,5 @@
-﻿using Framework;
+﻿using Caliburn.Micro;
+using Framework;
 using MetroPass.Core.Model.Keys;
 using MetroPass.UI.Common;
 using MetroPass.UI.DataModel;
@@ -6,37 +7,43 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using MetroPass.UI.Services;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 
 namespace MetroPass.UI.ViewModels
 {
-    public class LoadKdbPageViewModel : BindableBase
+    public class LoadKdbViewModel : Screen
     {
-        private Services.PageServices pageServices;
-        private Services.NavigationService navigationService;
+        private IPageServices pageServices;
+        private INavigationService navigationService;
 
-        public LoadKdbPageViewModel(Services.PageServices pageServices, Services.NavigationService navigationService)
+        public LoadKdbViewModel(IPageServices pageServices, INavigationService navigationService)
         {
-            // TODO: Complete member initialization
             this.pageServices = pageServices;
             this.navigationService = navigationService;
-            
+        }
+
+        public void GoBack()
+        {
+            navigationService.GoBack();
+        }
+
+        public bool CanGoBack
+        {
+            get { return navigationService.CanGoBack; }
         }
 
         private IStorageFile _database;
         public IStorageFile Database
         {
-            get
-            {
-                return _database;
-            }
+            get { return _database; }
             set
             {
-                SetProperty(ref _database, value);
+                _database = value;
+                NotifyOfPropertyChange(() => Database);
             }
         }
 
@@ -44,19 +51,21 @@ namespace MetroPass.UI.ViewModels
         public string Password
         {
             get { return _password; }
-            set { SetProperty<string>(ref _password, value); }
+            set
+            {
+                _password = value;
+                NotifyOfPropertyChange(() => Password);
+            }
         }
 
         private IStorageFile _keyFile;
         public IStorageFile KeyFile {
 
-            get
-            {
-                return _keyFile;
-            }
+            get { return _keyFile; }
             set
             {
-                SetProperty(ref _keyFile, value);
+                _keyFile = value;
+                NotifyOfPropertyChange(() => KeyFile);
             }
         }
   
@@ -64,37 +73,14 @@ namespace MetroPass.UI.ViewModels
         public double Progress
         {
             get { return _progress; }
-            set { SetProperty<double>(ref _progress, value); }
-        }
-        public ICommand PickDatabase
-        {
-            get
+            set
             {
-                return new DelegateCommand((Func<object, Task>)ExecutePickDatabase);
+                _progress = value;
+                NotifyOfPropertyChange(() => Progress);
             }
         }
-
-        public ICommand PickKeyFile
-        {
-            get
-            {
-                return new DelegateCommand((Func<object, Task>)ExecutePickKeyFile);
-            }
-        }
-
-        public ICommand LoadDatabase
-        {
-            get
-            {
-                return new DelegateCommand((Func<object, Task>)ExecuteLoadBase);
-            }
-        }
-
-
-
-
-
-        public async Task ExecutePickDatabase(object parameter)
+        
+        public async void PickDatabase()
         {
             if (await pageServices.EnsureUnsnapped())
             {
@@ -106,10 +92,9 @@ namespace MetroPass.UI.ViewModels
                 if (file != null)
                     Database = file;
             }
-  
         }
 
-        public async Task ExecutePickKeyFile(object obj)
+        public async void PickKeyFile()
         {
             if (await pageServices.EnsureUnsnapped())
             {
@@ -123,9 +108,8 @@ namespace MetroPass.UI.ViewModels
             }
         }
 
-        private async Task ExecuteLoadBase(object arg)
+        public async void OpenDatabase()
         {
-
             var userKeys = new List<IUserKey>();
 
             if (!string.IsNullOrEmpty(Password))
@@ -154,9 +138,12 @@ namespace MetroPass.UI.ViewModels
 
                 pageServices.Show(se.Message);
             }
-          
+        }
 
-      
+        public void OpenDemo()
+        {
+            PWDatabaseDataSource.Instance.SetupDemoData();
+            navigationService.Navigate<EntryGroupListPage>(new EntryGroupListPageViewModel(PWDatabaseDataSource.Instance.Tree.Group));
         }
     }
 }

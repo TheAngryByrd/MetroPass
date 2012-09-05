@@ -1,9 +1,11 @@
-﻿<Application
+﻿<caliburn:CaliburnApplication
     x:Class="MetroPass.UI.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:MetroPass.UI"
-    xmlns:localData="using:MetroPass.UI.Data">
+    xmlns:localData="using:MetroPass.UI.Data"
+    xmlns:caliburn="using:Caliburn.Micro"
+    >
 
     <Application.Resources>
         <ResourceDictionary>
@@ -22,4 +24,4 @@
             <x:String x:Key="AppName">MetroPass</x:String>
         </ResourceDictionary>
     </Application.Resources>
-</Application>
+</caliburn:CaliburnApplication>
