@@ -24,16 +24,17 @@ namespace MetroPass.UI.DataModel
 
         }
         public static PWDatabaseDataSource Instance { get { return instance; } }
-
-        private IKdbTree _tree;
-        public IKdbTree Tree
+        private PwDatabase _pwDatabase;
+        public PwDatabase PwDatabase
         {
-            get { return _tree; }
+            get { return _pwDatabase; }
             set
             {
-                SetProperty(ref _tree, value);
+                SetProperty(ref _pwDatabase, value);
             }
         }
+
+
 
         public void SetupDemoData()
         {
@@ -49,14 +50,15 @@ namespace MetroPass.UI.DataModel
             root.SubGroups.Add(homebanking);
             var tree = new Kdb4Tree(null);
             tree.Group = root;
-
-            this._tree = tree;
+            var pwDatabase = new PwDatabase(null);
+            pwDatabase.Tree = tree;
+            this.PwDatabase = pwDatabase;
         }
 
         public async Task LoadPwDatabase(IStorageFile pwDatabaseFile, IList<IUserKey> userKeys, IProgress<double> percentComplete)
         {
             var factory = new KdbReaderFactory();
-            this.Tree = await factory.LoadAsync(pwDatabaseFile, userKeys, percentComplete);
+            this.PwDatabase = await factory.LoadAsync(pwDatabaseFile, userKeys, percentComplete);
 
 
         }

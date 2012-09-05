@@ -1,4 +1,5 @@
-﻿using MetroPass.Core.Model.Keys;
+﻿using MetroPass.Core.Interfaces;
+using MetroPass.Core.Model.Keys;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,7 @@ namespace MetroPass.Core.Model
 
         public CompositeKey MasterKey { get; set; }
 
+        public IKdbTree Tree { get; set; }
         
     }
 }

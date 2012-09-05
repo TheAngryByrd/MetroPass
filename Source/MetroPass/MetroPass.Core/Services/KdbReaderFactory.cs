@@ -26,23 +26,23 @@ namespace MetroPass.Core.Services
         private const uint FileSignatureOld2 = 0xB54BFB65;
 
 
-        public Task<IKdbTree> LoadAsync(StorageFile database, List<IUserKey> userKeys)
+        public Task<PwDatabase> LoadAsync(StorageFile database, List<IUserKey> userKeys)
         {
             return LoadAsync(database, userKeys, new NullableProgress<double>());
         }
  
-        public async Task<IKdbTree> LoadAsync(IStorageFile kdbDatabase, IList<IUserKey> userKeys, IProgress<double> percentComplete)
+        public async Task<PwDatabase> LoadAsync(IStorageFile kdbDatabase, IList<IUserKey> userKeys, IProgress<double> percentComplete)
         {
             
             var kdbDataReader =  DataReader.FromBuffer(await FileIO.ReadBufferAsync(kdbDatabase));
             var versionInfo = ReadVersionInfo(kdbDataReader);
             IKdbReader reader = null;
             var compositeKey = new CompositeKey(userKeys, percentComplete);
-
+            var pwDatabase = new PwDatabase(compositeKey);
+          
             if (IsKdb4(versionInfo))
             {
-                var pwDatabase = new PwDatabase(compositeKey);
-                var kdb4File = new Kdb4File(pwDatabase);
+                  var kdb4File = new Kdb4File(pwDatabase);
 
                 reader = new Kdb4Reader(kdb4File);      
             }
@@ -50,8 +50,8 @@ namespace MetroPass.Core.Services
             {
                 throw new FormatException();
             }
-
-            return await reader.Load(kdbDataReader);
+            pwDatabase.Tree = await reader.Load(kdbDataReader);
+            return pwDatabase;
 
         }
 

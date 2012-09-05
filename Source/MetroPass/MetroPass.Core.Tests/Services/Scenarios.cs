@@ -32,7 +32,7 @@ namespace MetroPass.Core.Tests.Services
 
             var readerFactory = new KdbReaderFactory();
             var database = await Package.Current.InstalledLocation.GetFileAsync(path);
-            IKdbTree tree = await readerFactory.LoadAsync(database, userKeys);
+            IKdbTree tree = (await readerFactory.LoadAsync(database, userKeys)).Tree;
             return tree;
         }
     }
