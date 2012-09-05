@@ -26,8 +26,8 @@ namespace MetroPass.Core.Tests.Services
        public void CantCreateAnyOtherType()
        {
            KdbWriterFactory factory = new KdbWriterFactory();
-           var kdb4Tree = new Kdb4Tree(null);
-           Assert.ThrowsException<NotSupportedException>(() =>  factory.CreateWriter(kdb4Tree));
+ 
+           Assert.ThrowsException<NotSupportedException>(() =>  factory.CreateWriter(null));
 
        }
     }
