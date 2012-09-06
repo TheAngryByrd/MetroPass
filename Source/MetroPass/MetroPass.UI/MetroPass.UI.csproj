@@ -127,6 +127,7 @@
     <Compile Include="Common\TypedTemplateSelector.cs" />
     <Compile Include="DataModel\KdbDatasource.cs" />
     <Compile Include="Services\IPageServices.cs" />
+    <Compile Include="ViewModels\BaseScreen.cs" />
     <Compile Include="Views\EntryGroupListView.xaml.cs">
       <DependentUpon>EntryGroupListView.xaml</DependentUpon>
     </Compile>

@@ -7,13 +7,12 @@ using System.Linq;
 
 namespace MetroPass.UI.ViewModels
 {
-    public class EntryGroupListViewModel : Screen
+    public class EntryGroupListViewModel : BaseScreen
     {
         private readonly INavigationService navigationService;
 
-        public EntryGroupListViewModel(INavigationService navigationService, PwGroup entryGroup)
+        public EntryGroupListViewModel(INavigationService navigationService, PwGroup entryGroup): base(navigationService)
         {
-            this.navigationService = navigationService;
             this.Root = entryGroup;
         }
 

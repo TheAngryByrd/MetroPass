@@ -11,25 +11,15 @@ using Windows.Storage.Pickers;
 
 namespace MetroPass.UI.ViewModels
 {
-    public class LoadKdbViewModel : Screen
+    public class LoadKdbViewModel : BaseScreen
     {
         private IPageServices pageServices;
         private INavigationService navigationService;
 
-        public LoadKdbViewModel(IPageServices pageServices, INavigationService navigationService)
+        public LoadKdbViewModel(IPageServices pageServices, INavigationService navigationService): base(navigationService)
         {
             this.pageServices = pageServices;
             this.navigationService = navigationService;
-        }
-
-        public void GoBack()
-        {
-            navigationService.GoBack();
-        }
-
-        public bool CanGoBack
-        {
-            get { return navigationService.CanGoBack; }
         }
 
         private IStorageFile _database;
