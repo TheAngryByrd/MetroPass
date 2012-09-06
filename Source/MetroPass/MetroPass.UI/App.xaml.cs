@@ -62,7 +62,7 @@ namespace MetroPass.UI
         protected override object GetInstance(Type service, string key)
        {
     
-            var instance = ninjectContainer.Kernel.TryGet(service, key);
+            var instance = ninjectContainer.Kernel.Get(service, key);
  
             return instance;
         }
