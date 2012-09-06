@@ -17,13 +17,7 @@ namespace MetroPass.Core.Services
     public class KdbReaderFactory
     {
 
-        // KeePass 2.x signatures
-        private const uint FileSignature1 = 0x9AA2D903;
-        private const uint FileSignature2 = 0xB54BFB67;
 
-        // KeePass 1.x signatures
-        private const uint FileSignatureOld1 = 0x9AA2D903;
-        private const uint FileSignatureOld2 = 0xB54BFB65;
 
 
         public Task<PwDatabase> LoadAsync(StorageFile database, List<IUserKey> userKeys)
@@ -57,7 +51,7 @@ namespace MetroPass.Core.Services
 
         private static bool IsKdb4(VersionInfo versionInfo)
         {
-            return versionInfo.FileSignature1 == FileSignature1 && versionInfo.FileSignature2 == FileSignature2;
+            return versionInfo.FileSignature1 == KdbConstants.FileSignature1 && versionInfo.FileSignature2 == KdbConstants.FileSignature2;
         }
 
         private VersionInfo ReadVersionInfo(IDataReader kdbReader)

@@ -13,7 +13,7 @@ namespace MetroPass.Core.Model
         /// </summary>
         public const uint UuidSize = 16;
 
-        private byte[] uuidBytes = new byte[UuidSize];
+        public byte[] uuidBytes = new byte[UuidSize];
 
         public PwUuid(byte[] uuidBytes)
         {
