@@ -1,6 +1,7 @@
 ﻿using MetroPass.Core.Model.Kdb4;
 using MetroPass.Core.Services;
 using MetroPass.Core.Services.Kdb4;
+using MetroPass.Core.Services.Kdb4.Writer;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using System;
 using System.Collections.Generic;

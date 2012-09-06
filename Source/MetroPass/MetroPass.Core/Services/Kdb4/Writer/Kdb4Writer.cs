@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MetroPass.Core.Services.Kdb4
+namespace MetroPass.Core.Services.Kdb4.Writer
 {
     public class Kdb4Writer :IKdbWriter
     {

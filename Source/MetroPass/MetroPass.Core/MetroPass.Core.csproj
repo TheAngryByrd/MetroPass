@@ -138,7 +138,8 @@
     <Compile Include="Interfaces\IKdbTree.cs" />
     <Compile Include="Services\Kdb4\Kdb4Parser.cs" />
     <Compile Include="Services\Kdb4\Kdb4Reader.cs" />
-    <Compile Include="Services\Kdb4\Kdb4Writer.cs" />
+    <Compile Include="Services\Kdb4\Writer\Kdb4HeaderWriter.cs" />
+    <Compile Include="Services\Kdb4\Writer\Kdb4Writer.cs" />
     <Compile Include="Services\KdbReaderFactory.cs" />
     <Compile Include="Services\KdbWriterFactory.cs" />
   </ItemGroup>
