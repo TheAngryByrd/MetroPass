@@ -3,14 +3,12 @@ using Caliburn.Micro;
 using MetroPass.UI.Common;
 using System;
 using System.Linq;
+using MetroPass.UI.DataModel;
 using MetroPass.UI.Services;
+using MetroPass.UI.ViewModels;
 using MetroPass.UI.Views;
 using Windows.ApplicationModel;
 using Ninject;
-using Ninject.Modules;
-using Ninject.Parameters;
-using Windows.UI.Xaml.Controls;
-
 
 namespace MetroPass.UI
 {
@@ -33,6 +31,9 @@ namespace MetroPass.UI
             ninjectContainer.RegisterWinRTServices();
 
             ninjectContainer.Kernel.Bind<IPageServices>().To<PageServices>();
+            ninjectContainer.Kernel.Bind<EntryGroupListViewModel>().ToMethod((c) =>
+                new EntryGroupListViewModel(c.Kernel.Get<INavigationService>(), PWDatabaseDataSource.Instance.PwDatabase.Tree.Group)
+            );
         }
 
         protected override object GetInstance(Type service, string key)

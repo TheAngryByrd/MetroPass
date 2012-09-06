@@ -1,14 +1,10 @@
 ﻿using Caliburn.Micro;
-using Framework;
 using MetroPass.Core.Model.Keys;
-using MetroPass.UI.Common;
 using MetroPass.UI.DataModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security;
-using System.Threading.Tasks;
-using System.Windows.Input;
 using MetroPass.UI.Services;
 using Windows.Storage;
 using Windows.Storage.Pickers;
@@ -135,7 +131,7 @@ namespace MetroPass.UI.ViewModels
             {
                 await PWDatabaseDataSource.Instance.LoadPwDatabase(Database, userKeys, progress);
 
-                navigationService.NavigateToViewModel<EntryGroupListViewModel>(PWDatabaseDataSource.Instance.PwDatabase.Tree.Group);
+                navigationService.NavigateToViewModel<EntryGroupListViewModel>();
             }
             catch (SecurityException se)
             {
@@ -147,7 +143,7 @@ namespace MetroPass.UI.ViewModels
         public void OpenDemo()
         {
             PWDatabaseDataSource.Instance.SetupDemoData();
-            navigationService.NavigateToViewModel<EntryGroupListViewModel>(PWDatabaseDataSource.Instance.PwDatabase.Tree.Group);
+            navigationService.NavigateToViewModel<EntryGroupListViewModel>();
         }
     }
 }

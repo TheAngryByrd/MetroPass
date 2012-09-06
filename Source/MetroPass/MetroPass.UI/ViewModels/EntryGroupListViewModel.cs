@@ -11,14 +11,10 @@ namespace MetroPass.UI.ViewModels
     {
         private readonly INavigationService navigationService;
 
-        public EntryGroupListViewModel(INavigationService navigationService)
+        public EntryGroupListViewModel(INavigationService navigationService, PwGroup entryGroup)
         {
             this.navigationService = navigationService;
-        }
-
-        public PwGroup Parameter
-        {
-            set { this.Root = value; }
+            this.Root = entryGroup;
         }
 
         PwGroup _root = null;

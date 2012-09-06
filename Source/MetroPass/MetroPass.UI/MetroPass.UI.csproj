@@ -139,7 +139,6 @@
     <Compile Include="Common\LayoutAwarePage.cs" />
     <Compile Include="Common\RichTextColumns.cs" />
     <Compile Include="Common\SuspensionManager.cs" />
-    <Compile Include="Services\NavigationServices.cs" />
     <Compile Include="Services\PageServices.cs" />
     <Compile Include="ViewModels\EntryGroupListViewModel.cs" />
     <Compile Include="ViewModels\LoadKdbViewModel.cs" />
