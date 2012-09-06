@@ -6,12 +6,16 @@ using System.Linq;
 using MetroPass.UI.Services;
 using MetroPass.UI.Views;
 using Windows.ApplicationModel;
+using Ninject;
+
 
 namespace MetroPass.UI
 {
     public sealed partial class App
     {
         private WinRTContainer container;
+        private IKernel ninjectContainer;
+
         public App()
         {
             this.InitializeComponent();
@@ -22,13 +26,22 @@ namespace MetroPass.UI
         {
             base.Configure();
 
+            var kernel = new StandardKernel();
+
+     
+            
             container = new WinRTContainer(RootFrame);
             container.RegisterWinRTServices();
+            
             container.PerRequest<IPageServices, PageServices>();
+        
+            
         }
 
         protected override object GetInstance(Type service, string key)
         {
+
+           
             return container.GetInstance(service, key);
         }
 

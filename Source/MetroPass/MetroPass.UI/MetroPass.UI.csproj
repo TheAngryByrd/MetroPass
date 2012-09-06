@@ -149,6 +149,7 @@
     </AppxManifest>
     <None Include="Common\ReadMe.txt" />
     <None Include="MetroPass.UI_TemporaryKey.pfx" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\Logo.png" />
@@ -189,6 +190,12 @@
     </Reference>
     <Reference Include="Caliburn.Micro.Extensions">
       <HintPath>..\..\..\Libs\Caliburn.Micro.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject.Common">
+      <HintPath>..\packages\Portable.Ninject.Common.3.0.1.11\lib\Ninject.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject.WinRT">
+      <HintPath>..\..\..\Libs\Ninject.WinRT.dll</HintPath>
     </Reference>
     <Reference Include="Windows.UI.Interactivity">
       <HintPath>..\..\..\Libs\Windows.UI.Interactivity.dll</HintPath>
