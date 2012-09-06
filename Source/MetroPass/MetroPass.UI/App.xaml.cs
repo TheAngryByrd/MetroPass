@@ -7,14 +7,40 @@ using MetroPass.UI.Services;
 using MetroPass.UI.Views;
 using Windows.ApplicationModel;
 using Ninject;
+using Ninject.Modules;
+using Ninject.Parameters;
+using Windows.UI.Xaml.Controls;
 
 
 namespace MetroPass.UI
 {
+    public class NinjectContainer
+    {
+        public IKernel Kernel { get; private set; }
+        private readonly Frame _rootFrame;
+        private SimpleContainer simple = new SimpleContainer();
+
+        public NinjectContainer(Frame rootFrame)
+        {
+            var settings = new NinjectSettings();
+            settings.LoadExtensions = false;
+            Kernel = new StandardKernel(settings);
+            _rootFrame = rootFrame;
+        }
+
+        public void RegisterWinRTServices(bool treatViewAsLoaded = false)
+        {
+            Kernel.Rebind<SimpleContainer>().ToConstant<SimpleContainer>(simple);
+            var navService = new FrameAdapter(_rootFrame, treatViewAsLoaded);
+            Kernel.Rebind<INavigationService>().ToMethod<FrameAdapter>(x => navService);
+            Kernel.Rebind<IEventAggregator>().To<EventAggregator>();
+        }
+    }
+
     public sealed partial class App
     {
-        private WinRTContainer container;
-        private IKernel ninjectContainer;
+        //private WinRTContainer container;
+        private NinjectContainer ninjectContainer;
 
         public App()
         {
@@ -26,33 +52,30 @@ namespace MetroPass.UI
         {
             base.Configure();
 
-            var kernel = new StandardKernel();
+            ninjectContainer = new NinjectContainer(RootFrame);
+            ninjectContainer.RegisterWinRTServices();
 
-     
-            
-            container = new WinRTContainer(RootFrame);
-            container.RegisterWinRTServices();
-            
-            container.PerRequest<IPageServices, PageServices>();
-        
-            
+            ninjectContainer.Kernel.Bind<IPageServices>().To<PageServices>();
+
         }
 
         protected override object GetInstance(Type service, string key)
-        {
-
-           
-            return container.GetInstance(service, key);
+       {
+    
+            var instance = ninjectContainer.Kernel.TryGet(service, key);
+ 
+            return instance;
         }
 
         protected override IEnumerable<object> GetAllInstances(Type service)
         {
-            return container.GetAllInstances(service);
+
+            return ninjectContainer.Kernel.GetAll(service);
         }
 
         protected override void BuildUp(object instance)
         {
-            container.BuildUp(instance);
+            ninjectContainer.Kernel.Inject(instance);
         }
 
         protected override Type GetDefaultView()
