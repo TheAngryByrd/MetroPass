@@ -135,7 +135,7 @@ namespace MetroPass.UI.ViewModels
             {
                 await PWDatabaseDataSource.Instance.LoadPwDatabase(Database, userKeys, progress);
 
-                navigationService.Navigate<EntryGroupListPage>(new EntryGroupListPageViewModel(PWDatabaseDataSource.Instance.PwDatabase.Tree.Group));
+                navigationService.NavigateToViewModel<EntryGroupListViewModel>(PWDatabaseDataSource.Instance.PwDatabase.Tree.Group);
             }
             catch (SecurityException se)
             {
@@ -147,7 +147,7 @@ namespace MetroPass.UI.ViewModels
         public void OpenDemo()
         {
             PWDatabaseDataSource.Instance.SetupDemoData();
-            navigationService.Navigate<EntryGroupListPage>(new EntryGroupListPageViewModel(PWDatabaseDataSource.Instance.PwDatabase.Tree.Group));
+            navigationService.NavigateToViewModel<EntryGroupListViewModel>(PWDatabaseDataSource.Instance.PwDatabase.Tree.Group);
         }
     }
 }

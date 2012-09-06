@@ -127,8 +127,8 @@
     <Compile Include="Common\TypedTemplateSelector.cs" />
     <Compile Include="DataModel\KdbDatasource.cs" />
     <Compile Include="Services\IPageServices.cs" />
-    <Compile Include="Views\EntryGroupListPage.xaml.cs">
-      <DependentUpon>EntryGroupListPage.xaml</DependentUpon>
+    <Compile Include="Views\EntryGroupListView.xaml.cs">
+      <DependentUpon>EntryGroupListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\LoadKdbView.xaml.cs">
       <DependentUpon>LoadKdbView.xaml</DependentUpon>
@@ -141,7 +141,7 @@
     <Compile Include="Common\SuspensionManager.cs" />
     <Compile Include="Services\NavigationServices.cs" />
     <Compile Include="Services\PageServices.cs" />
-    <Compile Include="ViewModels\EntryGroupListPageViewModel.cs" />
+    <Compile Include="ViewModels\EntryGroupListViewModel.cs" />
     <Compile Include="ViewModels\LoadKdbViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -176,7 +176,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\EntryGroupListPage.xaml">
+    <Page Include="Views\EntryGroupListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
