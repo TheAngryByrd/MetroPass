@@ -1,4 +1,5 @@
-﻿using MetroPass.Core.Model.Keys;
+﻿using MetroPass.Core.Model;
+using MetroPass.Core.Model.Keys;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,6 @@ namespace MetroPass.Core.Interfaces
 {
     public interface IKdbWriter
     {
-        void Write(IKdbTree tree, IStorageFile database, CompositeKey compositeKey);
+        void Write(PwDatabase tree, IStorageFile database, CompositeKey compositeKey);
     }
 }

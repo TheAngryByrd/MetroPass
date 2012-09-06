@@ -1,4 +1,5 @@
 ﻿using MetroPass.Core.Interfaces;
+using MetroPass.Core.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace MetroPass.Core.Services.Kdb4
 {
     public class Kdb4Writer :IKdbWriter
     {
-        public void Write(IKdbTree tree, Windows.Storage.IStorageFile database, Model.Keys.CompositeKey compositeKey)
+        public void Write(PwDatabase tree, Windows.Storage.IStorageFile database, Model.Keys.CompositeKey compositeKey)
         {
             throw new NotImplementedException();
         }

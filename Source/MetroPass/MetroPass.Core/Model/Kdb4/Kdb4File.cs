@@ -44,7 +44,7 @@ namespace MetroPass.Core.Model.Kdb4
 
         public IBuffer pbTransformSeed { get; set; }
 
-        public Kdb4Tree kdb4Tree { get; set; }
+
 
 
 
