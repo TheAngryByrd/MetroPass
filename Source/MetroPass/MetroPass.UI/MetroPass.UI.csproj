@@ -122,6 +122,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Common\NinjectContainer.cs" />
     <Compile Include="Common\DelegateCommand.cs" />
     <Compile Include="Common\TypedTemplateSelector.cs" />
     <Compile Include="DataModel\KdbDatasource.cs" />

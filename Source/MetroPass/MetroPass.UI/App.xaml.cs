@@ -14,32 +14,9 @@ using Windows.UI.Xaml.Controls;
 
 namespace MetroPass.UI
 {
-    public class NinjectContainer
-    {
-        public IKernel Kernel { get; private set; }
-        private readonly Frame _rootFrame;
-        private SimpleContainer simple = new SimpleContainer();
-
-        public NinjectContainer(Frame rootFrame)
-        {
-            var settings = new NinjectSettings();
-            settings.LoadExtensions = false;
-            Kernel = new StandardKernel(settings);
-            _rootFrame = rootFrame;
-        }
-
-        public void RegisterWinRTServices(bool treatViewAsLoaded = false)
-        {
-            Kernel.Rebind<SimpleContainer>().ToConstant<SimpleContainer>(simple);
-            var navService = new FrameAdapter(_rootFrame, treatViewAsLoaded);
-            Kernel.Rebind<INavigationService>().ToMethod<FrameAdapter>(x => navService);
-            Kernel.Rebind<IEventAggregator>().To<EventAggregator>();
-        }
-    }
 
     public sealed partial class App
-    {
-        //private WinRTContainer container;
+    { 
         private NinjectContainer ninjectContainer;
 
         public App()
@@ -56,20 +33,16 @@ namespace MetroPass.UI
             ninjectContainer.RegisterWinRTServices();
 
             ninjectContainer.Kernel.Bind<IPageServices>().To<PageServices>();
-
         }
 
         protected override object GetInstance(Type service, string key)
-       {
-    
-            var instance = ninjectContainer.Kernel.Get(service, key);
- 
+       {    
+            var instance = ninjectContainer.Kernel.Get(service, key); 
             return instance;
         }
 
         protected override IEnumerable<object> GetAllInstances(Type service)
         {
-
             return ninjectContainer.Kernel.GetAll(service);
         }
 
