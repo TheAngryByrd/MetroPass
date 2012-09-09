@@ -29,6 +29,15 @@ namespace MetroPass.Core.Model.Keys
             PercentComplete = percentComplete;
         }
 
+        public async Task<IBuffer> GenerateHashedKeyAsync(IBuffer masterSeed, IBuffer transformSeed, ulong rounds)
+        {
+            var key = await GenerateKeyAsync(transformSeed, rounds);
+
+            var aesKey = SHA256Hasher.Hash(masterSeed, key);
+
+            return aesKey;
+        }
+
         public async Task<IBuffer> GenerateKeyAsync(IBuffer transformSeed, ulong rounds)
         {
             IBuffer rawCompositeKey = await CreateRawCompositeKey32();

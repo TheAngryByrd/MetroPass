@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
@@ -14,51 +15,91 @@ namespace MetroPass.Core.Model
             Element = element;
         }
 
-        public XElement Element { get; set; }
-
-        private int _iconId;
-        public int IconId
+        public IEnumerable<XElement> Meta
         {
-            get { return _iconId; }
-            set { SetProperty(ref _iconId, value); }
+            get
+            {
+                return Element.Elements("String");
+            }
         }
 
-        private string _title;
+        private XElement GetElement([CallerMemberName] String propertyName = null)
+        {
+            var titleElement = Meta.First(a => a.Element("Key").Value.ToLower() == propertyName.ToLower());
+            return titleElement.Element("Value");
+        }
+           
         public string Title
         {
-            get { return _title; }
-            set { SetProperty(ref _title, value); }
+            get 
+            {
+                return GetElement().Value;
+            }
+            set 
+            { 
+                GetElement().Value = value;
+                NotifyPropertyChanged(); 
+            }
         }
 
-        private string _username;
+  
+
         public string Username
         {
-            get { return _username; }
-            set { SetProperty(ref _username, value); }
+            get
+            {
+                return GetElement().Value;
+            }
+            set
+            {
+                GetElement().Value = value;
+                NotifyPropertyChanged();
+            }
         }
 
-        private string _password;
+ 
 
         public string Password
         {
-            get { return _password; }
-            set { SetProperty(ref _password, value); }
+            get
+            {
+                return GetElement().Value;
+            }
+            set
+            {
+                GetElement().Value = value;
+                NotifyPropertyChanged();
+            }
         }
 
-        private string _url;
+
 
         public string Url
         {
-            get { return _url; }
-            set { SetProperty(ref _url, value); }
+            get
+            {
+                return GetElement().Value;
+            }
+            set
+            {
+                GetElement().Value = value;
+                NotifyPropertyChanged();
+            }
         }
 
-        private string _notes;
+
 
         public string Notes
         {
-            get { return _notes; }
-            set { SetProperty(ref _notes, value); }
+            get
+            {
+                return GetElement().Value;
+            }
+            set
+            {
+                GetElement().Value = value;
+                NotifyPropertyChanged();
+            }
         }
 
 

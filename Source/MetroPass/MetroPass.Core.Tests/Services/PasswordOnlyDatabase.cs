@@ -26,6 +26,13 @@ namespace MetroPass.Core.Tests.Services
         public async Task CanOpenPasswordOnlyDatabase()
         {
             var kdb4Tree = await Scenarios.LoadDatabase(PasswordDatabasePath, PasswordDatabasePassword,null);
+            var firstGroup = kdb4Tree.Group.SubGroups.First();
+            Assert.AreEqual("General", firstGroup.Name);
+            Assert.AreEqual(new DateTime(2012, 08, 25), firstGroup.LastAccessTime.Date);
+           var firstEntry = kdb4Tree.Group.Entries.First();
+           Assert.AreEqual("Notes", firstEntry.Notes);
+           Assert.AreEqual("User Name", firstEntry.Username);
+           Assert.AreEqual("Sample Entry", firstEntry.Title);
         }
 
         [TestMethod]

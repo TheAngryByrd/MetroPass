@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Windows.Storage.Streams;
 using Windows.Security.Cryptography;
 using MetroPass.Core.Model;
+using MetroPass.Core.Model.Kdb4;
 namespace MetroPass.Core.Tests.Services.Kdb4.Writer
 {
     [TestClass]
@@ -41,7 +42,8 @@ namespace MetroPass.Core.Tests.Services.Kdb4.Writer
         public async Task WriteAllHeaders()
         {
             var database = new PwDatabase(null);
-            await hw.WriteHeaders(dataWriter, database);
+            var file = new Kdb4File(database);
+            await hw.WriteHeaders(dataWriter, file);
         }
     }
 }

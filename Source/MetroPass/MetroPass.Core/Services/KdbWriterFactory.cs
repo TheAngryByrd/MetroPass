@@ -16,7 +16,7 @@ namespace MetroPass.Core.Services
         {
             if (tree is Kdb4Tree)
             {
-                return new Kdb4Writer();
+                return new Kdb4Writer(new Kdb4HeaderWriter());
             }
             else
             {

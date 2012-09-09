@@ -16,6 +16,11 @@ namespace Framework
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public void NotifyPropertyChanged([CallerMemberName] String propertyName = null)
+        {
+            this.OnPropertyChanged(propertyName);
+        }
+
         /// <summary>
         /// Checks if a property already matches a desired value.  Sets the property and
         /// notifies listeners only when necessary.

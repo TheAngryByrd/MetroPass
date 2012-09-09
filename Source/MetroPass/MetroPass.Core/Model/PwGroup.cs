@@ -6,22 +6,24 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using Framework;
+using System.Xml;
 
 namespace MetroPass.Core.Model
 {
     public class PwGroup : PwCommon
     {
 
-        public XElement Element { get; private set; }
-        public int IconId { get; set; }
-        public string _name;
+
+
+    
         public string Name { 
-            get { 
-                return _name; 
+            get {
+                return Element.Element().Value; 
             } 
             set 
             {
-                SetProperty(ref _name, value);
+                Element.Element().Value = value;
+                NotifyPropertyChanged();      
             } 
         }
 

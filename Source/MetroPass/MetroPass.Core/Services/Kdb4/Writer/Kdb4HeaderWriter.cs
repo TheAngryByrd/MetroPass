@@ -27,22 +27,22 @@ namespace MetroPass.Core.Services.Kdb4.Writer
             WriteHeaderField(writer, headerId, data.AsBuffer());
         }
 
-        public async Task WriteHeaders(IDataWriter dataWriter, PwDatabase pwDatabase)
+        public async Task WriteHeaders(IDataWriter dataWriter, Kdb4File file)
         {
             //Write Signature and Version
             dataWriter.WriteBytes(BitConverter.GetBytes(KdbConstants.FileSignature1));
             dataWriter.WriteBytes(BitConverter.GetBytes(KdbConstants.FileSignature2));
             dataWriter.WriteBytes(BitConverter.GetBytes(KdbConstants.Kdb4Version));
 
-            WriteHeaderField(dataWriter, Kdb4HeaderFieldID.CipherID, pwDatabase.DataCipherUuid.uuidBytes);
-            var compressionId = (uint)  pwDatabase.Compression;
+            WriteHeaderField(dataWriter, Kdb4HeaderFieldID.CipherID, file.pwDatabase.DataCipherUuid.uuidBytes);
+            var compressionId = (uint) file.pwDatabase.Compression;
             WriteHeaderField(dataWriter, Kdb4HeaderFieldID.CompressionFlags,BitConverter.GetBytes(compressionId));
-            WriteHeaderField(dataWriter, Kdb4HeaderFieldID.MasterSeed, Windows.Security.Cryptography.CryptographicBuffer.GenerateRandom(32));
-            WriteHeaderField(dataWriter, Kdb4HeaderFieldID.TransformSeed, Windows.Security.Cryptography.CryptographicBuffer.GenerateRandom(32));
-            WriteHeaderField(dataWriter, Kdb4HeaderFieldID.TransformRounds,BitConverter.GetBytes(pwDatabase.KeyEncryptionRounds));
-            WriteHeaderField(dataWriter, Kdb4HeaderFieldID.EncryptionIV, Windows.Security.Cryptography.CryptographicBuffer.GenerateRandom(16));
-            WriteHeaderField(dataWriter, Kdb4HeaderFieldID.ProtectedStreamKey, Windows.Security.Cryptography.CryptographicBuffer.GenerateRandom(32));
-            WriteHeaderField(dataWriter, Kdb4HeaderFieldID.StreamStartBytes, Windows.Security.Cryptography.CryptographicBuffer.GenerateRandom(32));
+            WriteHeaderField(dataWriter, Kdb4HeaderFieldID.MasterSeed, file.pbMasterSeed);
+            WriteHeaderField(dataWriter, Kdb4HeaderFieldID.TransformSeed, file.pbTransformSeed);
+            WriteHeaderField(dataWriter, Kdb4HeaderFieldID.TransformRounds, BitConverter.GetBytes(file.pwDatabase.KeyEncryptionRounds));
+            WriteHeaderField(dataWriter, Kdb4HeaderFieldID.EncryptionIV, file.pbEncryptionIV);
+            WriteHeaderField(dataWriter, Kdb4HeaderFieldID.ProtectedStreamKey, file.pbProtectedStreamKey);
+            WriteHeaderField(dataWriter, Kdb4HeaderFieldID.StreamStartBytes, file.pbStreamStartBytes);
             var crsAlg = (uint)CrsAlgorithm.Salsa20;
             WriteHeaderField(dataWriter, Kdb4HeaderFieldID.StreamStartBytes, BitConverter.GetBytes(crsAlg));
             WriteHeaderField(dataWriter, Kdb4HeaderFieldID.EndOfHeader, new byte[] { (byte)'\r', (byte)'\n', (byte)'\r', (byte)'\n' });

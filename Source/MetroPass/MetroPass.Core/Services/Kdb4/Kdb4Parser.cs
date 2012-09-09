@@ -51,19 +51,7 @@ namespace MetroPass.Core.Services
         {
             var group = new PwGroup(elementGroup);
 
-
-            group.IconId = XmlConvert.ToInt16(elementGroup.Element("IconID").Value);
-
-
-            group.Name = elementGroup.Element("Name").Value;
-
             var timeElement = elementGroup.Element("Times");
-
-            group.CreationDate = DateTime.Parse(timeElement.Element("CreationTime").Value);
-            group.LastModifiedDate = DateTime.Parse(timeElement.Element("LastModificationTime").Value);
-            group.LastAccessTime = DateTime.Parse(timeElement.Element("LastAccessTime").Value);
-            group.ExpireTime = DateTime.Parse(timeElement.Element("ExpiryTime").Value);
-
             var entryElements = elementGroup.Elements("Entry");
 
             foreach (var element in entryElements)
@@ -79,45 +67,6 @@ namespace MetroPass.Core.Services
         public PwEntry ParseEntry(XElement entryElement)
         {
             var entry = new PwEntry(entryElement);
-
-            entry.IconId = XmlConvert.ToInt16(entryElement.Element("IconID").Value);
-
-            var timeElement = entryElement.Element("Times");
-
-            entry.CreationDate = DateTime.Parse(timeElement.Element("CreationTime").Value);
-            entry.LastModifiedDate = DateTime.Parse(timeElement.Element("LastModificationTime").Value);
-            entry.LastAccessTime = DateTime.Parse(timeElement.Element("LastAccessTime").Value);
-            entry.ExpireTime = DateTime.Parse(timeElement.Element("ExpiryTime").Value);
-
-            var meta = entryElement.Elements("String");
-
-            foreach (var item in meta)
-            {
-                var key = item.Element("Key").Value.ToLower();
-                var value = item.Element("Value").Value;
-
-                if (key == "title")
-                {
-                    entry.Title = value;
-                }
-                else if (key == "username")
-                {
-                    entry.Username = value;
-                }
-                else if (key == "password")
-                {
-                    entry.Password = value;
-                }
-                else if (key == "url")
-                {
-                    entry.Url = value;
-                }
-                else if (key == "notes")
-                {
-                    entry.Notes = value;
-                }
-
-            }
 
             return entry;
         }
