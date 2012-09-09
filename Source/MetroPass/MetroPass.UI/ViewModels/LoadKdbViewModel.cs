@@ -1,4 +1,5 @@
 ﻿using Caliburn.Micro;
+using MetroPass.Core.Model;
 using MetroPass.Core.Model.Keys;
 using MetroPass.UI.DataModel;
 using System;
@@ -121,7 +122,7 @@ namespace MetroPass.UI.ViewModels
             {
                 await PWDatabaseDataSource.Instance.LoadPwDatabase(Database, userKeys, progress);
 
-                navigationService.NavigateToViewModel<EntryGroupListViewModel>();
+                navigationService.NavigateToViewModel<EntryGroupListViewModel, PwGroup>(PWDatabaseDataSource.Instance.PwDatabase.Tree.Group, vm => vm.Root);
             }
             catch (SecurityException se)
             {

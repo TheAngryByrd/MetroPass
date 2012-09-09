@@ -31,9 +31,6 @@ namespace MetroPass.UI
             ninjectContainer.RegisterWinRTServices();
 
             ninjectContainer.Kernel.Bind<IPageServices>().To<PageServices>();
-            ninjectContainer.Kernel.Bind<EntryGroupListViewModel>().ToMethod((c) =>
-                new EntryGroupListViewModel(c.Kernel.Get<INavigationService>(), PWDatabaseDataSource.Instance.PwDatabase.Tree.Group)
-            );
         }
 
         protected override object GetInstance(Type service, string key)
