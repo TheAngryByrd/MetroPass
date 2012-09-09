@@ -51,12 +51,11 @@ namespace MetroPass.Core.Services
         {
             var group = new PwGroup(elementGroup);
 
-            var timeElement = elementGroup.Element("Times");
-            var entryElements = elementGroup.Elements("Entry");
+             var entryElements = elementGroup.Elements("Entry");
 
             foreach (var element in entryElements)
             {
-                group.Entries.Add(ParseEntry(element));
+                group.Entries.Add(new PwEntry(element));
             }
 
             group.SubGroups = ParseGroups(elementGroup.Elements("Group"));
@@ -64,12 +63,7 @@ namespace MetroPass.Core.Services
             return group;
         }
 
-        public PwEntry ParseEntry(XElement entryElement)
-        {
-            var entry = new PwEntry(entryElement);
 
-            return entry;
-        }
 
         public static XmlReaderSettings CreateStdXmlReaderSettings()
         {

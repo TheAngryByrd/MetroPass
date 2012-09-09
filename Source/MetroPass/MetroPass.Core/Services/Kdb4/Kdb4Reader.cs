@@ -106,9 +106,6 @@ namespace MetroPass.Core.Services
         }
         public void ReadHeader(IDataReader reader)
         {
-           
-
-
             while (true)
             {
                 if (this.ReadHeaderField(reader) == false) { break; }

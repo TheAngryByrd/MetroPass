@@ -16,18 +16,19 @@ namespace MetroPass.Core.Tests
         [TestMethod]
         public void blah()
         {
-            var element = new XElement("Child", "Content");
+            var grandChild = new XElement("Name", "My Name");
+            var element = new XElement("Group1");
+            element.AddFirst(grandChild);
             XDocument xml = new XDocument();
             xml.AddFirst(element);
 
             var tree = new Kdb4Tree(xml);
 
-           var x = new PwGroup(element);
+           var group = new PwGroup(element);
 
-           x.Element.Value = "New Content";
-
-
-           Assert.AreEqual("New Content", element.Value);
+           Assert.AreEqual(grandChild.Value, group.Name);
+           group.Name = "New Name";
+           Assert.AreEqual(grandChild.Value, group.Name);
         }
         [TestMethod]
         public void spike2()

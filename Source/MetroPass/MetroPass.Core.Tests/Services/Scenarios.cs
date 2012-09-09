@@ -9,13 +9,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
+using Windows.Storage;
 using Windows.Storage.Streams;
 
 namespace MetroPass.Core.Tests.Services
 {
     public class Scenarios
     {
-        public async static Task<IKdbTree> LoadDatabase(string path, string password, string keyPath)
+        public async static Task<PwDatabase> LoadDatabase(string path, string password, string keyPath)
+        {
+            var database = await Package.Current.InstalledLocation.GetFileAsync(path);
+            return await LoadDatabase(database, password, keyPath);
+
+        }
+
+        public async static Task<PwDatabase> LoadDatabase(IStorageFile database, string password, string keyPath)
         {
             var userKeys = new List<IUserKey>();
             if (!string.IsNullOrEmpty(password))
@@ -28,12 +36,11 @@ namespace MetroPass.Core.Tests.Services
                 var file = await Helpers.Helpers.GetKeyFile(keyPath);
                 userKeys.Add(await KcpKeyFile.Create(file));
             }
-       
+
 
             var readerFactory = new KdbReaderFactory();
-            var database = await Package.Current.InstalledLocation.GetFileAsync(path);
-            IKdbTree tree = (await readerFactory.LoadAsync(database, userKeys)).Tree;
-            return tree;
+
+            return await readerFactory.LoadAsync(database, userKeys);
         }
     }
 }

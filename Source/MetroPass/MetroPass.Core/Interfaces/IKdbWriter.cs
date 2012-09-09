@@ -11,6 +11,6 @@ namespace MetroPass.Core.Interfaces
 {
     public interface IKdbWriter
     {
-        Task Write(PwDatabase tree, IStorageFile database, CompositeKey compositeKey);
+        Task Write(PwDatabase tree, IStorageFile database);
     }
 }

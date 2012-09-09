@@ -25,8 +25,8 @@ namespace MetroPass.Core.Model
 
         private XElement GetElement([CallerMemberName] String propertyName = null)
         {
-            var titleElement = Meta.First(a => a.Element("Key").Value.ToLower() == propertyName.ToLower());
-            return titleElement.Element("Value");
+            var foundElement = Meta.First(a => a.Element("Key").Value.ToLower() == propertyName.ToLower());
+            return foundElement.Element("Value");
         }
            
         public string Title

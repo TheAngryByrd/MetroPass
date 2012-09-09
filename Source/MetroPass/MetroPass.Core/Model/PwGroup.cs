@@ -11,13 +11,11 @@ using System.Xml;
 namespace MetroPass.Core.Model
 {
     public class PwGroup : PwCommon
-    {
-
-
-
-    
-        public string Name { 
-            get {
+    {    
+        public string Name 
+        { 
+            get 
+            {
                 return Element.Element().Value; 
             } 
             set 

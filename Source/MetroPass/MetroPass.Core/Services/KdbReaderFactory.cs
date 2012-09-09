@@ -20,7 +20,7 @@ namespace MetroPass.Core.Services
 
 
 
-        public Task<PwDatabase> LoadAsync(StorageFile database, List<IUserKey> userKeys)
+        public Task<PwDatabase> LoadAsync(IStorageFile database, List<IUserKey> userKeys)
         {
             return LoadAsync(database, userKeys, new NullableProgress<double>());
         }
