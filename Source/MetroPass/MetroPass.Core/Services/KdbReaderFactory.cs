@@ -1,5 +1,4 @@
 ﻿using Framework;
-using MetroPass.Core.Helpers;
 using MetroPass.Core.Interfaces;
 using MetroPass.Core.Model;
 using MetroPass.Core.Model.Kdb4;
@@ -7,7 +6,6 @@ using MetroPass.Core.Model.Keys;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.Streams;
@@ -16,10 +14,6 @@ namespace MetroPass.Core.Services
 {
     public class KdbReaderFactory
     {
-
-
-
-
         public Task<PwDatabase> LoadAsync(IStorageFile database, List<IUserKey> userKeys)
         {
             return LoadAsync(database, userKeys, new NullableProgress<double>());

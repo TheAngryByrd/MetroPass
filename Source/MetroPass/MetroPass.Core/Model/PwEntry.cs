@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Linq;
 
 namespace MetroPass.Core.Model
@@ -17,10 +15,7 @@ namespace MetroPass.Core.Model
 
         public IEnumerable<XElement> Meta
         {
-            get
-            {
-                return Element.Elements("String");
-            }
+            get { return Element.Elements("String"); }
         }
 
         private XElement GetElement([CallerMemberName] String propertyName = null)
@@ -31,79 +26,32 @@ namespace MetroPass.Core.Model
            
         public string Title
         {
-            get 
-            {
-                return GetElement().Value;
-            }
-            set 
-            { 
-                GetElement().Value = value;
-                NotifyPropertyChanged(); 
-            }
+            get { return GetElement().Value; }
+            set { GetElement().Value = value; }
         }
-
-  
 
         public string Username
         {
-            get
-            {
-                return GetElement().Value;
-            }
-            set
-            {
-                GetElement().Value = value;
-                NotifyPropertyChanged();
-            }
+            get { return GetElement().Value; }
+            set { GetElement().Value = value; }
         }
-
- 
 
         public string Password
         {
-            get
-            {
-                return GetElement().Value;
-            }
-            set
-            {
-                GetElement().Value = value;
-                NotifyPropertyChanged();
-            }
+            get { return GetElement().Value; }
+            set { GetElement().Value = value; }
         }
-
-
 
         public string Url
         {
-            get
-            {
-                return GetElement().Value;
-            }
-            set
-            {
-                GetElement().Value = value;
-                NotifyPropertyChanged();
-            }
+            get { return GetElement().Value; }
+            set { GetElement().Value = value; }
         }
-
-
 
         public string Notes
         {
-            get
-            {
-                return GetElement().Value;
-            }
-            set
-            {
-                GetElement().Value = value;
-                NotifyPropertyChanged();
-            }
+            get { return GetElement().Value; }
+            set { GetElement().Value = value; }
         }
-
-
-
-  
     }
 }

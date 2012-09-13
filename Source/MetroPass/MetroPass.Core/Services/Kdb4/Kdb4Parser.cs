@@ -36,15 +36,12 @@ namespace MetroPass.Core.Services
             return kdb4Tree;
         }
 
-        public ObservableCollection<PwGroup> ParseGroups(IEnumerable<XElement> elementGroups)
+        public IEnumerable<PwGroup> ParseGroups(IEnumerable<XElement> elementGroups)
         {
-            var groups = new ObservableCollection<PwGroup>();
-
             foreach (var element in elementGroups)
             {
-                groups.Add(ParseGroup(element));
+                yield return ParseGroup(element);
             }
-            return groups;
         }
 
         public PwGroup ParseGroup(XElement elementGroup)
@@ -55,15 +52,16 @@ namespace MetroPass.Core.Services
 
             foreach (var element in entryElements)
             {
-                group.Entries.Add(new PwEntry(element));
+                group.AddEntry(new PwEntry(element));
             }
 
-            group.SubGroups = ParseGroups(elementGroup.Elements("Group"));
+            foreach (var subGroup in ParseGroups(elementGroup.Elements("Group")))
+            {
+                group.AddSubGroup(subGroup);
+            }
 
             return group;
         }
-
-
 
         public static XmlReaderSettings CreateStdXmlReaderSettings()
         {

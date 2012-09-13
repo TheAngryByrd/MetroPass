@@ -110,7 +110,6 @@
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BindableBase.cs" />
     <Compile Include="BufferHelpers.cs" />
     <Compile Include="Extend.cs" />
     <Compile Include="NullableProgress.cs" />

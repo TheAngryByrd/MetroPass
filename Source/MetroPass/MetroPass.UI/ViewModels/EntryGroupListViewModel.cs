@@ -10,8 +10,12 @@ namespace MetroPass.UI.ViewModels
     public class EntryGroupListViewModel : BaseScreen
     {
         private readonly INavigationService navigationService;
+        private readonly ObservableCollection<PwGroup> _entryGroupsWithEntries;
 
-        public EntryGroupListViewModel(INavigationService navigationService): base(navigationService) { }
+        public EntryGroupListViewModel(INavigationService navigationService): base(navigationService)
+        {
+            _entryGroupsWithEntries = new ObservableCollection<PwGroup>();
+        }
 
         PwGroup _root = null;
         public PwGroup Root
@@ -20,7 +24,9 @@ namespace MetroPass.UI.ViewModels
             set
             {
                 _root = value;
+                _entryGroupsWithEntries.AddRange(value.SubGroups);
                 NotifyOfPropertyChange(() => Root);
+                NotifyOfPropertyChange(() => EntryGroupsWithEntries);
             }
         }
 
@@ -28,12 +34,13 @@ namespace MetroPass.UI.ViewModels
         {
             get
             {
-                var temp = new ObservableCollection<PwGroup>();
+                //var temp = new ObservableCollection<PwGroup>();
 
-                temp.AddRange(Root.SubGroups);
-                temp.Add(new PwGroup(null) { Name = "Entries", Entries = this.Root.Entries });
+                //temp.AddRange(Root.SubGroups);
+                //temp.Add(new PwGroup(null, this.Root.Entries) { Name = "Entries"});
 
-                return temp;
+                //return temp;
+                return _entryGroupsWithEntries;
             }
         }
 
