@@ -1,4 +1,5 @@
-﻿using Caliburn.Micro;
+﻿using System.Xml.Linq;
+using Caliburn.Micro;
 using MetroPass.Core.Model;
 using Framework;
 using System;
@@ -9,11 +10,14 @@ namespace MetroPass.UI.ViewModels
 {
     public class EntryGroupListViewModel : BaseScreen
     {
-        private readonly INavigationService navigationService;
+        private readonly INavigationService _navigationService;
         private readonly ObservableCollection<PwGroup> _entryGroupsWithEntries;
 
-        public EntryGroupListViewModel(INavigationService navigationService): base(navigationService)
+        private PwCommon _selectedPasswordItem;
+
+        public EntryGroupListViewModel(INavigationService navigationService) : base(navigationService)
         {
+            _navigationService = navigationService;
             _entryGroupsWithEntries = new ObservableCollection<PwGroup>();
         }
 
@@ -24,24 +28,28 @@ namespace MetroPass.UI.ViewModels
             set
             {
                 _root = value;
+                _entryGroupsWithEntries.Add(new PwGroup(value.Element, value.Entries));
                 _entryGroupsWithEntries.AddRange(value.SubGroups);
                 NotifyOfPropertyChange(() => Root);
-                NotifyOfPropertyChange(() => EntryGroupsWithEntries);
+            }
+        }
+
+       public PwCommon SelectedPasswordItem
+        {
+            get { return _selectedPasswordItem; }
+            set
+            {
+                _selectedPasswordItem=value;
+                if (value is PwGroup)
+                {
+                    _navigationService.NavigateToViewModel<EntryGroupListViewModel, PwGroup>((PwGroup)value, vm => vm.Root);
+                }
             }
         }
 
         public ObservableCollection<PwGroup> EntryGroupsWithEntries
         {
-            get
-            {
-                //var temp = new ObservableCollection<PwGroup>();
-
-                //temp.AddRange(Root.SubGroups);
-                //temp.Add(new PwGroup(null, this.Root.Entries) { Name = "Entries"});
-
-                //return temp;
-                return _entryGroupsWithEntries;
-            }
+            get { return _entryGroupsWithEntries; }
         }
 
         public ObservableCollection<object> AllTogetherNow

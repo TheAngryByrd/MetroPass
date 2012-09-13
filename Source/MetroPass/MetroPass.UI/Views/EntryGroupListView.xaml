@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:MetroPass.UI"
     xmlns:common="using:MetroPass.UI.Common"
+    xmlns:cal="using:Caliburn.Micro"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
@@ -59,7 +60,7 @@
             Source="{Binding EntryGroupsWithEntries}"
             IsSourceGrouped="true"
             ItemsPath="AllTogetherNow"
-            />
+           />
     </Page.Resources>
 
     <!--
@@ -93,6 +94,7 @@
                   ItemsSource="{Binding Source={StaticResource groupedItemsViewSource}}" 
                   SelectionMode="Single"   
                   IsItemClickEnabled="true"
+                  SelectedItem="{Binding SelectedPasswordItem, Mode=TwoWay}"
                   >
 
             <ListView.GroupStyle>
