@@ -18,7 +18,7 @@ namespace MetroPass.Core.Services.Kdb4.Writer
         public void WriteHeaderField(IDataWriter writer, Kdb4HeaderFieldID headerId, IBuffer data)
         {
             writer.WriteByte((byte)headerId);
-
+            writer.WriteUInt16((ushort)data.Length);
             writer.WriteBuffer(data);
         }
 
@@ -47,6 +47,10 @@ namespace MetroPass.Core.Services.Kdb4.Writer
             WriteHeaderField(dataWriter, Kdb4HeaderFieldID.StreamStartBytes, BitConverter.GetBytes(crsAlg));
             WriteHeaderField(dataWriter, Kdb4HeaderFieldID.EndOfHeader, new byte[] { (byte)'\r', (byte)'\n', (byte)'\r', (byte)'\n' });
 
+
+            await dataWriter.StoreAsync();
+
+            await dataWriter.FlushAsync();
  
         }
 
