@@ -11,20 +11,18 @@
     mc:Ignorable="d">
 
     <Page.BottomAppBar>
-        <AppBar  VerticalAlignment="Bottom" x:Name="EntryAppBar">
+        <AppBar VerticalAlignment="Bottom" x:Name="EntryAppBar" IsOpen="{Binding ShowAppBar}">
             <StackPanel x:Name="EntryCommands" Orientation="Horizontal" HorizontalAlignment="Right" >
                 <Button x:Name="CopyUsernameButton" Style="{StaticResource CopyAppBarButtonStyle}" AutomationProperties.Name="Copy Username"></Button>
                 <Button x:Name="CopyPasswordButton" Style="{StaticResource PermissionsAppBarButtonStyle}" AutomationProperties.Name="Copy Password"></Button>
             </StackPanel>
-
         </AppBar>
-
     </Page.BottomAppBar>
+    
     <Page.Resources>
+        
         <common:TypedTemplateSelector x:Key="pwTemplateSelector"
                                  DefaultTemplateKey="Standard250x250ItemTemplate" />
-
-
         <DataTemplate x:Key="Type:PwGroup">
             <Grid Height="70" Margin="6" Width="250" Background="Blue">
                 <Grid.ColumnDefinitions>

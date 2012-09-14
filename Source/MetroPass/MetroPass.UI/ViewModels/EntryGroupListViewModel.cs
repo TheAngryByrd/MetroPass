@@ -13,8 +13,6 @@ namespace MetroPass.UI.ViewModels
         private readonly INavigationService _navigationService;
         private readonly ObservableCollection<PwGroup> _entryGroupsWithEntries;
 
-        private PwCommon _selectedPasswordItem;
-
         public EntryGroupListViewModel(INavigationService navigationService) : base(navigationService)
         {
             _navigationService = navigationService;
@@ -34,7 +32,8 @@ namespace MetroPass.UI.ViewModels
             }
         }
 
-       public PwCommon SelectedPasswordItem
+        private PwCommon _selectedPasswordItem;
+        public PwCommon SelectedPasswordItem
         {
             get { return _selectedPasswordItem; }
             set
@@ -42,8 +41,24 @@ namespace MetroPass.UI.ViewModels
                 _selectedPasswordItem=value;
                 if (value is PwGroup)
                 {
+                    ShowAppBar = false;
                     _navigationService.NavigateToViewModel<EntryGroupListViewModel, PwGroup>((PwGroup)value, vm => vm.Root);
                 }
+                else
+                {
+                    ShowAppBar = true;
+                }
+            }
+        }
+
+        private bool _showAppBar;
+        public bool ShowAppBar
+        {
+            get { return _showAppBar; }
+            set
+            {
+                _showAppBar = value;
+                NotifyOfPropertyChange(() => ShowAppBar);
             }
         }
 
