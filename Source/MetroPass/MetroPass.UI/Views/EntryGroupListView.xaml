@@ -12,7 +12,7 @@
 
     <Page.BottomAppBar>
         <AppBar VerticalAlignment="Bottom" x:Name="EntryAppBar" IsOpen="{Binding ShowAppBar}">
-            <StackPanel x:Name="EntryCommands" Orientation="Horizontal" HorizontalAlignment="Right" >
+            <StackPanel x:Name="EntryCommands" Orientation="Horizontal" HorizontalAlignment="Right" Visibility="{Binding ShowEntryCommands, Converter={StaticResource BoolVisibilityConverter}}" >
                 <Button x:Name="CopyUsername" Style="{StaticResource CopyAppBarButtonStyle}" AutomationProperties.Name="Copy Username"></Button>
                 <Button x:Name="CopyPassword" Style="{StaticResource PermissionsAppBarButtonStyle}" AutomationProperties.Name="Copy Password"></Button>
             </StackPanel>

@@ -51,6 +51,7 @@ namespace MetroPass.UI.ViewModels
                 {
                     ShowAppBar = true;
                 }
+                NotifyOfPropertyChange(() => ShowEntryCommands);
             }
         }
 
@@ -63,6 +64,11 @@ namespace MetroPass.UI.ViewModels
                 _showAppBar = value;
                 NotifyOfPropertyChange(() => ShowAppBar);
             }
+        }
+
+        public bool ShowEntryCommands
+        {
+            get { return _selectedPasswordItem is PwEntry; }
         }
 
         public async void CopyUsername()

@@ -5,6 +5,7 @@
     xmlns:local="using:MetroPass.UI"
     xmlns:localData="using:MetroPass.UI.Data"
     xmlns:caliburn="using:Caliburn.Micro"
+    xmlns:callisto="using:Callisto.Converters"
     >
 
     <Application.Resources>
@@ -22,6 +23,7 @@
             <!-- Application-specific resources -->
 
             <x:String x:Key="AppName">MetroPass</x:String>
+            <callisto:BooleanToVisibilityConverter x:Key="BoolVisibilityConverter" />
         </ResourceDictionary>
     </Application.Resources>
 </caliburn:CaliburnApplication>

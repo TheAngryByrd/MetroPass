@@ -194,6 +194,9 @@
     <Reference Include="Caliburn.Micro.Extensions">
       <HintPath>..\..\..\Libs\Caliburn.Micro.Extensions.dll</HintPath>
     </Reference>
+    <Reference Include="Callisto">
+      <HintPath>..\packages\Callisto.1.2.1\lib\winrt45\Callisto.dll</HintPath>
+    </Reference>
     <Reference Include="Ninject.Common">
       <HintPath>..\packages\Portable.Ninject.Common.3.0.1.11\lib\Ninject.Common.dll</HintPath>
     </Reference>
