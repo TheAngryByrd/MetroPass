@@ -48,7 +48,7 @@ namespace MetroPass.Core.Services
             return versionInfo.FileSignature1 == KdbConstants.FileSignature1 && versionInfo.FileSignature2 == KdbConstants.FileSignature2;
         }
 
-        private VersionInfo ReadVersionInfo(IDataReader kdbReader)
+        public VersionInfo ReadVersionInfo(IDataReader kdbReader)
         {
             var versionInfo = new VersionInfo();
             var readerBytes = new byte[4];

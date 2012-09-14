@@ -10,22 +10,27 @@ using Windows.Storage.Streams;
 using Windows.Security.Cryptography;
 using MetroPass.Core.Model;
 using MetroPass.Core.Model.Kdb4;
+using MetroPass.Core.Services;
 namespace MetroPass.Core.Tests.Services.Kdb4.Writer
 {
     [TestClass]
     public class KdbHeaderWriterShould
     {
         Kdb4HeaderWriter hw;
-        MemoryStream s;
-        IOutputStream outputStream;
+        InMemoryRandomAccessStream randomStream;
+
         IDataWriter dataWriter;
+        private const string PasswordDatabasePath = "Data\\Pass.kdbx";
+        private const string PasswordDatabasePassword = "UniquePassword";
         [TestInitialize]
         public void Init()
         {
              hw = new Kdb4HeaderWriter();
-             s = new MemoryStream();
-             outputStream = s.AsOutputStream();
-             dataWriter = new DataWriter(outputStream);
+             randomStream = new Windows.Storage.Streams.InMemoryRandomAccessStream();
+
+             dataWriter = new DataWriter(randomStream);
+             dataWriter.UnicodeEncoding = Windows.Storage.Streams.UnicodeEncoding.Utf8;
+
         }
 
         [TestMethod]
@@ -41,9 +46,29 @@ namespace MetroPass.Core.Tests.Services.Kdb4.Writer
         [TestMethod]
         public async Task WriteAllHeaders()
         {
-            var database = new PwDatabase(null);
-            var file = new Kdb4File(database);
-            await hw.WriteHeaders(dataWriter, file);
+            var database = (await Scenarios.LoadDatabase(PasswordDatabasePath, PasswordDatabasePassword, null));
+            var kdb4File = new Kdb4File(database);
+            kdb4File.pbMasterSeed = CryptographicBuffer.GenerateRandom(32);
+            kdb4File.pbTransformSeed = CryptographicBuffer.GenerateRandom(32);
+            kdb4File.pbEncryptionIV = CryptographicBuffer.GenerateRandom(16);
+            kdb4File.pbProtectedStreamKey = CryptographicBuffer.GenerateRandom(32);
+            kdb4File.pbStreamStartBytes = CryptographicBuffer.GenerateRandom(32);
+     
+
+            await hw.WriteHeaders(dataWriter, kdb4File);
+
+           await dataWriter.StoreAsync();
+
+           await dataWriter.FlushAsync();
+
+            dataWriter.DetachStream();
+            var data = randomStream.GetInputStreamAt(0);
+            var reader = new DataReader(data);
+            reader.UnicodeEncoding = Windows.Storage.Streams.UnicodeEncoding.Utf8;
+
+            await reader.LoadAsync((uint)randomStream.Size);
+            var factory = new KdbReaderFactory();
+            var headerinfo = factory.ReadVersionInfo(reader);
         }
     }
 }
