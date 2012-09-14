@@ -31,6 +31,7 @@ namespace MetroPass.UI
             ninjectContainer.RegisterWinRTServices();
 
             ninjectContainer.Kernel.Bind<IPageServices>().To<PageServices>();
+            ninjectContainer.Kernel.Bind<IClipboard>().To<MetroClipboard>();
         }
 
         protected override object GetInstance(Type service, string key)

@@ -126,6 +126,8 @@
     <Compile Include="Common\DelegateCommand.cs" />
     <Compile Include="Common\TypedTemplateSelector.cs" />
     <Compile Include="DataModel\KdbDatasource.cs" />
+    <Compile Include="Services\MetroClipboard.cs" />
+    <Compile Include="Services\IClipboard.cs" />
     <Compile Include="Services\IPageServices.cs" />
     <Compile Include="ViewModels\BaseScreen.cs" />
     <Compile Include="Views\EntryGroupListView.xaml.cs">
