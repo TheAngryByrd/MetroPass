@@ -43,39 +43,33 @@ namespace MetroPass.Core.Services.Kdb4.Writer
             var fs = await database.OpenTransactedWriteAsync();
             var outa = fs.Stream;
             var datawriter = new DataWriter(outa);
+            datawriter.ByteOrder = ByteOrder.LittleEndian;
 
            await _headerWriter.WriteHeaders(datawriter, kdb4File);
+           //datawriter.WriteBuffer(kdb4File.pbStreamStartBytes);
+           await datawriter.StoreAsync();
 
-           var aesKey = await databaseData.MasterKey.GenerateHashedKeyAsync(kdb4File.pbMasterSeed, kdb4File.pbTransformSeed, databaseData.KeyEncryptionRounds);
-           await outa.WriteAsync(kdb4File.pbStreamStartBytes);
-  
-  
-            var data = new Kdb4Persister().Persist(databaseData.Tree);
-            var encrypted = EncryptDatabase(data, aesKey);
-         
-            //await memoryStream2.WriteAsync(EncryptDatabase(data,aesKey));
-            var configuredStream = ConfigureStream(outa.AsStreamForWrite());
-           await configuredStream.WriteAsync(encrypted.AsBytes(), 0, (int)encrypted.Length);
+            var outStream = new MemoryStream();
+            await outStream.WriteAsync(kdb4File.pbStreamStartBytes.AsBytes(), 0, (int)kdb4File.pbStreamStartBytes.Length);
+            var configuredStream = ConfigureStream(outStream);      
 
+            var data = new Kdb4Persister().Persist(databaseData.Tree).AsBytes();
+            await configuredStream.WriteAsync(data, 0, data.Length);
 
+            configuredStream.Dispose();
+            var compressed = outStream.ToArray();
+            var aesKey = await databaseData.MasterKey.GenerateHashedKeyAsync(kdb4File.pbMasterSeed, kdb4File.pbTransformSeed, databaseData.KeyEncryptionRounds);
+            var encrypted = EncryptDatabase(compressed.AsBuffer(), aesKey).AsBytes();
+            datawriter.WriteBytes(encrypted);
+            await datawriter.StoreAsync();
+            await datawriter.FlushAsync();
 
-          //  XmlWriter.Create(configuredStream);
-
-          //  await configuredStream.WriteAsync(data.AsBytes(), 0, (int)data.Length);
-          //  //await configuredStream.FlushAsync();
-          //  var x = new DataWriter( configuredStream.AsOutputStream());
-          //  //await x.FlushAsync();
-           
-          //  var buff = x.DetachBuffer();
-          // // var bufferedData = new DataReader(configuredStream.AsInputStream()).DetachBuffer();
-          ////  var encryptedDatabase = EncryptDatabase(, aesKey);
            await fs.CommitAsync();
         }
 
         public Stream ConfigureStream(Stream stream)
         {
-
-
+            //Stream inputStream = stream;
             Stream inputStream = new HashedBlockStream(stream,true);
 
             if (kdb4File.pwDatabase.Compression == PwCompressionAlgorithm.GZip)

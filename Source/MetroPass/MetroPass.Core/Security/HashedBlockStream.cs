@@ -13,7 +13,7 @@ namespace MetroPass.Core.Security
     {
         private const int m_nDefaultBufferSize = 1024 * 1024; // 1 MB
 
-        private Stream m_sBaseStream;
+        public Stream m_sBaseStream;
         private bool m_bWriting;
         private bool m_bVerify;
         private bool m_bEos = false;
@@ -104,6 +104,35 @@ namespace MetroPass.Core.Security
         public override void Flush()
         {
             if (m_bWriting) m_bwOutput.Flush();
+        }
+        protected override void Dispose(bool disposing)
+        {
+            if (m_sBaseStream != null)
+            {
+                if (m_bWriting == false) // Reading mode
+                {
+
+                    m_brInput = null;
+                }
+                else // Writing mode
+                {
+                    if (m_nBufferPos == 0) // No data left in buffer
+                        WriteHashedBlock(); // Write terminating block
+                    else
+                    {
+                        WriteHashedBlock(); // Write remaining buffered data
+                        WriteHashedBlock(); // Write terminating block
+                    }
+
+                    Flush();
+
+                    m_bwOutput = null;
+                }
+
+
+                m_sBaseStream = null;
+            }
+            base.Dispose(disposing);
         }
 
         public void Close()

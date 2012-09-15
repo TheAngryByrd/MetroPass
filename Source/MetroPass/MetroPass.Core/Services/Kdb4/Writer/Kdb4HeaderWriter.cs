@@ -44,7 +44,7 @@ namespace MetroPass.Core.Services.Kdb4.Writer
             WriteHeaderField(dataWriter, Kdb4HeaderFieldID.ProtectedStreamKey, file.pbProtectedStreamKey);
             WriteHeaderField(dataWriter, Kdb4HeaderFieldID.StreamStartBytes, file.pbStreamStartBytes);
             var crsAlg = (uint)CrsAlgorithm.Salsa20;
-            WriteHeaderField(dataWriter, Kdb4HeaderFieldID.StreamStartBytes, BitConverter.GetBytes(crsAlg));
+            WriteHeaderField(dataWriter, Kdb4HeaderFieldID.InnerRandomStreamID, BitConverter.GetBytes(crsAlg));
             WriteHeaderField(dataWriter, Kdb4HeaderFieldID.EndOfHeader, new byte[] { (byte)'\r', (byte)'\n', (byte)'\r', (byte)'\n' });
 
 

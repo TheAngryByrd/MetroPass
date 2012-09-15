@@ -40,7 +40,7 @@ namespace MetroPass.Core.Tests.Services.Kdb4.Writer
 
             hw.WriteHeaderField(dataWriter, Model.Kdb4.Kdb4HeaderFieldID.MasterSeed, data);
 
-            Assert.AreEqual(dataWriter.UnstoredBufferLength, (uint)33);
+            Assert.AreEqual(dataWriter.UnstoredBufferLength, (uint)35);
         }
 
         [TestMethod]
@@ -70,5 +70,7 @@ namespace MetroPass.Core.Tests.Services.Kdb4.Writer
             var factory = new KdbReaderFactory();
             var headerinfo = factory.ReadVersionInfo(reader);
         }
+
+
     }
 }
