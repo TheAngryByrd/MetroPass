@@ -7,9 +7,11 @@ namespace MetroPass.UI.Services
 {
     public class MetroClipboard : IClipboard
     {
-        public Task CopyToClipboard(DataPackage data)
+        public Task CopyToClipboard(string textToCopy)
         {
-            Clipboard.SetContent(data);
+            var dataPackage = new DataPackage();
+            dataPackage.SetText(textToCopy);
+            Clipboard.SetContent(dataPackage);
             return ClearClipboard();
         }
 

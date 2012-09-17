@@ -1,12 +1,10 @@
-﻿using System.Diagnostics;
-using Caliburn.Micro;
+﻿using Caliburn.Micro;
 using MetroPass.Core.Model;
 using Framework;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using MetroPass.UI.Services;
-using Windows.ApplicationModel.DataTransfer;
 
 namespace MetroPass.UI.ViewModels
 {
@@ -83,9 +81,7 @@ namespace MetroPass.UI.ViewModels
             var entry = _selectedPasswordItem as PwEntry;
             if (entry != null)
             {
-                var dataPackage = new DataPackage();
-                dataPackage.SetText(entry.Username);
-                await _clipboard.CopyToClipboard(dataPackage);
+                await _clipboard.CopyToClipboard(entry.Username);
             }
         }
 
@@ -94,9 +90,7 @@ namespace MetroPass.UI.ViewModels
             var entry = _selectedPasswordItem as PwEntry;
             if (entry != null)
             {
-                var dataPackage = new DataPackage();
-                dataPackage.SetText(entry.Password);
-                await _clipboard.CopyToClipboard(dataPackage);
+                await _clipboard.CopyToClipboard(entry.Password);
             }
         }
 
