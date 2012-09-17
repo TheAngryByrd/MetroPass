@@ -17,6 +17,8 @@ using System.IO.Compression;
 using Windows.Security.Cryptography.Core;
 using MetroPass.Core.Model;
 using MetroPass.Core.Security;
+using MetroPass.Core.Helpers.Cipher;
+using MetroPass.Core.Helpers;
 
 namespace MetroPass.Core.Tests.Services
 {
@@ -247,7 +249,23 @@ namespace MetroPass.Core.Tests.Services
             var x = reader.ReadBuffer(32).AsBytes();
             CollectionAssert.AreEqual(starterBytes, x);
         }
+        [TestMethod]
+        public async Task TestProtectedDecrypt()
+        {
 
+            var protectedString = "QwzFTMLCpNY=";
+            var protectedStringBytes = Convert.FromBase64String(protectedString);
+
+           var rando = new CryptoRandomStream(CrsAlgorithm.Salsa20, Convert.FromBase64String("6tDlwZfwES4jAQzLisWdpNdnuTYyDZfflEdbshzdgi8="));
+           var getByte = rando.GetRandomBytes((uint)protectedStringBytes.Length);
+           byte[] pbPlain = new byte[protectedStringBytes.Length];
+
+
+           for (int i = 0; i < pbPlain.Length; ++i)
+               pbPlain[i] = (byte)(protectedStringBytes[i] ^ getByte[i]);
+
+           string mypass = UTF8Encoding.UTF8.GetString(pbPlain, 0, pbPlain.Length);
+        }
 
 
 
@@ -395,5 +413,6 @@ namespace MetroPass.Core.Tests.Services
 
             m_sBaseStream.Write(pbBuffer, nOffset, nCount);
         }
+
     }
 }

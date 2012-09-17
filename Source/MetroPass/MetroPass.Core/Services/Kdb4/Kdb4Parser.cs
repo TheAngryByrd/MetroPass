@@ -86,6 +86,8 @@ namespace MetroPass.Core.Services
 
         public static void DecodeXml(XElement root)
         {
+    
+            var protectedElements = root.Elements().Attributes("Protected");
             var attr = root.Attribute("Protected");
             if (attr != null && Convert.ToBoolean(attr.Value))
             {
