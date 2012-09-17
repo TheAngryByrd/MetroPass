@@ -1,4 +1,5 @@
-﻿using Caliburn.Micro;
+﻿using System.Diagnostics;
+using Caliburn.Micro;
 using MetroPass.Core.Model;
 using Framework;
 using System;
@@ -47,10 +48,11 @@ namespace MetroPass.UI.ViewModels
                     ShowAppBar = false;
                     _navigationService.NavigateToViewModel<EntryGroupListViewModel, PwGroup>((PwGroup)value, vm => vm.Root);
                 }
-                else
+                else if (value != null)
                 {
                     ShowAppBar = true;
                 }
+                NotifyOfPropertyChange(() => SelectedPasswordItem);
                 NotifyOfPropertyChange(() => ShowEntryCommands);
             }
         }
@@ -64,6 +66,11 @@ namespace MetroPass.UI.ViewModels
                 _showAppBar = value;
                 NotifyOfPropertyChange(() => ShowAppBar);
             }
+        }
+
+        public void DeselectItem()
+        {
+            SelectedPasswordItem = null;
         }
 
         public bool ShowEntryCommands

@@ -11,7 +11,7 @@
     mc:Ignorable="d">
 
     <Page.BottomAppBar>
-        <AppBar VerticalAlignment="Bottom" x:Name="EntryAppBar" IsOpen="{Binding ShowAppBar, Mode=TwoWay}">
+        <AppBar VerticalAlignment="Bottom" x:Name="EntryAppBar" IsOpen="{Binding ShowAppBar, Mode=TwoWay}" IsSticky="True" cal:Message.Attach="[Event Closed] = [Action DeselectItem]">
             <StackPanel x:Name="EntryCommands" Orientation="Horizontal" HorizontalAlignment="Right" Visibility="{Binding ShowEntryCommands, Converter={StaticResource BoolVisibilityConverter}}" >
                 <Button x:Name="CopyUsername" Style="{StaticResource CopyAppBarButtonStyle}" AutomationProperties.Name="Copy Username"></Button>
                 <Button x:Name="CopyPassword" Style="{StaticResource PermissionsAppBarButtonStyle}" AutomationProperties.Name="Copy Password"></Button>
@@ -81,9 +81,8 @@
             <Button x:Name="GoBack" Style="{StaticResource BackButtonStyle}"/>
             <TextBlock x:Name="pageTitle" Grid.Column="1" Text="{StaticResource AppName}" Style="{StaticResource PageHeaderTextStyle}"/>
         </Grid>
-
+        
         <ListView x:Name="itemListView" 
-            
                   Grid.Row="1"
                   Grid.RowSpan="1"
                   Padding="116,0,40,46"                 
@@ -91,10 +90,9 @@
                   ItemTemplateSelector="{StaticResource pwTemplateSelector}"
                   ItemsSource="{Binding Source={StaticResource groupedItemsViewSource}}" 
                   SelectionMode="Single"   
-                  IsItemClickEnabled="true"
+                  IsItemClickEnabled="False"
                   SelectedItem="{Binding SelectedPasswordItem, Mode=TwoWay}"
                   >
-
             <ListView.GroupStyle>
 
                 <GroupStyle>
