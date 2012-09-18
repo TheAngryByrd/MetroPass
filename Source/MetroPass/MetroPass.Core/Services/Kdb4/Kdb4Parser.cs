@@ -15,6 +15,7 @@ namespace MetroPass.Core.Services
     public class Kdb4Parser
     {
         public CryptoRandomStream _cryptoStream { get; set; }
+
         public Kdb4Parser(CryptoRandomStream crypto)
         {
             _cryptoStream = crypto;
@@ -84,14 +85,30 @@ namespace MetroPass.Core.Services
             return XDocument.Load(XmlReader.Create(readerStream, xrs));
         }
 
-        public static void DecodeXml(XElement root)
+        public void DecodeXml(XElement root)
         {
-    
-            var protectedElements = root.Elements().Attributes("Protected");
+
             var attr = root.Attribute("Protected");
             if (attr != null && Convert.ToBoolean(attr.Value))
             {
+                var protectedStringBytes = Convert.FromBase64String(root.Value);
+                int protectedByteLength = protectedStringBytes.Length;
+    
+           
+                var cipher = _cryptoStream.GetRandomBytes((uint)protectedByteLength);
+                byte[] pbPlain = new byte[protectedStringBytes.Length];
 
+
+                for (int i = 0; i < pbPlain.Length; ++i)
+                    pbPlain[i] = (byte)(protectedStringBytes[i] ^ cipher[i]);
+                
+                string mypass = UTF8Encoding.UTF8.GetString(pbPlain, 0, pbPlain.Length);
+                root.SetValue(mypass);
+            }
+
+            foreach (var node in  root.Elements())
+            {
+                DecodeXml(node);
             }
         }
 

@@ -1,17 +1,13 @@
 ﻿using MetroPass.Core.Helpers.Cipher;
 using MetroPass.Core.Model;
 using MetroPass.Core.Model.Kdb4;
-using MetroPass.Core.Model.Keys;
 using MetroPass.Core.Security;
-using MetroPass.Core.Helpers;
 using Framework;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Security;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage.Streams;
 using Windows.Security.Cryptography.Core;

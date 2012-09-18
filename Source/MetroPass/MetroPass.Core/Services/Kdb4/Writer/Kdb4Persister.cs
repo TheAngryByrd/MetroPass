@@ -10,13 +10,27 @@ using System.Threading.Tasks;
 using System.Xml;
 using Windows.Storage.Streams;
 using MetroPass.Core.Interfaces;
+using System.Xml.Linq;
+using MetroPass.Core.Helpers.Cipher;
 
 namespace MetroPass.Core.Services.Kdb4.Writer
 {
     public class Kdb4Persister
     {
+        private readonly CryptoRandomStream cryptoRandomStream;
+
+        public Kdb4Persister(CryptoRandomStream stream)
+        {
+            this.cryptoRandomStream = stream;
+        }
+
         public IBuffer Persist(IKdbTree tree)
         {
+
+            var root = tree.Document.Descendants("Root").First();
+
+            EncodeXml(root);
+
             MemoryStream ms = new MemoryStream();
 
             using (XmlWriter xw = XmlWriter.Create(ms))
@@ -25,6 +39,32 @@ namespace MetroPass.Core.Services.Kdb4.Writer
             }
 
             return ms.ToArray().AsBuffer() ;         
+        }
+
+        public void EncodeXml(XElement root)
+        {
+            var attr = root.Attribute("Protected");
+            if (attr != null && Convert.ToBoolean(attr.Value))
+            {
+                var protectedStringBytes = UTF8Encoding.UTF8.GetBytes(root.Value);
+                int protectedByteLength = protectedStringBytes.Length;
+
+
+                var cipher = cryptoRandomStream.GetRandomBytes((uint)protectedByteLength);
+                byte[] pbPlain = new byte[protectedStringBytes.Length];
+
+
+                for (int i = 0; i < pbPlain.Length; ++i)
+                    pbPlain[i] = (byte)(protectedStringBytes[i] ^ cipher[i]);
+
+                string mypass = Convert.ToBase64String(pbPlain);
+                root.SetValue(mypass);
+            }
+
+            foreach (var node in root.Elements())
+            {
+                EncodeXml(node);
+            }
         }
 
     }

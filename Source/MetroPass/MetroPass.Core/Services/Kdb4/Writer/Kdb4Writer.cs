@@ -51,9 +51,9 @@ namespace MetroPass.Core.Services.Kdb4.Writer
 
             var outStream = new MemoryStream();
             await outStream.WriteAsync(kdb4File.pbStreamStartBytes.AsBytes(), 0, (int)kdb4File.pbStreamStartBytes.Length);
-            var configuredStream = ConfigureStream(outStream);      
+            var configuredStream = ConfigureStream(outStream);
 
-            var data = new Kdb4Persister().Persist(databaseData.Tree).AsBytes();
+            var data = new Kdb4Persister(new CryptoRandomStream(CrsAlgorithm.Salsa20, kdb4File.pbProtectedStreamKey.AsBytes())).Persist(databaseData.Tree).AsBytes();
             await configuredStream.WriteAsync(data, 0, data.Length);
 
             configuredStream.Dispose();
@@ -79,6 +79,9 @@ namespace MetroPass.Core.Services.Kdb4.Writer
             return inputStream;
 
         }
+
+      
+
         public IBuffer EncryptDatabase(IBuffer source, IBuffer aesKey)
         {
             var symKeyProvider = SymmetricKeyAlgorithmProvider.OpenAlgorithm(SymmetricAlgorithmNames.AesCbcPkcs7);

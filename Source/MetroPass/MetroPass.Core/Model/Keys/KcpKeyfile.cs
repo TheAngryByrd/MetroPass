@@ -108,7 +108,7 @@ namespace MetroPass.Core.Model.Keys
                 XmlElement el = doc.DocumentElement;
 
                 if ((el == null) || !el.NodeName.Equals(RootElementName)) return null;
-                if (el.ChildNodes.Count < 2) return null;
+                if (el.ChildNodes.Count() < 2) return null;
 
                 foreach (var xmlChild in el.ChildNodes)
                 {
