@@ -32,8 +32,6 @@
 
                 <StackPanel Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,0,0,0" >
                     <TextBlock Text="{Binding Name}" Style="{StaticResource TitleTextStyle}" TextWrapping="NoWrap"/>
-
-
                 </StackPanel>
             </Grid>
         </DataTemplate>
@@ -84,7 +82,7 @@
         
         <SemanticZoom Grid.Row="1">
             <SemanticZoom.ZoomedInView>
-                <GridView x:Name="itemGridView" 
+                <GridView x:Name="zoomedInEntries" 
                     Padding="116,0,40,46"
                     ItemsPanel="{StaticResource HorizontalItemPanelTemplate}"
                     ItemTemplateSelector="{StaticResource pwTemplateSelector}"
@@ -98,7 +96,6 @@
                             <GroupStyle.ContainerStyle>
                                 <Style x:Name="ABC" TargetType="FrameworkElement">
                                     <Setter Property="Width" Value="Auto"></Setter>
-                                    <!--<Setter Property="Margin" Value="0,0,30,15"/>-->
                                 </Style>
                             </GroupStyle.ContainerStyle>
                             <GroupStyle.Panel>
@@ -122,6 +119,36 @@
                     </GridView.GroupStyle>
                 </GridView>
             </SemanticZoom.ZoomedInView>
+            <SemanticZoom.ZoomedOutView>
+                <GridView x:Name="zoomedOutEntries"
+                          Margin="116,0,40,46"
+                          ItemsSource="{Binding GroupsOnThisLevel}"
+                          ItemsPanel="{StaticResource HorizontalItemPanelTemplate}">
+                    <GridView.ItemTemplate>
+                        <DataTemplate>
+                            <Border Padding="10" Background="Blue" cal:Message.Attach="[Event Tapped] = [Action SelectGroup($dataContext)]">
+                                <Grid Width="Auto" Height="Auto">
+                                    <StackPanel Orientation="Vertical">
+                                        <TextBlock Text="{Binding Name}" Style="{StaticResource TitleTextStyle}" FontSize="28" Margin="12"/>
+                                        <TextBlock Style="{StaticResource TitleTextStyle}" FontSize="18" Margin="12">
+                                            <TextBlock.Inlines>
+                                                <Run Text="{Binding EntryCount}" />
+                                                <Run Text=" passwords" />
+                                            </TextBlock.Inlines>
+                                        </TextBlock>
+                                        <TextBlock Style="{StaticResource TitleTextStyle}" FontSize="18" Margin="12">
+                                            <TextBlock.Inlines>
+                                                <Run Text="{Binding SubGroupCount}" />
+                                                <Run Text=" subgroups" />
+                                            </TextBlock.Inlines>
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </GridView.ItemTemplate>
+                </GridView>
+            </SemanticZoom.ZoomedOutView>
         </SemanticZoom>
 
         <VisualStateManager.VisualStateGroups>

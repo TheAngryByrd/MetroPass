@@ -21,9 +21,19 @@ namespace MetroPass.Core.Model
             get { return _entries; }
         }
 
+        public int EntryCount
+        {
+            get { return _entries.Count(); }
+        }
+
         public IEnumerable<PwGroup> SubGroups
         {
             get { return this._subGroups; }
+        }
+
+        public int SubGroupCount
+        {
+            get { return _subGroups.Count(); }
         }
 
         public IEnumerable<PwCommon> AllTogetherNow

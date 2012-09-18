@@ -1,4 +1,5 @@
-﻿using Caliburn.Micro;
+﻿using System.Collections.Generic;
+using Caliburn.Micro;
 using MetroPass.Core.Model;
 using Framework;
 using System;
@@ -110,6 +111,16 @@ namespace MetroPass.UI.ViewModels
 
                 return temp;
             }
+        }
+
+        public IEnumerable<PwGroup> GroupsOnThisLevel
+        {
+            get { return Root.SubGroups; }
+        }
+
+        public void SelectGroup(PwGroup selectedGroup)
+        {
+            _navigationService.NavigateToViewModel<EntryGroupListViewModel, PwGroup>(selectedGroup, vm => vm.Root);
         }
     }
 }
