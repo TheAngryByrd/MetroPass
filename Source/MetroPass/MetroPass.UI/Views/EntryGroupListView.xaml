@@ -82,48 +82,47 @@
             <TextBlock x:Name="pageTitle" Grid.Column="1" Text="{StaticResource AppName}" Style="{StaticResource PageHeaderTextStyle}"/>
         </Grid>
         
-        <ScrollViewer VerticalScrollBarVisibility="Auto"
-                      VerticalScrollMode="Enabled"
-                      Grid.Row="1"
-                      Padding="116,0,40,46"
-                      Height="Auto">
-            <ListView x:Name="itemListView" 
-                      ItemsPanel="{StaticResource HorizontalItemPanelTemplate}"
-                      ItemTemplateSelector="{StaticResource pwTemplateSelector}"
-                      ItemsSource="{Binding Source={StaticResource groupedItemsViewSource}}" 
-                      SelectionMode="Single"   
-                      IsItemClickEnabled="False"
-                      SelectedItem="{Binding SelectedPasswordItem, Mode=TwoWay}"
-                      >
-                <ListView.GroupStyle>
-
-                    <GroupStyle>
-                        <GroupStyle.ContainerStyle>
-                            <Style x:Name="ABC" TargetType="FrameworkElement">
-                                <Setter Property="Width" Value="Auto"></Setter>
-                                <Setter Property="Margin" Value="0,0,30,15"/>
-                            </Style>
-                        </GroupStyle.ContainerStyle>
-                        <GroupStyle.HeaderTemplate>
-
-                            <DataTemplate>
-
-                                <Button Width="250"
-                                        AutomationProperties.Name="Group Title"                                    
-                                        Style="{StaticResource TextPrimaryButtonStyle}" >
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="{Binding Name}" Margin="3,-7,10,10" Style="{StaticResource GroupHeaderTextStyle}" />
-                                        <TextBlock Text="{StaticResource ChevronGlyph}" FontFamily="Segoe UI Symbol" Margin="0,-7,0,10" Style="{StaticResource GroupHeaderTextStyle}"/>
-                                    </StackPanel>
-                                </Button>
-                            </DataTemplate>
-                        </GroupStyle.HeaderTemplate>
-                    </GroupStyle>
-                </ListView.GroupStyle>
-
-            </ListView>
-        </ScrollViewer>
-        
+        <SemanticZoom Grid.Row="1">
+            <SemanticZoom.ZoomedInView>
+                <GridView x:Name="itemGridView" 
+                    Padding="116,0,40,46"
+                    ItemsPanel="{StaticResource HorizontalItemPanelTemplate}"
+                    ItemTemplateSelector="{StaticResource pwTemplateSelector}"
+                    ItemsSource="{Binding Source={StaticResource groupedItemsViewSource}}" 
+                    SelectionMode="Single"   
+                    IsItemClickEnabled="False"
+                    SelectedItem="{Binding SelectedPasswordItem, Mode=TwoWay}"
+                    >
+                    <GridView.GroupStyle>
+                        <GroupStyle>
+                            <GroupStyle.ContainerStyle>
+                                <Style x:Name="ABC" TargetType="FrameworkElement">
+                                    <Setter Property="Width" Value="Auto"></Setter>
+                                    <!--<Setter Property="Margin" Value="0,0,30,15"/>-->
+                                </Style>
+                            </GroupStyle.ContainerStyle>
+                            <GroupStyle.Panel>
+                                <ItemsPanelTemplate>
+                                    <VariableSizedWrapGrid Orientation="Vertical" Margin="0,0,40,0"/>
+                                </ItemsPanelTemplate>
+                            </GroupStyle.Panel>
+                            <GroupStyle.HeaderTemplate>
+                                <DataTemplate>
+                                    <Button Width="250"
+                                    AutomationProperties.Name="Group Title"                                    
+                                    Style="{StaticResource TextPrimaryButtonStyle}" >
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding Name}" Margin="3,-7,10,10" Style="{StaticResource GroupHeaderTextStyle}" />
+                                            <TextBlock Text="{StaticResource ChevronGlyph}" FontFamily="Segoe UI Symbol" Margin="0,-7,0,10" Style="{StaticResource GroupHeaderTextStyle}"/>
+                                        </StackPanel>
+                                    </Button>
+                                </DataTemplate>
+                            </GroupStyle.HeaderTemplate>
+                        </GroupStyle>
+                    </GridView.GroupStyle>
+                </GridView>
+            </SemanticZoom.ZoomedInView>
+        </SemanticZoom>
 
         <VisualStateManager.VisualStateGroups>
 
