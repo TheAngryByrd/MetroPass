@@ -122,6 +122,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Common\BindableBase.cs" />
     <Compile Include="Common\NinjectContainer.cs" />
     <Compile Include="Common\DelegateCommand.cs" />
     <Compile Include="Common\TypedTemplateSelector.cs" />
@@ -130,8 +131,12 @@
     <Compile Include="Services\IClipboard.cs" />
     <Compile Include="Services\IPageServices.cs" />
     <Compile Include="ViewModels\BaseScreen.cs" />
+    <Compile Include="ViewModels\GroupEditView.cs" />
     <Compile Include="Views\EntryGroupListView.xaml.cs">
       <DependentUpon>EntryGroupListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\GroupEditView.xaml.cs">
+      <DependentUpon>GroupEditView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\LoadKdbView.xaml.cs">
       <DependentUpon>LoadKdbView.xaml</DependentUpon>
@@ -179,6 +184,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\EntryGroupListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\GroupEditView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
