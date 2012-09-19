@@ -12,9 +12,14 @@
 
     <Page.BottomAppBar>
         <AppBar VerticalAlignment="Bottom" x:Name="EntryAppBar" IsOpen="{Binding ShowAppBar, Mode=TwoWay}" IsSticky="True" cal:Message.Attach="[Event Closed] = [Action DeselectItem]">
-            <StackPanel x:Name="EntryCommands" Orientation="Horizontal" HorizontalAlignment="Right" Visibility="{Binding ShowEntryCommands, Converter={StaticResource BoolVisibilityConverter}}" >
-                <Button x:Name="CopyUsername" Style="{StaticResource CopyAppBarButtonStyle}" AutomationProperties.Name="Copy Username"></Button>
-                <Button x:Name="CopyPassword" Style="{StaticResource PermissionsAppBarButtonStyle}" AutomationProperties.Name="Copy Password"></Button>
+            <StackPanel>
+                <StackPanel x:Name="GroupCommands" HorizontalAlignment="Left">
+                    <Button x:Name="EditGroup" Style="{StaticResource EditAppBarButtonStyle}" AutomationProperties.Name="Edit Group"></Button>
+                </StackPanel>
+                <StackPanel x:Name="EntryCommands" Orientation="Horizontal" HorizontalAlignment="Right" Visibility="{Binding ShowEntryCommands, Converter={StaticResource BoolVisibilityConverter}}" >
+                    <Button x:Name="CopyUsername" Style="{StaticResource CopyAppBarButtonStyle}" AutomationProperties.Name="Copy Username"></Button>
+                    <Button x:Name="CopyPassword" Style="{StaticResource PermissionsAppBarButtonStyle}" AutomationProperties.Name="Copy Password"></Button>
+                </StackPanel>
             </StackPanel>
         </AppBar>
     </Page.BottomAppBar>

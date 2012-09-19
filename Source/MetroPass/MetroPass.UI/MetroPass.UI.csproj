@@ -122,7 +122,6 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Common\BindableBase.cs" />
     <Compile Include="Common\NinjectContainer.cs" />
     <Compile Include="Common\DelegateCommand.cs" />
     <Compile Include="Common\TypedTemplateSelector.cs" />
@@ -131,7 +130,7 @@
     <Compile Include="Services\IClipboard.cs" />
     <Compile Include="Services\IPageServices.cs" />
     <Compile Include="ViewModels\BaseScreen.cs" />
-    <Compile Include="ViewModels\GroupEditView.cs" />
+    <Compile Include="ViewModels\GroupEditViewModel.cs" />
     <Compile Include="Views\EntryGroupListView.xaml.cs">
       <DependentUpon>EntryGroupListView.xaml</DependentUpon>
     </Compile>

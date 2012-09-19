@@ -11,11 +11,11 @@ namespace MetroPass.UI.ViewModels
 {
     public class GroupEditViewModel : BaseScreen
     {
-        private readonly IPageServices pageServices;
+     
 
-        public GroupEditViewModel(IPageServices pageServices, INavigationService navigationService) : base(navigationService)
+        public GroupEditViewModel( INavigationService navigationService) : base(navigationService)
         {
-            this.pageServices = pageServices;
+        
         }
         PwGroup pwGroup;
 
@@ -31,8 +31,6 @@ namespace MetroPass.UI.ViewModels
                 NotifyOfPropertyChange(() => Group);
             }
         }
-
-        private string myVar;
 
         public string GroupName
         {

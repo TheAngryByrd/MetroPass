@@ -56,6 +56,11 @@ namespace MetroPass.UI.ViewModels
             }
         }
 
+        public  void EditGroup()
+        {
+            _navigationService.NavigateToViewModel<GroupEditViewModel, PwGroup>(Root, vm => vm.Group);
+        }
+
         private bool _showAppBar;
         public bool ShowAppBar
         {
