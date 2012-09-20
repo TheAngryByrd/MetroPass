@@ -1,5 +1,6 @@
 ﻿using Caliburn.Micro;
 using MetroPass.Core.Model;
+using MetroPass.UI.DataModel;
 using MetroPass.UI.Services;
 using System;
 using System.Collections.Generic;
@@ -40,6 +41,12 @@ namespace MetroPass.UI.ViewModels
             	Group.Name = value;
                 NotifyOfPropertyChange(() => GroupName);
             }
+        
+        }
+
+        public async void Save()
+        {        	
+            PWDatabaseDataSource.Instance.SavePwDatabase();
         }
 
     }
