@@ -29,11 +29,19 @@ namespace MetroPass.UI.ViewModels
         protected override void OnViewAttached(object view, object context)
         {
             base.OnViewAttached(view, context);
+            var page = (Page)view;
 
             Window.Current.SizeChanged += (o, e) =>
             {
-                VisualStateManager.GoToState((Control)view, ApplicationView.Value.ToString(), true);
+                SetState(page, ApplicationView.Value);
             };
+
+            SetState(page, ApplicationView.Value);
+        }
+
+        private void SetState(Control view, ApplicationViewState state)
+        {
+            VisualStateManager.GoToState(view, state.ToString(), true);
         }
     }
 }
