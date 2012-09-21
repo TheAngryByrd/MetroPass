@@ -123,6 +123,16 @@ namespace MetroPass.UI.ViewModels
             get { return Root.SubGroups; }
         }
 
+        public IEnumerable<PwEntry> EntriesOnThisLevel
+        {
+            get { return Root.Entries; }
+        }
+
+        public IEnumerable<PwCommon> FlatList
+        {
+            get { return GroupsOnThisLevel.Cast<PwCommon>().Union(EntriesOnThisLevel); }
+        }
+
         public void SelectGroup(PwGroup selectedGroup)
         {
             _navigationService.NavigateToViewModel<EntryGroupListViewModel, PwGroup>(selectedGroup, vm => vm.Root);

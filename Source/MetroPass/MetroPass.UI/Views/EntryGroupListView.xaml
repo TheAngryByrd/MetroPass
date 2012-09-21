@@ -85,7 +85,7 @@
             <TextBlock x:Name="pageTitle" Grid.Column="1" Text="{StaticResource AppName}" Style="{StaticResource PageHeaderTextStyle}"/>
         </Grid>
         
-        <SemanticZoom Grid.Row="1">
+        <SemanticZoom x:Name="groupedList" Grid.Row="1">
             <SemanticZoom.ZoomedInView>
                 <GridView x:Name="zoomedInEntries" 
                     Padding="116,0,40,46"
@@ -155,6 +155,30 @@
                 </GridView>
             </SemanticZoom.ZoomedOutView>
         </SemanticZoom>
+        
+        <ListView x:Name="snappedList"
+                  Grid.Row="1"
+                  Padding="116,0,40,46"
+                  ItemTemplateSelector="{StaticResource pwTemplateSelector}"
+                  ItemsSource="{Binding FlatList}" 
+                  SelectionMode="Single"   
+                  IsItemClickEnabled="False"
+                  SelectedItem="{Binding SelectedPasswordItem, Mode=TwoWay}"
+                  Visibility="Collapsed"
+        >
+            <ListView.HeaderTemplate>
+                <DataTemplate>
+                    <Button Width="250"
+                                    AutomationProperties.Name="Group Title"                                    
+                                    Style="{StaticResource TextPrimaryButtonStyle}" >
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Root.Name}" Margin="3,-7,10,10" Style="{StaticResource GroupHeaderTextStyle}" />
+                            <TextBlock Text="{StaticResource ChevronGlyph}" FontFamily="Segoe UI Symbol" Margin="0,-7,0,10" Style="{StaticResource GroupHeaderTextStyle}"/>
+                        </StackPanel>
+                    </Button>
+                </DataTemplate>
+            </ListView.HeaderTemplate>
+        </ListView>
 
         <VisualStateManager.VisualStateGroups>
 
@@ -166,7 +190,7 @@
                 <!-- The entire page respects the narrower 100-pixel margin convention for portrait -->
                 <VisualState x:Name="FullScreenPortrait">
                     <Storyboard>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="backButton" Storyboard.TargetProperty="Style">
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="GoBack" Storyboard.TargetProperty="Style">
                             <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource PortraitBackButtonStyle}"/>
                         </ObjectAnimationUsingKeyFrames>
 
@@ -176,20 +200,18 @@
                 <!-- The back button and title have different styles when snapped -->
                 <VisualState x:Name="Snapped">
                     <Storyboard>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="backButton" Storyboard.TargetProperty="Style">
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="GoBack" Storyboard.TargetProperty="Style">
                             <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource SnappedBackButtonStyle}"/>
                         </ObjectAnimationUsingKeyFrames>
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="pageTitle" Storyboard.TargetProperty="Style">
                             <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource SnappedPageHeaderTextStyle}"/>
                         </ObjectAnimationUsingKeyFrames>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="itemListView" Storyboard.TargetProperty="ItemsPanel">
-                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource VerticalItemPanelTemplate}"/>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="groupedList" Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed"/>
                         </ObjectAnimationUsingKeyFrames>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="itemListView" Storyboard.TargetProperty="Padding">
-                            <DiscreteObjectKeyFrame KeyTime="0" Value="18,0,0,0"/>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="snappedList" Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Visible"/>
                         </ObjectAnimationUsingKeyFrames>
-
-
                     </Storyboard>
 
                 </VisualState>
