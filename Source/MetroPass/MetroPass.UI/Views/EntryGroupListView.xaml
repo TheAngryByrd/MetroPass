@@ -159,7 +159,7 @@
         
         <ListView x:Name="snappedList"
                   Grid.Row="1"
-                  Padding="116,0,40,46"
+                  Padding="50,0,40,46"
                   ItemTemplateSelector="{StaticResource pwTemplateSelector}"
                   ItemsSource="{Binding FlatList}" 
                   SelectionMode="Single"   
