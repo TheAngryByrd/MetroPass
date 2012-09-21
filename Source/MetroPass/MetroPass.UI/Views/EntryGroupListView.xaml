@@ -111,6 +111,7 @@
                             <GroupStyle.HeaderTemplate>
                                 <DataTemplate>
                                     <Button Width="250"
+                                            cal:Message.Attach="SelectGroup($dataContext)"
                                     AutomationProperties.Name="Group Title"                                    
                                     Style="{StaticResource TextPrimaryButtonStyle}" >
                                         <StackPanel Orientation="Horizontal">
