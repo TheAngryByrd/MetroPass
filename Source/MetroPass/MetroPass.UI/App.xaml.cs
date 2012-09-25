@@ -35,7 +35,7 @@ namespace MetroPass.UI
         }
 
         protected override object GetInstance(Type service, string key)
-       {    
+        {    
             var instance = ninjectContainer.Kernel.Get(service, key); 
             return instance;
         }
@@ -67,6 +67,13 @@ namespace MetroPass.UI
             var deferral = e.SuspendingOperation.GetDeferral();
             await SuspensionManager.SaveAsync();
             deferral.Complete();
+        }
+
+        protected override void OnSearchActivated(Windows.ApplicationModel.Activation.SearchActivatedEventArgs args)
+        {
+            var navigationService = ninjectContainer.Kernel.Get<INavigationService>();
+
+            navigationService.NavigateToViewModel<SearchResultsViewModel, string>(args.QueryText, vm => vm.QueryText);
         }
     }
 }
