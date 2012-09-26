@@ -15,6 +15,19 @@
         <CollectionViewSource x:Name="filtersViewSource" Source="{Binding Filters}"/>
         <caliburn:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         <x:String x:Key="AppName">MetroPass</x:String>
+
+        <DataTemplate x:Key="SearchResultItemTemplate">
+            <Grid Height="70" Margin="6" Width="250" Background="Teal">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,0,0,0" >
+                    <TextBlock Text="{Binding Title}" Style="{StaticResource TitleTextStyle}" TextWrapping="NoWrap"/>
+                    <TextBlock Text="{Binding Username}" Style="{StaticResource CaptionTextStyle}" TextWrapping="NoWrap"/>
+                </StackPanel>
+            </Grid>
+        </DataTemplate>
     </Page.Resources>
 
     <!--
@@ -41,17 +54,15 @@
             <TextBlock x:Name="resultText" Grid.Column="2" Text="Results for&#x00a0;" IsHitTestVisible="false" Style="{StaticResource PageSubheaderTextStyle}"/>
             <TextBlock x:Name="queryText" Grid.Column="3" Text="{Binding QueryText}" IsHitTestVisible="false" Style="{StaticResource PageSubheaderTextStyle}"/>
         </Grid>
-        
-        <TextBlock Grid.Row="1">Search All The Things!</TextBlock>
 
-        <!--<Grid x:Name="resultsPanel" Grid.Row="1">
+        <Grid x:Name="resultsPanel" Grid.Row="1">
             <Grid x:Name="typicalPanel">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <ItemsControl
+                <!--<ItemsControl
                     x:Name="filtersItemsControl"
                     Canvas.ZIndex="1"
                     ItemsSource="{Binding Source={StaticResource filtersViewSource}}"
@@ -73,7 +84,7 @@
                             </RadioButton>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
-                </ItemsControl>
+                </ItemsControl>-->
 
                 <GridView
                     x:Name="resultsGridView"
@@ -87,7 +98,7 @@
                     IsSwipeEnabled="false"
                     IsItemClickEnabled="True"
                     ItemsSource="{Binding Source={StaticResource resultsViewSource}}"
-                    ItemTemplate="{StaticResource StandardSmallIcon300x70ItemTemplate}">
+                    ItemTemplate="{StaticResource SearchResultItemTemplate}">
                     
                     <GridView.ItemContainerStyle>
                         <Style TargetType="Control">
@@ -98,7 +109,7 @@
                 </GridView>
             </Grid>
 
-            <Grid x:Name="snappedPanel" Visibility="Collapsed">
+            <!--<Grid x:Name="snappedPanel" Visibility="Collapsed">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
@@ -131,7 +142,7 @@
                         </Style>
                     </ListView.ItemContainerStyle>
                 </ListView>
-            </Grid>
+            </Grid>-->
         </Grid>
 
         <TextBlock
@@ -140,7 +151,7 @@
             Margin="120,50,0,0"
             Visibility="Collapsed"
             Style="{StaticResource SubheaderTextStyle}"
-            Text="No results match your search." />-->
+            Text="No results match your search." />
 
         <VisualStateManager.VisualStateGroups>
 
