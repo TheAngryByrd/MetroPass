@@ -4,6 +4,7 @@ using MetroPass.UI.DataModel;
 using MetroPass.UI.Services;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,6 +34,7 @@ namespace MetroPass.UI.ViewModels
             }
         }
 
+        [Required(ErrorMessage="Group name is required")]
         public string GroupName
         {
             get { return Group.Name; }

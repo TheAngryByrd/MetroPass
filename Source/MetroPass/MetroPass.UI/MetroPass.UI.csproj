@@ -135,6 +135,9 @@
     <Compile Include="Services\IPageServices.cs" />
     <Compile Include="ViewModels\BaseScreen.cs" />
     <Compile Include="ViewModels\GroupEditViewModel.cs" />
+    <Compile Include="Views\EntryEditView.xaml.cs">
+      <DependentUpon>EntryEditView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\EntryGroupListView.xaml.cs">
       <DependentUpon>EntryGroupListView.xaml</DependentUpon>
     </Compile>
@@ -185,6 +188,7 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\SearchResultsView.xaml">
+    <Page Include="Views\EntryEditView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
