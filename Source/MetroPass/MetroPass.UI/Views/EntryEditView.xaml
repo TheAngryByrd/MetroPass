@@ -37,6 +37,36 @@
             <TextBlock x:Name="pageTitle" Grid.Column="1" Text="{StaticResource AppName}" Style="{StaticResource PageHeaderTextStyle}"/>
         </Grid>
 
+        <Grid Grid.Row="2" Margin="36,0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Column="0" VerticalAlignment="Center" Grid.Row="0" Text="Title:" Margin="10" FontSize="24"/>
+                <TextBox Grid.Column="1" Grid.Row="0" Name="Title" Width="300" Margin="10" FontSize="20"/>
+                <TextBlock Grid.Column="0" VerticalAlignment="Center" Grid.Row="1" Text="Username:" Margin="10" FontSize="24"/>
+                <TextBox Grid.Column="1" Grid.Row="1" Name="Username" Width="300" Margin="10" FontSize="20"/>
+                <TextBlock Grid.Column="0" VerticalAlignment="Center" Grid.Row="2" Text="Password:" Margin="10" FontSize="24"/>
+                <TextBox Grid.Column="1" Grid.Row="2" Name="Password" Width="300" Margin="10" FontSize="20"/>
+                <TextBlock Grid.Column="0" VerticalAlignment="Center" Grid.Row="3" Text="Confirm:" Margin="10" FontSize="24"/>
+                <TextBox Grid.Column="1" Grid.Row="3" Name="Confirm" Width="300" Margin="10" FontSize="20"/>
+                <TextBlock Grid.Column="0" VerticalAlignment="Center" Grid.Row="4" Text="URL:" Margin="10" FontSize="24"/>
+                <TextBox Grid.Column="1" Grid.Row="4" Name="URL" Width="300" Margin="10" FontSize="20"/>
+                <TextBlock Grid.Column="0" VerticalAlignment="Top" Grid.Row="5" Text="Notes:" Margin="10" FontSize="24"/>
+                <TextBox Grid.Column="1" Grid.Row="5" Name="Notes" Width="300" Margin="10" FontSize="20" Height="300"/>
+                <Button Grid.Column="1" Grid.Row="6" Name="Save" Margin="10" Content="Save" Width="100" Height="50" FontSize="24"/>
+            </Grid>
+        </Grid>
         <VisualStateManager.VisualStateGroups>
 
             <!-- Visual states reflect the application's view state -->

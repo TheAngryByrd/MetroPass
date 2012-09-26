@@ -127,9 +127,6 @@
     <Compile Include="DataModel\KdbDatasource.cs" />
     <Compile Include="Common\EnumerableExtensions.cs" />
     <Compile Include="ViewModels\SearchResultsViewModel.cs" />
-    <Compile Include="Views\SearchResultsView.xaml.cs">
-      <DependentUpon>SearchResultsView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Services\MetroClipboard.cs" />
     <Compile Include="Services\IClipboard.cs" />
     <Compile Include="Services\IPageServices.cs" />
@@ -187,7 +184,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\SearchResultsView.xaml">
     <Page Include="Views\EntryEditView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
