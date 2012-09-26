@@ -22,7 +22,7 @@ namespace MetroPass.UI.ViewModels
             {
                 this._queryText = value;
                 NotifyOfPropertyChange(() => QueryText);
-                //SearchEntries();
+                SearchEntries();
             }
         }
 
