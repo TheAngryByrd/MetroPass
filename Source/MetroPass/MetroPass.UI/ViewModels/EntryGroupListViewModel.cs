@@ -56,9 +56,19 @@ namespace MetroPass.UI.ViewModels
             }
         }
 
+        public void SelectGroup(PwGroup selectedGroup)
+        {
+            _navigationService.NavigateToViewModel<EntryGroupListViewModel, PwGroup>(selectedGroup, vm => vm.Root);
+        }
+
         public  void EditGroup()
         {
             _navigationService.NavigateToViewModel<GroupEditViewModel, PwGroup>(Root, vm => vm.Group);
+        }
+
+        public void EditEntry()
+        {
+            _navigationService.NavigateToViewModel<EntryEditViewModel, PwEntry>((PwEntry)SelectedPasswordItem, vm => vm.Entry);
         }
 
         private bool _showAppBar;
@@ -131,11 +141,6 @@ namespace MetroPass.UI.ViewModels
         public IEnumerable<PwCommon> FlatList
         {
             get { return GroupsOnThisLevel.Cast<PwCommon>().Union(EntriesOnThisLevel); }
-        }
-
-        public void SelectGroup(PwGroup selectedGroup)
-        {
-            _navigationService.NavigateToViewModel<EntryGroupListViewModel, PwGroup>(selectedGroup, vm => vm.Root);
         }
     }
 }
