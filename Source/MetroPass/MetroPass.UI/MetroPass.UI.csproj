@@ -152,6 +152,9 @@
     <Compile Include="Services\PageServices.cs" />
     <Compile Include="ViewModels\EntryGroupListViewModel.cs" />
     <Compile Include="ViewModels\LoadKdbViewModel.cs" />
+    <Compile Include="Views\SearchResultsView.xaml.cs">
+      <DependentUpon>SearchResultsView.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -200,6 +203,10 @@
     <Page Include="Views\LoadKdbView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SearchResultsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
