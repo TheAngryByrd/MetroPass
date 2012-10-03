@@ -16,6 +16,8 @@ namespace MetroPass.UI.ViewModels
             this._navigationService=navigationService;
         }
 
+        protected Page View { get; private set;}
+
         public void GoBack()
         {
             _navigationService.GoBack();
@@ -29,19 +31,24 @@ namespace MetroPass.UI.ViewModels
         protected override void OnViewAttached(object view, object context)
         {
             base.OnViewAttached(view, context);
-            var page = (Page)view;
+            View = (Page)view;
 
             Window.Current.SizeChanged += (o, e) =>
             {
-                SetState(page, ApplicationView.Value);
+                SetState(ApplicationView.Value);
             };
 
-            SetState(page, ApplicationView.Value);
+            SetState(ApplicationView.Value);
         }
 
-        private void SetState(Control view, ApplicationViewState state)
+        protected void SetState(ApplicationViewState state)
         {
-            VisualStateManager.GoToState(view, state.ToString(), true);
+            SetState(state.ToString());
+        }
+
+        protected void SetState(string state)
+        {
+            VisualStateManager.GoToState(View, state, true);
         }
     }
 }

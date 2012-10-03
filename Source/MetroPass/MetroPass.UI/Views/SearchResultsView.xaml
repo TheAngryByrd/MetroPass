@@ -11,7 +11,7 @@
     d:ExtensionType="Search">
 
     <Page.Resources>
-        <CollectionViewSource x:Name="resultsViewSource" Source="{Binding Results}" IsSourceGrouped="False"/>
+        <!--<CollectionViewSource x:Name="resultsViewSource" Source="{Binding Results}" IsSourceGrouped="False"/>-->
         <!--<CollectionViewSource x:Name="filtersViewSource" Source="{Binding Filters}"/>-->
         <caliburn:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         <x:String x:Key="AppName">MetroPass</x:String>
@@ -30,18 +30,12 @@
         </DataTemplate>
     </Page.Resources>
 
-    <!--
-        This grid acts as a root panel for the page that defines two rows:
-        * Row 0 contains the back button and page title
-        * Row 1 contains the rest of the page layout
-    -->
     <Grid Style="{StaticResource LayoutRootStyle}">
         <Grid.RowDefinitions>
             <RowDefinition Height="140"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- Back button, page title and subtitles-->
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
@@ -91,11 +85,10 @@
                     AutomationProperties.AutomationId="ResultsGridView"
                     AutomationProperties.Name="Search Results"
                     Grid.Row="1"
-                    Margin="0,-238,0,0"
-                    Padding="110,240,110,46"
+                    Padding="110,46,110,46"
                     SelectionMode="None"
                     IsItemClickEnabled="True"
-                    ItemsSource="{Binding Source={StaticResource resultsViewSource}}"
+                    ItemsSource="{Binding Results}"
                     ItemTemplate="{StaticResource SearchResultsItemTemplate}">
                     
                     <GridView.ItemContainerStyle>
@@ -107,17 +100,17 @@
                 </GridView>
             </Grid>
 
-            <!--<Grid x:Name="snappedPanel" Visibility="Collapsed">
+            <Grid x:Name="snappedPanel" Visibility="Collapsed">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <ComboBox
+                <!--<ComboBox
                     ItemsSource="{Binding Source={StaticResource filtersViewSource}}"
                     Visibility="{Binding ShowFilters, Converter={StaticResource BooleanToVisibilityConverter}}"
                     Margin="20,0,20,20"
-                    HorizontalAlignment="Left"/>
+                    HorizontalAlignment="Left"/>-->
 
                 <ListView
                     x:Name="resultsListView"
@@ -130,7 +123,7 @@
                     SelectionMode="None"
                     IsSwipeEnabled="false"
                     IsItemClickEnabled="True"
-                    ItemsSource="{Binding Source={StaticResource resultsViewSource}}"
+                    ItemsSource="{Binding Results}"
                     ItemTemplate="{StaticResource StandardSmallIcon70ItemTemplate}">
 
                     <ListView.ItemContainerStyle>
@@ -140,7 +133,7 @@
                         </Style>
                     </ListView.ItemContainerStyle>
                 </ListView>
-            </Grid>-->
+            </Grid>
         </Grid>
 
         <TextBlock
@@ -170,9 +163,9 @@
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="resultsGridView" Storyboard.TargetProperty="Padding">
                             <DiscreteObjectKeyFrame KeyTime="0" Value="90,240,86,56"/>
                         </ObjectAnimationUsingKeyFrames>
-                        <!--<ObjectAnimationUsingKeyFrames Storyboard.TargetName="noResultsTextBlock" Storyboard.TargetProperty="Margin">
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="noResultsTextBlock" Storyboard.TargetProperty="Margin">
                             <DiscreteObjectKeyFrame KeyTime="0" Value="100,50,0,0"/>
-                        </ObjectAnimationUsingKeyFrames>-->
+                        </ObjectAnimationUsingKeyFrames>
                     </Storyboard>
                 </VisualState>
 
@@ -200,7 +193,7 @@
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="typicalPanel" Storyboard.TargetProperty="Visibility">
                             <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed"/>
                         </ObjectAnimationUsingKeyFrames>
-                        <!--<ObjectAnimationUsingKeyFrames Storyboard.TargetName="snappedPanel" Storyboard.TargetProperty="Visibility">
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="snappedPanel" Storyboard.TargetProperty="Visibility">
                             <DiscreteObjectKeyFrame KeyTime="0" Value="Visible"/>
                         </ObjectAnimationUsingKeyFrames>
 
@@ -209,7 +202,7 @@
                         </ObjectAnimationUsingKeyFrames>
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="noResultsTextBlock" Storyboard.TargetProperty="Style">
                             <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource BaselineTextStyle}"/>
-                        </ObjectAnimationUsingKeyFrames>-->
+                        </ObjectAnimationUsingKeyFrames>
                     </Storyboard>
                 </VisualState>
             </VisualStateGroup>
@@ -222,9 +215,9 @@
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="resultsPanel" Storyboard.TargetProperty="Visibility">
                             <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed"/>
                         </ObjectAnimationUsingKeyFrames>
-                        <!--<ObjectAnimationUsingKeyFrames Storyboard.TargetName="noResultsTextBlock" Storyboard.TargetProperty="Visibility">
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="noResultsTextBlock" Storyboard.TargetProperty="Visibility">
                             <DiscreteObjectKeyFrame KeyTime="0" Value="Visible"/>
-                        </ObjectAnimationUsingKeyFrames>-->						
+                        </ObjectAnimationUsingKeyFrames>						
                     </Storyboard>
                 </VisualState>
             </VisualStateGroup>
