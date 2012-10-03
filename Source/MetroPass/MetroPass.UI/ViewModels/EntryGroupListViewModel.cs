@@ -29,7 +29,7 @@ namespace MetroPass.UI.ViewModels
             set
             {
                 _root = value;
-                _entryGroupsWithEntries.Add(new PwGroup(value.Element, value.Entries));
+                _entryGroupsWithEntries.Add(new PwGroup(value.Element, value.Entries.OrderBy(e => e.Title)));
                 _entryGroupsWithEntries.AddRange(value.SubGroups);
                 NotifyOfPropertyChange(() => Root);
             }
@@ -122,7 +122,7 @@ namespace MetroPass.UI.ViewModels
                 var temp = new ObservableCollection<object>();
 
                 temp.AddRange(Root.SubGroups);
-                temp.AddRange(Root.Entries);
+                temp.AddRange(Root.Entries.OrderBy(e => e.Title));
 
                 return temp;
             }
