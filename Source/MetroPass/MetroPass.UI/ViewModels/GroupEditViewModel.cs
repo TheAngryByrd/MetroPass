@@ -46,9 +46,25 @@ namespace MetroPass.UI.ViewModels
         
         }
 
+        private bool canSave = true;
+        public bool CanSave
+        {
+        	get
+        	{
+                return canSave;
+        	}
+            set
+            {
+                canSave = value;
+                NotifyOfPropertyChange(() => CanSave);
+            }
+        }
+
         public async void Save()
         {        	
-            PWDatabaseDataSource.Instance.SavePwDatabase();
+            CanSave = false;
+            await PWDatabaseDataSource.Instance.SavePwDatabase();
+            CanSave = true;
         }
 
     }

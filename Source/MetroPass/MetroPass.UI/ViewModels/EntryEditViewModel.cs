@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MetroPass.Core.Model;
+using MetroPass.UI.DataModel;
 
 namespace MetroPass.UI.ViewModels
 {
@@ -94,6 +95,33 @@ namespace MetroPass.UI.ViewModels
                 Entry.Notes = value;
                 NotifyOfPropertyChange(() => Notes);
             }
+        
+        }
+
+        private bool canSave = true;
+        public bool CanSave
+        {
+            get
+            {
+                return canSave;
+            }
+            set
+            {
+                canSave = value;
+                NotifyOfPropertyChange(() => CanSave);
+            }
+        }
+
+ 
+
+        public async void Save()
+        {
+            CanSave = false;
+    
+                await PWDatabaseDataSource.Instance.SavePwDatabase();
+
+                CanSave = true;
+    
         }
     }
 }
