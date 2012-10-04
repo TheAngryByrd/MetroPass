@@ -9,15 +9,13 @@ using MetroPass.UI.Services;
 
 namespace MetroPass.UI.ViewModels
 {
-    public class EntryGroupListViewModel : BaseScreen
+    public class EntryGroupListViewModel : PasswordEntryScreen
     {
         private readonly INavigationService _navigationService;
         private readonly ObservableCollection<PwGroup> _entryGroupsWithEntries;
-        private readonly IClipboard _clipboard;
 
-        public EntryGroupListViewModel(INavigationService navigationService, IClipboard clipboard) : base(navigationService)
+        public EntryGroupListViewModel(INavigationService navigationService, IClipboard clipboard) : base(navigationService, clipboard)
         {
-            _clipboard = clipboard;
             _navigationService = navigationService;
             _entryGroupsWithEntries = new ObservableCollection<PwGroup>();
         }
@@ -35,27 +33,6 @@ namespace MetroPass.UI.ViewModels
             }
         }
 
-        private PwCommon _selectedPasswordItem;
-        public PwCommon SelectedPasswordItem
-        {
-            get { return _selectedPasswordItem; }
-            set
-            {
-                _selectedPasswordItem=value;
-                if (value is PwGroup)
-                {
-                    ShowAppBar = false;
-                    _navigationService.NavigateToViewModel<EntryGroupListViewModel, PwGroup>((PwGroup)value, vm => vm.Root);
-                }
-                else if (value != null)
-                {
-                    ShowAppBar = true;
-                }
-                NotifyOfPropertyChange(() => SelectedPasswordItem);
-                NotifyOfPropertyChange(() => ShowEntryCommands);
-            }
-        }
-
         public void SelectGroup(PwGroup selectedGroup)
         {
             _navigationService.NavigateToViewModel<EntryGroupListViewModel, PwGroup>(selectedGroup, vm => vm.Root);
@@ -66,49 +43,6 @@ namespace MetroPass.UI.ViewModels
             _navigationService.NavigateToViewModel<GroupEditViewModel, PwGroup>(Root, vm => vm.Group);
         }
 
-        public void EditEntry()
-        {
-            _navigationService.NavigateToViewModel<EntryEditViewModel, PwEntry>((PwEntry)SelectedPasswordItem, vm => vm.Entry);
-        }
-
-        private bool _showAppBar;
-        public bool ShowAppBar
-        {
-            get { return _showAppBar; }
-            set
-            {
-                _showAppBar = value;
-                NotifyOfPropertyChange(() => ShowAppBar);
-            }
-        }
-
-        public void DeselectItem()
-        {
-            SelectedPasswordItem = null;
-        }
-
-        public bool ShowEntryCommands
-        {
-            get { return _selectedPasswordItem is PwEntry; }
-        }
-
-        public async void CopyUsername()
-        {
-            var entry = _selectedPasswordItem as PwEntry;
-            if (entry != null)
-            {
-                await _clipboard.CopyToClipboard(entry.Username);
-            }
-        }
-
-        public async void CopyPassword()
-        {
-            var entry = _selectedPasswordItem as PwEntry;
-            if (entry != null)
-            {
-                await _clipboard.CopyToClipboard(entry.Password);
-            }
-        }
 
         public ObservableCollection<PwGroup> EntryGroupsWithEntries
         {

@@ -10,6 +10,18 @@
     mc:Ignorable="d"
     d:ExtensionType="Search">
 
+    <Page.BottomAppBar>
+        <AppBar VerticalAlignment="Bottom" x:Name="EntryAppBar" IsOpen="{Binding ShowAppBar, Mode=TwoWay}" IsSticky="True" caliburn:Message.Attach="[Event Closed] = [Action DeselectItem]">
+            <Grid>
+                <StackPanel x:Name="EntryCommands" Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="0" Visibility="{Binding ShowEntryCommands, Converter={StaticResource BoolVisibilityConverter}}" >
+                    <Button x:Name="EditEntry" Style="{StaticResource EditAppBarButtonStyle}" AutomationProperties.Name="Edit Entry"></Button>
+                    <Button x:Name="CopyUsername" Style="{StaticResource CopyAppBarButtonStyle}" AutomationProperties.Name="Copy Username"></Button>
+                    <Button x:Name="CopyPassword" Style="{StaticResource PermissionsAppBarButtonStyle}" AutomationProperties.Name="Copy Password"></Button>
+                </StackPanel>
+            </Grid>
+        </AppBar>
+    </Page.BottomAppBar>
+
     <Page.Resources>
         <!--<CollectionViewSource x:Name="resultsViewSource" Source="{Binding Results}" IsSourceGrouped="False"/>-->
         <!--<CollectionViewSource x:Name="filtersViewSource" Source="{Binding Filters}"/>-->
@@ -86,10 +98,12 @@
                     AutomationProperties.Name="Search Results"
                     Grid.Row="1"
                     Padding="110,46,110,46"
-                    SelectionMode="None"
-                    IsItemClickEnabled="True"
+                    SelectionMode="Single"
+                    IsItemClickEnabled="False"
                     ItemsSource="{Binding Results}"
-                    ItemTemplate="{StaticResource SearchResultsItemTemplate}">
+                    ItemTemplate="{StaticResource SearchResultsItemTemplate}"
+                    SelectedItem="{Binding SelectedPasswordItem, Mode=TwoWay}"
+                    >
                     
                     <GridView.ItemContainerStyle>
                         <Style TargetType="Control">

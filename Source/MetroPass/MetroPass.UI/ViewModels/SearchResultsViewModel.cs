@@ -4,12 +4,13 @@ using System.Linq;
 using Caliburn.Micro;
 using MetroPass.Core.Model;
 using MetroPass.UI.DataModel;
+using MetroPass.UI.Services;
 
 namespace MetroPass.UI.ViewModels
 {
-    public class SearchResultsViewModel : BaseScreen
+    public class SearchResultsViewModel : PasswordEntryScreen
     {
-        public SearchResultsViewModel(INavigationService navigationService) : base(navigationService)
+        public SearchResultsViewModel(INavigationService navigationService, IClipboard clipboard) : base(navigationService, clipboard)
         {
             Results = new ObservableCollection<PwEntry>();
         }

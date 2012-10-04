@@ -127,6 +127,7 @@
     <Compile Include="DataModel\KdbDatasource.cs" />
     <Compile Include="Common\EnumerableExtensions.cs" />
     <Compile Include="ViewModels\EntryEditViewModel.cs" />
+    <Compile Include="ViewModels\PasswordEntryScreen.cs" />
     <Compile Include="ViewModels\SearchResultsViewModel.cs" />
     <Compile Include="Services\MetroClipboard.cs" />
     <Compile Include="Services\IClipboard.cs" />
