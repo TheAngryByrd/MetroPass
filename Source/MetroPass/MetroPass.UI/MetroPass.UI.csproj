@@ -226,6 +226,11 @@
       <HintPath>..\..\..\Libs\Windows.UI.Interactivity.dll</HintPath>
     </Reference>
   </ItemGroup>
+  <ItemGroup>
+    <SDKReference Include="MSAdvertisingXaml, Version=6.1">
+      <Name>MSAdvertisingXaml</Name>
+    </SDKReference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">
     <VisualStudioVersion>11.0</VisualStudioVersion>
   </PropertyGroup>
