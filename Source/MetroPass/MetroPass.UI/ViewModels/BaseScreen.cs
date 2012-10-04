@@ -33,11 +33,19 @@ namespace MetroPass.UI.ViewModels
             base.OnViewAttached(view, context);
             View = (Page)view;
 
-            Window.Current.SizeChanged += (o, e) =>
-            {
-                SetState(ApplicationView.Value);
-            };
+            Window.Current.SizeChanged += Window_SizeChanged;
 
+            SetState(ApplicationView.Value);
+        }
+
+        protected override void OnDeactivate(bool close)
+        {
+            base.OnDeactivate(close);
+            Window.Current.SizeChanged -= Window_SizeChanged;
+        }
+
+        private void Window_SizeChanged(object sender, Windows.UI.Core.WindowSizeChangedEventArgs e)
+        {
             SetState(ApplicationView.Value);
         }
 
