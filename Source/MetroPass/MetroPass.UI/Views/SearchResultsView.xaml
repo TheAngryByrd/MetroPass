@@ -23,8 +23,6 @@
     </Page.BottomAppBar>
 
     <Page.Resources>
-        <!--<CollectionViewSource x:Name="resultsViewSource" Source="{Binding Results}" IsSourceGrouped="False"/>-->
-        <!--<CollectionViewSource x:Name="filtersViewSource" Source="{Binding Filters}"/>-->
         <caliburn:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         <x:String x:Key="AppName">MetroPass</x:String>
 
@@ -68,30 +66,6 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <!--<ItemsControl
-                    x:Name="filtersItemsControl"
-                    Canvas.ZIndex="1"
-                    ItemsSource="{Binding Source={StaticResource filtersViewSource}}"
-                    Visibility="{Binding ShowFilters, Converter={StaticResource BooleanToVisibilityConverter}}"
-                    Margin="120,-3,120,30">
-
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <StackPanel Orientation="Horizontal"/>
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <RadioButton
-                                GroupName="Filters"
-                                IsChecked="{Binding Active, Mode=TwoWay}"
-                                Style="{StaticResource TextRadioButtonStyle}">
-                                <TextBlock Text="{Binding Description}"  Margin="3,-7,3,10" Style="{StaticResource GroupHeaderTextStyle}" />
-                            </RadioButton>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>-->
-
                 <GridView
                     x:Name="resultsGridView"
                     AutomationProperties.AutomationId="ResultsGridView"
@@ -120,12 +94,6 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <!--<ComboBox
-                    ItemsSource="{Binding Source={StaticResource filtersViewSource}}"
-                    Visibility="{Binding ShowFilters, Converter={StaticResource BooleanToVisibilityConverter}}"
-                    Margin="20,0,20,20"
-                    HorizontalAlignment="Left"/>-->
-
                 <ListView
                     x:Name="resultsListView"
                     AutomationProperties.AutomationId="ResultsListView"
@@ -134,11 +102,13 @@
                     Grid.Row="1"
                     Margin="10,0,0,0"
                     Padding="0,0,0,60"
-                    SelectionMode="None"
+                    SelectionMode="Single"
                     IsSwipeEnabled="false"
-                    IsItemClickEnabled="True"
+                    IsItemClickEnabled="False"
                     ItemsSource="{Binding Results}"
-                    ItemTemplate="{StaticResource StandardSmallIcon70ItemTemplate}">
+                    SelectedItem="{Binding SelectedPasswordItem, Mode=TwoWay}"
+                    ItemTemplate="{StaticResource SearchResultsItemTemplate}"
+                    >
 
                     <ListView.ItemContainerStyle>
                         <Style TargetType="Control">
@@ -171,9 +141,6 @@
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="GoBack" Storyboard.TargetProperty="Style">
                             <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource PortraitBackButtonStyle}"/>
                         </ObjectAnimationUsingKeyFrames>
-                        <!--<ObjectAnimationUsingKeyFrames Storyboard.TargetName="filtersItemsControl" Storyboard.TargetProperty="Margin">
-                            <DiscreteObjectKeyFrame KeyTime="0" Value="100,-3,90,30"/>
-                        </ObjectAnimationUsingKeyFrames>-->
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="resultsGridView" Storyboard.TargetProperty="Padding">
                             <DiscreteObjectKeyFrame KeyTime="0" Value="90,240,86,56"/>
                         </ObjectAnimationUsingKeyFrames>
