@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security;
 using MetroPass.UI.Services;
+using MetroPass.UI.Views;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 
@@ -14,13 +15,13 @@ namespace MetroPass.UI.ViewModels
 {
     public class LoadKdbViewModel : BaseScreen
     {
-        private IPageServices pageServices;
-        private INavigationService navigationService;
+        private readonly IPageServices _pageServices;
+        private readonly INavigationService _navigationService;
 
-        public LoadKdbViewModel(IPageServices pageServices, INavigationService navigationService): base(navigationService)
+        public LoadKdbViewModel(IPageServices pageServices, INavigationService navigationService) : base(navigationService)
         {
-            this.pageServices = pageServices;
-            this.navigationService = navigationService;
+            _pageServices = pageServices;
+            _navigationService = navigationService;
         }
 
         private IStorageFile _database;
@@ -70,7 +71,7 @@ namespace MetroPass.UI.ViewModels
         
         public async void PickDatabase()
         {
-            if (await pageServices.EnsureUnsnapped())
+            if (await _pageServices.EnsureUnsnapped())
             {
                 FileOpenPicker openPicker = new FileOpenPicker();
                 openPicker.ViewMode = PickerViewMode.List;
@@ -78,13 +79,20 @@ namespace MetroPass.UI.ViewModels
                 openPicker.FileTypeFilter.Add(".kdbx");
                 var file = await openPicker.PickSingleFileAsync();
                 if (file != null)
+                {
                     Database = file;
+                    var view = View as ILoadKdbView;
+                    if (view != null)
+                    {
+                        view.FocusPassword();
+                    }
+                }
             }
         }
 
         public async void PickKeyFile()
         {
-            if (await pageServices.EnsureUnsnapped())
+            if (await _pageServices.EnsureUnsnapped())
             {
                 FileOpenPicker openPicker = new FileOpenPicker();
                 openPicker.ViewMode = PickerViewMode.List;
@@ -122,19 +130,19 @@ namespace MetroPass.UI.ViewModels
             {
                 await PWDatabaseDataSource.Instance.LoadPwDatabase(Database, userKeys, progress);
 
-                navigationService.NavigateToViewModel<EntryGroupListViewModel, PwGroup>(PWDatabaseDataSource.Instance.PwDatabase.Tree.Group, vm => vm.Root);
+                _navigationService.NavigateToViewModel<EntryGroupListViewModel, PwGroup>(PWDatabaseDataSource.Instance.PwDatabase.Tree.Group, vm => vm.Root);
             }
             catch (SecurityException se)
             {
 
-                pageServices.Show(se.Message);
+                _pageServices.Show(se.Message);
             }
         }
 
         public void OpenDemo()
         {
             PWDatabaseDataSource.Instance.SetupDemoData();
-            navigationService.NavigateToViewModel<EntryGroupListViewModel>();
+            _navigationService.NavigateToViewModel<EntryGroupListViewModel>();
         }
     }
 }
