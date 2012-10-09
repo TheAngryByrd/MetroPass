@@ -20,7 +20,13 @@ namespace MetroPass.Core.Model
 
         private XElement GetElement([CallerMemberName] String propertyName = null)
         {
-            var foundElement = Meta.First(a => a.Element("Key").Value.ToLower() == propertyName.ToLower());
+            var foundElement = Meta.FirstOrDefault(a => a.Element("Key").Value.ToLower() == propertyName.ToLower());
+
+            if(foundElement == null)
+            {
+                return new XElement(propertyName);
+            }
+
             return foundElement.Element("Value");
         }
            
