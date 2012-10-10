@@ -31,7 +31,7 @@ namespace MetroPass.Core.Services.Kdb4.Writer
         {
             _headerWriter = headerWriter;
         }
-        public async Task Write(PwDatabase databaseData, Windows.Storage.IStorageFile database)
+        public async Task Write(PwDatabase databaseData, Windows.Storage.IStorageFile databaseFile)
         {
              kdb4File = new Kdb4File(databaseData);
             kdb4File.pbMasterSeed = CryptographicBuffer.GenerateRandom(32);
@@ -40,14 +40,12 @@ namespace MetroPass.Core.Services.Kdb4.Writer
             kdb4File.pbProtectedStreamKey = CryptographicBuffer.GenerateRandom(32);
             kdb4File.pbStreamStartBytes = CryptographicBuffer.GenerateRandom(32);
             
-            var fs = await database.OpenTransactedWriteAsync();
-            var outa = fs.Stream;
-            var datawriter = new DataWriter(outa);
+            InMemoryRandomAccessStream memoryStream = new InMemoryRandomAccessStream();
+            var datawriter = new DataWriter(memoryStream);
             datawriter.ByteOrder = ByteOrder.LittleEndian;
 
-           await _headerWriter.WriteHeaders(datawriter, kdb4File);
-           //datawriter.WriteBuffer(kdb4File.pbStreamStartBytes);
-           await datawriter.StoreAsync();
+           await _headerWriter.WriteHeaders(datawriter, kdb4File);       
+  
 
             var outStream = new MemoryStream();
             await outStream.WriteAsync(kdb4File.pbStreamStartBytes.AsBytes(), 0, (int)kdb4File.pbStreamStartBytes.Length);
@@ -61,10 +59,10 @@ namespace MetroPass.Core.Services.Kdb4.Writer
             var aesKey = await databaseData.MasterKey.GenerateHashedKeyAsync(kdb4File.pbMasterSeed, kdb4File.pbTransformSeed, databaseData.KeyEncryptionRounds);
             var encrypted = EncryptDatabase(compressed.AsBuffer(), aesKey).AsBytes();
             datawriter.WriteBytes(encrypted);
-            await datawriter.StoreAsync();
-            await datawriter.FlushAsync();
 
-           await fs.CommitAsync();
+            var written = datawriter.DetachBuffer();
+
+            await FileIO.WriteBufferAsync(databaseFile, written);
         }
 
         public Stream ConfigureStream(Stream stream)

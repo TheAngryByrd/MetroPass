@@ -48,9 +48,7 @@ namespace MetroPass.Core.Services.Kdb4.Writer
             WriteHeaderField(dataWriter, Kdb4HeaderFieldID.EndOfHeader, new byte[] { (byte)'\r', (byte)'\n', (byte)'\r', (byte)'\n' });
 
 
-            await dataWriter.StoreAsync();
 
-            await dataWriter.FlushAsync();
  
         }
 
