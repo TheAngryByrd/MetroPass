@@ -115,6 +115,7 @@
     <Compile Include="NullableProgress.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SHA256Hasher.cs" />
+    <Compile Include="StringExtensions.cs" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">
     <VisualStudioVersion>11.0</VisualStudioVersion>

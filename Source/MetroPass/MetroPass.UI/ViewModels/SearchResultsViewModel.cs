@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using Caliburn.Micro;
+using Framework;
 using MetroPass.Core.Model;
 using MetroPass.UI.DataModel;
 using MetroPass.UI.Services;
@@ -39,7 +40,7 @@ namespace MetroPass.UI.ViewModels
             var root = PWDatabaseDataSource.Instance.PwDatabase.Tree.Group;
 
             var matchingEntries = root.AllEntries()
-                .Where(e => e.Title.Contains(QueryText) || e.Notes.Contains(QueryText) || e.Username.Contains(QueryText));
+                .Where(e => e.Title.ContainsInsensitive(QueryText) || e.Notes.ContainsInsensitive(QueryText) || e.Username.ContainsInsensitive(QueryText));
 
             matchingEntries.OrderBy(e => e.Title).ForEach(e => Results.Add(e));
 
