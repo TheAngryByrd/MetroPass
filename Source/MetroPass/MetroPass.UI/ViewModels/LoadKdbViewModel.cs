@@ -1,11 +1,11 @@
-﻿using Caliburn.Micro;
-using MetroPass.Core.Model;
-using MetroPass.Core.Model.Keys;
-using MetroPass.UI.DataModel;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security;
+using Caliburn.Micro;
+using MetroPass.Core.Model;
+using MetroPass.Core.Model.Keys;
+using MetroPass.UI.DataModel;
 using MetroPass.UI.Services;
 using MetroPass.UI.Views;
 using Windows.Storage;
@@ -103,12 +103,26 @@ namespace MetroPass.UI.ViewModels
                     KeyFile = file;
             }
         }
+
         public bool CanOpenDatabase
         {
-            get { return Database != null; }
+            get { return Database != null && !OpeningDatabase; }
         }
+
+        private bool _openingDatabase = false;
+        private bool OpeningDatabase
+        {
+            get { return _openingDatabase; }
+            set
+            {
+                _openingDatabase = value;
+                NotifyOfPropertyChange(() => CanOpenDatabase);
+            }
+        }
+
         public async void OpenDatabase()
         {
+            OpeningDatabase = true;
             var userKeys = new List<IUserKey>();
 
             if (!string.IsNullOrEmpty(Password))
@@ -129,20 +143,14 @@ namespace MetroPass.UI.ViewModels
             try
             {
                 await PWDatabaseDataSource.Instance.LoadPwDatabase(Database, userKeys, progress);
-
+                OpeningDatabase = false;
                 _navigationService.NavigateToViewModel<EntryGroupListViewModel, PwGroup>(PWDatabaseDataSource.Instance.PwDatabase.Tree.Group, vm => vm.Root);
             }
             catch (SecurityException se)
             {
-
+                OpeningDatabase = false;
                 _pageServices.Show(se.Message);
             }
-        }
-
-        public void OpenDemo()
-        {
-            PWDatabaseDataSource.Instance.SetupDemoData();
-            _navigationService.NavigateToViewModel<EntryGroupListViewModel>();
         }
     }
 }
