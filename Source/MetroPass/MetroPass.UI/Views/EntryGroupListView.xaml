@@ -146,7 +146,7 @@
                                         <TextBlock Style="{StaticResource TitleTextStyle}" FontSize="18" Margin="12">
                                             <TextBlock.Inlines>
                                                 <Run Text="{Binding SubGroupCount}" />
-                                                <Run Text=" subgroups" />
+                                                <Run Text=" folders" />
                                             </TextBlock.Inlines>
                                         </TextBlock>
                                     </StackPanel>
