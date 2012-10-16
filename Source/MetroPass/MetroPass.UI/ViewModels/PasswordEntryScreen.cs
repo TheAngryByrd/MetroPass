@@ -35,6 +35,7 @@ namespace MetroPass.UI.ViewModels
                 }
                 NotifyOfPropertyChange(() => SelectedPasswordItem);
                 NotifyOfPropertyChange(() => ShowEntryCommands);
+                NotifyOfPropertyChange(() => ShowGroupCommands);
             }
         }
 
@@ -52,6 +53,11 @@ namespace MetroPass.UI.ViewModels
         public bool ShowEntryCommands
         {
             get { return _selectedPasswordItem is PwEntry; }
+        }
+
+        public bool ShowGroupCommands
+        {
+            get { return _selectedPasswordItem == null; }
         }
 
         public void EditEntry()
