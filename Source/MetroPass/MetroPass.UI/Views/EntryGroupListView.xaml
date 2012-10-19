@@ -30,14 +30,15 @@
         <common:TypedTemplateSelector x:Key="pwTemplateSelector"
                                  DefaultTemplateKey="Standard250x250ItemTemplate" />
         <DataTemplate x:Key="Type:PwGroup">
-            <Grid Height="70" Margin="6" Width="250" Background="Blue">
+            <Grid Height="70" Width="250" Background="Blue">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <StackPanel Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,0,0,0" >
-                    <TextBlock Text="{Binding Name}" Style="{StaticResource TitleTextStyle}" TextWrapping="NoWrap"/>
+                <StackPanel Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left" Orientation="Horizontal">
+                    <TextBlock Style="{StaticResource IconFontStyle}" Text="&#xE1C1;" />
+                    <TextBlock Text="{Binding Name}" Style="{StaticResource FolderTitleStyle}" TextWrapping="NoWrap"/>
                 </StackPanel>
             </Grid>
         </DataTemplate>

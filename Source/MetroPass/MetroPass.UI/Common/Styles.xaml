@@ -9,5 +9,21 @@
     <ItemsPanelTemplate x:Key="VerticalItemPanelTemplate">
         <VirtualizingStackPanel Orientation="Vertical"/>
     </ItemsPanelTemplate>
+    
+    <Style x:Key="IconFontStyle" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="Segoe UI Symbol" />
+        <Setter Property="FontSize" Value="32" />
+        <Setter Property="Width" Value="40" />
+        <Setter Property="Height" Value="40" />
+        <Setter Property="TextAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Margin" Value="15,15,15,15" />
+    </Style>
+
+    <Style x:Key="FolderTitleStyle" TargetType="TextBlock">
+        <Setter Property="Margin" Value="10,0,0,0"/>
+        <Setter Property="Height" Value="70"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+    </Style>
 
 </ResourceDictionary>
