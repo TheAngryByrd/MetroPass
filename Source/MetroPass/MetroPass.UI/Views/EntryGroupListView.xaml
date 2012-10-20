@@ -35,27 +35,22 @@
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-
-                <StackPanel Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left" Orientation="Horizontal">
-                    <TextBlock Style="{StaticResource IconFontStyle}" Text="&#xE1C1;" />
-                    <TextBlock Text="{Binding Name}" Style="{StaticResource FolderTitleStyle}" TextWrapping="NoWrap"/>
-                </StackPanel>
+                <TextBlock Style="{StaticResource IconFontStyle}" Text="&#xE1C1;" />
+                <TextBlock Grid.Column="1" Text="{Binding Name}" Style="{StaticResource FolderTitleStyle}" TextWrapping="NoWrap"/>
             </Grid>
         </DataTemplate>
         <DataTemplate x:Key="Type:PwEntry" >
-            <Grid Height="70" Margin="6" Width="250" Background="Teal">
+            <Grid Height="70" Width="250" Background="Teal">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-
+                <TextBlock Style="{StaticResource IconFontStyle}" Text="&#xE192;" />
                 <StackPanel Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,0,0,0" >
                     <TextBlock Text="{Binding Title}" Style="{StaticResource TitleTextStyle}" TextWrapping="NoWrap"/>
                     <TextBlock Text="{Binding Username}" Style="{StaticResource CaptionTextStyle}" TextWrapping="NoWrap"/>
-
                 </StackPanel>
             </Grid>
-
         </DataTemplate>
 
         <CollectionViewSource
@@ -85,6 +80,27 @@
             </Grid.ColumnDefinitions>
             <Button x:Name="GoBack" Style="{StaticResource BackButtonStyle}"/>
             <TextBlock x:Name="pageTitle" Grid.Column="1" Text="{StaticResource AppName}" Style="{StaticResource PageHeaderTextStyle}"/>
+
+            <!--<Grid Height="70" Width="250" Background="Blue">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Style="{StaticResource IconFontStyle}" Text="&#xE1C1;" />
+                <TextBlock Grid.Column="1" Text="Windows" Style="{StaticResource FolderTitleStyle}" TextWrapping="NoWrap"/>
+            </Grid>
+
+            <Grid Grid.Column="1" Height="70" Width="250" Background="Teal">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Style="{StaticResource IconFontStyle}" Text="&#xE192;" />
+                <StackPanel Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,0,0,0" >
+                    <TextBlock Text="GMail" Style="{StaticResource TitleTextStyle}" TextWrapping="NoWrap"/>
+                    <TextBlock Text="kevinkuebler@gmail.com" Style="{StaticResource CaptionTextStyle}" TextWrapping="NoWrap"/>
+                </StackPanel>
+            </Grid>-->
         </Grid>
         
         <SemanticZoom x:Name="groupedList" Grid.Row="1">
