@@ -191,5 +191,10 @@
     		</Setter.Value>
     	</Setter>
     </Style>
+    
+    <Style x:Key="ErrorTextBoxStyleSnapped" TargetType="TextBox" BasedOn="{StaticResource ErrorTextBoxStyle}">
+        <Setter Property="FontSize" Value="20"/>
+        <Setter Property="Margin" Value="0,0,10,0"/>
+    </Style>
 
 </ResourceDictionary>

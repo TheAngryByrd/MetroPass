@@ -17,10 +17,12 @@ namespace MetroPass.UI.Views
             if (passwordsMatch)
             {
                 VisualStateManager.GoToState(this.Confirm, "NoError", true);
+                VisualStateManager.GoToState(this.ConfirmSnapped, "NoError", true);
             }
             else
             {
                 VisualStateManager.GoToState(this.Confirm, "Error", true);
+                VisualStateManager.GoToState(this.ConfirmSnapped, "Error", true);
             }
         }
     }
