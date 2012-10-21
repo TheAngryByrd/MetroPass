@@ -111,6 +111,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BufferHelpers.cs" />
+    <Compile Include="DateTimeExtensions.cs" />
     <Compile Include="Extend.cs" />
     <Compile Include="NullableProgress.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

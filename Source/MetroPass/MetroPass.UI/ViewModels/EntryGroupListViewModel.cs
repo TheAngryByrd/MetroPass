@@ -76,5 +76,10 @@ namespace MetroPass.UI.ViewModels
         {
             get { return GroupsOnThisLevel.Cast<PwCommon>().Union(EntriesOnThisLevel); }
         }
+
+        public void AddEntry()
+        {
+            _navigationService.NavigateToViewModel<AddEntryViewModel, PwGroup>(Root, vm => vm.ParentGroup);
+        }
     }
 }

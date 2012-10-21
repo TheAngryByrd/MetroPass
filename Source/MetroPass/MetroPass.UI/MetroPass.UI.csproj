@@ -128,6 +128,7 @@
     <Compile Include="Common\TypedTemplateSelector.cs" />
     <Compile Include="DataModel\KdbDatasource.cs" />
     <Compile Include="Common\EnumerableExtensions.cs" />
+    <Compile Include="ViewModels\AddEntryViewModel.cs" />
     <Compile Include="ViewModels\EntryEditViewModel.cs" />
     <Compile Include="ViewModels\PasswordEntryScreen.cs" />
     <Compile Include="ViewModels\SearchResultsViewModel.cs" />
@@ -136,6 +137,9 @@
     <Compile Include="Services\IPageServices.cs" />
     <Compile Include="ViewModels\BaseScreen.cs" />
     <Compile Include="ViewModels\GroupEditViewModel.cs" />
+    <Compile Include="Views\AddEntryView.xaml.cs">
+      <DependentUpon>AddEntryView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\EntryEditView.xaml.cs">
       <DependentUpon>EntryEditView.xaml</DependentUpon>
     </Compile>
@@ -192,6 +196,10 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
     <Page Include="Common\StandardStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\AddEntryView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

@@ -15,6 +15,7 @@
             <Grid>
                 <StackPanel x:Name="GroupCommands" Orientation="Horizontal"  HorizontalAlignment="Left" Grid.Row="0" Visibility="{Binding ShowGroupCommands, Converter={StaticResource BoolVisibilityConverter}}">
                     <Button x:Name="EditGroup" Style="{StaticResource EditAppBarButtonStyle}" AutomationProperties.Name="Edit Group"></Button>
+                    <Button x:Name="AddEntry" Style="{StaticResource AddAppBarButtonStyle}" AutomationProperties.Name="Add Entry"></Button>
                 </StackPanel>
                 <StackPanel x:Name="EntryCommands" Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="0" Visibility="{Binding ShowEntryCommands, Converter={StaticResource BoolVisibilityConverter}}" >
                     <Button x:Name="EditEntry" Style="{StaticResource EditAppBarButtonStyle}" AutomationProperties.Name="Edit Entry"></Button>
