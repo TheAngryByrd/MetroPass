@@ -145,6 +145,7 @@
     <Compile Include="Views\GroupEditView.xaml.cs">
       <DependentUpon>GroupEditView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\IEntryEditView.cs" />
     <Compile Include="Views\ILoadKdbView.cs" />
     <Compile Include="Views\LoadKdbView.xaml.cs">
       <DependentUpon>LoadKdbView.xaml</DependentUpon>

@@ -56,7 +56,7 @@
             <TextBlock Grid.Column="0" VerticalAlignment="Center" Grid.Row="2" Text="Password:" Margin="10" FontSize="24"/>
             <TextBox Grid.Column="1" Grid.Row="2" Name="Password" Width="300" Margin="10" FontSize="20" />
             <TextBlock Grid.Column="0" VerticalAlignment="Center" Grid.Row="3" Text="Confirm:" Margin="10" FontSize="24"/>
-            <TextBox Grid.Column="1" Grid.Row="3" Name="Confirm" Width="300" Margin="10" FontSize="20" />
+            <TextBox Grid.Column="1" Grid.Row="3" Name="Confirm" Width="300" Margin="10" FontSize="20" Style="{StaticResource ErrorTextBoxStyle}" />
             <TextBlock Grid.Column="0" VerticalAlignment="Center" Grid.Row="4" Text="URL:" Margin="10" FontSize="24"/>
             <TextBox Grid.Column="1" Grid.Row="4" Name="Url" Width="300" Margin="10" FontSize="20"/>
             <TextBlock Grid.Column="0" VerticalAlignment="Top" Grid.Row="5" Text="Notes:" Margin="10" FontSize="24"/>
@@ -81,7 +81,6 @@
         </StackPanel>
         
         <VisualStateManager.VisualStateGroups>
-
             <!-- Visual states reflect the application's view state -->
             <VisualStateGroup x:Name="ApplicationViewStates">
                 <VisualState x:Name="FullScreenLandscape"/>

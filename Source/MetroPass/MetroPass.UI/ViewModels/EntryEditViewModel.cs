@@ -4,12 +4,15 @@ using System.Linq;
 using MetroPass.Core.Model;
 using MetroPass.UI.DataModel;
 using System.Diagnostics;
+using MetroPass.UI.Views;
+using Windows.UI.Xaml;
 
 namespace MetroPass.UI.ViewModels
 {
     public class EntryEditViewModel : BaseScreen
     {
         private readonly INavigationService _navigationService;
+        private bool _loadingData = true;
 
         public EntryEditViewModel(INavigationService navigationService) : base(navigationService)
         {
@@ -30,6 +33,7 @@ namespace MetroPass.UI.ViewModels
                 Url = _pwEntry.Url;
                 Notes = _pwEntry.Notes;
                 NotifyOfPropertyChange(() => Entry);
+                _loadingData = false;
             }
         }
 
@@ -65,7 +69,7 @@ namespace MetroPass.UI.ViewModels
             set
             {
                 _password = value;
-                CanSave = value == Confirm;
+                ConfirmPassword();
                 NotifyOfPropertyChange(() => Password);
             }
         }
@@ -77,8 +81,23 @@ namespace MetroPass.UI.ViewModels
             set
             {
                 _confirm = value;
-                CanSave = value == Password;
-                NotifyOfPropertyChange(() => Password);
+                ConfirmPassword();
+                NotifyOfPropertyChange(() => Confirm);
+            }
+        }
+
+        private void ConfirmPassword()
+        {
+            if (!_loadingData)
+            {
+                bool passwordsMatch = Password == Confirm;
+                CanSave=passwordsMatch;
+                
+                var view = this.View as IEntryEditView;
+                if (view != null)
+                {
+                    view.SetPasswordState(passwordsMatch);
+                }
             }
         }
 
