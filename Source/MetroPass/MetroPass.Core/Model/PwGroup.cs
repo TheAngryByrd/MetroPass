@@ -49,6 +49,12 @@ namespace MetroPass.Core.Model
             _entries.Add(entry);
         }
 
+        public void AddEntryToDocument(PwEntry entry)
+        {
+            this.AddEntry(entry);
+            Element.Elements("Entry").Last().AddAfterSelf(entry.Element);
+        }
+
         public void AddSubGroup(PwGroup subGroup)
         {
             _subGroups.Add(subGroup);

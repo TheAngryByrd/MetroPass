@@ -9,6 +9,7 @@ using MetroPass.UI.ViewModels;
 using MetroPass.UI.Views;
 using Windows.ApplicationModel;
 using Ninject;
+using MetroPass.Core.Interfaces;
 
 namespace MetroPass.UI
 {

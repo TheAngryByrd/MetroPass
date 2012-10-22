@@ -142,7 +142,7 @@ namespace MetroPass.UI.ViewModels
             CanSave = false;
             var entryElement = GetNewEntryElement();
             var entry = new PwEntry(entryElement);
-            ParentGroup.AddEntry(entry);
+            ParentGroup.AddEntryToDocument(entry);
             await PWDatabaseDataSource.Instance.SavePwDatabase();
             _navigationService.GoBack();
         }
