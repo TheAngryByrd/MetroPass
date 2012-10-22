@@ -126,7 +126,7 @@ namespace MetroPass.UI.ViewModels
         
         }
 
-        private bool _canSave = true;
+        private bool _canSave = false;
         public bool CanSave
         {
             get { return _canSave; }
@@ -137,11 +137,13 @@ namespace MetroPass.UI.ViewModels
             }
         }
 
-        public void Save()
+        public async void Save()
         {
             CanSave = false;
             var entryElement = GetNewEntryElement();
-            //TODO: Create an entry and add it to the parent group here
+            var entry = new PwEntry(entryElement);
+            ParentGroup.AddEntryToDocument(entry);
+            await PWDatabaseDataSource.Instance.SavePwDatabase();
             _navigationService.GoBack();
         }
 
