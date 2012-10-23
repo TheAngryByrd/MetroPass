@@ -13,6 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
+using System.Xml.Serialization;
 using Windows.Security.Cryptography;
 using Windows.Security.Cryptography.Core;
 using Windows.Storage;
@@ -22,6 +23,7 @@ using Windows.Storage.Streams;
 namespace MetroPass.Core.Services.Kdb4.Writer
 {
  
+
 
     public class Kdb4Writer : IKdbWriter
     {
@@ -63,6 +65,8 @@ namespace MetroPass.Core.Services.Kdb4.Writer
             var written = datawriter.DetachBuffer();
 
             await FileIO.WriteBufferAsync(databaseFile, written);
+
+            databaseData.Tree = new Kdb4Parser(new CryptoRandomStream(CrsAlgorithm.Salsa20, kdb4File.pbProtectedStreamKey.AsBytes())).ParseXmlDocument(databaseData.Tree.Document);
         }
 
         public Stream ConfigureStream(Stream stream)

@@ -21,10 +21,15 @@ namespace MetroPass.Core.Services
             _cryptoStream = crypto;
         }
 
-        public Kdb4Tree Parse(Stream decrypredDatabase)
+        public Kdb4Tree ParseStream(Stream decrypredDatabase)
         {
 
             var xml = CreateXmlReader(decrypredDatabase);
+            return ParseXmlDocument(xml);
+        }
+
+        public Kdb4Tree ParseXmlDocument(XDocument xml)
+        {
             var root = xml.Descendants("Root").First();
 
             DecodeXml(root);

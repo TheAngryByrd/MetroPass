@@ -37,7 +37,7 @@ namespace MetroPass.Core.Services
             var crypto = GenerateCryptoRandomStream();
             var parser = new Kdb4Parser(crypto);
 
-            return parser.Parse(decompressEdDatabase);
+            return parser.ParseStream(decompressEdDatabase);
         }
 
         public CryptoRandomStream GenerateCryptoRandomStream()
