@@ -151,39 +151,41 @@ namespace MetroPass.UI.ViewModels
         {
             var entryTemplate = @"
                 <Entry>
+                    <UUID>{0}</UUID>
                     <IconID>0</IconID>
                     <Times>
-                        <LastModificationTime>{0}</LastModificationTime>
-                        <CreationTime>{0}</CreationTime>
-                        <LastAccessTime>{0}</LastAccessTime>
-                        <ExpiryTime>{0}</ExpiryTime>
-                        <LocationChanged>{0}</LocationChanged>
+                        <LastModificationTime>{1}</LastModificationTime>
+                        <CreationTime>{1}</CreationTime>
+                        <LastAccessTime>{1}</LastAccessTime>
+                        <ExpiryTime>{1}</ExpiryTime>
+                        <LocationChanged>{1}</LocationChanged>
                         <Expires>False</Expires>
                         <UsageCount>0</UsageCount>
                     </Times>
                     <String>
                         <Key>Title</Key>
-                        <Value>{1}</Value>
-                    </String>
-                    <String>
-                        <Key>UserName</Key>
                         <Value>{2}</Value>
                     </String>
                     <String>
+                        <Key>UserName</Key>
+                        <Value>{3}</Value>
+                    </String>
+                    <String>
                         <Key>Password</Key>
-                        <Value Protected=""True"">{3}</Value>
+                        <Value Protected=""True"">{4}</Value>
                     </String>
                     <String>
                         <Key>URL</Key>
-                        <Value>{4}</Value>
+                        <Value>{5}</Value>
                     </String>
                     <String>
                         <Key>Notes</Key>
-                        <Value>{5}</Value>
+                        <Value>{6}</Value>
                     </String>
                 </Entry>
             ";
-            entryTemplate = String.Format(entryTemplate, DateTime.Now.ToFormattedUtcTime(), Title, Username, Password, Url, Notes);
+            var uuid = new PwUuid(true);
+            entryTemplate = String.Format(entryTemplate, Convert.ToBase64String(uuid.UuidBytes), DateTime.Now.ToFormattedUtcTime(), Title, Username, Password, Url, Notes);
 
             var element = XElement.Parse(entryTemplate);
             return element;

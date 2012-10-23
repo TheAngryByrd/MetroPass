@@ -34,7 +34,7 @@ namespace MetroPass.Core.Services.Kdb4.Writer
             dataWriter.WriteBytes(BitConverter.GetBytes(KdbConstants.FileSignature2));
             dataWriter.WriteBytes(BitConverter.GetBytes(KdbConstants.Kdb4Version));
 
-            WriteHeaderField(dataWriter, Kdb4HeaderFieldID.CipherID, file.pwDatabase.DataCipherUuid.uuidBytes);
+            WriteHeaderField(dataWriter, Kdb4HeaderFieldID.CipherID, file.pwDatabase.DataCipherUuid.UuidBytes);
             var compressionId = (uint) file.pwDatabase.Compression;
             WriteHeaderField(dataWriter, Kdb4HeaderFieldID.CompressionFlags,BitConverter.GetBytes(compressionId));
             WriteHeaderField(dataWriter, Kdb4HeaderFieldID.MasterSeed, file.pbMasterSeed);
