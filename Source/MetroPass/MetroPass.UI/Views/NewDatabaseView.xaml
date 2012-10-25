@@ -1,15 +1,16 @@
 ﻿<Page
     x:Name="pageRoot"
-    x:Class="MetroPass.UI.Views.StartPageView"
-
+    x:Class="MetroPass.UI.Views.NewDatabaseView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:MetroPass.UI"
-    xmlns:cal="using:Caliburn.Micro"    >
+    xmlns:cal="using:Caliburn.Micro"      
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
 
     <Page.Resources>
 
-  
     </Page.Resources>
 
     <!--
@@ -33,31 +34,31 @@
             <TextBlock x:Name="pageTitle" Grid.Column="1" Text="{StaticResource AppName}" Style="{StaticResource PageHeaderTextStyle}"/>
         </Grid>
         
-        <Grid x:Name="FullScreenMode" Grid.Row="1">
+        <Grid Grid.Row="1" HorizontalAlignment="Left" Margin="36,0,0,-0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="45*"/>
-                <ColumnDefinition Width="10"/>
-                <ColumnDefinition Width="45*"/>
+                <ColumnDefinition Width="auto"></ColumnDefinition>
+                <ColumnDefinition Width="auto"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <StackPanel Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Button x:Name="NewDatabase">
-                    <StackPanel>
-                        <TextBlock HorizontalAlignment="Center" FontSize="100" FontFamily="Segoe UI Symbol"></TextBlock>
-                        <TextBlock FontSize="30">New Database</TextBlock>
-                    </StackPanel>
-                </Button>
-            </StackPanel>
-            <StackPanel Grid.Column="1">
-             
-            </StackPanel>
-            <StackPanel Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Button x:Name="OpenDatabase">
-                    <StackPanel>
-                        <TextBlock HorizontalAlignment="Center" FontSize="100" FontFamily="Segoe UI Symbol"></TextBlock>
-                        <TextBlock FontSize="30">Open Database</TextBlock>
-                    </StackPanel>
-                </Button>
-            </StackPanel>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.Resources>
+                <Style TargetType="PasswordBox">
+                    <Setter Property="Margin" Value="10" />
+                </Style>
+                <Style TargetType="TextBlock">
+                    <Setter Property="Margin" Value="10" />
+                </Style>
+            </Grid.Resources>
+            <TextBlock Grid.Row="0" Grid.Column="0" FontSize="30"  Margin="10">Password: </TextBlock>
+            <PasswordBox x:Name="Password" Grid.Row="0" Grid.Column="1" Width="500"></PasswordBox>
+            <TextBlock Grid.Row="1" Grid.Column="0" FontSize="30"  Margin="10">Confirm Password:</TextBlock>
+            <PasswordBox  x:Name="Confirm" Grid.Row="1" Grid.Column="1" Width="500"></PasswordBox>
+            <TextBlock Grid.Row="2" Grid.Column="0" FontSize="15"  Margin="10">Create Key File Coming Soon!</TextBlock>
+            <Button Grid.Column="1" Grid.Row="3" Name="Save" Margin="10" Content="Save" Width="100" Height="50" FontSize="24"/>
         </Grid>
 
         <VisualStateManager.VisualStateGroups>

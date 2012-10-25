@@ -2,7 +2,7 @@
 
 namespace MetroPass.UI.Views
 {
-    public interface IEntryEditView
+    public interface IPasswordErrorStateView
     {
         void SetPasswordState(bool passwordsMatch);
     }

@@ -5,7 +5,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace MetroPass.UI.Views
 {
-    public sealed partial class EntryEditView : Page, IEntryEditView
+    public sealed partial class EntryEditView : Page, IPasswordErrorStateView
     {
         public EntryEditView()
         {

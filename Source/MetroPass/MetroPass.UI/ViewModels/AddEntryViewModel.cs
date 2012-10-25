@@ -111,7 +111,7 @@ namespace MetroPass.UI.ViewModels
             bool passwordsMatch = Password == Confirm;
             CanSave = passwordsMatch;
                 
-            var view = this.View as IEntryEditView;
+            var view = this.View as IPasswordErrorStateView;
             if (view != null)
             {
                 view.SetPasswordState(passwordsMatch);
