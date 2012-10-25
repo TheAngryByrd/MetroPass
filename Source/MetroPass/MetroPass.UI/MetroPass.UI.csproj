@@ -130,6 +130,7 @@
     <Compile Include="Common\EnumerableExtensions.cs" />
     <Compile Include="ViewModels\AddEntryViewModel.cs" />
     <Compile Include="ViewModels\EntryEditViewModel.cs" />
+    <Compile Include="ViewModels\NewDatabaseViewModel.cs" />
     <Compile Include="ViewModels\PasswordEntryScreen.cs" />
     <Compile Include="ViewModels\SearchResultsViewModel.cs" />
     <Compile Include="Services\MetroClipboard.cs" />
@@ -162,6 +163,9 @@
     <Compile Include="Services\PageServices.cs" />
     <Compile Include="ViewModels\EntryGroupListViewModel.cs" />
     <Compile Include="ViewModels\LoadKdbViewModel.cs" />
+    <Compile Include="Views\NewDatabaseView.xaml.cs">
+      <DependentUpon>NewDatabaseView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SearchResultsView.xaml.cs">
       <DependentUpon>SearchResultsView.xaml</DependentUpon>
     </Compile>
@@ -220,6 +224,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\LoadKdbView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\NewDatabaseView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -10,14 +10,19 @@ namespace MetroPass.UI.ViewModels
 {
     public class StartPageViewModel : BaseScreen
     {
-        private readonly IPageServices _pageServices;
+
         private readonly INavigationService _navigationService;
 
-        public StartPageViewModel(IPageServices pageServices, INavigationService navigationService)
+        public StartPageViewModel( INavigationService navigationService)
             : base(navigationService)
         {
-            _pageServices = pageServices;
+
             _navigationService = navigationService;
+        }
+
+        public void NewDatabase()
+        {
+            _navigationService.NavigateToViewModel(typeof(NewDatabaseViewModel));
         }
 
         public void OpenDatabase()
