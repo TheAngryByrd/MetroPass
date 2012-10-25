@@ -22,6 +22,8 @@ namespace MetroPass.UI.ViewModels
         {
             _pageServices = pageServices;
             _navigationService = navigationService;
+
+            PickDatabase();
         }
 
         private IStorageFile _database;

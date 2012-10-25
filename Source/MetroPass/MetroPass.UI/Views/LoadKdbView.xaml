@@ -11,13 +11,13 @@
     mc:Ignorable="d">
 
     <Page.Resources>
-        <!-- TODO: Delete this line if the key AppName is declared in App.xaml -->
-        <x:String x:Key="AppName">MetroPass</x:String>
+ 
     </Page.Resources>
 
     <Grid Style="{StaticResource LayoutRootStyle}">
         <Grid.RowDefinitions>
             <RowDefinition Height="140"/>
+
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -31,7 +31,7 @@
             <Button x:Name="GoBack" Style="{StaticResource BackButtonStyle}"/>
             <TextBlock x:Name="pageTitle" Grid.Column="1" Text="{StaticResource AppName}" Style="{StaticResource PageHeaderTextStyle}"/>
         </Grid>
-   
+      
         <Grid Grid.Row="1" x:Name="NormalDatabaseLoader">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="3*"></ColumnDefinition>
@@ -39,6 +39,7 @@
                 <ColumnDefinition Width="3*"></ColumnDefinition>
                 
             </Grid.ColumnDefinitions>
+            
             <StackPanel HorizontalAlignment="Center" Grid.Column="0" Grid.Row="0">
                 <Button x:Name="PickDatabase" Content="Pick database file" Width="300" Height="100" FontSize="24"/>
                 <TextBlock x:Name="OutputTextBlockDatabaseFile" Style="{StaticResource SubheaderTextStyle}" TextWrapping="Wrap" Text="{Binding Path=Database.Name}" />
@@ -50,7 +51,7 @@
                 <Button x:Name="PickKeyFile" Content="Pick Key File" Width="300" Height="100" FontSize="24" />
                 <TextBlock x:Name="OutputTextBlockKeyFile" Style="{StaticResource TitleTextStyle}" TextWrapping="Wrap"  Text="{Binding Path=KeyFile.Name}"/>
 
-                <Button Background="Orange" Foreground="White" x:Name="OpenDatabase" Content="Open Database" Width="300" Height="100" FontSize="24" Margin="0,100,0,0" />
+                <Button Background="Orange" Foreground="White" x:Name="OpenDatabase" Content="Open Database" Width="300" Height="100" FontSize="24" Margin="0,50,0,0" />
                 <StackPanel  Margin="0,20">
                     <TextBlock FontSize="20">Decrypting Progress</TextBlock>
                     <ProgressBar x:Name="Progress" Height="20"></ProgressBar>

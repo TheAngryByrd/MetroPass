@@ -54,7 +54,7 @@ namespace MetroPass.UI
 
         protected override Type GetDefaultView()
         {
-            return typeof(LoadKdbView);
+            return typeof(StartPageView);
         }
 
         /// <summary>
