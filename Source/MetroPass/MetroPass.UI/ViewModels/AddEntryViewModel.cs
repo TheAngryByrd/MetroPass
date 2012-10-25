@@ -3,6 +3,7 @@ using Caliburn.Micro;
 using System;
 using System.Linq;
 using Framework;
+using MetroPass.Core.Interfaces;
 using MetroPass.Core.Model;
 using MetroPass.UI.DataModel;
 using MetroPass.UI.Views;
@@ -12,10 +13,24 @@ namespace MetroPass.UI.ViewModels
     public class AddEntryViewModel : BaseScreen
     {
         private readonly INavigationService _navigationService;
+        private readonly IKdbTree _dbTree;
 
-        public AddEntryViewModel(INavigationService navigationService) : base(navigationService)
+        public AddEntryViewModel(IKdbTree dbTree, INavigationService navigationService) : base(navigationService)
         {
-            this._navigationService=navigationService;
+            _dbTree = dbTree;
+            _navigationService = navigationService;
+        }
+
+        private string _parentGroupID;
+        public string ParentGroupID
+        {
+            get { return _parentGroupID; }
+            set
+            {
+                _parentGroupID = value;
+                var groupElement = _dbTree.FindGroupByUuid(value);
+                ParentGroup = new PwGroup(groupElement);
+            }
         }
 
         private PwGroup _parentGroup;

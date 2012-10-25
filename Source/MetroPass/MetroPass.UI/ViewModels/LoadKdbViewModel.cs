@@ -144,7 +144,7 @@ namespace MetroPass.UI.ViewModels
             {
                 await PWDatabaseDataSource.Instance.LoadPwDatabase(Database, userKeys, progress);
                 OpeningDatabase = false;
-                _navigationService.NavigateToViewModel<EntryGroupListViewModel, PwGroup>(PWDatabaseDataSource.Instance.PwDatabase.Tree.Group, vm => vm.Root);
+                _navigationService.UriFor<EntryGroupListViewModel>().WithParam(vm => vm.GroupId, PWDatabaseDataSource.Instance.PwDatabase.Tree.Group.UUID).Navigate();
             }
             catch (SecurityException se)
             {

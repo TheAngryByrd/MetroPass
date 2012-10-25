@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Net;
 using Caliburn.Micro;
 using MetroPass.Core.Model;
 using MetroPass.UI.Services;
@@ -27,7 +28,8 @@ namespace MetroPass.UI.ViewModels
                 if (value is PwGroup)
                 {
                     ShowAppBar = false;
-                    _navigationService.NavigateToViewModel<EntryGroupListViewModel, PwGroup>((PwGroup)value, vm => vm.Root);
+                    var encodedUUID = WebUtility.UrlEncode(value.UUID);
+                    _navigationService.UriFor<EntryGroupListViewModel>().WithParam(vm => vm.GroupId, encodedUUID).Navigate();
                 }
                 else if (value != null)
                 {
@@ -62,7 +64,8 @@ namespace MetroPass.UI.ViewModels
 
         public void EditEntry()
         {
-            _navigationService.NavigateToViewModel<EntryEditViewModel, PwEntry>((PwEntry)SelectedPasswordItem, vm => vm.Entry);
+            var encodedUUID = WebUtility.UrlEncode(SelectedPasswordItem.UUID);
+            _navigationService.UriFor<EntryEditViewModel>().WithParam(vm => vm.EntryID, encodedUUID).Navigate();
         }
 
         public void DeselectItem()

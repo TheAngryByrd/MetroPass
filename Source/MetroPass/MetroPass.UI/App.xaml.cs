@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Caliburn.Micro;
+using MetroPass.Core.Interfaces;
 using MetroPass.UI.Common;
 using System;
 using System.Linq;
@@ -9,7 +10,6 @@ using MetroPass.UI.ViewModels;
 using MetroPass.UI.Views;
 using Windows.ApplicationModel;
 using Ninject;
-using MetroPass.Core.Interfaces;
 
 namespace MetroPass.UI
 {
@@ -33,6 +33,7 @@ namespace MetroPass.UI
 
             ninjectContainer.Kernel.Bind<IPageServices>().To<PageServices>();
             ninjectContainer.Kernel.Bind<IClipboard>().To<MetroClipboard>();
+            ninjectContainer.Kernel.Bind<IKdbTree>().ToMethod(c => PWDatabaseDataSource.Instance.PwDatabase.Tree);
         }
 
         protected override object GetInstance(Type service, string key)
@@ -74,7 +75,7 @@ namespace MetroPass.UI
         {
             var navigationService = ninjectContainer.Kernel.Get<INavigationService>();
 
-            navigationService.NavigateToViewModel<SearchResultsViewModel, string>(args.QueryText, vm => vm.QueryText);
+            navigationService.UriFor<SearchResultsViewModel>().WithParam(vm => vm.QueryText, args.QueryText).Navigate();
         }
     }
 }

@@ -7,8 +7,8 @@ namespace MetroPass.Core.Model
 {
     public class PwGroup : PwCommon
     {    
-        private readonly List<PwEntry> _entries;
-        private readonly List<PwGroup> _subGroups;
+        private readonly IEnumerable<XElement> _entries;
+        private readonly IEnumerable<XElement> _subGroups;
 
         public string Name 
         { 
@@ -18,7 +18,9 @@ namespace MetroPass.Core.Model
 
         public IEnumerable<PwEntry> Entries
         {
-            get { return _entries; }
+            get { 
+                return _entries.Select(e => new PwEntry(e)).OrderBy(e => e.Title);
+            }
         }
 
         public int EntryCount
@@ -28,7 +30,9 @@ namespace MetroPass.Core.Model
 
         public IEnumerable<PwGroup> SubGroups
         {
-            get { return this._subGroups; }
+            get { 
+                return _subGroups.Select(e => new PwGroup(e)).OrderBy(g => g.Name);
+            }
         }
 
         public int SubGroupCount
@@ -44,14 +48,8 @@ namespace MetroPass.Core.Model
             }
         }
 
-        public void AddEntry(PwEntry entry)
-        {
-            _entries.Add(entry);
-        }
-
         public void AddEntryToDocument(PwEntry entry)
         {
-            this.AddEntry(entry);
             var lastEntry = Element.Elements("Entry").LastOrDefault();
             if (lastEntry != null)
             {
@@ -63,23 +61,11 @@ namespace MetroPass.Core.Model
             }
         }
 
-        public void AddSubGroup(PwGroup subGroup)
-        {
-            _subGroups.Add(subGroup);
-        }
-
         public PwGroup(XElement element)
         {
             Element = element;
-            _entries = new List<PwEntry>();
-            _subGroups = new List<PwGroup>();
-        }
-
-        public PwGroup(XElement element, IEnumerable<PwEntry> entries)
-        {
-            Element = element;
-            _entries = new List<PwEntry>(entries);
-            _subGroups = new List<PwGroup>();
+            _entries = element.Elements("Entry");
+            _subGroups = element.Elements("Group");
         }
     }
 }

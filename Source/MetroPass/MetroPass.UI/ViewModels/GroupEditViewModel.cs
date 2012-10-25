@@ -1,35 +1,43 @@
 ﻿using Caliburn.Micro;
+using MetroPass.Core.Interfaces;
 using MetroPass.Core.Model;
 using MetroPass.UI.DataModel;
-using MetroPass.UI.Services;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MetroPass.UI.ViewModels
 {
     public class GroupEditViewModel : BaseScreen
     {
-     
+        private readonly IKdbTree _dbTree;
+        private readonly INavigationService _navigationService;
 
-        public GroupEditViewModel( INavigationService navigationService) : base(navigationService)
+        public GroupEditViewModel(IKdbTree dbTree, INavigationService navigationService) : base(navigationService)
         {
-        
+            _dbTree = dbTree;
+            _navigationService = navigationService;
         }
-        PwGroup pwGroup;
 
-        public PwGroup Group
+        private string _groupId;
+        public string GroupId
         {
-        	get
-        	{
-                return pwGroup;
-        	}
+            get { return _groupId; }
             set
             {
-                pwGroup = value;
+                _groupId = value;
+                var groupElement = _dbTree.FindGroupByUuid(value);
+                Group = new PwGroup(groupElement);
+            }
+        }
+
+        PwGroup _pwGroup;
+        public PwGroup Group
+        {
+        	get { return _pwGroup; }
+            private set
+            {
+                _pwGroup = value;
                 NotifyOfPropertyChange(() => Group);
             }
         }
@@ -46,16 +54,13 @@ namespace MetroPass.UI.ViewModels
         
         }
 
-        private bool canSave = true;
+        private bool _canSave = true;
         public bool CanSave
         {
-        	get
-        	{
-                return canSave;
-        	}
+        	get { return _canSave; }
             set
             {
-                canSave = value;
+                _canSave = value;
                 NotifyOfPropertyChange(() => CanSave);
             }
         }
@@ -64,8 +69,7 @@ namespace MetroPass.UI.ViewModels
         {        	
             CanSave = false;
             await PWDatabaseDataSource.Instance.SavePwDatabase();
-            CanSave = true;
+            _navigationService.GoBack();
         }
-
     }
 }

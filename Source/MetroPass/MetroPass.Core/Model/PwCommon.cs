@@ -18,6 +18,11 @@ namespace MetroPass.Core.Model
     {
         public XElement Element { get; protected set; }
 
+        public string UUID
+        {
+            get { return Element.Elements("UUID").First().Value; }
+        }
+
         public int IconID
         {
             get { return XmlConvert.ToInt16(Element.Element().Value); }

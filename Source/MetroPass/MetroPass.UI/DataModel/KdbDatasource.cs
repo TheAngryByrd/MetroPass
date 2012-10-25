@@ -30,21 +30,21 @@ namespace MetroPass.UI.DataModel
 
         public void SetupDemoData()
         {
-            var root = new PwGroup(null) { Name = "Root" };
-            var email = new PwGroup(null) { Name = "Email" };
-            var gmailAccounts = new PwGroup(null) { Name = "Gmail" };
-            gmailAccounts.AddEntry(new PwEntry(null) { Title = "Main gmail", Username = "Something@gmail.com" });
-            email.AddSubGroup(gmailAccounts);
-            email.AddEntry(new PwEntry(null) { Title = "Yahoo", Username = "Something@yahoo.com" });
-            root.AddSubGroup(email);
+            //var root = new PwGroup(null) { Name = "Root" };
+            //var email = new PwGroup(null) { Name = "Email" };
+            //var gmailAccounts = new PwGroup(null) { Name = "Gmail" };
+            //gmailAccounts.AddEntry(new PwEntry(null) { Title = "Main gmail", Username = "Something@gmail.com" });
+            //email.AddSubGroup(gmailAccounts);
+            //email.AddEntry(new PwEntry(null) { Title = "Yahoo", Username = "Something@yahoo.com" });
+            //root.AddSubGroup(email);
 
-            var homebanking = new PwGroup(null) { Name = "Banking" };
-            root.AddSubGroup(homebanking);
-            var tree = new Kdb4Tree(null);
-            tree.Group = root;
-            var pwDatabase = new PwDatabase(null);
-            pwDatabase.Tree = tree;
-            this.PwDatabase = pwDatabase;
+            //var homebanking = new PwGroup(null) { Name = "Banking" };
+            //root.AddSubGroup(homebanking);
+            //var tree = new Kdb4Tree(null);
+            //tree.Group = root;
+            //var pwDatabase = new PwDatabase(null);
+            //pwDatabase.Tree = tree;
+            //this.PwDatabase = pwDatabase;
         }
 
         public async Task LoadPwDatabase(IStorageFile pwDatabaseFile, IList<IUserKey> userKeys, IProgress<double> percentComplete)

@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Net;
 using Caliburn.Micro;
+using MetroPass.Core.Interfaces;
 using MetroPass.Core.Model;
 using Framework;
 using System;
@@ -13,11 +15,25 @@ namespace MetroPass.UI.ViewModels
     {
         private readonly INavigationService _navigationService;
         private readonly ObservableCollection<PwGroup> _entryGroupsWithEntries;
+        private readonly IKdbTree _dbTree;
 
-        public EntryGroupListViewModel(INavigationService navigationService, IClipboard clipboard) : base(navigationService, clipboard)
+        public EntryGroupListViewModel(IKdbTree dbTree, INavigationService navigationService, IClipboard clipboard) : base(navigationService, clipboard)
         {
+            _dbTree = dbTree;
             _navigationService = navigationService;
             _entryGroupsWithEntries = new ObservableCollection<PwGroup>();
+        }
+
+        private string _groupId;
+        public string GroupId
+        {
+            get { return _groupId; }
+            set
+            {
+                _groupId = value;
+                var groupElement = _dbTree.FindGroupByUuid(value);
+                Root = new PwGroup(groupElement);
+            }
         }
 
         PwGroup _root = null;
@@ -27,7 +43,7 @@ namespace MetroPass.UI.ViewModels
             set
             {
                 _root = value;
-                _entryGroupsWithEntries.Add(new PwGroup(value.Element, value.Entries.OrderBy(e => e.Title)));
+                _entryGroupsWithEntries.Add(new PwGroup(value.Element));
                 _entryGroupsWithEntries.AddRange(value.SubGroups);
                 NotifyOfPropertyChange(() => Root);
             }
@@ -35,12 +51,13 @@ namespace MetroPass.UI.ViewModels
 
         public void SelectGroup(PwGroup selectedGroup)
         {
-            _navigationService.NavigateToViewModel<EntryGroupListViewModel, PwGroup>(selectedGroup, vm => vm.Root);
+            var encodedUUID = WebUtility.UrlEncode(selectedGroup.UUID);
+            _navigationService.UriFor<EntryGroupListViewModel>().WithParam(vm => vm.GroupId, encodedUUID).Navigate();
         }
 
         public  void EditGroup()
         {
-            _navigationService.NavigateToViewModel<GroupEditViewModel, PwGroup>(Root, vm => vm.Group);
+            _navigationService.UriFor<GroupEditViewModel>().WithParam(vm => vm.GroupId, Root.UUID).Navigate();
         }
 
 
@@ -79,7 +96,7 @@ namespace MetroPass.UI.ViewModels
 
         public void AddEntry()
         {
-            _navigationService.NavigateToViewModel<AddEntryViewModel, PwGroup>(Root, vm => vm.ParentGroup);
+            _navigationService.UriFor<AddEntryViewModel>().WithParam(vm => vm.ParentGroupID, Root.UUID).Navigate();
         }
     }
 }

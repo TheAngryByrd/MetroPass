@@ -1,11 +1,10 @@
 ﻿using Caliburn.Micro;
 using System;
 using System.Linq;
+using MetroPass.Core.Interfaces;
 using MetroPass.Core.Model;
 using MetroPass.UI.DataModel;
-using System.Diagnostics;
 using MetroPass.UI.Views;
-using Windows.UI.Xaml;
 
 namespace MetroPass.UI.ViewModels
 {
@@ -14,9 +13,24 @@ namespace MetroPass.UI.ViewModels
         private readonly INavigationService _navigationService;
         private bool _loadingData = true;
 
-        public EntryEditViewModel(INavigationService navigationService) : base(navigationService)
+        private readonly IKdbTree _dbTree;
+
+        public EntryEditViewModel(IKdbTree dbTree, INavigationService navigationService) : base(navigationService)
         {
-            this._navigationService=navigationService;
+            _dbTree = dbTree;
+            _navigationService = navigationService;
+        }
+
+        private string _entryID;
+        public string EntryID
+        {
+            get { return _entryID; }
+            set
+            {
+                _entryID = value;
+                var entryElement = _dbTree.FindEntryByUuid(value);
+                Entry = new PwEntry(entryElement);
+            }
         }
 
         private PwEntry _pwEntry;
