@@ -9,7 +9,7 @@ using System.Xml.Linq;
 
 namespace MetroPass.UI.ViewModels
 {
-    public class NewDatabaseViewModel: BaseScreen
+    public class NewDatabaseViewModel : BaseScreen 
     {
         private readonly INavigationService _navigationService;
 
@@ -19,6 +19,17 @@ namespace MetroPass.UI.ViewModels
                 _navigationService = navigationService;
         }
 
+        private string _name;
+        public string Name
+        {
+            get { return _name; }
+
+            set
+            {
+                _name = value;
+                NotifyOfPropertyChange(() => Name);
+            }
+        }
         private string _password;
         public string Password
         {
