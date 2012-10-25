@@ -44,21 +44,27 @@
                 <RowDefinition Height="auto"></RowDefinition>
                 <RowDefinition Height="auto"></RowDefinition>
                 <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
             </Grid.RowDefinitions>
             <Grid.Resources>
                 <Style TargetType="PasswordBox">
+                    <Setter Property="Margin" Value="10" />
+                </Style>
+                <Style TargetType="TextBox">
                     <Setter Property="Margin" Value="10" />
                 </Style>
                 <Style TargetType="TextBlock">
                     <Setter Property="Margin" Value="10" />
                 </Style>
             </Grid.Resources>
-            <TextBlock Grid.Row="0" Grid.Column="0" FontSize="30"  Margin="10">Password: </TextBlock>
-            <PasswordBox x:Name="Password" Grid.Row="0" Grid.Column="1" Width="500"></PasswordBox>
-            <TextBlock Grid.Row="1" Grid.Column="0" FontSize="30"  Margin="10">Confirm Password:</TextBlock>
-            <PasswordBox  x:Name="Confirm" Grid.Row="1" Grid.Column="1" Width="500"></PasswordBox>
-            <TextBlock Grid.Row="2" Grid.Column="0" FontSize="15"  Margin="10">Create Key File Coming Soon!</TextBlock>
-            <Button Grid.Column="1" Grid.Row="3" Name="Save" Margin="10" Content="Save" Width="100" Height="50" FontSize="24"/>
+            <TextBlock Grid.Row="0" Grid.Column="0" FontSize="30"  Margin="10">Name: </TextBlock>
+            <TextBox x:Name="Name" Grid.Row="0" Grid.Column="1" Width="500"></TextBox>
+            <TextBlock Grid.Row="1" Grid.Column="0" FontSize="30"  Margin="10">Password: </TextBlock>
+            <PasswordBox x:Name="Password" Grid.Row="1" Grid.Column="1" Width="500"></PasswordBox>
+            <TextBlock Grid.Row="2" Grid.Column="0" FontSize="30"  Margin="10">Confirm Password:</TextBlock>
+            <PasswordBox  x:Name="Confirm" Grid.Row="2" Grid.Column="1" Width="500"></PasswordBox>
+            <TextBlock Grid.Row="3" Grid.Column="0" FontSize="15"  Margin="10">Create Key File Coming Soon!</TextBlock>
+            <Button Grid.Column="1" Grid.Row="4" Name="Save" Margin="10" Content="Save" Width="100" Height="50" FontSize="24"/>
         </Grid>
 
         <VisualStateManager.VisualStateGroups>
