@@ -54,17 +54,17 @@ namespace MetroPass.Core.Services
         {
             var group = new PwGroup(elementGroup);
 
-             var entryElements = elementGroup.Elements("Entry");
+            //var entryElements = elementGroup.Elements("Entry");
 
-            foreach (var element in entryElements)
-            {
-                group.AddEntry(new PwEntry(element));
-            }
+            //foreach (var element in entryElements)
+            //{
+            //    group.AddEntry(new PwEntry(element));
+            //}
 
-            foreach (var subGroup in ParseGroups(elementGroup.Elements("Group")))
-            {
-                group.AddSubGroup(subGroup);
-            }
+            //foreach (var subGroup in ParseGroups(elementGroup.Elements("Group")))
+            //{
+            //    group.AddSubGroup(subGroup);
+            //}
 
             return group;
         }
