@@ -1,10 +1,8 @@
 ﻿using Caliburn.Micro;
+using Framework;
 using MetroPass.UI.Views;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Linq;
 
 namespace MetroPass.UI.ViewModels
@@ -81,7 +79,9 @@ namespace MetroPass.UI.ViewModels
         public async void Save()
         {
             CanSave = false;
-            
+            var databaseXDocument = NewDatabase();
+
+
             _navigationService.NavigateToViewModel<EntryGroupListViewModel>();
         }
 
@@ -89,17 +89,17 @@ namespace MetroPass.UI.ViewModels
         {
             var databaseXML = @"<KeePassFile>
                                   <Meta>
-                                    <Generator>KeePass</Generator>
+                                    <Generator>{0}</Generator>
                                     <HeaderHash>0GuRCYFy2gzb1mm508FVJ1I0wDkJFHN3g0oN0GvSZ04=</HeaderHash>
-                                    <DatabaseName>NewName</DatabaseName>
-                                    <DatabaseNameChanged>2012-10-25T02:48:36Z</DatabaseNameChanged>
+                                    <DatabaseName>{1}</DatabaseName>
+                                    <DatabaseNameChanged>{2}</DatabaseNameChanged>
                                     <DatabaseDescription />
-                                    <DatabaseDescriptionChanged>2012-10-25T02:47:56Z</DatabaseDescriptionChanged>
+                                    <DatabaseDescriptionChanged>{2}</DatabaseDescriptionChanged>
                                     <DefaultUserName />
-                                    <DefaultUserNameChanged>2012-10-25T02:47:56Z</DefaultUserNameChanged>
+                                    <DefaultUserNameChanged>{2}</DefaultUserNameChanged>
                                     <MaintenanceHistoryDays>365</MaintenanceHistoryDays>
                                     <Color />
-                                    <MasterKeyChanged>2012-10-25T02:47:56Z</MasterKeyChanged>
+                                    <MasterKeyChanged>{2}</MasterKeyChanged>
                                     <MasterKeyChangeRec>-1</MasterKeyChangeRec>
                                     <MasterKeyChangeForce>-1</MasterKeyChangeForce>
                                     <MemoryProtection>
@@ -111,13 +111,13 @@ namespace MetroPass.UI.ViewModels
                                     </MemoryProtection>
                                     <RecycleBinEnabled>True</RecycleBinEnabled>
                                     <RecycleBinUUID>AAAAAAAAAAAAAAAAAAAAAA==</RecycleBinUUID>
-                                    <RecycleBinChanged>2012-10-25T02:47:56Z</RecycleBinChanged>
+                                    <RecycleBinChanged>{2}</RecycleBinChanged>
                                     <EntryTemplatesGroup>AAAAAAAAAAAAAAAAAAAAAA==</EntryTemplatesGroup>
-                                    <EntryTemplatesGroupChanged>2012-10-25T02:47:56Z</EntryTemplatesGroupChanged>
+                                    <EntryTemplatesGroupChanged>{2}</EntryTemplatesGroupChanged>
                                     <HistoryMaxItems>10</HistoryMaxItems>
                                     <HistoryMaxSize>6291456</HistoryMaxSize>
-                                    <LastSelectedGroup>GD11ELf89ESN7K5jV/HhAw==</LastSelectedGroup>
-                                    <LastTopVisibleGroup>GD11ELf89ESN7K5jV/HhAw==</LastTopVisibleGroup>
+                                    <LastSelectedGroup></LastSelectedGroup>
+                                    <LastTopVisibleGroup></LastTopVisibleGroup>
                                     <Binaries />
                                     <CustomData />
                                   </Meta>
@@ -126,8 +126,9 @@ namespace MetroPass.UI.ViewModels
                                     <DeletedObjects />
                                   </Root>
                                 </KeePassFile>";
-
-            return XDocument.Parse(databaseXML);
+           
+            var formatedXml = string.Format(databaseXML, "MetroPass", Name, DateTime.Now.ToFormattedUtcTime());
+            return XDocument.Parse(formatedXml);
         }
     }
 }
