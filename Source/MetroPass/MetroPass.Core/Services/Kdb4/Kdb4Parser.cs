@@ -25,14 +25,22 @@ namespace MetroPass.Core.Services
         {
 
             var xml = CreateXmlReader(decrypredDatabase);
-            return ParseXmlDocument(xml);
+            return ParseAndDecode(xml);
         }
 
-        public Kdb4Tree ParseXmlDocument(XDocument xml)
+        public Kdb4Tree ParseAndDecode(XDocument xml)
         {
             var root = xml.Descendants("Root").First();
 
             DecodeXml(root);
+
+            return ParseXmlDocument(xml);
+        }
+        
+
+        public Kdb4Tree ParseXmlDocument(XDocument xml)
+        {
+            var root = xml.Descendants("Root").First();
 
             var groups = root.Element("Group");
 
