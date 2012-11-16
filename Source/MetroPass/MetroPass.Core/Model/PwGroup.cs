@@ -30,8 +30,18 @@ namespace MetroPass.Core.Model
 
         public IEnumerable<PwGroup> SubGroups
         {
-            get { 
-                return _subGroups.Select(e => new PwGroup(e)).OrderBy(g => g.Name);
+            get {
+                int i = 0, subGroupCount = _subGroups.Count();
+                return _subGroups
+                    .OrderBy(e => e.Element("Name").Value)
+                    .Select(e =>
+                        new
+                        {
+                            Group = new PwGroup(e),
+                            SortKey = e.Element("Name").Value == "Backup" ? ++subGroupCount : e.Element("Name").Value == "Recycle Bin" ? ++subGroupCount : ++i
+                        })
+                    .OrderBy(g => g.SortKey)
+                    .Select(g => g.Group);
             }
         }
 
