@@ -43,7 +43,7 @@ namespace MetroPass.UI.ViewModels
             set
             {
                 _root = value;
-                _entryGroupsWithEntries.Add(new PwGroup(value.Element));
+                _entryGroupsWithEntries.Add(new PwGroup(value.Element, false));
                 _entryGroupsWithEntries.AddRange(value.SubGroups);
                 NotifyOfPropertyChange(() => Root);
             }

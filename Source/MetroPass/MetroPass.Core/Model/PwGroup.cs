@@ -61,11 +61,22 @@ namespace MetroPass.Core.Model
             }
         }
 
-        public PwGroup(XElement element)
+        public PwGroup(XElement element) : this(element, true) {}
+
+        public PwGroup(XElement element, bool includeSubGroups)
         {
             Element = element;
             _entries = element.Elements("Entry");
-            _subGroups = element.Elements("Group");
+            
+            if (includeSubGroups)
+            {
+                _subGroups = element.Elements("Group");
+            }
+            else
+            {
+                _subGroups = new XElement[0];
+            }
+
         }
     }
 }
