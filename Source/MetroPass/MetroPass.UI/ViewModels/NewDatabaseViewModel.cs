@@ -4,11 +4,13 @@ using MetroPass.Core.Model;
 using MetroPass.Core.Model.Keys;
 using MetroPass.Core.Services;
 using MetroPass.UI.DataModel;
+using MetroPass.UI.Services;
 using MetroPass.UI.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
+using Windows.Storage.Pickers;
 
 namespace MetroPass.UI.ViewModels
 {
@@ -16,10 +18,12 @@ namespace MetroPass.UI.ViewModels
     {
         private readonly INavigationService _navigationService;
 
-        public NewDatabaseViewModel( INavigationService navigationService)
-            : base(navigationService)
+        private readonly IPageServices _pageServices;
+
+        public NewDatabaseViewModel(INavigationService navigationService, IPageServices pageServices) : base(navigationService)
         {
-                _navigationService = navigationService;
+            this._pageServices = pageServices;
+            _navigationService = navigationService;
         }
 
         private string _name;
@@ -91,9 +95,31 @@ namespace MetroPass.UI.ViewModels
             var compositeKey = new CompositeKey(new List<IUserKey> { passwordKey }, new NullableProgress<double>());
             var pwDatabase = new PwDatabase(compositeKey);
 
+            
+
             pwDatabase.Tree = parser.ParseXmlDocument(databaseXDocument);
-            PWDatabaseDataSource.Instance.PwDatabase = pwDatabase;
-            _navigationService.UriFor<EntryGroupListViewModel>().WithParam(vm => vm.GroupId, PWDatabaseDataSource.Instance.PwDatabase.Tree.Group.UUID).Navigate();
+            pwDatabase.DataCipherUuid = new PwUuid(true);
+
+
+            if (await _pageServices.EnsureUnsnapped())
+            {
+                FileSavePicker saver = new FileSavePicker();      
+                saver.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
+                saver.SuggestedFileName = this.Name;
+                saver.FileTypeChoices.Add(".kdbx", new List<string> { ".kdbx" });
+                var storageFile = await saver.PickSaveFileAsync();
+
+                if (storageFile != null)
+                {
+
+                    PWDatabaseDataSource.Instance.PwDatabase = pwDatabase;
+                    PWDatabaseDataSource.Instance.StorageFile = storageFile;
+                    await PWDatabaseDataSource.Instance.SavePwDatabase();
+                    _navigationService.UriFor<EntryGroupListViewModel>().WithParam(vm => vm.GroupId, PWDatabaseDataSource.Instance.PwDatabase.Tree.Group.UUID).Navigate();
+                }
+            }
+
+
         }
 
         public XDocument NewDatabase()

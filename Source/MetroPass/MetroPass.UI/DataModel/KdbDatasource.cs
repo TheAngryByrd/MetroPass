@@ -20,7 +20,7 @@ namespace MetroPass.UI.DataModel
         }
         public static PWDatabaseDataSource Instance { get { return instance; } }
 
-        private IStorageFile keePassFile;
+        public IStorageFile StorageFile;
         private PwDatabase _pwDatabase;
         public PwDatabase PwDatabase
         {
@@ -49,9 +49,14 @@ namespace MetroPass.UI.DataModel
 
         public async Task LoadPwDatabase(IStorageFile pwDatabaseFile, IList<IUserKey> userKeys, IProgress<double> percentComplete)
         {
-            keePassFile = pwDatabaseFile;
+            StorageFile = pwDatabaseFile;
             var factory = new KdbReaderFactory();
             this.PwDatabase = await factory.LoadAsync(pwDatabaseFile, userKeys, percentComplete);
+        }
+
+        public async Task CreatePwDatabase(IStorageFile pwDatabaseFil )
+        {
+
         }
 
         public async Task SavePwDatabase()
@@ -60,7 +65,7 @@ namespace MetroPass.UI.DataModel
 
             var writer = factory.CreateWriter(PwDatabase.Tree);
 
-            await writer.Write(PwDatabase, keePassFile);
+            await writer.Write(PwDatabase, StorageFile);
 
         }
     } 
