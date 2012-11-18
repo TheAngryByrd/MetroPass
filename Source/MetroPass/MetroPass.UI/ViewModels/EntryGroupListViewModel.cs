@@ -98,5 +98,10 @@ namespace MetroPass.UI.ViewModels
         {
             _navigationService.UriFor<AddEntryViewModel>().WithParam(vm => vm.ParentGroupID, Root.UUID).Navigate();
         }
+
+        public void AddGroup()
+        {
+            _navigationService.UriFor<AddGroupViewModel>().WithParam(vm => vm.ParentGroupID, Root.UUID).Navigate();
+        }
     }
 }

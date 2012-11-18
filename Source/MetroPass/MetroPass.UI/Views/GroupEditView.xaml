@@ -47,7 +47,7 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Column="0" VerticalAlignment="Center" Grid.Row="0" Name="xlabelName" Text="Group Name:" Margin="10" FontSize="24"/>
+                <TextBlock Grid.Column="0" VerticalAlignment="Center" Grid.Row="0" Name="xlabelName" Text="Folder Name:" Margin="10" FontSize="24"/>
                 <TextBox Grid.Column="1" Grid.Row="0" Name="GroupName" Width="300" Margin="10" FontSize="20"/>             
                 <Button Grid.Column="1" Grid.Row="2" Name="Save" Margin="10" Content="Save" Width="100" Height="50" FontSize="24"/>
             </Grid>

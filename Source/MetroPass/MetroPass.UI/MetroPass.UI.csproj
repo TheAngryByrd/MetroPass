@@ -129,6 +129,7 @@
     <Compile Include="DataModel\KdbDatasource.cs" />
     <Compile Include="Common\EnumerableExtensions.cs" />
     <Compile Include="ViewModels\AddEntryViewModel.cs" />
+    <Compile Include="ViewModels\AddGroupViewModel.cs" />
     <Compile Include="ViewModels\EntryEditViewModel.cs" />
     <Compile Include="ViewModels\NewDatabaseViewModel.cs" />
     <Compile Include="ViewModels\PasswordEntryScreen.cs" />
@@ -141,6 +142,9 @@
     <Compile Include="ViewModels\StartPageViewModel.cs" />
     <Compile Include="Views\AddEntryView.xaml.cs">
       <DependentUpon>AddEntryView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AddGroupView.xaml.cs">
+      <DependentUpon>AddGroupView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\EntryEditView.xaml.cs">
       <DependentUpon>EntryEditView.xaml</DependentUpon>
@@ -208,6 +212,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\AddEntryView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\AddGroupView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

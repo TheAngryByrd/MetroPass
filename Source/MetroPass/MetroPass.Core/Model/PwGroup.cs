@@ -71,6 +71,11 @@ namespace MetroPass.Core.Model
             }
         }
 
+        public void AddGroupToDocument(PwGroup group)
+        {
+            Element.Add(group.Element);
+        }
+
         public PwGroup(XElement element) : this(element, true) {}
 
         public PwGroup(XElement element, bool includeSubGroups)
