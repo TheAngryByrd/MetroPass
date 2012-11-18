@@ -16,7 +16,7 @@ namespace MetroPass.Core.Model.Kdb4
 
         public XElement FindEntryByUuid(string entryId)
         {
-            var entryElements = Document.Descendants("Entry").Where(e => e.Element("UUID").Value == entryId);
+            var entryElements = Document.Descendants("Entry").Where(e => e.Element("UUID") != null && e.Element("UUID").Value == entryId);
             if (entryElements.Count() == 1)
             {
                 return entryElements.Single();
