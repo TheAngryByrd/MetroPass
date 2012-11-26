@@ -10,6 +10,7 @@ using MetroPass.UI.ViewModels;
 using MetroPass.UI.Views;
 using Windows.ApplicationModel;
 using Ninject;
+using Windows.UI.ApplicationSettings;
 
 namespace MetroPass.UI
 {
@@ -22,6 +23,26 @@ namespace MetroPass.UI
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+       
+         
+        }
+
+        protected override void OnWindowCreated(Windows.UI.Xaml.WindowCreatedEventArgs args)
+        {
+            base.OnWindowCreated(args);
+            SettingsPane.GetForCurrentView().CommandsRequested += ShowPrivacyPolicy;
+        }             
+
+        void ShowPrivacyPolicy(SettingsPane sender, SettingsPaneCommandsRequestedEventArgs args)
+        {
+           var privacyPolicyCommand = new SettingsCommand("privacyPolicy","Privacy Policy", a => LaunchPrivacyPolicyUrl());
+           args.Request.ApplicationCommands.Add(privacyPolicyCommand);
+        }
+
+        async void LaunchPrivacyPolicyUrl()
+        {
+            Uri privacyPolicyUrl =    new Uri("http://metropass.azurewebsites.net");        
+            var result = await Windows.System.Launcher.LaunchUriAsync(privacyPolicyUrl);
         }
 
         protected override void Configure()
