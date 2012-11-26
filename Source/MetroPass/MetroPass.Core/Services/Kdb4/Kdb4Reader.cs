@@ -75,7 +75,7 @@ namespace MetroPass.Core.Services
             }
             catch (Exception e)
             {
-                throw new SecurityException("Seems like the password is incorrect dude", e);
+                throw new SecurityException("There was a problem opening your database", e);
                
             }
            
