@@ -41,7 +41,7 @@ namespace MetroPass.UI
 
         async void LaunchPrivacyPolicyUrl()
         {
-            Uri privacyPolicyUrl =    new Uri("http://metropass.azurewebsites.net");        
+            Uri privacyPolicyUrl = new Uri("http://metropass.azurewebsites.net/Privacy-Policy");        
             var result = await Windows.System.Launcher.LaunchUriAsync(privacyPolicyUrl);
         }
 
