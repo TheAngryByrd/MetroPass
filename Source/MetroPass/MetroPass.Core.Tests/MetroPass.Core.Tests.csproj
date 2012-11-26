@@ -151,8 +151,6 @@
     <Content Include="Data\Pass.kdbx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="MetroPass.Core.Tests_TemporaryKey.pfx">
-    </Content>
     <Content Include="Data\Readme.txt" />
     <Content Include="Images\UnitTestLogo.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
