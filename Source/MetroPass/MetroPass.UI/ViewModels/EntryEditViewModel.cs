@@ -29,7 +29,8 @@ namespace MetroPass.UI.ViewModels
             {
                 _entryID = value;
                 var entryElement = _dbTree.FindEntryByUuid(value);
-                Entry = new PwEntry(entryElement);
+                var groupElement = entryElement.Parent;
+                Entry = new PwEntry(entryElement, new PwGroup(groupElement, false));
             }
         }
 

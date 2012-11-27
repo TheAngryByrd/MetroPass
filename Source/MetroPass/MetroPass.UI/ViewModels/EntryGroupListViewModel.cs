@@ -7,21 +7,23 @@ using Framework;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using MetroPass.UI.DataModel;
 using MetroPass.UI.Services;
+using Windows.UI.Popups;
 
 namespace MetroPass.UI.ViewModels
 {
     public class EntryGroupListViewModel : PasswordEntryScreen
     {
         private readonly INavigationService _navigationService;
-        private readonly ObservableCollection<PwGroup> _entryGroupsWithEntries;
+        private readonly ObservableCollection<PwGroup> _topLevelGroups;
         private readonly IKdbTree _dbTree;
 
         public EntryGroupListViewModel(IKdbTree dbTree, INavigationService navigationService, IClipboard clipboard) : base(navigationService, clipboard)
         {
             _dbTree = dbTree;
             _navigationService = navigationService;
-            _entryGroupsWithEntries = new ObservableCollection<PwGroup>();
+            _topLevelGroups = new ObservableCollection<PwGroup>();
         }
 
         private string _groupId;
@@ -43,8 +45,8 @@ namespace MetroPass.UI.ViewModels
             set
             {
                 _root = value;
-                _entryGroupsWithEntries.Add(new PwGroup(value.Element, false));
-                _entryGroupsWithEntries.AddRange(value.SubGroups);
+                _topLevelGroups.Add(new PwGroup(value.Element, false));
+                _topLevelGroups.AddRange(value.SubGroups);
                 NotifyOfPropertyChange(() => Root);
             }
         }
@@ -61,22 +63,9 @@ namespace MetroPass.UI.ViewModels
         }
 
 
-        public ObservableCollection<PwGroup> EntryGroupsWithEntries
+        public ObservableCollection<PwGroup> TopLevelGroups
         {
-            get { return _entryGroupsWithEntries; }
-        }
-
-        public ObservableCollection<object> AllTogetherNow
-        {
-            get
-            {
-                var temp = new ObservableCollection<object>();
-
-                temp.AddRange(Root.SubGroups);
-                temp.AddRange(Root.Entries.OrderBy(e => e.Title));
-
-                return temp;
-            }
+            get { return _topLevelGroups; }
         }
 
         public IEnumerable<PwGroup> GroupsOnThisLevel
@@ -102,6 +91,26 @@ namespace MetroPass.UI.ViewModels
         public void AddGroup()
         {
             _navigationService.UriFor<AddGroupViewModel>().WithParam(vm => vm.ParentGroupID, Root.UUID).Navigate();
+        }
+
+        public async void DeleteEntry()
+        {
+            var confirmMessage = String.Format("Are you sure you want to delete the password for {0}?", ((PwEntry)SelectedPasswordItem).Title);
+            var confirmDialog = new MessageDialog(confirmMessage, "Confirm Delete");
+            bool result = false;
+
+            confirmDialog.Commands.Add(new UICommand("Yes", (cmd) => result = true));
+            confirmDialog.Commands.Add(new UICommand("No", (cmd) => result = false));
+            confirmDialog.DefaultCommandIndex = 0;
+            confirmDialog.CancelCommandIndex = 1;
+
+            await confirmDialog.ShowAsync();
+
+            if (result)
+            {
+                SelectedPasswordItem.Element.Remove();
+                await PWDatabaseDataSource.Instance.SavePwDatabase();
+            }
         }
     }
 }

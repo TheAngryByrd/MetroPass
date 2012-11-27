@@ -19,7 +19,7 @@ namespace MetroPass.Core.Model
         public IEnumerable<PwEntry> Entries
         {
             get { 
-                return _entries.Select(e => new PwEntry(e)).OrderBy(e => e.Title);
+                return _entries.Select(e => new PwEntry(e, this)).OrderBy(e => e.Title);
             }
         }
 
