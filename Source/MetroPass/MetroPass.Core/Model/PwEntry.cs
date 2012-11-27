@@ -8,14 +8,22 @@ namespace MetroPass.Core.Model
 {
     public class PwEntry : PwCommon
     {
-        public PwEntry(XElement element)
+        private readonly PwGroup _parentGroup;
+
+        public PwEntry(XElement element, PwGroup parentGroup)
         {
+            _parentGroup = parentGroup;
             Element = element;
         }
 
         public IEnumerable<XElement> Meta
         {
             get { return Element.Elements("String"); }
+        }
+
+        public PwGroup ParentGroup
+        {
+            get { return _parentGroup; }
         }
 
         private XElement GetElement([CallerMemberName] String propertyName = null)

@@ -14,7 +14,7 @@ namespace MetroPass.UI.ViewModels
 
         public PasswordEntryScreen(INavigationService navigationService, IClipboard clipboard) : base(navigationService)
         {
-            _navigationService=navigationService;
+            _navigationService = navigationService;
             _clipboard = clipboard;
         }
 
