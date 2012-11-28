@@ -60,7 +60,7 @@
             x:Name="groupedItemsViewSource"
             Source="{Binding TopLevelGroups}"
             IsSourceGrouped="true"
-            ItemsPath="AllTogetherNow"
+            ItemsPath="SubGroupsAndEntries"
            />
     </Page.Resources>
 

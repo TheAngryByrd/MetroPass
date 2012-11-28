@@ -26,6 +26,11 @@ namespace MetroPass.Core.Model
             get { return _parentGroup; }
         }
 
+        public void Remove()
+        {
+            ParentGroup.SubGroupsAndEntries.Remove(this);
+        }
+
         private XElement GetElement([CallerMemberName] String propertyName = null)
         {
             var foundElement = Meta.FirstOrDefault(a => a.Element("Key").Value.ToLower() == propertyName.ToLower());
