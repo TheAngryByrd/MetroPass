@@ -3,7 +3,6 @@ using MetroPass.Core.Model;
 using MetroPass.Core.Model.Kdb4;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -42,38 +41,17 @@ namespace MetroPass.Core.Services
         {
             var root = xml.Descendants("Root").First();
 
-            var groups = root.Element("Group");
+            var rootGroup = root.Element("Group");
 
             var kdb4Tree = new Kdb4Tree(xml);
-            kdb4Tree.Group = ParseGroup(groups);
+            kdb4Tree.Group = ParseGroup(rootGroup);
 
             return kdb4Tree;
         }
 
-        public IEnumerable<PwGroup> ParseGroups(IEnumerable<XElement> elementGroups)
+        public PwGroup ParseGroup(XElement rootGroup)
         {
-            foreach (var element in elementGroups)
-            {
-                yield return ParseGroup(element);
-            }
-        }
-
-        public PwGroup ParseGroup(XElement elementGroup)
-        {
-            var group = new PwGroup(elementGroup);
-
-            //var entryElements = elementGroup.Elements("Entry");
-
-            //foreach (var element in entryElements)
-            //{
-            //    group.AddEntry(new PwEntry(element));
-            //}
-
-            //foreach (var subGroup in ParseGroups(elementGroup.Elements("Group")))
-            //{
-            //    group.AddSubGroup(subGroup);
-            //}
-
+            var group = new PwGroup(rootGroup);
             return group;
         }
 

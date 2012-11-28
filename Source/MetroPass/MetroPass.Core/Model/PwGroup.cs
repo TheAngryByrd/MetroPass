@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Xml.Linq;
 
@@ -9,6 +9,24 @@ namespace MetroPass.Core.Model
     {    
         private readonly IEnumerable<XElement> _entries;
         private readonly IEnumerable<XElement> _subGroups;
+
+        public PwGroup(XElement element) : this(element, true) { }
+
+        public PwGroup(XElement element, bool includeSubGroups) 
+        {
+            Element = element;
+            _entries = element.Elements("Entry");
+
+            if (includeSubGroups)
+            {
+                _subGroups = element.Elements("Group");
+            }
+            else
+            {
+                _subGroups = new XElement[0];
+            }
+            _subGroupsAndEntries = new ObservableCollection<PwCommon>(this.SubGroups.Union(this.Entries.Cast<PwCommon>()));
+        }
 
         public string Name 
         { 
@@ -50,11 +68,12 @@ namespace MetroPass.Core.Model
             get { return _subGroups.Count(); }
         }
 
-        public IEnumerable<PwCommon> AllTogetherNow
+        private readonly ObservableCollection<PwCommon> _subGroupsAndEntries;
+        public ObservableCollection<PwCommon> SubGroupsAndEntries
         {
             get
             {
-                return this.SubGroups.Union(this.Entries.Cast<PwCommon>());
+                return _subGroupsAndEntries;
             }
         }
 
@@ -74,24 +93,6 @@ namespace MetroPass.Core.Model
         public void AddGroupToDocument(PwGroup group)
         {
             Element.Add(group.Element);
-        }
-
-        public PwGroup(XElement element) : this(element, true) {}
-
-        public PwGroup(XElement element, bool includeSubGroups)
-        {
-            Element = element;
-            _entries = element.Elements("Entry");
-            
-            if (includeSubGroups)
-            {
-                _subGroups = element.Elements("Group");
-            }
-            else
-            {
-                _subGroups = new XElement[0];
-            }
-
         }
     }
 }

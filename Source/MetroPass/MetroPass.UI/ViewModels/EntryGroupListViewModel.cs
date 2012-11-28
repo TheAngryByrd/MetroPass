@@ -109,6 +109,7 @@ namespace MetroPass.UI.ViewModels
             if (result)
             {
                 SelectedPasswordItem.Element.Remove();
+                ((PwEntry)SelectedPasswordItem).Remove();
                 await PWDatabaseDataSource.Instance.SavePwDatabase();
             }
         }
