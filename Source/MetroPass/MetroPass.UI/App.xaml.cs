@@ -1,30 +1,28 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Caliburn.Micro;
 using MetroPass.Core.Interfaces;
 using MetroPass.UI.Common;
-using System;
-using System.Linq;
 using MetroPass.UI.DataModel;
 using MetroPass.UI.Services;
 using MetroPass.UI.ViewModels;
 using MetroPass.UI.Views;
-using Windows.ApplicationModel;
 using Ninject;
+using Windows.ApplicationModel;
+using Windows.ApplicationModel.Activation;
 using Windows.UI.ApplicationSettings;
+using Windows.UI.Xaml.Controls;
 
 namespace MetroPass.UI
 {
-
     public sealed partial class App
     { 
-        private NinjectContainer ninjectContainer;
+        private NinjectContainer _ninjectContainer;
 
         public App()
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
-       
-         
         }
 
         protected override void OnWindowCreated(Windows.UI.Xaml.WindowCreatedEventArgs args)
@@ -49,33 +47,38 @@ namespace MetroPass.UI
         {
             base.Configure();
 
-            ninjectContainer = new NinjectContainer(RootFrame);
-            ninjectContainer.RegisterWinRTServices();
+            _ninjectContainer = new NinjectContainer();
+            _ninjectContainer.RegisterWinRTServices();
 
-            ninjectContainer.Kernel.Bind<IPageServices>().To<PageServices>();
-            ninjectContainer.Kernel.Bind<IClipboard>().To<MetroClipboard>();
-            ninjectContainer.Kernel.Bind<IKdbTree>().ToMethod(c => PWDatabaseDataSource.Instance.PwDatabase.Tree);
+            _ninjectContainer.Kernel.Bind<IPageServices>().To<PageServices>();
+            _ninjectContainer.Kernel.Bind<IClipboard>().To<MetroClipboard>();
+            _ninjectContainer.Kernel.Bind<IKdbTree>().ToMethod(c => PWDatabaseDataSource.Instance.PwDatabase.Tree);
         }
 
         protected override object GetInstance(Type service, string key)
         {    
-            var instance = ninjectContainer.Kernel.Get(service, key); 
+            var instance = _ninjectContainer.Kernel.Get(service, key); 
             return instance;
         }
 
         protected override IEnumerable<object> GetAllInstances(Type service)
         {
-            return ninjectContainer.Kernel.GetAll(service);
+            return _ninjectContainer.Kernel.GetAll(service);
         }
 
         protected override void BuildUp(object instance)
         {
-            ninjectContainer.Kernel.Inject(instance);
+            _ninjectContainer.Kernel.Inject(instance);
         }
 
-        protected override Type GetDefaultView()
+        protected override void PrepareViewFirst(Frame rootFrame)
         {
-            return typeof(StartPageView);
+            _ninjectContainer.RegisterNavigationService(rootFrame);
+        }
+
+        protected override void OnLaunched(LaunchActivatedEventArgs args)
+        {
+            DisplayRootView<StartPageView>();
         }
 
         /// <summary>
@@ -94,7 +97,7 @@ namespace MetroPass.UI
 
         protected override void OnSearchActivated(Windows.ApplicationModel.Activation.SearchActivatedEventArgs args)
         {
-            var navigationService = ninjectContainer.Kernel.Get<INavigationService>();
+            var navigationService = _ninjectContainer.Kernel.Get<INavigationService>();
 
             navigationService.UriFor<SearchResultsViewModel>().WithParam(vm => vm.QueryText, args.QueryText).Navigate();
         }
