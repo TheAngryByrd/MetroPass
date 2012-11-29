@@ -11,7 +11,7 @@
     mc:Ignorable="d">
 
     <Page.BottomAppBar>
-        <AppBar VerticalAlignment="Bottom" x:Name="EntryAppBar" IsOpen="{Binding ShowAppBar, Mode=TwoWay}" IsSticky="True" cal:Message.Attach="[Event Closed] = [Action DeselectItem]">
+        <AppBar VerticalAlignment="Bottom" x:Name="EntryAppBar" IsOpen="{Binding ShowAppBar, Mode=TwoWay}" IsSticky="True" Closed="EntryAppBar_Closed" cal:Message.Attach="[Event Closed] = [Action DeselectItem]">
             <Grid>
                 <StackPanel x:Name="GroupCommands" Orientation="Horizontal"  HorizontalAlignment="Left" Grid.Row="0" Visibility="{Binding ShowGroupCommands, Converter={StaticResource BoolVisibilityConverter}}">
                     <Button x:Name="EditGroup" Style="{StaticResource EditAppBarButtonStyle}" AutomationProperties.Name="Edit Folder"></Button>
