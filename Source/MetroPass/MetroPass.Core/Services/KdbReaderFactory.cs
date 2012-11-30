@@ -45,6 +45,7 @@ namespace MetroPass.Core.Services
 
         private static bool IsKdb4(VersionInfo versionInfo)
         {
+            return true;
             return versionInfo.FileSignature1 == KdbConstants.FileSignature1 && versionInfo.FileSignature2 == KdbConstants.FileSignature2;
         }
 

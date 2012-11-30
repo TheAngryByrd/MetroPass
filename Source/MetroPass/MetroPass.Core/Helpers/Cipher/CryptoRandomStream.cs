@@ -100,8 +100,8 @@ namespace MetroPass.Core.Helpers.Cipher
             }
             else // Unknown algorithm
             {
-
-                throw new ArgumentException();
+                throw new UnknownAlgorithmException();
+            
             }
         }
 
@@ -153,7 +153,9 @@ namespace MetroPass.Core.Helpers.Cipher
                     ((ulong)pb[6] << 48) | ((ulong)pb[7] << 56);
             }
         }
-
-
+    }
+  
+    public class UnknownAlgorithmException : Exception
+    {
     }
 }
