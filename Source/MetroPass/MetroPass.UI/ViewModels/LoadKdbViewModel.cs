@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Security;
 using Caliburn.Micro;
 using MetroPass.Core.Model;
@@ -146,7 +147,9 @@ namespace MetroPass.UI.ViewModels
             {
                 await PWDatabaseDataSource.Instance.LoadPwDatabase(Database, userKeys, progress);
                 OpeningDatabase = false;
-                _navigationService.UriFor<EntryGroupListViewModel>().WithParam(vm => vm.GroupId, PWDatabaseDataSource.Instance.PwDatabase.Tree.Group.UUID).Navigate();
+                var encodedUUID = WebUtility.UrlEncode(PWDatabaseDataSource.Instance.PwDatabase.Tree.Group.UUID);
+
+                _navigationService.UriFor<EntryGroupListViewModel>().WithParam(vm => vm.GroupId, encodedUUID).Navigate();
             }
             catch (SecurityException se)
             {

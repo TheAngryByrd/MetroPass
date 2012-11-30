@@ -1,4 +1,5 @@
-﻿using Caliburn.Micro;
+﻿using System.Net;
+using Caliburn.Micro;
 using Framework;
 using MetroPass.Core.Model;
 using MetroPass.Core.Model.Keys;
@@ -115,7 +116,8 @@ namespace MetroPass.UI.ViewModels
                     PWDatabaseDataSource.Instance.PwDatabase = pwDatabase;
                     PWDatabaseDataSource.Instance.StorageFile = storageFile;
                     await PWDatabaseDataSource.Instance.SavePwDatabase();
-                    _navigationService.UriFor<EntryGroupListViewModel>().WithParam(vm => vm.GroupId, PWDatabaseDataSource.Instance.PwDatabase.Tree.Group.UUID).Navigate();
+                    var encodedUUID = WebUtility.UrlEncode(PWDatabaseDataSource.Instance.PwDatabase.Tree.Group.UUID);
+                    _navigationService.UriFor<EntryGroupListViewModel>().WithParam(vm => vm.GroupId, encodedUUID).Navigate();
                 }
             }
 
