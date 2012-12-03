@@ -63,7 +63,7 @@
                 <HyperlinkButton NavigateUri="{Binding Text, ElementName=Url}" Content="{Binding Text, ElementName=Url}" />
             </StackPanel>
             <TextBlock Grid.Column="0" VerticalAlignment="Top" Grid.Row="5" Text="Notes:" Margin="10" FontSize="24"/>
-            <TextBox Grid.Column="1" Grid.Row="5" Name="Notes" Width="300" Margin="10" FontSize="20" Height="200" TextWrapping="Wrap"/>
+            <TextBox Grid.Column="1" Grid.Row="5" Name="Notes" Width="300" Margin="10" FontSize="20" Height="200" TextWrapping="Wrap" AcceptsReturn="True"/>
             <Button Grid.Column="1" Grid.Row="6" Name="Save" Margin="10" Content="Save" Width="100" Height="50" FontSize="24"/>
         </Grid>
 
@@ -80,7 +80,7 @@
             <TextBox x:Name="URLSnapped" InputScope="Url" Text="{Binding Url, Mode=TwoWay}" Style="{StaticResource SnappedTextboxStyle}"/>
             <HyperlinkButton NavigateUri="{Binding Text, ElementName=URLSnapped}" Content="{Binding Text, ElementName=URLSnapped}" />
             <TextBlock VerticalAlignment="Center" Text="Notes:" Style="{StaticResource SnappedLabelStyle}"/>
-            <TextBox x:Name="Notesnapped" Text="{Binding Notes, Mode=TwoWay}" Style="{StaticResource SnappedTextboxStyle}" Height="100"/>
+            <TextBox x:Name="Notesnapped" Text="{Binding Notes, Mode=TwoWay}" Style="{StaticResource SnappedTextboxStyle}" Height="100" TextWrapping="Wrap" AcceptsReturn="True"/>
             <Button Name="SaveSnapped" cal:Message.Attach="Save" Margin="0 20 0 0" Content="Save" Width="80" Height="40" FontSize="18"/>
         </StackPanel>
         

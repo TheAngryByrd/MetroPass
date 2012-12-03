@@ -35,55 +35,60 @@
             <TextBlock x:Name="PageTitle" Text="{Binding NewEntryTitle}" Grid.Column="1" Style="{StaticResource PageHeaderTextStyle}"/>
         </Grid>
 
-        <Grid Grid.Row="1" Margin="36,0" x:Name="NormalEditView">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-            <TextBlock Grid.Column="0" VerticalAlignment="Center" Grid.Row="0" Text="Title:" Margin="10" FontSize="24"/>
-            <TextBox Grid.Column="1" Grid.Row="0" Name="Title" Width="300" Margin="10" FontSize="20"/>
-            <TextBlock Grid.Column="0" VerticalAlignment="Center" Grid.Row="1" Text="Username:" Margin="10" FontSize="24"/>
-            <TextBox Grid.Column="1" Grid.Row="1" Name="Username" Width="300" Margin="10" FontSize="20"/>
-            <TextBlock Grid.Column="0" VerticalAlignment="Center" Grid.Row="2" Text="Password:" Margin="10" FontSize="24"/>
-            <TextBox Grid.Column="1" Grid.Row="2" Name="Password" Width="300" Margin="10" FontSize="20" />
-            <TextBlock Grid.Column="0" VerticalAlignment="Center" Grid.Row="3" Text="Confirm:" Margin="10" FontSize="24"/>
-            <TextBox Grid.Column="1" Grid.Row="3" Name="Confirm" Width="300" Margin="10" FontSize="20" Style="{StaticResource ErrorTextBoxStyle}" />
-            <TextBlock Grid.Column="0" VerticalAlignment="Top" Grid.Row="4" Text="URL:" Margin="10" FontSize="24"/>
-            <StackPanel Grid.Column="1" Grid.Row="4" Orientation="Vertical">
-                <TextBox Name="Url" Width="300" Margin="10" FontSize="20" InputScope="Url" />
-                <HyperlinkButton NavigateUri="{Binding Text, ElementName=Url}" Content="{Binding Text, ElementName=Url}" />
-            </StackPanel>
-            <TextBlock Grid.Column="0" VerticalAlignment="Top" Grid.Row="5" Text="Notes:" Margin="10" FontSize="24"/>
-            <TextBox Grid.Column="1" Grid.Row="5" Name="Notes" Width="300" Margin="10" FontSize="20" Height="200" TextWrapping="Wrap"/>
-            <Button Grid.Column="1" Grid.Row="6" Name="Save" Margin="10" Content="Save" Width="100" Height="50" FontSize="24"/>
-        </Grid>
+        <ScrollViewer x:Name="NormalEditView" Grid.Row="1" Margin="36,0" HorizontalScrollBarVisibility="Hidden" HorizontalScrollMode="Disabled" VerticalScrollBarVisibility="Auto" VerticalScrollMode="Auto" ZoomMode="Disabled">
+            <Grid >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Column="0" VerticalAlignment="Center" Grid.Row="0" Text="Title:" Margin="10" FontSize="24"/>
+                <TextBox Grid.Column="1" Grid.Row="0" Name="Title" Width="300" Margin="10" FontSize="20"/>
+                <TextBlock Grid.Column="0" VerticalAlignment="Center" Grid.Row="1" Text="Username:" Margin="10" FontSize="24"/>
+                <TextBox Grid.Column="1" Grid.Row="1" Name="Username" Width="300" Margin="10" FontSize="20"/>
+                <TextBlock Grid.Column="0" VerticalAlignment="Center" Grid.Row="2" Text="Password:" Margin="10" FontSize="24"/>
+                <TextBox Grid.Column="1" Grid.Row="2" Name="Password" Width="300" Margin="10" FontSize="20" />
+                <TextBlock Grid.Column="0" VerticalAlignment="Center" Grid.Row="3" Text="Confirm:" Margin="10" FontSize="24"/>
+                <TextBox Grid.Column="1" Grid.Row="3" Name="Confirm" Width="300" Margin="10" FontSize="20" Style="{StaticResource ErrorTextBoxStyle}" />
+                <TextBlock Grid.Column="0" VerticalAlignment="Top" Grid.Row="4" Text="URL:" Margin="10" FontSize="24"/>
+                <StackPanel Grid.Column="1" Grid.Row="4" Orientation="Vertical">
+                    <TextBox Name="Url" Width="300" Margin="10" FontSize="20" InputScope="Url" />
+                    <HyperlinkButton NavigateUri="{Binding Text, ElementName=Url}" Content="{Binding Text, ElementName=Url}" />
+                </StackPanel>
+                <TextBlock Grid.Column="0" VerticalAlignment="Top" Grid.Row="5" Text="Notes:" Margin="10" FontSize="24"/>
+                <TextBox Grid.Column="1" Grid.Row="5" Name="Notes" Width="300" Margin="10" FontSize="20" Height="200" TextWrapping="Wrap" AcceptsReturn="True"/>
+                <Button Grid.Column="1" Grid.Row="6" Name="Save" Margin="10" Content="Save" Width="100" Height="50" FontSize="24"/>
+            </Grid>
+        </ScrollViewer>
 
-        <StackPanel Orientation="Vertical" x:Name="SnappedEditView" Margin="20,0" Grid.Row="1" Width="300" HorizontalAlignment="Left" Visibility="Collapsed">
-            <TextBlock VerticalAlignment="Center" Text="Title:" Style="{StaticResource SnappedLabelStyle}"/>
-            <TextBox x:Name="TitleSnapped" Text="{Binding Title, Mode=TwoWay}" Style="{StaticResource SnappedTextboxStyle}"/>
-            <TextBlock VerticalAlignment="Center" Text="Username:" Style="{StaticResource SnappedLabelStyle}"/>
-            <TextBox x:Name="UsernameSnapped" Text="{Binding Username, Mode=TwoWay}" Style="{StaticResource SnappedTextboxStyle}"/>
-            <TextBlock VerticalAlignment="Center" Text="Password:" Style="{StaticResource SnappedLabelStyle}"/>
-            <TextBox x:Name="PasswordSnapped" Text="{Binding Password, Mode=TwoWay}" Style="{StaticResource SnappedTextboxStyle}"/>
-            <TextBlock VerticalAlignment="Center" Text="Confirm:" Style="{StaticResource SnappedLabelStyle}"/>
-            <TextBox x:Name="ConfirmSnapped" Text="{Binding Confirm, Mode=TwoWay}" Style="{StaticResource ErrorTextBoxStyleSnapped}"/>
-            <TextBlock VerticalAlignment="Center" Text="URL:" Style="{StaticResource SnappedLabelStyle}"/>
-            <TextBox x:Name="URLSnapped" InputScope="Url" Text="{Binding Url, Mode=TwoWay}" Style="{StaticResource SnappedTextboxStyle}"/>
-            <HyperlinkButton NavigateUri="{Binding Text, ElementName=URLSnapped}" Content="{Binding Text, ElementName=URLSnapped}"/>
-            <TextBlock VerticalAlignment="Center" Text="Notes:" Style="{StaticResource SnappedLabelStyle}"/>
-            <TextBox x:Name="Notesnapped" Text="{Binding Notes, Mode=TwoWay}" Style="{StaticResource SnappedTextboxStyle}" Height="100"/>
-            <Button Name="SaveSnapped" cal:Message.Attach="Save" Margin="0 20 0 0" Content="Save" Width="80" Height="40" FontSize="18"/>
-        </StackPanel>
-        
+        <ScrollViewer x:Name="SnappedEditView" Grid.Row="1" Margin="20,0" Width="300" HorizontalAlignment="Left" Visibility="Collapsed"
+                      HorizontalScrollBarVisibility="Hidden" HorizontalScrollMode="Disabled" VerticalScrollBarVisibility="Auto" VerticalScrollMode="Auto" ZoomMode="Disabled">
+            <StackPanel Orientation="Vertical">
+                <TextBlock VerticalAlignment="Center" Text="Title:" Style="{StaticResource SnappedLabelStyle}"/>
+                <TextBox x:Name="TitleSnapped" Text="{Binding Title, Mode=TwoWay}" Style="{StaticResource SnappedTextboxStyle}"/>
+                <TextBlock VerticalAlignment="Center" Text="Username:" Style="{StaticResource SnappedLabelStyle}"/>
+                <TextBox x:Name="UsernameSnapped" Text="{Binding Username, Mode=TwoWay}" Style="{StaticResource SnappedTextboxStyle}"/>
+                <TextBlock VerticalAlignment="Center" Text="Password:" Style="{StaticResource SnappedLabelStyle}"/>
+                <TextBox x:Name="PasswordSnapped" Text="{Binding Password, Mode=TwoWay}" Style="{StaticResource SnappedTextboxStyle}"/>
+                <TextBlock VerticalAlignment="Center" Text="Confirm:" Style="{StaticResource SnappedLabelStyle}"/>
+                <TextBox x:Name="ConfirmSnapped" Text="{Binding Confirm, Mode=TwoWay}" Style="{StaticResource ErrorTextBoxStyleSnapped}"/>
+                <TextBlock VerticalAlignment="Center" Text="URL:" Style="{StaticResource SnappedLabelStyle}"/>
+                <TextBox x:Name="URLSnapped" InputScope="Url" Text="{Binding Url, Mode=TwoWay}" Style="{StaticResource SnappedTextboxStyle}"/>
+                <HyperlinkButton NavigateUri="{Binding Text, ElementName=URLSnapped}" Content="{Binding Text, ElementName=URLSnapped}"/>
+                <TextBlock VerticalAlignment="Center" Text="Notes:" Style="{StaticResource SnappedLabelStyle}"/>
+                <TextBox x:Name="Notesnapped" Text="{Binding Notes, Mode=TwoWay}" Style="{StaticResource SnappedTextboxStyle}" Height="100" TextWrapping="Wrap" AcceptsReturn="True"/>
+                <Button Name="SaveSnapped" cal:Message.Attach="Save" Margin="0 20 0 0" Content="Save" Width="80" Height="40" FontSize="18"/>
+            </StackPanel>
+        </ScrollViewer>
+
         <VisualStateManager.VisualStateGroups>
             <!-- Visual states reflect the application's view state -->
             <VisualStateGroup x:Name="ApplicationViewStates">
