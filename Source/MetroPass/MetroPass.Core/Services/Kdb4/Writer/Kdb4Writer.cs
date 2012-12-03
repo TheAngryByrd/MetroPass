@@ -1,30 +1,20 @@
-﻿using Framework;
+﻿using System;
+using System.IO;
+using System.IO.Compression;
+using System.Threading.Tasks;
+using Framework;
 using MetroPass.Core.Helpers.Cipher;
 using MetroPass.Core.Interfaces;
 using MetroPass.Core.Model;
 using MetroPass.Core.Model.Kdb4;
 using MetroPass.Core.Security;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.IO.Compression;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
-using System.Xml.Linq;
-using System.Xml.Serialization;
 using Windows.Security.Cryptography;
 using Windows.Security.Cryptography.Core;
 using Windows.Storage;
-using Windows.Storage.Compression;
 using Windows.Storage.Streams;
 
 namespace MetroPass.Core.Services.Kdb4.Writer
 {
- 
-
-
     public class Kdb4Writer : IKdbWriter
     {
         public Kdb4File kdb4File;
@@ -48,7 +38,6 @@ namespace MetroPass.Core.Services.Kdb4.Writer
 
            await _headerWriter.WriteHeaders(datawriter, kdb4File);       
   
-
             var outStream = new MemoryStream();
             await outStream.WriteAsync(kdb4File.pbStreamStartBytes.AsBytes(), 0, (int)kdb4File.pbStreamStartBytes.Length);
             var configuredStream = ConfigureStream(outStream);
@@ -66,7 +55,9 @@ namespace MetroPass.Core.Services.Kdb4.Writer
 
             await FileIO.WriteBufferAsync(databaseFile, written);
 
-            databaseData.Tree = new Kdb4Parser(new CryptoRandomStream(CrsAlgorithm.Salsa20, kdb4File.pbProtectedStreamKey.AsBytes())).ParseXmlDocument(databaseData.Tree.Document);
+            var cryptoStream = new CryptoRandomStream(CrsAlgorithm.Salsa20, kdb4File.pbProtectedStreamKey.AsBytes());
+            var parser = new Kdb4Parser(cryptoStream);
+            databaseData.Tree = parser.ParseAndDecode(databaseData.Tree.Document);
         }
 
         public Stream ConfigureStream(Stream stream)
@@ -79,10 +70,7 @@ namespace MetroPass.Core.Services.Kdb4.Writer
                 inputStream = new GZipStream(inputStream, CompressionMode.Compress);
             }
             return inputStream;
-
         }
-
-      
 
         public IBuffer EncryptDatabase(IBuffer source, IBuffer aesKey)
         {
@@ -90,9 +78,5 @@ namespace MetroPass.Core.Services.Kdb4.Writer
             var aesCryptoKey = symKeyProvider.CreateSymmetricKey(aesKey);
             return CryptographicEngine.Encrypt(aesCryptoKey, source, kdb4File.pbEncryptionIV);
         }
-    
-   
-  
-
     }
 }
