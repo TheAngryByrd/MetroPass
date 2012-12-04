@@ -59,7 +59,8 @@ namespace MetroPass.UI.ViewModels
 
         public  void EditGroup()
         {
-            _navigationService.UriFor<GroupEditViewModel>().WithParam(vm => vm.GroupId, Root.UUID).Navigate();
+            var encodedUUID = WebUtility.UrlEncode(Root.UUID);
+            _navigationService.UriFor<GroupEditViewModel>().WithParam(vm => vm.GroupId, encodedUUID).Navigate();
         }
 
 
@@ -85,12 +86,14 @@ namespace MetroPass.UI.ViewModels
 
         public void AddEntry()
         {
-            _navigationService.UriFor<AddEntryViewModel>().WithParam(vm => vm.ParentGroupID, Root.UUID).Navigate();
+            var encodedUUID = WebUtility.UrlEncode(Root.UUID);
+            _navigationService.UriFor<AddEntryViewModel>().WithParam(vm => vm.ParentGroupID, encodedUUID).Navigate();
         }
 
         public void AddGroup()
         {
-            _navigationService.UriFor<AddGroupViewModel>().WithParam(vm => vm.ParentGroupID, Root.UUID).Navigate();
+            var encodedUUID = WebUtility.UrlEncode(Root.UUID);
+            _navigationService.UriFor<AddGroupViewModel>().WithParam(vm => vm.ParentGroupID, encodedUUID).Navigate();
         }
 
         public async void DeleteEntry()
