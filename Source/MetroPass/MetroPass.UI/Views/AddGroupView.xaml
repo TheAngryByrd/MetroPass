@@ -1,4 +1,5 @@
 ﻿<Page
+      xmlns:UI="using:Microsoft.Advertising.WinRT.UI" 
     x:Name="pageRoot"
     x:Class="MetroPass.UI.Views.AddGroupView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -39,20 +40,25 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="480"/>
+                <ColumnDefinition Width="160"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
+                <RowDefinition Height="60" />
+                <RowDefinition Height="80" />
+
             </Grid.RowDefinitions>
             <TextBlock Grid.Column="0" VerticalAlignment="Center" Grid.Row="0" Text="Folder Name:" Margin="10" FontSize="24"/>
             <TextBox Grid.Column="1" Grid.Row="0" Name="FolderName" Width="300" Margin="10" FontSize="20"/>
             <Button Grid.Column="1" Grid.Row="1" Name="Save" Margin="10" Content="Save" Width="100" Height="50" FontSize="24"/>
+            <UI:AdControl Grid.Column="3" Grid.RowSpan="7" ApplicationId="f8df6ddc-bc72-41bf-bf1d-676ddf2af726" AdUnitId="10052046" Width="160" Height="600"  HorizontalAlignment="Right"/>
         </Grid>
 
         <StackPanel Orientation="Vertical" x:Name="SnappedEditView" Margin="20,0" Grid.Row="1" Width="300" HorizontalAlignment="Left" Visibility="Collapsed">
             <TextBlock VerticalAlignment="Center" Text="Folder Name:" Style="{StaticResource SnappedLabelStyle}"/>
             <TextBox x:Name="FolderNameSnapped" Text="{Binding FolderName, Mode=TwoWay}" Style="{StaticResource SnappedTextboxStyle}"/>
             <Button Name="SaveSnapped" cal:Message.Attach="Save" Margin="0 20 0 0" Content="Save" Width="80" Height="40" FontSize="18"/>
+            
         </StackPanel>
         
         <VisualStateManager.VisualStateGroups>
