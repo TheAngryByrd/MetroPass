@@ -199,7 +199,9 @@ namespace MetroPass.Core.Services
             if ((pbID == null) || (pbID.Length != 16))
                 throw new FormatException();
 
-            file.pwDatabase.DataCipherUuid = new PwUuid(pbID);
+            file.pwDatabase.DataCipherUuid = new PwUuid(new byte[]{
+						0x31, 0xC1, 0xF2, 0xE6, 0xBF, 0x71, 0x43, 0x50,
+						0xBE, 0x58, 0x05, 0x21, 0x6A, 0xFC, 0x5A, 0xFF });//new PwUuid(pbID);
         }
 
 
