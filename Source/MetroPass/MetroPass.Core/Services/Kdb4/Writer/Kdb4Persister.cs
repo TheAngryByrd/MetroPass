@@ -24,9 +24,10 @@ namespace MetroPass.Core.Services.Kdb4.Writer
             this.cryptoRandomStream = stream;
         }
 
-        public IBuffer Persist(IKdbTree tree)
+        public IBuffer Persist(IKdbTree tree, IBuffer hashOfHeader)
         {
-
+            var x = tree.Document.Descendants("HeaderHash").First();
+            x.Value = Convert.ToBase64String(hashOfHeader.AsBytes());
             var root = tree.Document.Descendants("Root").First();
 
             EncodeXml(root);
