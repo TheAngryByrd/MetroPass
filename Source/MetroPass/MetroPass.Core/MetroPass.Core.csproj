@@ -114,6 +114,7 @@
     <Compile Include="Helpers\StrUtil.cs" />
     <Compile Include="Interfaces\IKdbReader.cs" />
     <Compile Include="Interfaces\IKdbWriter.cs" />
+    <Compile Include="Model\IPwGroup.cs" />
     <Compile Include="Model\Kdb4\Kdb4File.cs" />
     <Compile Include="Model\Kdb4\Kdb4Tree.cs" />
     <Compile Include="Model\Keys\CompositeKey.cs" />

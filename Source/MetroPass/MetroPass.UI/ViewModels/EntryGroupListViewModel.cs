@@ -13,17 +13,39 @@ using Windows.UI.Popups;
 
 namespace MetroPass.UI.ViewModels
 {
+    public class AdGroup : IGroup
+    {
+        public string Name { get; set; }
+        public AdGroup()
+        {
+            Name = "Advertisement";
+
+        }
+        public ObservableCollection<PwCommon> SubGroupsAndEntries
+        {
+            get
+            {
+                // TODO: Implement this property getter
+                return new ObservableCollection<PwCommon>(){new AdItem()};
+            }
+        }
+    }
+    public class AdItem : PwCommon
+    {
+
+    }
+
     public class EntryGroupListViewModel : PasswordEntryScreen
     {
         private readonly INavigationService _navigationService;
-        private readonly ObservableCollection<PwGroup> _topLevelGroups;
+        private readonly ObservableCollection<IGroup> _topLevelGroups;
         private readonly IKdbTree _dbTree;
 
         public EntryGroupListViewModel(IKdbTree dbTree, INavigationService navigationService, IClipboard clipboard) : base(navigationService, clipboard)
         {
             _dbTree = dbTree;
             _navigationService = navigationService;
-            _topLevelGroups = new ObservableCollection<PwGroup>();
+            _topLevelGroups = new ObservableCollection<IGroup>();
         }
 
         private string _groupId;
@@ -47,6 +69,7 @@ namespace MetroPass.UI.ViewModels
                 _root = value;
                 _topLevelGroups.Add(new PwGroup(value.Element, false));
                 _topLevelGroups.AddRange(value.SubGroups);
+                _topLevelGroups.Add(new AdGroup());
                 NotifyOfPropertyChange(() => Root);
             }
         }
@@ -64,7 +87,7 @@ namespace MetroPass.UI.ViewModels
         }
 
 
-        public ObservableCollection<PwGroup> TopLevelGroups
+        public ObservableCollection<IGroup> TopLevelGroups
         {
             get { return _topLevelGroups; }
         }

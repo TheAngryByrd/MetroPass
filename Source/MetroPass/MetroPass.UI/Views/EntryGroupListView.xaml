@@ -1,4 +1,5 @@
 ﻿<Page
+    xmlns:UI="using:Microsoft.Advertising.WinRT.UI" 
     x:Name="pageRoot"
     x:Class="MetroPass.UI.Views.EntryGroupListView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -55,7 +56,23 @@
                 </StackPanel>
             </Grid>
         </DataTemplate>
-
+        <DataTemplate x:Key="Type:AdItem">
+            <UI:AdControl Grid.Column="2" ApplicationId="f8df6ddc-bc72-41bf-bf1d-676ddf2af726" AdUnitId="10046064" Width="160" Height="600"/>
+        </DataTemplate>
+        
+        <DataTemplate x:Key="AdHeader">
+            <TextBlock Text="{Binding Name}" Margin="3,-7,10,10" Style="{StaticResource GroupHeaderTextStyle}" />
+        </DataTemplate>
+        <DataTemplate x:Key="GroupHeader">
+            <Button Width="250"     cal:Message.Attach="SelectGroup($dataContext)"
+                                    AutomationProperties.Name="Group Title"                                    
+                                    Style="{StaticResource TextPrimaryButtonStyle}" >
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{Binding Name}" Margin="3,-7,10,10" Style="{StaticResource GroupHeaderTextStyle}" />
+                    <TextBlock Text="{StaticResource ChevronGlyph}" FontFamily="Segoe UI Symbol" Margin="0,-7,0,10" Style="{StaticResource GroupHeaderTextStyle}"/>
+                </StackPanel>
+            </Button>
+        </DataTemplate>
         <CollectionViewSource
             x:Name="groupedItemsViewSource"
             Source="{Binding TopLevelGroups}"
@@ -84,26 +101,7 @@
             <Button x:Name="GoBack" Style="{StaticResource BackButtonStyle}"/>
             <TextBlock x:Name="pageTitle" Grid.Column="1" Text="{StaticResource AppName}" Style="{StaticResource PageHeaderTextStyle}"/>
 
-            <!--<Grid Height="70" Width="250" Background="Blue">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <TextBlock Style="{StaticResource IconFontStyle}" Text="&#xE1C1;" />
-                <TextBlock Grid.Column="1" Text="Windows" Style="{StaticResource FolderTitleStyle}" TextWrapping="NoWrap"/>
-            </Grid>
-
-            <Grid Grid.Column="1" Height="70" Width="250" Background="Teal">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <TextBlock Style="{StaticResource IconFontStyle}" Text="&#xE192;" />
-                <StackPanel Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,0,0,0" >
-                    <TextBlock Text="GMail" Style="{StaticResource TitleTextStyle}" TextWrapping="NoWrap"/>
-                    <TextBlock Text="kevinkuebler@gmail.com" Style="{StaticResource CaptionTextStyle}" TextWrapping="NoWrap"/>
-                </StackPanel>
-            </Grid>-->
+        
         </Grid>
         
         <SemanticZoom x:Name="groupedList" Grid.Row="1">
@@ -129,7 +127,10 @@
                                     <VariableSizedWrapGrid Orientation="Vertical" Margin="0,0,40,0"/>
                                 </ItemsPanelTemplate>
                             </GroupStyle.Panel>
-                            <GroupStyle.HeaderTemplate>
+                            <GroupStyle.HeaderTemplateSelector>
+                                <common:EntryGroupListViewHeaderTemplateSelector AdvertTemplate="{StaticResource  ResourceKey=AdHeader}" NormalTemplate="{StaticResource ResourceKey=GroupHeader}"/> 
+                            </GroupStyle.HeaderTemplateSelector>
+                            <!--<GroupStyle.HeaderTemplate>
                                 <DataTemplate>
                                     <Button Width="250"
                                             cal:Message.Attach="SelectGroup($dataContext)"
@@ -141,7 +142,7 @@
                                         </StackPanel>
                                     </Button>
                                 </DataTemplate>
-                            </GroupStyle.HeaderTemplate>
+                            </GroupStyle.HeaderTemplate>-->
                         </GroupStyle>
                     </GridView.GroupStyle>
                 </GridView>
