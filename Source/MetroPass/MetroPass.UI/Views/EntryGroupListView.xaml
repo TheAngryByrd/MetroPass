@@ -153,7 +153,7 @@
                           ItemsPanel="{StaticResource HorizontalItemPanelTemplate}">
                     <GridView.ItemTemplate>
                         <DataTemplate>
-                            <Border Padding="10" Background="Blue" cal:Message.Attach="[Event Tapped] = [Action SelectGroup($dataContext)]">
+                            <Border Padding="10" cal:Message.Attach="[Event Tapped] = [Action SelectGroup($dataContext)]">
                                 <Grid Width="Auto" Height="Auto">
                                     <StackPanel Orientation="Vertical">
                                         <TextBlock Text="{Binding Name}" Style="{StaticResource TitleTextStyle}" FontSize="28" Margin="12"/>
