@@ -8,11 +8,18 @@
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
-    
     <Grid>
-        <StackPanel Orientation="Horizontal" Height="30" VerticalAlignment="Top">
-            <TextBlock Text="Recycle Bin enabled: " VerticalAlignment="Center" FontSize="20" />
-            <CheckBox x:Name="RecycleBinEnabled" VerticalAlignment="Top" Margin="10 0 0 0" />
+        <StackPanel Orientation="Vertical">
+            <StackPanel Orientation="Horizontal" Height="30" VerticalAlignment="Top">
+                <TextBlock Text="Recycle Bin enabled: " VerticalAlignment="Center" FontSize="20" />
+                <CheckBox x:Name="RecycleBinEnabled" VerticalAlignment="Top" Margin="10 0 0 0" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Visibility="{Binding IsChecked, ElementName=RecycleBinEnabled, Converter={StaticResource BoolVisibilityConverter}}">
+                <TextBlock Text="Recycle Bin:" FontSize="20" />
+                <ComboBox DisplayMemberPath="Name"
+                          ItemsSource="{Binding AvailableGroups}" 
+                          SelectedItem="{Binding SelectedRecycleBinGroup, Mode=TwoWay}" />
+            </StackPanel>
         </StackPanel>
     </Grid>
 </UserControl>
