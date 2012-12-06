@@ -1,24 +1,57 @@
-﻿using Caliburn.Micro;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Caliburn.Micro;
+using MetroPass.Core.Interfaces;
+using MetroPass.Core.Model;
 
 namespace MetroPass.UI.ViewModels
 {
     public class SettingsViewModel : Screen
     {
-        public SettingsViewModel()
-        {
-            this.DisplayName = "Options";
+        private readonly IKdbTree _dbTree;
+        private readonly IEnumerable<PwGroup> _availablRecycleBinGroups;
 
-            RecycleBinEnabled = true;
+        public SettingsViewModel(IKdbTree dbTree)
+        {
+            _dbTree = dbTree;
+            _availablRecycleBinGroups = dbTree.Group.SubGroups.ToList();
+
+            this.DisplayName = "Options";
         }
 
-        private bool _recycleBinEnabled;
         public bool RecycleBinEnabled
         {
-            get { return _recycleBinEnabled; }
+            get { return _dbTree.MetaData.RecycleBinEnabled; }
             set
             {
-                _recycleBinEnabled = value;
-                NotifyOfPropertyChange(() => RecycleBinEnabled);
+                if (_dbTree.MetaData.RecycleBinEnabled != value)
+                {
+                    _dbTree.MetaData.RecycleBinEnabled = value;
+                    NotifyOfPropertyChange(() => RecycleBinEnabled);
+                }
+            }
+        }
+
+        public IEnumerable<PwGroup> AvailableGroups
+        {
+            get
+            {
+                return _availablRecycleBinGroups;
+            }
+        }
+
+        public PwGroup SelectedRecycleBinGroup
+        {
+            get
+            {
+                return _availablRecycleBinGroups.FirstOrDefault(g => g.UUID == _dbTree.MetaData.RecycleBinUUID);
+            }
+            set
+            {
+                if (_dbTree.MetaData.RecycleBinUUID != value.UUID) {
+                    _dbTree.MetaData.RecycleBinUUID = value.UUID;
+                    NotifyOfPropertyChange(() => SelectedRecycleBinGroup);
+                }
             }
         }
     }

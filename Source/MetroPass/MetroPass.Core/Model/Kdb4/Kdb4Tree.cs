@@ -12,7 +12,10 @@ namespace MetroPass.Core.Model.Kdb4
         public Kdb4Tree(XDocument document)
         {
             Document = document;
+            MetaData = new Kdb4TreeMetaData(document);
         }
+
+        public Kdb4TreeMetaData MetaData { get; set; }
 
         public XElement FindEntryByUuid(string entryId)
         {
