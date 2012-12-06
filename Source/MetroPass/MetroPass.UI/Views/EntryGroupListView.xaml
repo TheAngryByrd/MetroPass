@@ -61,7 +61,7 @@
         </DataTemplate>
         
         <DataTemplate x:Key="AdHeader">
-            <TextBlock Text="{Binding Name}" Margin="3,-7,10,10" Style="{StaticResource GroupHeaderTextStyle}" />
+           
         </DataTemplate>
         <DataTemplate x:Key="GroupHeader">
             <Button Width="250"     cal:Message.Attach="SelectGroup($dataContext)"
