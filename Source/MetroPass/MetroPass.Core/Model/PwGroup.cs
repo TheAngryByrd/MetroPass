@@ -5,8 +5,8 @@ using System.Xml.Linq;
 
 namespace MetroPass.Core.Model
 {
-    public class PwGroup : PwCommon
-    {    
+    public class PwGroup : PwCommon, IGroup
+    { 
         private readonly IEnumerable<XElement> _entries;
         private readonly IEnumerable<XElement> _subGroups;
 
@@ -15,23 +15,33 @@ namespace MetroPass.Core.Model
         public PwGroup(XElement element, bool includeSubGroups) 
         {
             Element = element;
-            _entries = element.Elements("Entry");
+            if (element != null)
+            {
+                _entries = element.Elements("Entry");
 
-            if (includeSubGroups)
-            {
-                _subGroups = element.Elements("Group");
+                if (includeSubGroups)
+                {
+                    _subGroups = element.Elements("Group");
+                }
+                else
+                {
+                    _subGroups = new XElement[0];
+                }
+                _subGroupsAndEntries = new ObservableCollection<PwCommon>(this.SubGroups.Union(this.Entries.Cast<PwCommon>()));
             }
-            else
-            {
-                _subGroups = new XElement[0];
-            }
-            _subGroupsAndEntries = new ObservableCollection<PwCommon>(this.SubGroups.Union(this.Entries.Cast<PwCommon>()));
+    
         }
 
         public string Name 
         { 
-            get { return Element.Element().Value; } 
-            set { Element.Element().Value = value; }
+            get
+            {
+                return Element.Element().Value;
+            }
+            set
+            {
+                Element.Element().Value = value;
+            }
         }
 
         public IEnumerable<PwEntry> Entries
