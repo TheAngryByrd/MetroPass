@@ -19,12 +19,39 @@ namespace MetroPass.UI.ViewModels
         private readonly IPageServices _pageServices;
         private readonly INavigationService _navigationService;
 
+ 
+
+        private string _path;
+        public string Path
+        {
+            get { return _path; }
+            set
+            {
+                _path = value;
+              
+                NotifyOfPropertyChange(() => Path);
+            }
+        }
+        private string _parameter;
+        public string Parameter
+        {
+            get { return _parameter; }
+            set
+            {
+                _parameter = value;
+
+                NotifyOfPropertyChange(() => Parameter);
+            }
+        }
+
+
         public LoadKdbViewModel(IPageServices pageServices, INavigationService navigationService) : base(navigationService)
         {
             _pageServices = pageServices;
             _navigationService = navigationService;
 
-            PickDatabase();
+          
+     
         }
 
         private IStorageFile _database;
@@ -122,6 +149,17 @@ namespace MetroPass.UI.ViewModels
                 NotifyOfPropertyChange(() => CanOpenDatabase);
             }
         }
+
+        protected async override void OnViewLoaded(object view)
+        {
+            base.OnViewLoaded(view);
+          
+            if (Database == null)
+            {
+                PickDatabase();
+            }
+        }
+     
 
         public async void OpenDatabase()
         {

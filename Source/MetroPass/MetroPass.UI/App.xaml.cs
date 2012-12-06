@@ -101,5 +101,16 @@ namespace MetroPass.UI
 
             navigationService.UriFor<SearchResultsViewModel>().WithParam(vm => vm.QueryText, args.QueryText).Navigate();
         }
+
+        protected override void OnFileActivated(FileActivatedEventArgs args)
+        {
+            
+            var navigationService = _ninjectContainer.Kernel.Get<INavigationService>();
+            navigationService.NavigateToViewModel<LoadKdbViewModel>(args.Files[0]);
+            //navigationService.UriFor<LoadKdbViewModel>().WithParam(vm => vm.Path, args.Files[0].Path).Navigate();
+            //this.DisplayRootView<LoadKdbView>(args.Files[0]);
+            //DisplayRootViewFor<LoadKdbViewModel>();
+           // base.OnFileActivated(args);
+        }
     }
 }
