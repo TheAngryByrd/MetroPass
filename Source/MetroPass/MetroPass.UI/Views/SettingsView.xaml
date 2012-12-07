@@ -16,7 +16,7 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal" Visibility="{Binding IsChecked, ElementName=RecycleBinEnabled, Converter={StaticResource BoolVisibilityConverter}}">
                 <TextBlock Text="Recycle Bin:" FontSize="20" />
-                <ComboBox DisplayMemberPath="Name"
+                <ComboBox DisplayMemberPath="DisplayName"
                           ItemsSource="{Binding AvailableGroups}" 
                           SelectedItem="{Binding SelectedRecycleBinGroup, Mode=TwoWay}" />
             </StackPanel>
