@@ -7,15 +7,32 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     d:DesignHeight="300"
-    d:DesignWidth="400">
-    <Grid>
+    d:DesignWidth="400"
+    >
+    <UserControl.Resources>
+        <Style x:Key="SettingsSectionHeader" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="24" />
+            <Setter Property="FontFamily" Value="Segoe UI" />
+            <Setter Property="Foreground" Value="{StaticResource MainAppColor}" />
+            <Setter Property="Margin" Value="0 10 0 0" />
+        </Style>
+        <Style x:Key="SettingLabel" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="Margin" Value="0 15 0 5" />
+        </Style>
+        <Style x:Key="SettingToggle" TargetType="ToggleSwitch">
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="Foreground" Value="Black" />
+        </Style>
+    </UserControl.Resources>
+    <Grid Background="White">
         <StackPanel Orientation="Vertical">
-            <StackPanel Orientation="Horizontal" Height="30" VerticalAlignment="Top">
-                <TextBlock Text="Recycle Bin enabled: " VerticalAlignment="Center" FontSize="20" />
-                <CheckBox x:Name="RecycleBinEnabled" VerticalAlignment="Top" Margin="10 0 0 0" />
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Visibility="{Binding IsChecked, ElementName=RecycleBinEnabled, Converter={StaticResource BoolVisibilityConverter}}">
-                <TextBlock Text="Recycle Bin:" FontSize="20" />
+            <TextBlock Text="Recycle Bin" Style="{StaticResource SettingsSectionHeader}" />
+            <TextBlock Text="Recycle Bin enabled:" Style="{StaticResource SettingLabel}" />
+            <ToggleSwitch x:Name="RecycleBinEnabled" IsOn="{Binding RecycleBinEnabled}" OnContent="Yes" OffContent="No" Style="{StaticResource SettingToggle}" />
+            <StackPanel Orientation="Vertical" Visibility="{Binding IsOn, ElementName=RecycleBinEnabled, Converter={StaticResource BoolVisibilityConverter}}">
+                <TextBlock Text="Recycle Bin:" Style="{StaticResource SettingLabel}" />
                 <ComboBox DisplayMemberPath="DisplayName"
                           ItemsSource="{Binding AvailableGroups}" 
                           SelectedItem="{Binding SelectedRecycleBinGroup, Mode=TwoWay}" />
