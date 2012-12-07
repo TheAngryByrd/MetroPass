@@ -77,7 +77,7 @@ namespace MetroPass.UI.ViewModels
         {
             get
             {
-                return string.Format("{0}{1}", new string(' ', Level), Group.Name);
+                return string.Format("{0}{1}", new string(' ', Level * 2), Group.Name);
             }
         }
     }
