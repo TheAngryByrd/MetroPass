@@ -1,5 +1,7 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Xml.Linq;
+using Framework;
 
 namespace MetroPass.Core.Model.Kdb4
 {
@@ -8,6 +10,7 @@ namespace MetroPass.Core.Model.Kdb4
         private readonly XElement _metaElement;
         private const string RecycledBinEnabledElementName = "RecycleBinEnabled";
         private const string RecycledBinUUIDElementName = "RecycleBinUUID";
+        private const string RecycleBinChangedElementName = "RecycleBinChanged";
 
         public Kdb4TreeMetaData(XDocument kdbDocument)
         {
@@ -63,6 +66,29 @@ namespace MetroPass.Core.Model.Kdb4
                     _metaElement.Add(uuidElement);
                 }
                 uuidElement.Value = value.ToString();
+            }
+        }
+
+        public string RecycleBinChanged
+        {
+            get
+            {
+                var changedElement = _metaElement.Descendants(RecycleBinChangedElementName).FirstOrDefault();
+                if (changedElement != null)
+                {
+                    return changedElement.Value;
+                }
+                return DateTime.Now.ToFormattedUtcTime();
+            }
+            set
+            {
+                var changedElement = _metaElement.Descendants(RecycleBinChangedElementName).FirstOrDefault();
+                if (changedElement == null)
+                {
+                    changedElement = new XElement(RecycleBinChangedElementName);
+                    _metaElement.Add(changedElement);
+                }
+                changedElement.Value = value;
             }
         }
     }

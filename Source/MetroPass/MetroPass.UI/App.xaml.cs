@@ -11,6 +11,7 @@ using Ninject;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.ApplicationSettings;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 
@@ -40,8 +41,14 @@ namespace MetroPass.UI
             args.Request.ApplicationCommands.Add(privacyPolicyCommand);
            
             var optionsCommand = new SettingsCommand("metroPassOptions", "Options", h =>
-                DialogService.ShowSettings<SettingsViewModel>(headerBrush: settingsColor));
+                DialogService.ShowSettings<SettingsViewModel>(onClosed: SaveSettings, headerBrush: settingsColor));
             args.Request.ApplicationCommands.Add(optionsCommand);
+        }
+
+        private void SaveSettings(SettingsViewModel settingsViewModel, UIElement _)
+        {
+            //The settings view model sets the properties directly on the IKdbTree, so we just need to save the database here
+            PWDatabaseDataSource.Instance.SavePwDatabase();
         }
 
         private async void LaunchPrivacyPolicyUrl()
