@@ -10,8 +10,11 @@ using MetroPass.UI.Views;
 using Ninject;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.Storage;
 using Windows.UI.ApplicationSettings;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Popups;
 
 namespace MetroPass.UI
 {
@@ -21,6 +24,7 @@ namespace MetroPass.UI
 
         public App()
         {
+            
             this.InitializeComponent();
             this.Suspending += OnSuspending;
         }
@@ -81,6 +85,8 @@ namespace MetroPass.UI
             DisplayRootView<StartPageView>();
         }
 
+        
+
         /// <summary>
         /// Invoked when application execution is being suspended.  Application state is saved
         /// without knowing whether the application will be terminated or resumed with the contents
@@ -103,14 +109,17 @@ namespace MetroPass.UI
         }
 
         protected override void OnFileActivated(FileActivatedEventArgs args)
+        {           
+            PWDatabaseDataSource.Instance.StorageFile = args.Files[0] as StorageFile;
+            DisplayRootView<LoadKdbView>();
+        }
+
+        protected async override void OnUnhandledException(object sender, Windows.UI.Xaml.UnhandledExceptionEventArgs e)
         {
-            
-            var navigationService = _ninjectContainer.Kernel.Get<INavigationService>();
-            navigationService.NavigateToViewModel<LoadKdbViewModel>(args.Files[0]);
-            //navigationService.UriFor<LoadKdbViewModel>().WithParam(vm => vm.Path, args.Files[0].Path).Navigate();
-            //this.DisplayRootView<LoadKdbView>(args.Files[0]);
-            //DisplayRootViewFor<LoadKdbViewModel>();
-           // base.OnFileActivated(args);
+      
+            MessageDialog x = new MessageDialog(e.Message);
+            await x.ShowAsync();
+            base.OnUnhandledException(sender, e);
         }
     }
 }

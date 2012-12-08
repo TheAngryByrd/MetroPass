@@ -21,9 +21,10 @@
       </VisualElements>
       <Extensions>
         <Extension Category="windows.search" />
-        <Extension Category="windows.fileTypeAssociation" Executable="$targetnametoken$.exe" EntryPoint="MetroPass.UI.App">
-          <FileTypeAssociation Name="kdbx">
+        <Extension Category="windows.fileTypeAssociation" Executable="MetroPass.UI.exe" EntryPoint="MetroPass.UI.App">
+          <FileTypeAssociation Name=".kdbx">
             <DisplayName>Keepass 2.x</DisplayName>
+            <EditFlags OpenIsSafe="true" />
             <SupportedFileTypes>
               <FileType>.kdbx</FileType>
             </SupportedFileTypes>

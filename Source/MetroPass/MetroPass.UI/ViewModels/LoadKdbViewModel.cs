@@ -150,13 +150,18 @@ namespace MetroPass.UI.ViewModels
             }
         }
 
-        protected async override void OnViewLoaded(object view)
+        protected override void OnViewLoaded(object view)
         {
             base.OnViewLoaded(view);
-          
-            if (Database == null)
+
+            if (PWDatabaseDataSource.Instance.StorageFile == null)
             {
                 PickDatabase();
+            }
+            else
+            {
+                Database = PWDatabaseDataSource.Instance.StorageFile;
+                PWDatabaseDataSource.Instance.StorageFile = null;
             }
         }
      
