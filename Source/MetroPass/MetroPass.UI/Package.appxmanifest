@@ -21,6 +21,15 @@
       </VisualElements>
       <Extensions>
         <Extension Category="windows.search" />
+        <Extension Category="windows.fileTypeAssociation" Executable="MetroPass.UI.exe" EntryPoint="MetroPass.UI.App">
+          <FileTypeAssociation Name=".kdbx">
+            <DisplayName>Keepass 2.x</DisplayName>
+            <Logo>Assets\SmallLogo.jpg</Logo>
+            <SupportedFileTypes>
+              <FileType>.kdbx</FileType>
+            </SupportedFileTypes>
+          </FileTypeAssociation>
+        </Extension>
       </Extensions>
     </Application>
   </Applications>
