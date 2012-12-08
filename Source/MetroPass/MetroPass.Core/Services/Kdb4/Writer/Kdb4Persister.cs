@@ -26,8 +26,19 @@ namespace MetroPass.Core.Services.Kdb4.Writer
 
         public IBuffer Persist(IKdbTree tree, IBuffer hashOfHeader)
         {
-            var x = tree.Document.Descendants("HeaderHash").First();
-            x.Value = Convert.ToBase64String(hashOfHeader.AsBytes());
+            var metaElement = tree.Document.Descendants("Meta").FirstOrDefault();
+            if (metaElement == null)
+            {
+                metaElement = new XElement("Meta", new XElement("Generator", "MetroPass"));
+                tree.Document.Add(metaElement);
+            }
+            var headerHashElement = metaElement.Elements("HeaderHash").FirstOrDefault();
+            if (headerHashElement == null)
+            {
+                headerHashElement = new XElement("HeaderHash");
+                metaElement.Add(headerHashElement);
+            }
+            headerHashElement.Value = Convert.ToBase64String(hashOfHeader.AsBytes());
             var root = tree.Document.Descendants("Root").First();
 
             EncodeXml(root);
