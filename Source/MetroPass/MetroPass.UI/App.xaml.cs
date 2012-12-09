@@ -117,9 +117,7 @@ namespace MetroPass.UI
         protected async override void OnUnhandledException(object sender, Windows.UI.Xaml.UnhandledExceptionEventArgs e)
         {
       
-            MessageDialog x = new MessageDialog(e.Message);
-            await x.ShowAsync();
-            base.OnUnhandledException(sender, e);
+   
         }
     }
 }
