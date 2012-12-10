@@ -3,6 +3,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:MetroPass.UI.Common">
 
+    <SolidColorBrush x:Key="MainAppColor" Color="#006E87" />
+
     <ItemsPanelTemplate x:Key="HorizontalItemPanelTemplate">
         <VirtualizingStackPanel Orientation="Horizontal"/>
     </ItemsPanelTemplate>

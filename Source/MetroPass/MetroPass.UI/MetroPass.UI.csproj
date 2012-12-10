@@ -131,8 +131,11 @@
     <Compile Include="Common\TypedTemplateSelector.cs" />
     <Compile Include="DataModel\KdbDatasource.cs" />
     <Compile Include="Common\EnumerableExtensions.cs" />
+    <Compile Include="Dialogs\DialogService.cs" />
     <Compile Include="ViewModels\AddEntryViewModel.cs" />
     <Compile Include="ViewModels\AddGroupViewModel.cs" />
+    <Compile Include="ViewModels\AdGroup.cs" />
+    <Compile Include="ViewModels\AdItem.cs" />
     <Compile Include="ViewModels\EntryEditViewModel.cs" />
     <Compile Include="ViewModels\NewDatabaseViewModel.cs" />
     <Compile Include="ViewModels\PasswordEntryScreen.cs" />
@@ -142,6 +145,7 @@
     <Compile Include="Services\IPageServices.cs" />
     <Compile Include="ViewModels\BaseScreen.cs" />
     <Compile Include="ViewModels\GroupEditViewModel.cs" />
+    <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\StartPageViewModel.cs" />
     <Compile Include="Views\AddEntryView.xaml.cs">
       <DependentUpon>AddEntryView.xaml</DependentUpon>
@@ -175,6 +179,9 @@
     </Compile>
     <Compile Include="Views\SearchResultsView.xaml.cs">
       <DependentUpon>SearchResultsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SettingsView.xaml.cs">
+      <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\StartPageView.xaml.cs">
       <DependentUpon>StartPageView.xaml</DependentUpon>
@@ -247,6 +254,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\SettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\StartPageView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -260,6 +271,9 @@
     <Reference Include="Caliburn.Micro.Extensions, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Caliburn.Micro.1.4\lib\win8\Caliburn.Micro.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Callisto">
+      <HintPath>..\packages\Callisto.1.2.6\lib\winrt45\Callisto.dll</HintPath>
     </Reference>
     <Reference Include="Ninject.Common">
       <HintPath>..\packages\Portable.Ninject.Common.3.0.1.11\lib\Ninject.Common.dll</HintPath>

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Net;
+using System.Xml.Linq;
 using Caliburn.Micro;
 using MetroPass.Core.Interfaces;
 using MetroPass.Core.Model;
@@ -13,28 +14,6 @@ using Windows.UI.Popups;
 
 namespace MetroPass.UI.ViewModels
 {
-    public class AdGroup : IGroup
-    {
-        public string Name { get; set; }
-        public AdGroup()
-        {
-            Name = "Advertisement";
-
-        }
-        public ObservableCollection<PwCommon> SubGroupsAndEntries
-        {
-            get
-            {
-                // TODO: Implement this property getter
-                return new ObservableCollection<PwCommon>(){new AdItem()};
-            }
-        }
-    }
-    public class AdItem : PwCommon
-    {
-
-    }
-
     public class EntryGroupListViewModel : PasswordEntryScreen
     {
         private readonly INavigationService _navigationService;
@@ -86,7 +65,6 @@ namespace MetroPass.UI.ViewModels
             _navigationService.UriFor<GroupEditViewModel>().WithParam(vm => vm.GroupId, encodedUUID).Navigate();
         }
 
-
         public ObservableCollection<IGroup> TopLevelGroups
         {
             get { return _topLevelGroups; }
@@ -134,6 +112,19 @@ namespace MetroPass.UI.ViewModels
 
             if (result)
             {
+                if (_dbTree.MetaData.RecycleBinEnabled)
+                {
+                    var recycleBinGroupElement = _dbTree.FindGroupByUuid(_dbTree.MetaData.RecycleBinUUID);
+                    var clonedElement = new XElement(SelectedPasswordItem.Element);
+                    recycleBinGroupElement.Add(clonedElement);
+
+                    var recycleBinGroup = TopLevelGroups.FirstOrDefault(g => g.UUID == _dbTree.MetaData.RecycleBinUUID);
+                    if (recycleBinGroup != null)
+                    {
+                        var clonedEntry = new PwEntry(clonedElement, (PwGroup)recycleBinGroup);
+                        recycleBinGroup.SubGroupsAndEntries.Add(clonedEntry);
+                    }
+                }
                 SelectedPasswordItem.Element.Remove();
                 ((PwEntry)SelectedPasswordItem).Remove();
                 await PWDatabaseDataSource.Instance.SavePwDatabase();

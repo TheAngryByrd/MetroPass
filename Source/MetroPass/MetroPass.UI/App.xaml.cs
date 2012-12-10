@@ -32,16 +32,28 @@ namespace MetroPass.UI
         protected override void OnWindowCreated(Windows.UI.Xaml.WindowCreatedEventArgs args)
         {
             base.OnWindowCreated(args);
-            SettingsPane.GetForCurrentView().CommandsRequested += ShowPrivacyPolicy;
-        }             
-
-        void ShowPrivacyPolicy(SettingsPane sender, SettingsPaneCommandsRequestedEventArgs args)
-        {
-           var privacyPolicyCommand = new SettingsCommand("privacyPolicy","Privacy Policy", a => LaunchPrivacyPolicyUrl());
-           args.Request.ApplicationCommands.Add(privacyPolicyCommand);
+            SettingsPane.GetForCurrentView().CommandsRequested += ConfigureSettings;
         }
 
-        async void LaunchPrivacyPolicyUrl()
+        private void ConfigureSettings(SettingsPane sender, SettingsPaneCommandsRequestedEventArgs args)
+        {
+            var settingsColor = App.Current.Resources["MainAppColor"] as SolidColorBrush;
+
+            var privacyPolicyCommand = new SettingsCommand("privacyPolicy","Privacy Policy", a => LaunchPrivacyPolicyUrl());
+            args.Request.ApplicationCommands.Add(privacyPolicyCommand);
+           
+            var optionsCommand = new SettingsCommand("metroPassOptions", "Options", h =>
+                DialogService.ShowSettings<SettingsViewModel>(onClosed: SaveSettings, headerBrush: settingsColor));
+            args.Request.ApplicationCommands.Add(optionsCommand);
+        }
+
+        private void SaveSettings(SettingsViewModel settingsViewModel, UIElement _)
+        {
+            //The settings view model sets the properties directly on the IKdbTree, so we just need to save the database here
+            PWDatabaseDataSource.Instance.SavePwDatabase();
+        }
+
+        private async void LaunchPrivacyPolicyUrl()
         {
             Uri privacyPolicyUrl = new Uri("http://metropass.azurewebsites.net/Privacy-Policy");        
             var result = await Windows.System.Launcher.LaunchUriAsync(privacyPolicyUrl);
