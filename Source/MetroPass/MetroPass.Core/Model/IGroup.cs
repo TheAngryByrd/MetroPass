@@ -5,9 +5,7 @@ namespace MetroPass.Core.Model
     public interface IGroup
     {
         string Name { get; set; }
-
-        PwGroup Group { get; }
-
+        string UUID { get; }
         ObservableCollection<PwCommon> SubGroupsAndEntries { get; }
     }
 }
