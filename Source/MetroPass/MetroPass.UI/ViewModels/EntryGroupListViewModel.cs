@@ -14,30 +14,6 @@ using Windows.UI.Popups;
 
 namespace MetroPass.UI.ViewModels
 {
-    public class AdGroup : IGroup
-    {
-        public string Name { get; set; }
-        public AdGroup()
-        {
-            Name = "Advertisement";
-
-        }
-        public PwGroup Group { get; private set; }
-
-        public ObservableCollection<PwCommon> SubGroupsAndEntries
-        {
-            get
-            {
-                // TODO: Implement this property getter
-                return new ObservableCollection<PwCommon>(){new AdItem()};
-            }
-        }
-    }
-    public class AdItem : PwCommon
-    {
-
-    }
-
     public class EntryGroupListViewModel : PasswordEntryScreen
     {
         private readonly INavigationService _navigationService;
@@ -89,7 +65,6 @@ namespace MetroPass.UI.ViewModels
             _navigationService.UriFor<GroupEditViewModel>().WithParam(vm => vm.GroupId, encodedUUID).Navigate();
         }
 
-
         public ObservableCollection<IGroup> TopLevelGroups
         {
             get { return _topLevelGroups; }
@@ -139,45 +114,21 @@ namespace MetroPass.UI.ViewModels
             {
                 if (_dbTree.MetaData.RecycleBinEnabled)
                 {
-                    if (Root.UUID == _dbTree.MetaData.RecycleBinUUID)
+                    var recycleBinGroupElement = _dbTree.FindGroupByUuid(_dbTree.MetaData.RecycleBinUUID);
+                    var clonedElement = new XElement(SelectedPasswordItem.Element);
+                    recycleBinGroupElement.Add(clonedElement);
+
+                    var recycleBinGroup = TopLevelGroups.FirstOrDefault(g => g.UUID == _dbTree.MetaData.RecycleBinUUID);
+                    if (recycleBinGroup != null)
                     {
-                        SelectedPasswordItem.Element.Remove();
-                    }
-                    else
-                    {
-                        var recycleBinGroupElement = _dbTree.FindGroupByUuid(_dbTree.MetaData.RecycleBinUUID);
-                        recycleBinGroupElement.Add(SelectedPasswordItem.Element);
-                        var recycleBinGroup = TopLevelGroups.FirstOrDefault(g => g.Group.UUID == _dbTree.MetaData.RecycleBinUUID);
-                        if (recycleBinGroup != null)
-                        {
-                            var clonedElement = new XElement(SelectedPasswordItem.Element);
-                            var clonedEntry = new PwEntry(clonedElement, recycleBinGroup.Group);
-                            recycleBinGroup.SubGroupsAndEntries.Add(clonedEntry);
-                        }
-                        SelectedPasswordItem.Element.Remove();
+                        var clonedEntry = new PwEntry(clonedElement, (PwGroup)recycleBinGroup);
+                        recycleBinGroup.SubGroupsAndEntries.Add(clonedEntry);
                     }
                 }
-                else
-                {
-                    SelectedPasswordItem.Element.Remove();
-                }
+                SelectedPasswordItem.Element.Remove();
                 ((PwEntry)SelectedPasswordItem).Remove();
                 await PWDatabaseDataSource.Instance.SavePwDatabase();
             }
         }
-
-        //private void MoveSelectedItemToRecycle()
-        //{
-        //    var recycleBinGroup = _dbTree.FindGroupByUuid(_dbTree.MetaData.RecycleBinUUID);
-        //    SelectedPasswordItem.Element.Remove();
-        //    recycleBinGroup.Add(SelectedPasswordItem.Element);
-        //}
-
-        //private async void DeleteSelectedItem()
-        //{
-        //    SelectedPasswordItem.Element.Remove();
-        //    ((PwEntry)SelectedPasswordItem).Remove();
-        //    await PWDatabaseDataSource.Instance.SavePwDatabase();
-        //}
     }
 }
