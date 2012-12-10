@@ -32,6 +32,8 @@ namespace MetroPass.Core.Model
     
         }
 
+        public PwGroup Group { get { return this; } }
+
         public string Name 
         { 
             get

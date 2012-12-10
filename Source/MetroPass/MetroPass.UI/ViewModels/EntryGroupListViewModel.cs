@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Net;
+using System.Xml.Linq;
 using Caliburn.Micro;
 using MetroPass.Core.Interfaces;
 using MetroPass.Core.Model;
@@ -21,6 +22,8 @@ namespace MetroPass.UI.ViewModels
             Name = "Advertisement";
 
         }
+        public PwGroup Group { get; private set; }
+
         public ObservableCollection<PwCommon> SubGroupsAndEntries
         {
             get
@@ -134,10 +137,47 @@ namespace MetroPass.UI.ViewModels
 
             if (result)
             {
-                SelectedPasswordItem.Element.Remove();
+                if (_dbTree.MetaData.RecycleBinEnabled)
+                {
+                    if (Root.UUID == _dbTree.MetaData.RecycleBinUUID)
+                    {
+                        SelectedPasswordItem.Element.Remove();
+                    }
+                    else
+                    {
+                        var recycleBinGroupElement = _dbTree.FindGroupByUuid(_dbTree.MetaData.RecycleBinUUID);
+                        recycleBinGroupElement.Add(SelectedPasswordItem.Element);
+                        var recycleBinGroup = TopLevelGroups.FirstOrDefault(g => g.Group.UUID == _dbTree.MetaData.RecycleBinUUID);
+                        if (recycleBinGroup != null)
+                        {
+                            var clonedElement = new XElement(SelectedPasswordItem.Element);
+                            var clonedEntry = new PwEntry(clonedElement, recycleBinGroup.Group);
+                            recycleBinGroup.SubGroupsAndEntries.Add(clonedEntry);
+                        }
+                        SelectedPasswordItem.Element.Remove();
+                    }
+                }
+                else
+                {
+                    SelectedPasswordItem.Element.Remove();
+                }
                 ((PwEntry)SelectedPasswordItem).Remove();
                 await PWDatabaseDataSource.Instance.SavePwDatabase();
             }
         }
+
+        //private void MoveSelectedItemToRecycle()
+        //{
+        //    var recycleBinGroup = _dbTree.FindGroupByUuid(_dbTree.MetaData.RecycleBinUUID);
+        //    SelectedPasswordItem.Element.Remove();
+        //    recycleBinGroup.Add(SelectedPasswordItem.Element);
+        //}
+
+        //private async void DeleteSelectedItem()
+        //{
+        //    SelectedPasswordItem.Element.Remove();
+        //    ((PwEntry)SelectedPasswordItem).Remove();
+        //    await PWDatabaseDataSource.Instance.SavePwDatabase();
+        //}
     }
 }
