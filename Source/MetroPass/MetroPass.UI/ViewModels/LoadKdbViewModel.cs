@@ -257,11 +257,14 @@ namespace MetroPass.UI.ViewModels
   
         private async Task TryLoadLastDatabase(ApplicationDataContainer roamingSettings, StorageItemMostRecentlyUsedList storageList)
         {
+            var pickDatabase = true;
+
             if (PWDatabaseDataSource.Instance.StorageFile != null)
             {
                 Database = PWDatabaseDataSource.Instance.StorageFile;
                 PWDatabaseDataSource.Instance.StorageFile = null;
                 FocuxPassword();
+                pickDatabase = false;
             }
             else if (roamingSettings.Values.ContainsKey(mostRecentDatabaseKey))
             {
@@ -269,13 +272,17 @@ namespace MetroPass.UI.ViewModels
                 if (storageList.ContainsItem(databaseToken))
                 {
                     Database = await storageList.GetFileAsync(databaseToken);
+                    pickDatabase = false;
+                    FocuxPassword();
                 }
-                FocuxPassword();
+       
+           
             }
-            else
+            if (pickDatabase)
             {
                 PickDatabase();
             }
+      
         }
 
         private async Task TryLoadLastKeefile(ApplicationDataContainer roamingSettings, StorageItemMostRecentlyUsedList storageList)
