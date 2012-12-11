@@ -97,6 +97,15 @@ namespace MetroPass.UI.ViewModels
             _navigationService.UriFor<AddGroupViewModel>().WithParam(vm => vm.ParentGroupID, encodedUUID).Navigate();
         }
 
+        private bool PasswordIsInRecycleBin
+        {
+            get 
+            {
+                return SelectedPasswordItem != null &&
+                    ((PwEntry)SelectedPasswordItem).ParentGroup.UUID == _dbTree.MetaData.RecycleBinUUID;
+            }
+        }
+
         public async void DeleteEntry()
         {
             var confirmMessage = String.Format("Are you sure you want to delete the password for {0}?", ((PwEntry)SelectedPasswordItem).Title);
@@ -112,8 +121,9 @@ namespace MetroPass.UI.ViewModels
 
             if (result)
             {
-                if (_dbTree.MetaData.RecycleBinEnabled)
+                if (_dbTree.MetaData.RecycleBinEnabled && !PasswordIsInRecycleBin)
                 {
+                    //Move the element to the recycle bin in the document
                     var recycleBinGroupElement = _dbTree.FindGroupByUuid(_dbTree.MetaData.RecycleBinUUID);
                     var clonedElement = new XElement(SelectedPasswordItem.Element);
                     recycleBinGroupElement.Add(clonedElement);
@@ -121,6 +131,7 @@ namespace MetroPass.UI.ViewModels
                     var recycleBinGroup = TopLevelGroups.FirstOrDefault(g => g.UUID == _dbTree.MetaData.RecycleBinUUID);
                     if (recycleBinGroup != null)
                     {
+                        //Move the entry into the Recycle Bin group that's visible in the grid view
                         var clonedEntry = new PwEntry(clonedElement, (PwGroup)recycleBinGroup);
                         recycleBinGroup.SubGroupsAndEntries.Add(clonedEntry);
                     }
