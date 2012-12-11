@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Security;
+using System.Threading.Tasks;
 using Caliburn.Micro;
 using MetroPass.Core.Model;
 using MetroPass.Core.Model.Keys;
@@ -114,30 +115,20 @@ namespace MetroPass.UI.ViewModels
                     Database = file;
                     StoreMostRecentFile(mostRecentDatabaseKey, file);
 
-                    var view = View as ILoadKdbView;
-                    if (view != null)
-                    {
-                        view.FocusPassword();
-                    }
+             
                 }
             }
         }
   
-        private const string mostRecentDatabaseKey = "mostRecentDatabase";
-        private const string mostRecentKeeFileKey = "mostRecentKeeFIle";
-
-        private void StoreMostRecentFile(string keyValue, StorageFile file)
+        private void FocuxPassword()
         {
-            var storageList =  StorageApplicationPermissions.MostRecentlyUsedList;
-            if(storageList.ContainsItem(keyValue))
+            var view = View as ILoadKdbView;
+            if (view != null)
             {
-                storageList.Remove(keyValue);
+                view.FocusPassword();
             }
-       
-            var mruToken = StorageApplicationPermissions.MostRecentlyUsedList.Add(file);
-            ApplicationData.Current.RoamingSettings.Values[keyValue] = mruToken;
         }
-
+  
         public async void PickKeyFile()
         {
             if (await _pageServices.EnsureUnsnapped())
@@ -150,15 +141,62 @@ namespace MetroPass.UI.ViewModels
                 if (file != null)
                 {
                     KeyFile = file;
-                    StoreMostRecentFile(mostRecentKeeFileKey, file);
+                    StoreMostRecentFile(mostRecentKeyFileKey, file);
+                    FocuxPassword();
                 }
                    
             }
         }
 
+        private const string mostRecentDatabaseKey = "mostRecentDatabase";
+        private const string mostRecentKeyFileKey = "mostRecentKeeFIle";
+
+        private void StoreMostRecentFile(string keyValue, StorageFile file)
+        {
+            var storageList = StorageApplicationPermissions.MostRecentlyUsedList;
+            if (storageList.ContainsItem(keyValue))
+            {
+                storageList.Remove(keyValue);
+            }
+
+            var mruToken = StorageApplicationPermissions.MostRecentlyUsedList.Add(file);
+            ApplicationData.Current.RoamingSettings.Values[keyValue] = mruToken;
+        }
+
         public bool CanOpenDatabase
         {
             get { return Database != null && !OpeningDatabase; }
+        }
+
+        private bool _canPickDatabase = true;
+
+        
+
+        public bool CanPickDatabase
+        {
+            get
+            {
+                return _canPickDatabase;
+            }
+            set
+            {
+                _canPickDatabase = value;
+                NotifyOfPropertyChange(() => CanPickDatabase);
+            }
+        }
+
+        private bool _canPickKeyFile = true;
+        public bool CanPickKeyFile
+        {
+            get
+            {
+                return _canPickKeyFile;
+            }
+            set
+            {
+                _canPickKeyFile = value;
+                NotifyOfPropertyChange(() => CanPickKeyFile);
+            }
         }
 
         private bool _openingDatabase = false;
@@ -178,32 +216,60 @@ namespace MetroPass.UI.ViewModels
 
             var storageList = StorageApplicationPermissions.MostRecentlyUsedList;
             var roamingSettings = ApplicationData.Current.RoamingSettings;
+            var taskList = new List<Task>();
+            taskList.Add(TryLoadLastKeefile(roamingSettings, storageList));
+            taskList.Add(TryLoadLastDatabase(roamingSettings, storageList));
+            Func<Task> loadLastTasks = async () => await Task.WhenAll(taskList);
+            await DisableEnableBlock(loadLastTasks);
+        }
 
-            if(roamingSettings.Values.ContainsKey(mostRecentKeeFileKey))
-            {
-                var keeFileToken = roamingSettings.Values[mostRecentKeeFileKey].ToString();
-                if (storageList.ContainsItem(keeFileToken))
-                {
-                    KeyFile = await storageList.GetFileAsync(keeFileToken);
-                } 
-            }
+        private async Task DisableEnableBlock(Func<Task> loadLastTasks)
+        {
+            EnablePickers(false);
+            await loadLastTasks();
+            EnablePickers(true);
+        }
 
+        private void EnablePickers(bool isEnabled)
+        {
+            CanPickDatabase = isEnabled;
+            CanPickKeyFile = isEnabled;
+        }
+
+    
+  
+        private async Task TryLoadLastDatabase(ApplicationDataContainer roamingSettings, StorageItemMostRecentlyUsedList storageList)
+        {
             if (PWDatabaseDataSource.Instance.StorageFile != null)
             {
                 Database = PWDatabaseDataSource.Instance.StorageFile;
                 PWDatabaseDataSource.Instance.StorageFile = null;
+                FocuxPassword();
             }
             else if (roamingSettings.Values.ContainsKey(mostRecentDatabaseKey))
             {
-                var databaseToken =roamingSettings.Values[mostRecentDatabaseKey].ToString();
+                var databaseToken = roamingSettings.Values[mostRecentDatabaseKey].ToString();
                 if (storageList.ContainsItem(databaseToken))
                 {
                     Database = await storageList.GetFileAsync(databaseToken);
-                }              
+                }
+                FocuxPassword();
             }
             else
             {
                 PickDatabase();
+            }
+        }
+
+        private async Task TryLoadLastKeefile(ApplicationDataContainer roamingSettings, StorageItemMostRecentlyUsedList storageList)
+        {
+            if (roamingSettings.Values.ContainsKey(mostRecentKeyFileKey))
+            {
+                var keeFileToken = roamingSettings.Values[mostRecentKeyFileKey].ToString();
+                if (storageList.ContainsItem(keeFileToken))
+                {
+                    KeyFile = await storageList.GetFileAsync(keeFileToken);
+                }
             }
         }
 
