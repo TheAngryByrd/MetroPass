@@ -210,6 +210,21 @@ namespace MetroPass.UI.ViewModels
             }
         }
 
+        private bool _isIndeterminateProgressBarVisible;
+        public bool IsIndeterminateProgressBarVisible
+        {
+            get
+            {
+                return _isIndeterminateProgressBarVisible;
+            }
+            set
+            {
+                _isIndeterminateProgressBarVisible = value;
+                NotifyOfPropertyChange(() => IsIndeterminateProgressBarVisible);
+            }
+          
+        }
+
         protected async override void OnViewLoaded(object view)
         {
             base.OnViewLoaded(view);
@@ -225,9 +240,11 @@ namespace MetroPass.UI.ViewModels
 
         private async Task DisableEnableBlock(Func<Task> loadLastTasks)
         {
+            IsIndeterminateProgressBarVisible = true;
             EnablePickers(false);
             await loadLastTasks();
             EnablePickers(true);
+            IsIndeterminateProgressBarVisible = false;
         }
 
         private void EnablePickers(bool isEnabled)

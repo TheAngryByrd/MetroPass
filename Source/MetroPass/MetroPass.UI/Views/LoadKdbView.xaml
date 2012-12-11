@@ -29,11 +29,15 @@
         <Grid Grid.ColumnSpan="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
             <Button x:Name="GoBack" Style="{StaticResource BackButtonStyle}"/>
             <TextBlock x:Name="pageTitle" Grid.Column="1" Text="{StaticResource AppName}" Style="{StaticResource PageHeaderTextStyle}"/>
+            <StackPanel  HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="2">
+                <ProgressBar x:Name="indeterminateProgressBar" IsIndeterminate="True" Width="400" Visibility="{Binding IsIndeterminateProgressBarVisible, Converter={StaticResource BoolVisibilityConverter }}"/>
+            </StackPanel>
         </Grid>
       
         <Grid Grid.Row="1" x:Name="NormalDatabaseLoader" Grid.ColumnSpan="2">
@@ -43,7 +47,7 @@
                 <ColumnDefinition Width="3*"></ColumnDefinition>
                 
             </Grid.ColumnDefinitions>
-            
+         
             <StackPanel HorizontalAlignment="Center" Grid.Column="0" Grid.Row="0">
                 <Button x:Name="PickDatabase" Content="Pick database file" Width="300" Height="100" FontSize="24"/>
                 <TextBlock x:Name="OutputTextBlockDatabaseFile" Style="{StaticResource SubheaderTextStyle}" TextWrapping="Wrap" Text="{Binding Path=Database.Name}" />
