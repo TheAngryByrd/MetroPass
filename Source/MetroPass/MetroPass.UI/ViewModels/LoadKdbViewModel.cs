@@ -10,6 +10,7 @@ using MetroPass.UI.DataModel;
 using MetroPass.UI.Services;
 using MetroPass.UI.Views;
 using Windows.Storage;
+using Windows.Storage.AccessCache;
 using Windows.Storage.Pickers;
 
 namespace MetroPass.UI.ViewModels
@@ -111,6 +112,8 @@ namespace MetroPass.UI.ViewModels
                 if (file != null)
                 {
                     Database = file;
+                    StoreMostRecentFile(mostRecentDatabaseKey, file);
+
                     var view = View as ILoadKdbView;
                     if (view != null)
                     {
@@ -118,6 +121,21 @@ namespace MetroPass.UI.ViewModels
                     }
                 }
             }
+        }
+  
+        private const string mostRecentDatabaseKey = "mostRecentDatabase";
+        private const string mostRecentKeeFileKey = "mostRecentKeeFIle";
+
+        private void StoreMostRecentFile(string keyValue, StorageFile file)
+        {
+            var storageList =  StorageApplicationPermissions.MostRecentlyUsedList;
+            if(storageList.ContainsItem(keyValue))
+            {
+                storageList.Remove(keyValue);
+            }
+       
+            var mruToken = StorageApplicationPermissions.MostRecentlyUsedList.Add(file);
+            ApplicationData.Current.RoamingSettings.Values[keyValue] = mruToken;
         }
 
         public async void PickKeyFile()
@@ -130,7 +148,11 @@ namespace MetroPass.UI.ViewModels
                 openPicker.FileTypeFilter.Add(".key");
                 var file = await openPicker.PickSingleFileAsync();
                 if (file != null)
+                {
                     KeyFile = file;
+                    StoreMostRecentFile(mostRecentKeeFileKey, file);
+                }
+                   
             }
         }
 
@@ -150,21 +172,40 @@ namespace MetroPass.UI.ViewModels
             }
         }
 
-        protected override void OnViewLoaded(object view)
+        protected async override void OnViewLoaded(object view)
         {
             base.OnViewLoaded(view);
 
-            if (PWDatabaseDataSource.Instance.StorageFile == null)
+            var storageList = StorageApplicationPermissions.MostRecentlyUsedList;
+            var roamingSettings = ApplicationData.Current.RoamingSettings;
+
+            if(roamingSettings.Values.ContainsKey(mostRecentKeeFileKey))
             {
-                PickDatabase();
+                var keeFileToken = roamingSettings.Values[mostRecentKeeFileKey].ToString();
+                if (storageList.ContainsItem(keeFileToken))
+                {
+                    KeyFile = await storageList.GetFileAsync(keeFileToken);
+                } 
             }
-            else
+
+            if (PWDatabaseDataSource.Instance.StorageFile != null)
             {
                 Database = PWDatabaseDataSource.Instance.StorageFile;
                 PWDatabaseDataSource.Instance.StorageFile = null;
             }
+            else if (roamingSettings.Values.ContainsKey(mostRecentDatabaseKey))
+            {
+                var databaseToken =roamingSettings.Values[mostRecentDatabaseKey].ToString();
+                if (storageList.ContainsItem(databaseToken))
+                {
+                    Database = await storageList.GetFileAsync(databaseToken);
+                }              
+            }
+            else
+            {
+                PickDatabase();
+            }
         }
-     
 
         public async void OpenDatabase()
         {
