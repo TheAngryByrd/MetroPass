@@ -1,0 +1,1443 @@
+<?xml version="1.0"?><doc>
+    <assembly>
+        <name>MicrosoftAdvertising</name>
+    </assembly>
+    <members>
+        <member name="T:MicrosoftAdvertising.Shared.AdRequestFactory">
+            <summary>
+            Class: AdRequestFactory
+            The AdRequestFactory assembles the data needed to make a request for an ad
+            from the ARC server.
+            </summary>
+        </member>
+        <member name="F:MicrosoftAdvertising.Shared.AdRequestFactory.LatLongFormatSpecifier">
+            <summary>
+            format specificer for ToString(...) call on lat and long truncates 
+            output to 5 decimal places giving a precision of 5 decimal places
+            </summary>
+        </member>
+        <member name="F:MicrosoftAdvertising.Shared.AdRequestFactory.HttpRequestCommonParameterConstant">
+            <summary>
+            Constant parameter(s) attached to the end of every ad request.
+            </summary>
+        </member>
+        <member name="F:MicrosoftAdvertising.Shared.AdRequestFactory.HttpRequestParameterConstantDisplayAd">
+            <summary>
+            Using "no-count" (nct) parameter =1 to tell DE to not count the impression on delivery
+            </summary>
+        </member>
+        <member name="F:MicrosoftAdvertising.Shared.AdRequestFactory.HttpRequestParameterAdmodel">
+            <summary>
+            Ad model request parameter tag.
+            </summary>
+        </member>
+        <member name="F:MicrosoftAdvertising.Shared.AdRequestFactory.HttpRequestParameterPubid">
+            <summary>
+            Publisher ID request parameter tag.
+            </summary>
+        </member>
+        <member name="F:MicrosoftAdvertising.Shared.AdRequestFactory.HttpRequestParameterPid">
+            <summary>
+            Placement ID request parameter tag.
+            </summary>
+        </member>
+        <member name="F:MicrosoftAdvertising.Shared.AdRequestFactory.HttpRequestParameterType">
+            <summary>
+            Ad type (banner and/or text) request parameter tag.
+            </summary>
+        </member>
+        <member name="F:MicrosoftAdvertising.Shared.AdRequestFactory.HttpRequestParameterPolymorphic">
+            <summary>
+            Ad type (banner and/or text) request parameter tag.
+            </summary>
+        </member>
+        <member name="F:MicrosoftAdvertising.Shared.AdRequestFactory.HttpRequestParameterWidth">
+            <summary>
+            Placement width request parameter tag.
+            </summary>
+        </member>
+        <member name="F:MicrosoftAdvertising.Shared.AdRequestFactory.HttpRequestParameterHeight">
+            <summary>
+            Placement height request parameter tag.
+            </summary>
+        </member>
+        <member name="F:MicrosoftAdvertising.Shared.AdRequestFactory.HttpRequestParameterFormatOptions">
+            <summary>
+            Ad image format request parameter tag.
+            </summary>
+        </member>
+        <member name="F:MicrosoftAdvertising.Shared.AdRequestFactory.HttpRequestParameterStoreAppId">
+            <summary>
+            The App ID (aka Product GUID) as understood by the store APIs.
+            </summary>
+        </member>
+        <member name="F:MicrosoftAdvertising.Shared.AdRequestFactory.HttpRequestParameterLocation">
+            <summary>
+            Location request parameter tag.
+            </summary>
+        </member>
+        <member name="F:MicrosoftAdvertising.Shared.AdRequestFactory.HttpRequestParameterDeviceId">
+            <summary>
+            Client / Device Id request parameter.
+            </summary>
+        </member>
+        <member name="F:MicrosoftAdvertising.Shared.AdRequestFactory.HttpRequestParameterUserAgent">
+            <summary>
+            User-agent request parameter.
+            </summary>
+        </member>
+        <member name="F:MicrosoftAdvertising.Shared.AdRequestFactory.HttpRequestValueLocationSeparator">
+            <summary>
+            Location separator value.
+            </summary>
+        </member>
+        <member name="F:MicrosoftAdvertising.Shared.AdRequestFactory.HttpRequestValueImageJpeg">
+            <summary>
+            JPEG image format request value.
+            </summary>
+        </member>
+        <member name="F:MicrosoftAdvertising.Shared.AdRequestFactory.HttpRequestValueImagePng">
+            <summary>
+            PNG image format request value.
+            </summary>
+        </member>
+        <member name="F:MicrosoftAdvertising.Shared.AdRequestFactory.HttpRequestValueImageGif">
+            <summary>
+            GIF image format request value.
+            </summary>
+        </member>
+        <member name="F:MicrosoftAdvertising.Shared.AdRequestFactory.HttpRequestValueTypeBanner">
+            <summary>
+            Banner ad request value.
+            </summary>
+        </member>
+        <member name="F:MicrosoftAdvertising.Shared.AdRequestFactory.HttpRequestValueTypeText">
+            <summary>
+            Text ad request value.
+            </summary>
+        </member>
+        <member name="F:MicrosoftAdvertising.Shared.AdRequestFactory.HttpRequestValueTypeRichMedia">
+            <summary>
+            Rich media ad request value.
+            </summary>
+        </member>
+        <member name="F:MicrosoftAdvertising.Shared.AdRequestFactory.HttpRequestValueTypePolymorphicAd">
+            <summary>
+            Rich media ad request value.
+            </summary>
+        </member>
+        <member name="F:MicrosoftAdvertising.Shared.AdRequestFactory.HttpRequestConstantLocationOptin">
+            <summary>
+            Request parameter indicating the user has opted in for location targeting.
+            </summary>
+        </member>
+        <member name="F:MicrosoftAdvertising.Shared.AdRequestFactory.RequestStringBufferSize">
+            <summary>
+            Initial size of request string buffer.
+            </summary>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.AdRequestFactory.#ctor(MicrosoftAdvertising.Shared.AdPlacement)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="placement">The placement's properties will be used to construct the ad request data.</param>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.AdRequestFactory.ConstructAdRequestUrl(MicrosoftAdvertising.Shared.AdPlacement)">
+            <summary>
+            Constructs the Ad request Url.
+            </summary>
+            <returns>Url for the request.</returns>
+        </member>
+        <member name="P:MicrosoftAdvertising.Shared.AdRequestFactory.AdServerUrl">
+            <summary>
+            The base URL of the ad server (ARC) shared by all AdPlacements.
+            </summary>
+        </member>
+        <member name="P:MicrosoftAdvertising.Shared.AdRequestFactory.RequestData">
+            <summary>
+            The HttpRequestData which contains all the information necessary to request an ad, including
+            the URL and any headers.
+            </summary>
+        </member>
+        <member name="T:MicrosoftAdvertising.Shared.AsyncWebRequestWrapper">
+            <summary>
+            Defines the Web request wrapper used to make web calls
+            </summary>
+        </member>
+        <member name="T:MicrosoftAdvertising.Shared.IWebRequestWrapper">
+            <summary>
+            Interface for web requests
+            </summary>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.IWebRequestWrapper.SendRequestAsync">
+            <summary>
+            Sends the requests asynchronously
+            </summary>
+            <exception cref="!:HttpRequestException">when non-200 code returned (e.g. 404 not found) or no network available</exception>
+            <exception cref="T:System.ArgumentException">when url is invalid</exception>
+            <exception cref="T:System.Threading.Tasks.TaskCanceledException">if the request was cancelled</exception>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.IWebRequestWrapper.Cancel">
+            <summary>
+            Cancels any pending web requests
+            </summary>
+        </member>
+        <member name="P:MicrosoftAdvertising.Shared.IWebRequestWrapper.Response">
+            <summary>
+            Gets the http responses for the requests. If this is called before the completion of 
+            web requests it will return null. The returned result is not a deep copy of
+            results, so the caller shouldn't modify the returned data.
+            </summary>
+        </member>
+        <member name="F:MicrosoftAdvertising.Shared.AsyncWebRequestWrapper.cachedUserAgent">
+            <summary>
+            cached device user agent string
+            </summary>
+        </member>
+        <member name="F:MicrosoftAdvertising.Shared.AsyncWebRequestWrapper.cancellationTokenSource">
+            <summary>
+            source of token to handle cancelling of the http request
+            </summary>
+        </member>
+        <member name="F:MicrosoftAdvertising.Shared.AsyncWebRequestWrapper.lockObj">
+            <summary>
+            used to lock some sections of code
+            </summary>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.AsyncWebRequestWrapper.#ctor(MicrosoftAdvertising.Shared.HttpRequestData)">
+            <summary>
+            Constructs AsyncWebRequestWrapper
+            </summary>
+            <param name="httpRequestData">Array of input web requests data.</param>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.AsyncWebRequestWrapper.Cancel">
+            <summary>
+            Cancels the http request in progress.
+            </summary>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.AsyncWebRequestWrapper.GetUserAgentString">
+            <summary>
+            Retrieves the user agent string used for requests.
+            This will have the following format:
+            "WindowsAdClient/x.x.x.x (Windows; [WWA/XAML])"
+            </summary>
+            <returns>The user agent string to use for the request</returns>
+        </member>
+        <member name="F:MicrosoftAdvertising.Shared.ExceptionMessages.loader">
+            <summary>
+            reference to ResourceLoader for getting localised strings
+            </summary>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.ExceptionMessages.GetResource(System.String)">
+            <summary>
+            attempts to get a resrouce and handles any exceptions
+            </summary>
+            <param name="resourceName">name of resource to get</param>
+            <returns>loaded resource or not found.</returns>
+        </member>
+        <member name="P:MicrosoftAdvertising.Shared.ExceptionMessages.Loader">
+            <summary>
+            ResourceLoader accessor
+            </summary>        
+        </member>
+        <member name="T:MicrosoftAdvertising.Shared.IJSONWrapper">
+            <summary>
+            class to encapsulate json functionality
+            </summary>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.IJSONWrapper.ExtractNamedJsonArray(System.Object,System.String,System.Boolean)">
+            <summary>
+            Extract a named json array from the node
+            </summary>
+            <param name="jsonNode">json data node</param>
+            <param name="keyName">name of array</param>
+            <param name="isOptional">whether the property is optional</param>
+            <returns>Array as a list of object</returns>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.IJSONWrapper.ExtractNamedJsonAsString(System.Object,System.String,System.Boolean)">
+            <summary>
+            Extract stringified json from a json node
+            </summary>
+            <param name="jsonNode">json data node</param>
+            <param name="keyName">name of array</param>
+            <param name="isOptional">whether the property is optional</param>
+            <returns>stringified json</returns>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.IJSONWrapper.ExtractNamedJsonObject(System.Object,System.String,System.Boolean)">
+            <summary>
+            Extract named json object from a json node
+            </summary>
+            <param name="jsonNode">json data node</param>
+            <param name="keyName">name of array</param>
+            <param name="isOptional">whether the property is optional</param>
+            <returns>json object</returns>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.IJSONWrapper.ExtractStringPropertyValue(System.Object,System.String,System.Boolean)">
+            <summary>
+            Extract named string property value from a json node
+            </summary>
+            <param name="jsonNode">json data node</param>
+            <param name="keyName">name of array</param>
+            <param name="isOptional">whether the property is optional</param>
+            <returns>string property value</returns>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.IJSONWrapper.Parse(System.String)">
+            <summary>
+            Parse json object from json data string
+            </summary>
+            <param name="jsonData">json string data</param>
+            <returns>json object</returns>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.IJSONWrapper.BuildJsonArrayAndStringify(System.String,System.Collections.Generic.IList{System.Collections.Generic.IDictionary{System.String,System.String}})">
+            <summary>
+            Build a JSON array from dictionary of values
+            </summary>
+            <param name="objectName">object name of json array</param>
+            <param name="values">list of dictionary of string values keyed by name</param>
+            <returns>JSON string of array</returns>
+        </member>
+        <member name="T:MicrosoftAdvertising.Shared.JSONWrapper">
+            <summary>
+            wrapper providing utility methods on built-in JSON parser
+            </summary>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.JSONWrapper.Parse(System.String)">
+            <summary>
+            Parse json data from string
+            </summary>
+            <param name="jsonData">json string</param>
+            <returns>json object</returns>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.JSONWrapper.ExtractStringPropertyValue(System.Object,System.String,System.Boolean)">
+            <summary>
+            Retrieves the string value from jsonNode. 
+            </summary>
+            <param name="jsonNode">JSON object node to retrieve the value from.</param>
+            <param name="keyName">Key for the value.</param>
+            <param name="isOptional">If the requested value is supposed to be optional or mandatory.</param>
+            <returns>Value of the key.</returns>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.JSONWrapper.ExtractNamedJsonArray(System.Object,System.String,System.Boolean)">
+            <summary>
+            Retrieves the string value from jsonNode. 
+            </summary>
+            <param name="jsonNode">JSON object node to retrieve the value from.</param>
+            <param name="keyName">Key for the value.</param>
+            <param name="isOptional">If the requested value is supposed to be optional or mandatory.</param>
+            <returns>Value of the key.</returns>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.JSONWrapper.ExtractNamedJsonObject(System.Object,System.String,System.Boolean)">
+            <summary>
+            Retrieves the string value from jsonNode. 
+            </summary>
+            <param name="jsonNode">JSON object node to retrieve the value from.</param>
+            <param name="keyName">Key for the value.</param>
+            <param name="isOptional">If the requested value is supposed to be optional or mandatory.</param>
+            <returns>Value of the key.</returns>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.JSONWrapper.ExtractNamedJsonAsString(System.Object,System.String,System.Boolean)">
+            <summary>
+            Retrieves the string value from jsonNode. 
+            </summary>
+            <param name="jsonNode">JSON object node to retrieve the value from.</param>
+            <param name="keyName">Key for the value.</param>
+            <param name="isOptional">If the requested value is supposed to be optional or mandatory.</param>
+            <returns>Value of the key.</returns>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.JSONWrapper.BuildJsonArrayAndStringify(System.String,System.Collections.Generic.IList{System.Collections.Generic.IDictionary{System.String,System.String}})">
+            <summary>
+            Build a JSON array from dictionary of values
+            </summary>
+            <param name="objectName">object name of json array</param>
+            <param name="values">list of dictionary of string values keyed by name</param>
+            <returns>JSON string of array</returns>
+        </member>
+        <member name="T:MicrosoftAdvertising.Shared.WinRT.RendererOptions">
+            <summary>
+            Provides access to store renderer options
+            </summary>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.WinRT.RendererOptions.#ctor">
+            <summary>
+            create a renderer options class
+            </summary>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.WinRT.RendererOptions.#ctor(MicrosoftAdvertising.Shared.IJSONWrapper)">
+            <summary>
+            Create a renderer options class
+            </summary>
+            <param name="jsonWrapper">json parser to use to convert options to json</param>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.WinRT.RendererOptions.AddRendererOption(System.String,System.String)">
+            <summary>
+            Add a renderer option to the options for ad control. The maximum is 10 options per ad control, if maximum is exceeded an exception will be thrown. 
+            </summary>
+            <param name="optionName">name of the renderer option. Maximum of 16 characters, if exceeded an exception will be thrown.</param>
+            <param name="optionValue">value of the option. Maximum of 128 characters, if exceeded an exception will be thrown.</param>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.WinRT.RendererOptions.RemoveRendererOption(System.String)">
+            <summary>
+            remove a renderer option from the options for the ad control
+            </summary>
+            <param name="optionName">name of renderer option, ignored if not exists</param>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.WinRT.RendererOptions.GetOptionsJson">
+            <summary>
+            return options in a json format
+            </summary>
+            <returns>renderer options as json format</returns>
+        </member>
+        <member name="T:MicrosoftAdvertising.Shared.WebRequestException">
+            <summary>
+            Wrapper for any exception that occurs during WebRequestWrapper execution
+            </summary>
+        </member>
+        <member name="F:MicrosoftAdvertising.Shared.WebRequestException.DefaultErrorMessage">
+            <summary>
+            The error message to use when there is no inner exception
+            </summary>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.WebRequestException.#ctor(System.Exception)">
+            <summary>
+            Constructor for WebRequestException
+            </summary>
+            <param name="innerException">The wrapped exception</param>
+        </member>
+        <member name="T:MicrosoftAdvertising.Shared.AdException">
+            <summary>
+            Represents errors that might occur during operation of the Microsoft AdControl.
+            </summary>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.AdException.#ctor(System.String)">
+            <summary>
+            Instantiates a new instance of the AdException class with a specified error info.
+            </summary>
+            <param name="errorMessage">Error Message</param>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.AdException.#ctor(System.String,System.Exception)">
+            <summary>
+            Instantiates a new instance of the AdException class with a specified error info.
+            </summary>
+            <param name="errorMessage">Error Message</param>
+            <param name="innerException">Inner exception</param>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.AdException.#ctor(MicrosoftAdvertising.ErrorCode,System.String)">
+            <summary>
+            Instantiates a new instance of the AdException class with a specified error info.
+            </summary>
+            <param name="errorCode">Common error code of the current exception.</param>
+            <param name="errorMessage">Error Message</param>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.AdException.#ctor(MicrosoftAdvertising.ErrorCode,System.String,System.Exception)">
+            <summary>
+            Instantiates a new instance of the AdException class with a specified error info.
+            </summary>
+            <param name="errorCode">Common error code of the current exception.</param>
+            <param name="errorMessage">Error Message</param>
+            <param name="innerException">Inner exception</param>
+        </member>
+        <member name="T:MicrosoftAdvertising.Shared.NewAdSubscriber">
+            <summary>
+            Delegate to notify the result of a new ad fetch.
+            </summary>
+            <param name="adPlacement">Ad placement for which the notification is fired.</param>
+            <param name="exception">Any exception that occured while fetching the ad. For successful downloaded of an ad, this will be null.</param>
+        </member>
+        <member name="T:MicrosoftAdvertising.Shared.AdPlacement">
+            <summary>
+            Class: AdPlacement
+            The AdPlacement class represents an ad placement within an application
+            </summary>
+        </member>
+        <member name="F:MicrosoftAdvertising.Shared.AdPlacement.DeviceIdFileName">
+            <summary>
+            File name for storing unique device Id
+            </summary>
+        </member>
+        <member name="F:MicrosoftAdvertising.Shared.AdPlacement.location">
+            <summary>
+            Stores the current location of the user.
+            </summary>
+        </member>
+        <member name="F:MicrosoftAdvertising.Shared.AdPlacement.adTags">
+            <summary>
+            Tags used to send down to ad engine.
+            </summary>
+        </member>
+        <member name="F:MicrosoftAdvertising.Shared.AdPlacement.adUnitId">
+            <summary>
+            Placement ID.
+            </summary>
+        </member>
+        <member name="F:MicrosoftAdvertising.Shared.AdPlacement.adTypes">
+            <summary>
+            Ad types the placement supports.
+            </summary>
+        </member>
+        <member name="F:MicrosoftAdvertising.Shared.AdPlacement.subscriber">
+            <summary>
+            Subscriber for ad download and error event notifications.
+            </summary>
+        </member>
+        <member name="F:MicrosoftAdvertising.Shared.AdPlacement.instanceLockObj">
+            <summary>
+            Lock for synchronizing access to instance data.
+            </summary>
+        </member>
+        <member name="F:MicrosoftAdvertising.Shared.AdPlacement.webRequestWrapper">
+            <summary>
+            Web request for downloading an ad
+            </summary>
+        </member>
+        <member name="F:MicrosoftAdvertising.Shared.AdPlacement.currentAd">
+            <summary>
+            Current ad instance.
+            </summary>
+        </member>
+        <member name="F:MicrosoftAdvertising.Shared.AdPlacement.isDownloadingAd">
+            <summary>
+            Flag to check if an ad is being downloaded or not.
+            </summary>
+        </member>
+        <member name="F:MicrosoftAdvertising.Shared.AdPlacement.closed">
+            <summary>
+            Flag to check if the placement has been closed or not.
+            </summary>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.AdPlacement.#ctor(System.String,MicrosoftAdvertising.Shared.AdType,MicrosoftAdvertising.Shared.NewAdSubscriber,System.Int32,System.Int32)">
+            <summary>
+            Private constructor - the public interface exposes a static create method.
+            </summary>
+            <param name="adUnitId">the id of the specific ad placement within the application</param>
+            <param name="adTypes">the types of ad supported by this placement.</param>
+            <param name="subscriber">the subscriber for ad download notifications</param>
+            <param name="width">the width of the ad to be requested</param>
+            <param name="height">the height of the ad to be requested</param>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.AdPlacement.CreateAdPlacement(System.String,MicrosoftAdvertising.Shared.AdType,MicrosoftAdvertising.Shared.NewAdSubscriber,System.Int32,System.Int32)">
+            <summary>
+            Creates a new AdPlacement with the specified parameters.
+            </summary>
+            <param name="adUnitId">the id of the specific ad placement within the application</param>
+            <param name="adTypes">the types of ad supported by this placement. This can be a single
+             value from the values specified in {@link AdType}, or an OR combination of values
+             such as AdType.TEXT | AdType.BANNER.</param>
+            <param name="subscriber">the event handler for ad download notifications</param>
+            <param name="width">the width of the ad to be requested</param>
+            <param name="height">the height of the ad to be requested</param>
+            <returns>the created AdPlacement</returns>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.AdPlacement.InvalidateAd(MicrosoftAdvertising.Shared.IAdvertisement)">
+            <summary>
+            Invalidates the ad
+            </summary>
+            <param name="ad">Advertisement to invalidate.</param>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.AdPlacement.Close">
+            <summary>
+            Closes the placement and cancels any pending web requests
+            </summary>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.AdPlacement.Resize(System.Int32,System.Int32)">
+            <summary>
+            Change dimensions of the ad.
+            </summary>
+            <param name="size">The new size.</param>
+            <exception cref="T:MicrosoftAdvertising.Shared.WebRequestException">When the webrequest fails.</exception>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.AdPlacement.IsPremiumAdUnit(System.String,System.String)">
+            <summary>
+            A numeric adUnitId means the inventory is long-tail (served from AdCenter/AppNexus).
+            Any non-numeric characters means the inventory is premium/reserved (served from AdExpert).
+            </summary>
+            <param name="applicationId"></param>
+            <param name="adUnitId"></param>
+            <returns>whether the ad unit is premium inventory</returns>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.AdPlacement.CreateWebRequestWrapper(MicrosoftAdvertising.Shared.HttpRequestData)">
+            <summary>
+            Create a web request wrapper
+            </summary>
+            <param name="httpRequestData">data that defines the web request</param>
+            <returns>The IWebRequestWrapper class instance.</returns>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.AdPlacement.CreateAdvertisement(System.Byte[])">
+            <summary>
+            Create an Advertisement object from a JSON reponse
+            </summary>
+            <param name="bytes">Bytes representing the server response.</param>
+            <returns>The instanciated Advertisement object.</returns>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.AdPlacement.InitDeviceId">
+            <summary>
+            Try to read the device ID from isolated storage.
+            </summary>
+            <returns>The device ID read form storage, or null.</returns>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.AdPlacement.CreateDeviceIdAndWriteToStorage">
+            <summary>
+            Create a new device ID and write to storage
+            </summary>
+            <returns>The new device ID.</returns>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.AdPlacement.InitWlidTicket">
+            <summary>
+            Try to get a WLID (Windows Live ID) ticket for the current user.
+            </summary>
+            <returns>the WLID ticket</returns>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.AdPlacement.GetUserLocale">
+            <summary>
+            Get the locale from the OS.
+            </summary>
+            <returns>The locale.</returns>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.AdPlacement.SetCurrentAdDisplayedSuccessfully">
+            <summary>
+            updates the current ad state to displayed successfully
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:MicrosoftAdvertising.Shared.AdPlacement.RefreshAsync" -->
+        <member name="M:MicrosoftAdvertising.Shared.AdPlacement.SendAdRequestAsync">
+            <summary>
+            Made this async call because we first need to read/write the device ID from filesystem before
+            sending request to server. File IO is async, and this allows us to await the read/write process
+            before constructing the ad request.
+            </summary>
+        </member>
+        <member name="P:MicrosoftAdvertising.Shared.AdPlacement.CurrentAd">
+            <summary>
+            Current ad instance. 
+            </summary>
+        </member>
+        <member name="P:MicrosoftAdvertising.Shared.AdPlacement.Locale">
+            <summary>
+            Locale targeting param shared by all Ad Placements.
+            </summary>
+        </member>
+        <member name="P:MicrosoftAdvertising.Shared.AdPlacement.DeviceId">
+            <summary>
+            Client / Device ID, must be in GUID format.
+            </summary>
+        </member>
+        <member name="P:MicrosoftAdvertising.Shared.AdPlacement.TestMode">
+            <summary>
+            Test mode property shared by all Ad Placements.
+            </summary>
+        </member>
+        <member name="P:MicrosoftAdvertising.Shared.AdPlacement.Advertisement">
+            <summary>
+            The current ad to be shown.
+            </summary>
+        </member>
+        <member name="P:MicrosoftAdvertising.Shared.AdPlacement.Location">
+            <summary>
+            Current user location
+            </summary>
+        </member>
+        <member name="P:MicrosoftAdvertising.Shared.AdPlacement.AdTags">
+            <summary>
+            Gets or sets the ad tags to be passed into the ad delivery engine.
+            </summary>
+        </member>
+        <member name="P:MicrosoftAdvertising.Shared.AdPlacement.AdUnitId">
+            <summary>
+            Placement Id
+            </summary>
+        </member>
+        <member name="P:MicrosoftAdvertising.Shared.AdPlacement.IsPremiumInventory">
+            <summary>
+            Whether this ad placement is reserved or long-tail inventory.
+            </summary>
+        </member>
+        <member name="P:MicrosoftAdvertising.Shared.AdPlacement.AdTypes">
+            <summary>
+            Ad types supported by this placement
+            </summary>
+        </member>
+        <member name="T:MicrosoftAdvertising.Shared.AdType">
+            <summary>
+            Type of ad that gets downloaded. The values can be combined using an OR operator ( | ). For example, AdType.Banner | AdType.Text.
+            </summary>
+        </member>
+        <member name="F:MicrosoftAdvertising.Shared.AdType.Unknown">
+            <summary>
+            Represent a default value for Ad Type where no ad type is specified.
+            </summary>
+        </member>
+        <member name="F:MicrosoftAdvertising.Shared.AdType.PolymorphicAd">
+            <summary>
+            Represent a polymorphic ad type
+            </summary>
+        </member>
+        <member name="F:MicrosoftAdvertising.Shared.AdType.All">
+            <summary>
+            Represent an Ad type where any ad type is allowed
+            </summary>
+        </member>
+        <member name="T:MicrosoftAdvertising.Shared.Advertisement">
+            <summary>
+            An Advertisement is a base class for all types of ads. It regroups all common properties
+            and methods for advertisements.
+            </summary>
+        </member>
+        <member name="T:MicrosoftAdvertising.Shared.IAdvertisement">
+            <summary>
+            Interface for advertisement class
+            </summary>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.IAdvertisement.Close">
+            <summary>
+            Close the advertisement to free its resources.
+            </summary>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.IAdvertisement.SetResponseData(System.Object,System.String,System.String)">
+            <summary>
+            Set response data received from network.
+            </summary>
+            <param name="adResponseNode">The adrsp node in the JSON response from server.</param>
+            <param name="adNodeString">The extracted "ad" node as a string.</param>
+            <param name="prmNodeString">The extracted "prm" node as a string.</param>
+        </member>
+        <member name="P:MicrosoftAdvertising.Shared.IAdvertisement.AdType">
+            <summary>
+            Gets the type of the ad
+            </summary>
+        </member>
+        <member name="P:MicrosoftAdvertising.Shared.IAdvertisement.Expired">
+            <summary>
+            Checks if the Ad is expired or not.
+            </summary>
+        </member>
+        <member name="P:MicrosoftAdvertising.Shared.IAdvertisement.HasBeenDisplayed">
+            <summary>
+            tracks whether the ad has been displayed or not to track if we should allow refresh
+            </summary>
+        </member>
+        <member name="F:MicrosoftAdvertising.Shared.Advertisement.ElemAdResponse">
+            <summary>
+            Various element and attribute names and their values in the ad response from the back-end
+            </summary>
+        </member>
+        <member name="F:MicrosoftAdvertising.Shared.Advertisement.DefaultTTLMinutes">
+            <summary>
+            Default TTL for an Ad in minutes
+            </summary>
+        </member>
+        <member name="F:MicrosoftAdvertising.Shared.Advertisement.lockObj">
+            <summary>
+            Lock for critical sections
+            </summary>
+        </member>
+        <member name="F:MicrosoftAdvertising.Shared.Advertisement.closed">
+            <summary>
+            ad is closed or not
+            </summary>
+        </member>
+        <member name="F:MicrosoftAdvertising.Shared.Advertisement.expirationTime">
+            <summary>
+            Ad expiration time
+            </summary>
+        </member>
+        <member name="F:MicrosoftAdvertising.Shared.Advertisement.adType">
+            <summary>
+            Type of Ad
+            </summary>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.Advertisement.#ctor">
+            <summary>
+            Default constructor
+            </summary>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.Advertisement.SetResponseData(System.Object,System.String,System.String)">
+            <summary>
+            Deserialize from parsed json data
+            </summary>
+            <param name="adResponseNode">The adrsp node in the JSON response from server.</param>
+            <param name="adNodeString">The extracted "ad" node as a string.</param>
+            <param name="prmNodeString">The extracted "prm" node as a string.</param>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.Advertisement.Close">
+            <summary>
+            Release resources allocated for this ad.
+            </summary>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.Advertisement.ParseExpiration(System.String)">
+            <summary>
+            Get the expiration time from the input string and the current time. The input value is in minutes.
+            </summary>
+            <param name="adTTLMin">Time to live value for ad in minutes.</param>
+        </member>
+        <member name="P:MicrosoftAdvertising.Shared.Advertisement.Expired">
+            <summary>
+            Checks if the Ad is expired or not.
+            </summary>
+        </member>
+        <member name="P:MicrosoftAdvertising.Shared.Advertisement.HasBeenDisplayed">
+            <summary>
+            Tracks whether the ad has been displayed or not to track if we should allow refresh.
+            </summary>
+        </member>
+        <member name="P:MicrosoftAdvertising.Shared.Advertisement.AdType">
+            <summary>
+            Gets the type of the ad
+            </summary>
+        </member>
+        <member name="T:MicrosoftAdvertising.Shared.AdvertisementFactory">
+            <summary>
+            Concrete type to create advertisement objects.
+            </summary>
+        </member>
+        <member name="T:MicrosoftAdvertising.Shared.IAdvertisementFactory">
+            <summary>
+            Interface for types that can create ads from server response.
+            </summary>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.IAdvertisementFactory.CreateFromResponse(System.String)">
+            <summary>
+            Create an Advertisement object from the server response.
+            </summary>
+            <param name="response">The string response from the server.</param>
+            <returns>The new Advertisement instance.</returns>
+        </member>
+        <member name="F:MicrosoftAdvertising.Shared.AdvertisementFactory.jsonWrapper">
+            <summary>
+            JSON wrapper instance
+            </summary>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.AdvertisementFactory.#ctor(MicrosoftAdvertising.Shared.IJSONWrapper)">
+            <summary>
+            Constructor
+            </summary>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.AdvertisementFactory.CreateFromResponse(System.String)">
+            <summary>
+            Create an Advertisement object from the server response.
+            </summary>
+            <param name="response">The string response from the server.</param>
+            <returns>The new Advertisement instance.</returns>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.AdvertisementFactory.CheckAndHandleAdResponseError(System.Object)">
+            <summary>
+            Helper method to detect and handle ad response error by throwing exception
+            </summary>
+            <param name="jsonData">ad response json</param>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.AdvertisementFactory.CreateAd(MicrosoftAdvertising.Shared.AdType)">
+            <summary>
+            Create an Advertisement object of the correct type
+            </summary>
+            <param name="adType">The type of ad to create.</param>
+            <returns>The new Advertisement object.</returns>
+        </member>
+        <member name="T:MicrosoftAdvertising.Shared.GeoLocation">
+            <summary>
+            Represents the geo data used for targeting in the form of latitude and longitude.
+            </summary>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.GeoLocation.#ctor(System.Double,System.Double)">
+            <summary>
+            Constructs a GeoLocation.
+            </summary>
+            <param name="latitude">latitude value</param>
+            <param name="longitude">longitude value</param>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.GeoLocation.IsValid">
+            <summary>
+            Checks that the latitude and longitude values are within valid ranges.
+            </summary>
+            <returns>Returns true if the latitude and longitude values are within valid ranges.</returns>
+        </member>
+        <member name="P:MicrosoftAdvertising.Shared.GeoLocation.Latitude">
+            <summary>
+            Gets or sets the latitude of this Location.
+            </summary>
+        </member>
+        <member name="P:MicrosoftAdvertising.Shared.GeoLocation.Longitude">
+            <summary>
+            Gets or sets the longitude of this Location.
+            </summary>
+        </member>
+        <member name="P:MicrosoftAdvertising.Shared.GeoLocation.IsDefined">
+            <summary>
+            true if both latitude and longitude are not zero, false if they are both zero
+            </summary>
+        </member>
+        <member name="T:MicrosoftAdvertising.Shared.HttpRequestData">
+            <summary>
+            Defines the data for the Http web request
+            </summary>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.HttpRequestData.#ctor(System.String)">
+            <summary>
+            Constructs HttpRequestData
+            </summary>
+            <param name="url">URL to send the web request.</param>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.HttpRequestData.#ctor(MicrosoftAdvertising.Shared.HttpRequestData)">
+            <summary>
+            Constructs HttpRequestData
+            <param name="requestData">reference to HttpRequestData.</param>
+            </summary>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.HttpRequestData.ToString">
+            <summary>
+            Returns the a string representation of this request data.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:MicrosoftAdvertising.Shared.HttpRequestData.Url">
+            <summary>
+            Gets or sets the URL
+            </summary>
+        </member>
+        <member name="P:MicrosoftAdvertising.Shared.HttpRequestData.Headers">
+            <summary>
+            Custom headers that will be added to the HTTP request.
+            </summary>
+        </member>
+        <member name="T:MicrosoftAdvertising.Shared.HttpResponseData">
+            <summary>
+            Defines the data for the Http web response
+            </summary>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.HttpResponseData.#ctor">
+            <summary>
+            Default Constructor for HttpResponseData
+            </summary>
+        </member>
+        <member name="P:MicrosoftAdvertising.Shared.HttpResponseData.StatusCode">
+            <summary>
+            Gets or sets the HTTP status code for the response
+            </summary>
+        </member>
+        <member name="P:MicrosoftAdvertising.Shared.HttpResponseData.ContentType">
+            <summary>
+            Gets or sets the response content type.
+            </summary>
+        </member>
+        <member name="P:MicrosoftAdvertising.Shared.HttpResponseData.Response">
+            <summary>
+            Gets or sets the HTTP response.
+            </summary>
+        </member>
+        <member name="T:MicrosoftAdvertising.Shared.ManifestCapabilities">
+            <summary>
+            exposes an applications capailites as found in the application manifest file
+            </summary>
+        </member>
+        <member name="F:MicrosoftAdvertising.Shared.ManifestCapabilities.CapNetworking">
+            <summary>
+            current capabilites a manifest file exposes
+            </summary>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.ManifestCapabilities.SetCapability(System.String)">
+            <summary>
+            sets the capability to true
+            </summary>
+            <param name="cap">the capability to set</param>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.ManifestCapabilities.ValidateRequiredCapabilities">
+            <summary>
+            Verifies that all capabilities required for showing ads are present, and if not
+            throws an AdException listing the missing capabilities.
+            </summary>
+        </member>
+        <member name="P:MicrosoftAdvertising.Shared.ManifestCapabilities.RuntimeType">
+            <summary>
+            The type of app.
+            For Windows 8: WWA or XAML
+            For Windows Phone: Silverlight or XNA
+            </summary>
+        </member>
+        <member name="P:MicrosoftAdvertising.Shared.ManifestCapabilities.InternetClient">
+            <summary>
+            Applications that use the anonymous LiveID to uniquely identify the 
+            user in an anonymous fashion. 
+            </summary>
+        </member>
+        <member name="P:MicrosoftAdvertising.Shared.ManifestCapabilities.Sensors">
+            <summary>
+            Indicates whether the Sensors capability exists.
+            </summary>
+        </member>
+        <member name="T:MicrosoftAdvertising.Shared.PolymorphicAd">
+            <summary>
+            A TextAd is an advertisement displaying few lines of text within an ad placement.
+            </summary>
+        </member>
+        <member name="F:MicrosoftAdvertising.Shared.PolymorphicAd.jsonWrapper">
+            <summary>
+            JSON wrapper instance
+            </summary>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.PolymorphicAd.#ctor(MicrosoftAdvertising.Shared.IJSONWrapper)">
+            <summary>
+            Default constructor
+            </summary>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.PolymorphicAd.#ctor(System.String,System.String,System.String)">
+            <summary>
+            Constructor for PolymorphicAd.
+            </summary>
+            <param name="rendererUrl">The URL of the renderer script.</param>
+            <param name="adParameters">The ad parameters which are inputs to the renderer.</param>
+            <param name="prmParameters">The prm parameters which are inputs to the renderer.</param>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.PolymorphicAd.SetResponseData(System.Object,System.String,System.String)">
+            <summary>
+            Deserialize from parsed json data
+            </summary>
+            <param name="adResponseNode">The adrsp node in the JSON response from server.</param>
+            <param name="adNodeString">The extracted "ad" node as a string.</param>
+            <param name="prmNodeString">The extracted "prm" (parameters) node as a string.</param>
+        </member>
+        <member name="P:MicrosoftAdvertising.Shared.PolymorphicAd.RendererUrl">
+            <summary>
+            The URL of the renderer for this ad
+            </summary>
+        </member>
+        <member name="P:MicrosoftAdvertising.Shared.PolymorphicAd.AdParameters">
+            <summary>
+            The ad parameters to pass to the renderer
+            </summary>
+        </member>
+        <member name="P:MicrosoftAdvertising.Shared.PolymorphicAd.PrmParameters">
+            <summary>
+            The server parameters to pass to the renderer
+            </summary>
+        </member>
+        <member name="P:MicrosoftAdvertising.Shared.PolymorphicAd.RendererOptionParameters">
+            <summary>
+            The renderer option parameters to pass to the renderer
+            </summary>
+        </member>
+        <member name="T:MicrosoftAdvertising.Shared.ProtocolException">
+            <summary>
+            Represents errors that might occur due to invalid ad response format/protocol.
+            </summary>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.ProtocolException.#ctor">
+            <summary>
+            Default constructor
+            </summary>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.ProtocolException.#ctor(System.String)">
+            <summary>
+            Constructor taking string as parameter
+            </summary>
+            <param name="message">Error message</param>
+        </member>
+        <member name="T:MicrosoftAdvertising.Shared.StorageException">
+            <summary>
+            Wrapper for any exception that occurs during storage
+            </summary>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.StorageException.#ctor(System.Exception)">
+            <summary>
+            Constructor for StorageException
+            </summary>
+            <param name="innerException">The wrapped exception</param>
+        </member>
+        <member name="T:MicrosoftAdvertising.Shared.StorageUtils">
+            <summary>
+            Class for containing utility functions for storing and retriving data from persistent store.
+            </summary>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.StorageUtils.WriteText(Windows.Storage.StorageFolder,System.String,System.String)">
+            <summary>
+            Write text to a file. This will delete the old file if it exists before writing the specified text.
+            </summary>
+            <param name="folder">Folder to write file in</param>
+            <param name="filename">File name</param>
+            <param name="text">Text to write</param>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.StorageUtils.ReadText(Windows.Storage.StorageFolder,System.String)">
+            <summary>
+            Reads text from the file.
+            </summary>
+            <param name="folder">folder name</param>
+            <param name="filename">file name</param>
+            <returns>Text in the file</returns>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.StorageUtils.ReadPropertiesFile(Windows.Storage.StorageFile)">
+            <summary>
+            Reads text from the file.
+            </summary>
+            <param name="file">file</param>
+            <returns>Text in the file</returns>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.StorageUtils.HandleStorageError(System.Exception)">
+            <summary>
+            Throw a new StorageException
+            </summary>
+            <param name="innerException">The exception that caused the error.</param>
+        </member>
+        <member name="T:MicrosoftAdvertising.Shared.TestAdResponseBlobs">
+            <summary>
+            temporary class to hold hard-coded ad response blobs
+            TO USE LOCAL DIR, REPLACE "http:\\/\\/ads1.msn.com\\/ads\\/w8\\/renderers" WITH "ms-appx:\\/\\/\\/ads\\/renderers"
+            
+            </summary>
+        </member>
+        <member name="T:MicrosoftAdvertising.Shared.Utilities">
+            <summary>
+            Class for containing utility functions.
+            </summary>
+        </member>
+        <member name="F:MicrosoftAdvertising.Shared.Utilities.HttpErrorMessage">
+            <summary>
+            Error message for non-success http status code.
+            </summary>
+        </member>
+        <member name="F:MicrosoftAdvertising.Shared.Utilities.HttpRequestValueDelimiter">
+            <summary>
+            Request value delimiter.
+            </summary>
+        </member>
+        <member name="F:MicrosoftAdvertising.Shared.Utilities.PhoneNumMaxLen">
+            <summary>
+            maximum allowed length of a telphone number
+            </summary>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.Utilities.MapHttpErrorToException(System.Net.HttpStatusCode,System.Exception)">
+            <summary>
+            Converts the input error http response into an exception.
+            </summary>
+            <param name="statusCode">The status code of the http response.</param>
+            <param name="innerException">Exception caught in the event the http request failed.</param>
+            <returns>AdException for the error http response</returns>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.Utilities.AppendHttpDelimitedString(System.Text.StringBuilder,System.String)">
+            <summary>
+            Helper method to form the http request string.
+            </summary>
+            <param name="buffer">Buffer to modify</param>
+            <param name="textToAppend">Text to append</param>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.Utilities.UrlEncodingNeeded(System.Char)">
+            <summary>
+            Determines if we need to URL encode the input character. This includes check for all unreserved
+            characters as specified in RFC 3986 except '~'.
+            .Net UrEncode seems to encode '~' as well. Also, the AFS source code has the
+            same list of unreserved characters as below
+            </summary>
+            <param name="ch">Character to check for encoding.</param>
+            <returns>'true' if we need to encode the character, 'false' otherwise.</returns>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.Utilities.UrlEncode(System.String)">
+            <summary>
+            Url Encodes the input string.
+            </summary>
+            <param name="str">String value to encode</param>
+            <returns>the encoded string. If the input is null this function returns null.</returns>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.Utilities.IsPhoneNumberValid(System.String)">
+            <summary>
+            Verifies if provided string is a valid phone number. It must contain only digits and
+            the '-' character, if '+' is present it must be the first character and must be
+            less than PhoneNumMaxLen(24).
+            </summary>
+            <param name="number">number to validate</param>
+            <returns>true if phone number is valid, false otherwise</returns>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.WinRT.AdPlacement.GetAdAsync">
+            <summary>
+            Retrieves a new ad from the server.
+            </summary>
+            <returns>the Advertisement</returns>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.WinRT.AdPlacement.GetAdInternalAsync">
+            <summary>
+            Retrieves a new ad from the server.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:MicrosoftAdvertising.Shared.WinRT.AdPlacement.LastError">
+            <summary>
+            Information about the last error that occurred while requesting a new ad.
+            </summary>
+        </member>
+        <member name="T:MicrosoftAdvertising.Shared.WinRT.SdkInfoProvider">
+            <summary>
+            class to encapsulate data on SDK such as version, etc. 
+            </summary>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.WinRT.SdkInfoProvider.GetSdkInfo">
+            <summary>
+            Return SDK version
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MicrosoftAdvertising.Shared.WinRT.SdkInfoProvider.InitializeInfo">
+            <summary>
+            initialize the value of SDK version
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:MicrosoftAdvertising.Shared.WinRT.SdkInfo">
+            <summary>
+            structure containing information about the SDK and runtime
+            </summary>
+        </member>
+        <member name="F:MicrosoftAdvertising.Shared.WinRT.SdkInfo.sdkVersion">
+            <summary>
+            File version of SDK assmbly
+            </summary>
+        </member>
+        <member name="F:MicrosoftAdvertising.Shared.WinRT.SdkInfo.client">
+            <summary>
+            SDK client
+            </summary>
+        </member>
+        <member name="F:MicrosoftAdvertising.Shared.WinRT.SdkInfo.runtimeType">
+            <summary>
+            Current runtime type
+            </summary>
+        </member>
+        <member name="T:MicrosoftAdvertising.AdManager">
+            <summary>
+            Admanager class.
+            </summary>
+        </member>
+        <member name="M:MicrosoftAdvertising.AdManager.#ctor(System.String)">
+            <summary>
+            Initialize a new AdControl with the provided parameters.
+            </summary>
+            <param name="applicationId">This parameter identifies the application and is assigned to you 
+            during the publisher registration process. See the Publisher Onboarding Guide for more information.</param>
+        </member>
+        <member name="M:MicrosoftAdvertising.AdManager.Initialize(System.String)">
+            <summary>
+            Initializes the singleton AdManager with the specified app ID.
+            </summary>
+            <param name="applicationId"></param>
+        </member>
+        <member name="M:MicrosoftAdvertising.AdManager.Deinitialize">
+            <summary>
+            Uninitializes the singleton AdManager and releases resources.
+            </summary>
+        </member>
+        <member name="P:MicrosoftAdvertising.AdManager.IsInitialized">
+            <summary>
+            Returns a boolean specifying whether AdManager singleton is initialized.
+            </summary>
+        </member>
+        <member name="P:MicrosoftAdvertising.AdManager.ApplicationId">
+            <summary>
+            The application ID of the app as registered in pubCenter.
+            </summary>
+        </member>
+        <member name="P:MicrosoftAdvertising.AdManager.Current">
+            <summary>
+            Gets the singleton AdManager that was previously initialized.
+            </summary>
+        </member>
+        <member name="T:MicrosoftAdvertising.ErrorCode">
+            <PublicAPI file="..\IntelliSense\[CULTURE]\ErrorCode.xml" tag="ErrorCode"/>
+        </member>
+        <member name="F:MicrosoftAdvertising.ErrorCode.Unknown">
+            <PublicAPI file="..\IntelliSense\[CULTURE]\ErrorCode.xml" tag="ErrorCode_Unknown"/>
+        </member>
+        <member name="F:MicrosoftAdvertising.ErrorCode.NoAdAvailable">
+            <PublicAPI file="..\IntelliSense\[CULTURE]\ErrorCode.xml" tag="ErrorCode_NoAdAvailable"/>
+        </member>
+        <member name="F:MicrosoftAdvertising.ErrorCode.NetworkConnectionFailure">
+            <PublicAPI file="..\IntelliSense\[CULTURE]\ErrorCode.xml" tag="ErrorCode_NetworkConnectionFailure"/>
+        </member>
+        <member name="F:MicrosoftAdvertising.ErrorCode.ClientConfiguration">
+            <PublicAPI file="..\IntelliSense\[CULTURE]\ErrorCode.xml" tag="ErrorCode_ClientConfiguration"/>
+        </member>
+        <member name="F:MicrosoftAdvertising.ErrorCode.ServerSideError">
+            <PublicAPI file="..\IntelliSense\[CULTURE]\ErrorCode.xml" tag="ErrorCode_ServerSideError"/>
+        </member>
+        <member name="F:MicrosoftAdvertising.ErrorCode.InvalidServerResponse">
+            <PublicAPI file="..\IntelliSense\[CULTURE]\ErrorCode.xml" tag="ErrorCode_InvalidServerResponse"/>
+        </member>
+        <member name="F:MicrosoftAdvertising.ErrorCode.Other">
+            <PublicAPI file="..\IntelliSense\[CULTURE]\ErrorCode.xml" tag="ErrorCode_Other"/>
+        </member>
+        <member name="F:MicrosoftAdvertising.ErrorCode.RefreshNotAllowed">
+            <PublicAPI file="..\IntelliSense\[CULTURE]\ErrorCode.xml" tag="ErrorCode_RefreshNotAllowed"/>
+        </member>
+    </members>
+<Signature xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/><Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/><DigestValue>QrqTlR5uuUhy831OBk0qZQMs9n4=</DigestValue></Reference></SignedInfo><SignatureValue>
+    H6UsUu02SWXTYnoRBLeTa7DlIsWadb0gWxYRTUXGYgEJx+PkKz4oR0uGvHYw1fb8SYS+CHC+
+    RZzpuGijvviZxxRuiIUP9lPLMNwKYtjzY13frQ0rSwVLdP+OYYuB/6bpZJQeSGoJyxS58jsA
+    hqY1l5ch8Q8drCUnQmMibKheez+v4yacgporYfX3ciG/yMRW7Zz3iOTZ3wzZO4CzTpqCCJcQ
+    VYIy3Fz9mN7zDzoQlm25ka/6JDaHchWDcXFPj8dVmsAx1zCq2SPH+zhCL9nq325TEtioN6E7
+    Ocf3GK2ICONfSNAsjfCH7o4SYqjEk24dl6rEBXeW041jhMmaHBSaeg==
+  </SignatureValue><KeyInfo>
+      <KeyValue>
+        <RSAKeyValue>
+          <Modulus>
+            s3R00II8h6ea1I6yBEKAlyUu5EHOk2M2XxPytHiYgMYofsyKE+89N4w7CaDYFMVcXtipHX8B
+            wbOYG1B37P7qfEXPf+EhDsWEyp8Pa7MJOLd0xFcevvBIqHla3w6bHJqovMhStQxpj4TOcVV7
+            /wkgv0B3NyEwdFuV33fLoOXBchIGPfLIVWyvwftqFifI9bNh49nOGw8e9OTNTDRsPkcR5wIr
+            XxR6BAf11z2L22d9Vz41622NAUCNGoeW4g93TIm6OJz7jgKR2yIP5dA2qbg3RdAq/JaNwWBx
+            M6WIsfbCBDCHW8PXL7J5EdiLZWKiihFmXX5/BXpzih96heXNKBDRPQ==
+          </Modulus>
+          <Exponent>AQAB</Exponent>
+        </RSAKeyValue>
+      </KeyValue>
+      <X509Data>
+        <X509Certificate>
+          MIIEqTCCA5GgAwIBAgITMwAAAIhZDjxRH+JqZwABAAAAiDANBgkqhkiG9w0BAQUFADB5MQsw
+          CQYDVQQGEwJVUzETMBEGA1UECBMKV2FzaGluZ3RvbjEQMA4GA1UEBxMHUmVkbW9uZDEeMBwG
+          A1UEChMVTWljcm9zb2Z0IENvcnBvcmF0aW9uMSMwIQYDVQQDExpNaWNyb3NvZnQgQ29kZSBT
+          aWduaW5nIFBDQTAeFw0xMjA3MjYyMDUwNDFaFw0xMzEwMjYyMDUwNDFaMIGDMQswCQYDVQQG
+          EwJVUzETMBEGA1UECBMKV2FzaGluZ3RvbjEQMA4GA1UEBxMHUmVkbW9uZDEeMBwGA1UEChMV
+          TWljcm9zb2Z0IENvcnBvcmF0aW9uMQ0wCwYDVQQLEwRNT1BSMR4wHAYDVQQDExVNaWNyb3Nv
+          ZnQgQ29ycG9yYXRpb24wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCzdHTQgjyH
+          p5rUjrIEQoCXJS7kQc6TYzZfE/K0eJiAxih+zIoT7z03jDsJoNgUxVxe2KkdfwHBs5gbUHfs
+          /up8Rc9/4SEOxYTKnw9rswk4t3TEVx6+8EioeVrfDpscmqi8yFK1DGmPhM5xVXv/CSC/QHc3
+          ITB0W5Xfd8ug5cFyEgY98shVbK/B+2oWJ8j1s2Hj2c4bDx705M1MNGw+RxHnAitfFHoEB/XX
+          PYvbZ31XPjXrbY0BQI0ah5biD3dMibo4nPuOApHbIg/l0DapuDdF0Cr8lo3BYHEzpYix9sIE
+          MIdbw9cvsnkR2ItlYqKKEWZdfn8FenOKH3qF5c0oENE9AgMBAAGjggEdMIIBGTATBgNVHSUE
+          DDAKBggrBgEFBQcDAzAdBgNVHQ4EFgQUJls+W12WX+L3d4h/XkVTWKguW7gwDgYDVR0PAQH/
+          BAQDAgeAMB8GA1UdIwQYMBaAFMsR6MrStBZYAck3LjMWFrlMmgofMFYGA1UdHwRPME0wS6BJ
+          oEeGRWh0dHA6Ly9jcmwubWljcm9zb2Z0LmNvbS9wa2kvY3JsL3Byb2R1Y3RzL01pY0NvZFNp
+          Z1BDQV8wOC0zMS0yMDEwLmNybDBaBggrBgEFBQcBAQROMEwwSgYIKwYBBQUHMAKGPmh0dHA6
+          Ly93d3cubWljcm9zb2Z0LmNvbS9wa2kvY2VydHMvTWljQ29kU2lnUENBXzA4LTMxLTIwMTAu
+          Y3J0MA0GCSqGSIb3DQEBBQUAA4IBAQAP3kBJiJHRMTejRDhpsmor1JH7aIWuWLseDI9W+pnX
+          ypcnTOiFjnlpLOS9lj/lcGaXlTBlKa3Gyqz1D3moZ79p9A+X4woPv+6WdimyItAzxv+LSa2u
+          sv2/JervJ1DA6xn4GmRqoOEXWa/xz+yBqInosdIUBuNqbXRSZNqWlCpcaWsf7QWZGtzoZaqI
+          GxWVGtOkUZb9VZX4Y42fFAyxnn9KBP/DZq0Kr66k3mP68OrDs7Lrh9vFOK22c9J4ZOrsIVtr
+          O9ZEIvSBUqUrQymLDKEqcYJCy6sbftSlp6333vdGms5DOegqU+3PQOR3iEK/RxbgpTZq76ca
+          jTo9MwT2JSAj
+        </X509Certificate>
+      </X509Data>
+      <X509Data>
+        <X509Certificate>
+          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
+        </X509Certificate>
+      </X509Data>
+      <X509Data>
+        <X509Certificate>
+          MIIFvDCCA6SgAwIBAgIKYTMmGgAAAAAAMTANBgkqhkiG9w0BAQUFADBfMRMwEQYKCZImiZPy
+          LGQBGRYDY29tMRkwFwYKCZImiZPyLGQBGRYJbWljcm9zb2Z0MS0wKwYDVQQDEyRNaWNyb3Nv
+          ZnQgUm9vdCBDZXJ0aWZpY2F0ZSBBdXRob3JpdHkwHhcNMTAwODMxMjIxOTMyWhcNMjAwODMx
+          MjIyOTMyWjB5MQswCQYDVQQGEwJVUzETMBEGA1UECBMKV2FzaGluZ3RvbjEQMA4GA1UEBxMH
+          UmVkbW9uZDEeMBwGA1UEChMVTWljcm9zb2Z0IENvcnBvcmF0aW9uMSMwIQYDVQQDExpNaWNy
+          b3NvZnQgQ29kZSBTaWduaW5nIFBDQTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEB
+          ALJyWVwZMGS/HZpgICBCmXZTbD4b1m/My/Hqa/6XFhDg3zp0gxq3L6Ay7P/ewkJOI9VyANs1
+          VwqJyq4gSfTwaKxNS42lvXlLcZtHB9r9Jd+ddYjPqnNEf9eB2/O98jakyVxF3K+tPeAoaJca
+          p6Vyc1bxF5Tk/TWUcqDWdl8ed0WDhTgW0HNbBbpnUo2lsmkv2hkL/pJ0KeJ2L1TdFDBZ+NKN
+          Yv3LyV9GMVC5JxPkQDDPcikQKCLHN049oDI9kM2hOAaFXE5WgigqBTK3S9dPY+fSLWLxRT3n
+          rAgA9kahntFbjCZT6HqqSvJGzzc8OJ60d1ylF56NyxGPVjzBrAlfA9MCAwEAAaOCAV4wggFa
+          MA8GA1UdEwEB/wQFMAMBAf8wHQYDVR0OBBYEFMsR6MrStBZYAck3LjMWFrlMmgofMAsGA1Ud
+          DwQEAwIBhjASBgkrBgEEAYI3FQEEBQIDAQABMCMGCSsGAQQBgjcVAgQWBBT90TFO0yaKleGY
+          YDuoMW+mPLzYLTAZBgkrBgEEAYI3FAIEDB4KAFMAdQBiAEMAQTAfBgNVHSMEGDAWgBQOrIJg
+          QFYnl+UlE/wq4QpTlVnkpDBQBgNVHR8ESTBHMEWgQ6BBhj9odHRwOi8vY3JsLm1pY3Jvc29m
+          dC5jb20vcGtpL2NybC9wcm9kdWN0cy9taWNyb3NvZnRyb290Y2VydC5jcmwwVAYIKwYBBQUH
+          AQEESDBGMEQGCCsGAQUFBzAChjhodHRwOi8vd3d3Lm1pY3Jvc29mdC5jb20vcGtpL2NlcnRz
+          L01pY3Jvc29mdFJvb3RDZXJ0LmNydDANBgkqhkiG9w0BAQUFAAOCAgEAWTk+fyZGr+tvQLEy
+          tWrrDi9uqEn361917Uw7LddDrQv+y+ktMaMjzHxQmIAhXaw9L0y6oqhWnONwu7i0+Hm1SXL3
+          PupBf8rhDBdpy6WcIC36C1DEVs0t40rSvHDnqA2iA6VW4LiKS1fylUKc8fPv7uOGHzQ8uFaa
+          8FMjhSqkghyT4pQHHfLiTviMocroE6WRTsgb0o9ylSpxbZsa+BzwU9ZnzCL/XB3Nooy9J7J5
+          Y1ZEolHN+emjWFbdmwJFRC9f9Nqu1IIybvyklRPk62nnqaIsvsgrEA5ljpnb9aL6EiYJZTiU
+          8XofSrvR4Vbo0HiWGFzJNRZf3ZMdSY4tvq00RBzuEBUaAF3dNVshzpjHCe6FDoxPbQ4TTj18
+          KUicctHzbMrB7HCjV5JXfZSNoBtIA1r3z6NnCnSlNu0tLxfI5nI3EvRvsTxngvlSso0zFmUe
+          DordEN5k9G/ORtTTF+l5xAS00/ss3x+KnqwK+xMnQK3k+eGpf0a7B2BHZWBATrBC7E7ts3Z5
+          2Ao0CW0cgDEf4g5U3eWh++VHEK1kmP9QFi58vwUheuKVQSdpw5OPlcmN2Jshrg1cnPCiroZo
+          gwxqLbt2awAdlq3yFnv2FoMkuYjPaqhHMS+a3ONxPdcAfmJH0c6IybgY+g5yjcGjPa8CQGr/
+          aZuW4hCoELQ3UAjWwz0=
+        </X509Certificate>
+      </X509Data>
+    </KeyInfo><Object id="ts-countersig"><X509Data><X509Certificate>MIIEmjCCA4KgAwIBAgIKYQd/NAAAAAAADzANBgkqhkiG9w0BAQUFADB5MQswCQYDVQQGEwJVUzET
+MBEGA1UECBMKV2FzaGluZ3RvbjEQMA4GA1UEBxMHUmVkbW9uZDEeMBwGA1UEChMVTWljcm9zb2Z0
+IENvcnBvcmF0aW9uMSMwIQYDVQQDExpNaWNyb3NvZnQgVGltZXN0YW1waW5nIFBDQTAeFw0xMjAx
+MDkyMTUzNTdaFw0xMzA0MDkyMTUzNTdaMIGzMQswCQYDVQQGEwJVUzETMBEGA1UECBMKV2FzaGlu
+Z3RvbjEQMA4GA1UEBxMHUmVkbW9uZDEeMBwGA1UEChMVTWljcm9zb2Z0IENvcnBvcmF0aW9uMQ0w
+CwYDVQQLEwRNT1BSMScwJQYDVQQLEx5uQ2lwaGVyIERTRSBFU046QkJFQy0zMENBLTJEQkUxJTAj
+BgNVBAMTHE1pY3Jvc29mdCBUaW1lLVN0YW1wIFNlcnZpY2UwggEiMA0GCSqGSIb3DQEBAQUAA4IB
+DwAwggEKAoIBAQC4NLWZDdis9H6Lq0JbmEMp+WbE4dV3k/+sHIrSisIr1QLK2cGIO5ba8NZdKszQ
+iBzep3Zx2WckJrPIjD3RnB75xUC7HjA+NH9cMO4rnRF08ldj6I2wmErxWcJ6R8FM9RG7ssXqxZ3C
+1C/x1ldhUr584siY/R4JukggratNRLOI54BoD/2Ed+1sUDupLEK+1NBbdLOjPn7J55SUAv6YHVRM
+jG2OKP3o7zbLXYONHAN2Ot3PLh9Enz+58n/BOdN2vipxEIhYhb6pnE423tvIkjfQs+689hO5WXDw
+qgpQkK+omYEnb1paHjvGzQgg5l6Pqiz4kkxUOcslsTGYCvXmPNB1AgMBAAGjgegwgeUwHQYDVR0O
+BBYEFNBtWpkbsctpMfzVPPbfHMxiz0DAMB8GA1UdIwQYMBaAFG/oTj+XuTSrS4aPvJzqrDtBQ8bQ
+MEQGA1UdHwQ9MDswOaA3oDWGM2h0dHA6Ly9jcmwubWljcm9zb2Z0LmNvbS9wa2kvY3JsL3Byb2R1
+Y3RzL3RzcGNhLmNybDBIBggrBgEFBQcBAQQ8MDowOAYIKwYBBQUHMAKGLGh0dHA6Ly93d3cubWlj
+cm9zb2Z0LmNvbS9wa2kvY2VydHMvdHNwY2EuY3J0MBMGA1UdJQQMMAoGCCsGAQUFBwMIMA0GCSqG
+SIb3DQEBBQUAA4IBAQCzERCbfFyFGDJIF5SbejdYYnLX2I35rVpA0qX3CLrTSekd0ENrpA3qH1Ly
+ya4vOCaD/aZeRfl5jgYLGjzx/7VjgEYER46gm0wAy1t7c3QyxB0SbGxBb0uk2AAGi6KDyIDoJfZ9
+NkVfOyxKR6AyvtuZ37ynmzfga+RaNNDkDOZp4gB01y98zykijfwCgbj1xZ+31QYZLv4ngSL6iG4a
+s0Fm8y+LB/Z7nXz9CADO0q5tpM3Bzf9SlB7TYgrBjhu0QjGEXFes4kL+mTO1YE5zZYjNXtY0bkEE
+oWoR+Qcdpb3rzEm2SYQv8YO7xSDuC56LxGFOOjUJHmCnBX6JkqCJ16Ar</X509Certificate></X509Data><X509Data><X509Certificate>MIIEnTCCA4WgAwIBAgIQaguZT8AAJasR20UfWHpnojANBgkqhkiG9w0BAQUFADBwMSswKQYDVQQL
+EyJDb3B5cmlnaHQgKGMpIDE5OTcgTWljcm9zb2Z0IENvcnAuMR4wHAYDVQQLExVNaWNyb3NvZnQg
+Q29ycG9yYXRpb24xITAfBgNVBAMTGE1pY3Jvc29mdCBSb290IEF1dGhvcml0eTAeFw0wNjA5MTYw
+MTA0NDdaFw0xOTA5MTUwNzAwMDBaMHkxCzAJBgNVBAYTAlVTMRMwEQYDVQQIEwpXYXNoaW5ndG9u
+MRAwDgYDVQQHEwdSZWRtb25kMR4wHAYDVQQKExVNaWNyb3NvZnQgQ29ycG9yYXRpb24xIzAhBgNV
+BAMTGk1pY3Jvc29mdCBUaW1lc3RhbXBpbmcgUENBMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIB
+CgKCAQEA3Ddu+6/IQkpxGMjOSD5TwPqrFLosMrsST1LIg+0+M9lJMZIotpFk4B9QhLrCS9F/Bfjv
+db6Lx6jVrmlwZngnZui2t++Fuc3uqv0SpAtZIikvz0DZVgQbdrVtZG1KVNvd8d6/n4PHgN9/TAI3
+lPXAnghWHmhHzdnAdlwvfbYlBLRWW2ocY/+AfDzu1QQlTTl3dAddwlzYhjcsdckO6h45CXx2/p1s
+bnrg7D6Pl55xDl8qTxhiYDKe0oNOKyJcaEWL3i+EEFCy+bUajWzuJZsT+MsQ14UO9IJ2czbGlXqi
+zGAG7AWwhjO3+JRbhEGEWIWUbrAfLEjMb5xD4GrofyaOawIDAQABo4IBKDCCASQwEwYDVR0lBAww
+CgYIKwYBBQUHAwgwgaIGA1UdAQSBmjCBl4AQW9Bw72lyniNRfhSyTY7/y6FyMHAxKzApBgNVBAsT
+IkNvcHlyaWdodCAoYykgMTk5NyBNaWNyb3NvZnQgQ29ycC4xHjAcBgNVBAsTFU1pY3Jvc29mdCBD
+b3Jwb3JhdGlvbjEhMB8GA1UEAxMYTWljcm9zb2Z0IFJvb3QgQXV0aG9yaXR5gg8AwQCLPDyIEdE+
+9mPs30AwEAYJKwYBBAGCNxUBBAMCAQAwHQYDVR0OBBYEFG/oTj+XuTSrS4aPvJzqrDtBQ8bQMBkG
+CSsGAQQBgjcUAgQMHgoAUwB1AGIAQwBBMAsGA1UdDwQEAwIBhjAPBgNVHRMBAf8EBTADAQH/MA0G
+CSqGSIb3DQEBBQUAA4IBAQCUTRExwnxQuxGOoWEHAQ6McEWN73NUvT8JBS3/uFFThRztOZG3o1YL
+3oy2OxvR+6ynybexUSEbbwhpfmsDoiJG7Wy0bXwiuEbThPOND74HijbB637pcF1Fn5LSzM7djsDh
+vyrNfOzJrjLVh7nLY8Q20Rghv3beO5qzG3OeIYjYtLQSVIz0nMJlSpooJpxgig87xxNleEi7z62D
+Ok+wYljeMOnpOR3jifLaOYH5EyGMZIBjBgSW8poCQy97Roi6/wLZZflK3toDdJOzBW4MzJ3cKGF8
+SPEXnBEhOAIch6wGxZYyuOVAxlM9vamJ3uhmN430IpaczLB3VFE61nJEsiP2</X509Certificate></X509Data><CounterSignature xmlns="http://schemas.microsoft.com/xmldsig/timestamp/2003" ts-format="cms-timestamp-message">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</CounterSignature></Object></Signature></doc>
