@@ -66,6 +66,7 @@ namespace MetroPass.UI
             _ninjectContainer.RegisterWinRTServices();
 
             _ninjectContainer.Kernel.Bind<IPageServices>().To<PageServices>();
+            _ninjectContainer.Kernel.Bind<ILockingService>().To<LockingService>();
             _ninjectContainer.Kernel.Bind<IClipboard>().To<MetroClipboard>();
             _ninjectContainer.Kernel.Bind<IKdbTree>().ToMethod(c => PWDatabaseDataSource.Instance.PwDatabase.Tree);
         }
@@ -115,16 +116,12 @@ namespace MetroPass.UI
         
         protected override void OnResuming(object sender, object e)
         {
-            //base.OnResuming(sender, e);
-
+          
             if (ApplicationData.Current.LocalSettings.Values.ContainsKey("SuspendDate"))
             {
                 DateTime suspendedDate = DateTime.Parse(ApplicationData.Current.LocalSettings.Values["SuspendDate"].ToString());
-                TimeSpan ts = DateTime.Now.Subtract(suspendedDate);
-                if (ts.Seconds > 1)
-                {
-                    DisplayRootView<StartPageView>();
-                }
+                var locker =_ninjectContainer.Kernel.Get<ILockingService>();
+                locker.OnResumeLock(suspendedDate);
             }
         }
 

@@ -5,6 +5,7 @@ using Caliburn.Micro;
 using Framework;
 using MetroPass.Core.Interfaces;
 using MetroPass.Core.Model;
+using MetroPass.UI.DataModel;
 
 namespace MetroPass.UI.ViewModels
 {
@@ -43,6 +44,67 @@ namespace MetroPass.UI.ViewModels
                 }
             }
         }
+        public const int MinMinutesToLockDatabase = 1;
+        public bool LockDatabaseAfterInactivityEnabled
+        {
+            get
+            {
+
+                return SettingsModel.MinutesToLockDatabase > 0;
+            }
+            set
+            {
+                SettingsModel.MinutesToLockDatabase = value ? MinMinutesToLockDatabase : 0;
+
+                NotifyOfPropertyChange(() => LockDatabaseAfterInactivityEnabled);
+                NotifyOfPropertyChange(() => MinutesToLockDatabase);
+            }
+        }
+
+        public int MinutesToLockDatabase
+        {
+            get
+            {
+                return SettingsModel.MinutesToLockDatabase;
+            }
+            set
+            {
+                SettingsModel.MinutesToLockDatabase = value;
+                NotifyOfPropertyChange(() => MinutesToLockDatabase);
+            }
+        }
+
+        public const int MinClearClipboardSeconds = 10;
+
+        public bool SecondsToClearClipboardEnabled
+        {
+            get
+            {
+                return SettingsModel.SecondsToClearClipboard > 0;
+            }
+            set
+            {
+                SettingsModel.SecondsToClearClipboard = value ? MinClearClipboardSeconds : 0;
+
+                
+                NotifyOfPropertyChange(() => SecondsToClearClipboardEnabled);
+                NotifyOfPropertyChange(() => SecondsToClearClipboard);
+            }
+        }
+
+        public int SecondsToClearClipboard
+        {
+            get
+            {
+                return SettingsModel.SecondsToClearClipboard;
+            }
+            set
+            {
+                SettingsModel.SecondsToClearClipboard = value;
+                NotifyOfPropertyChange(() => SecondsToClearClipboard);
+            }
+        }
+
 
         public IEnumerable<PwGroupLevels> AvailableGroups
         {

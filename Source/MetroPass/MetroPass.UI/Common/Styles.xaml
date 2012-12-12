@@ -45,6 +45,31 @@
         <Setter Property="VerticalAlignment" Value="Center"/>
     </Style>
 
+    <SolidColorBrush x:Key="SliderBorderThemeBrush" Color="Transparent" />
+    <SolidColorBrush x:Key="SliderDisabledBorderThemeBrush" Color="Transparent" />
+
+    <SolidColorBrush x:Key="SliderThumbBackgroundThemeBrush" Color="#FF000000" />
+    <SolidColorBrush x:Key="SliderThumbBorderThemeBrush" Color="#FF000000" />
+    <SolidColorBrush x:Key="SliderThumbDisabledBackgroundThemeBrush" Color="#FF929292" />
+    <SolidColorBrush x:Key="SliderThumbPointerOverBackgroundThemeBrush" Color="#FF000000" />
+    <SolidColorBrush x:Key="SliderThumbPointerOverBorderThemeBrush" Color="#FF000000" />
+    <SolidColorBrush x:Key="SliderThumbPressedBackgroundThemeBrush" Color="#FF000000" />
+    <SolidColorBrush x:Key="SliderThumbPressedBorderThemeBrush" Color="#FF000000" />
+
+    <SolidColorBrush x:Key="SliderTickMarkInlineBackgroundThemeBrush" Color="White" />
+    <SolidColorBrush x:Key="SliderTickMarkInlineDisabledForegroundThemeBrush" Color="White" />
+    <SolidColorBrush x:Key="SliderTickmarkOutsideBackgroundThemeBrush" Color="#80000000" />
+    <SolidColorBrush x:Key="SliderTickMarkOutsideDisabledForegroundThemeBrush" Color="#80000000" />
+
+    <SolidColorBrush x:Key="SliderTrackBackgroundThemeBrush" Color="#1A000000" />
+    <SolidColorBrush x:Key="SliderTrackDecreaseBackgroundThemeBrush" Color="#FF4617B4" />
+    <SolidColorBrush x:Key="SliderTrackDecreaseDisabledBackgroundThemeBrush" Color="#1C000000" />
+    <SolidColorBrush x:Key="SliderTrackDecreasePointerOverBackgroundThemeBrush" Color="#FF5F37BE" />
+    <SolidColorBrush x:Key="SliderTrackDecreasePressedBackgroundThemeBrush" Color="#FF7241E4" />
+    <SolidColorBrush x:Key="SliderTrackDisabledBackgroundThemeBrush" Color="#1A000000" />
+    <SolidColorBrush x:Key="SliderTrackPointerOverBackgroundThemeBrush" Color="#26000000" />
+    <SolidColorBrush x:Key="SliderTrackPressedBackgroundThemeBrush" Color="#33000000" />
+
     <Style x:Key="ErrorTextBoxStyle" TargetType="TextBox">
     	<Setter Property="MinWidth" Value="{StaticResource TextControlThemeMinWidth}"/>
     	<Setter Property="MinHeight" Value="{StaticResource TextControlThemeMinHeight}"/>
