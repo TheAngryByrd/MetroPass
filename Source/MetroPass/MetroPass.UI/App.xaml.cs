@@ -106,9 +106,29 @@ namespace MetroPass.UI
         private async void OnSuspending(object sender, SuspendingEventArgs e)
         {
             var deferral = e.SuspendingOperation.GetDeferral();
+            ApplicationData.Current.LocalSettings.Values["SuspendDate"] = DateTime.Now.ToString();
             await SuspensionManager.SaveAsync();
             deferral.Complete();
+        
         }
+
+        
+        protected override void OnResuming(object sender, object e)
+        {
+            //base.OnResuming(sender, e);
+
+            if (ApplicationData.Current.LocalSettings.Values.ContainsKey("SuspendDate"))
+            {
+                DateTime suspendedDate = DateTime.Parse(ApplicationData.Current.LocalSettings.Values["SuspendDate"].ToString());
+                TimeSpan ts = DateTime.Now.Subtract(suspendedDate);
+                if (ts.Seconds > 1)
+                {
+                    DisplayRootView<StartPageView>();
+                }
+            }
+        }
+
+
 
         protected override void OnSearchActivated(Windows.ApplicationModel.Activation.SearchActivatedEventArgs args)
         {
