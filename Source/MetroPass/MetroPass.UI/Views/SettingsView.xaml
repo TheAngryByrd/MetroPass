@@ -12,7 +12,7 @@
      
     >
     <UserControl.Resources>
-
+        
         <Style x:Key="SettingsSectionHeader" TargetType="TextBlock">
             <Setter Property="FontSize" Value="24" />
             <Setter Property="FontFamily" Value="Segoe UI" />
@@ -47,7 +47,7 @@
             <ToggleSwitch x:Name="LockDatabaseAfterInactivitySwitch" Visibility="Visible" IsOn="{Binding LockDatabaseAfterInactivityEnabled, Mode=TwoWay}" OnContent="Yes" OffContent="No" Style="{StaticResource SettingToggle}" />
             <StackPanel Orientation="Vertical" Visibility="{Binding IsOn, ElementName=LockDatabaseAfterInactivitySwitch, Converter={StaticResource BoolVisibilityConverter}}">
                 <TextBlock Text="{Binding MinutesToLockDatabase, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0} minute(s)'}"  Style="{StaticResource SettingLabel}"></TextBlock>
-                <Slider Width="250" Minimum="1" Maximum="60" StepFrequency="1" Value="{Binding MinutesToLockDatabase, Mode=TwoWay}" IsThumbToolTipEnabled="False"/>
+                <Slider Style="{StaticResource SliderLight}" Width="250" Minimum="1" Maximum="60" StepFrequency="1" Value="{Binding MinutesToLockDatabase, Mode=TwoWay}" IsThumbToolTipEnabled="False"/>
             </StackPanel>
 
 
@@ -56,7 +56,7 @@
             <StackPanel Orientation="Vertical" Visibility="{Binding IsOn, ElementName=ClearClipboardSwitch, Converter={StaticResource BoolVisibilityConverter}}">
 
                 <TextBlock Text="{Binding SecondsToClearClipboard, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0} second(s)'}"  Style="{StaticResource SettingLabel}"></TextBlock>
-                <Slider Width="250" Minimum="10" Maximum="60" StepFrequency="1" Value="{Binding SecondsToClearClipboard, Mode=TwoWay}" IsThumbToolTipEnabled="False"/>
+                <Slider Style="{StaticResource SliderLight}" Width="250" Minimum="10" Maximum="60" StepFrequency="1" Value="{Binding SecondsToClearClipboard, Mode=TwoWay}" IsThumbToolTipEnabled="False"/>
             </StackPanel>
         </StackPanel>
 
