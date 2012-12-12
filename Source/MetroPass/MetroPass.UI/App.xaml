@@ -3,8 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:MetroPass.UI"
-    xmlns:localData="using:MetroPass.UI.Data"
-       xmlns:common="using:MetroPass.UI.Common"
+    xmlns:common="using:MetroPass.UI.Common"
     xmlns:caliburn="using:Caliburn.Micro"
     >
 
@@ -37,6 +36,8 @@
                     <SolidColorBrush x:Key="ToggleSwitchTrackDisabledBackgroundThemeBrush" Color="#1F000000" />
                     <SolidColorBrush x:Key="ToggleSwitchTrackPointerOverBackgroundThemeBrush" Color="#4A000000" />
                     <SolidColorBrush x:Key="ToggleSwitchTrackPressedBackgroundThemeBrush" Color="#42000000" />
+                    
+              
                 </ResourceDictionary>
             </ResourceDictionary.ThemeDictionaries>
             <ResourceDictionary.MergedDictionaries>
