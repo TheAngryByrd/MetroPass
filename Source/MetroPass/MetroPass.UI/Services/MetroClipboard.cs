@@ -1,12 +1,15 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using MetroPass.UI.DataModel;
 using Windows.ApplicationModel.DataTransfer;
 
 namespace MetroPass.UI.Services
 {
     public class MetroClipboard : IClipboard
     {
+        public Task LastClearTask { get; private set; }
+        CancellationTokenSource tokenSource = new CancellationTokenSource();
         public Task CopyToClipboard(string textToCopy)
         {
             var dataPackage = new DataPackage();
@@ -17,12 +20,25 @@ namespace MetroPass.UI.Services
 
         public Task ClearClipboard()
         {
-            var uiScheduler = TaskScheduler.FromCurrentSynchronizationContext();
-            return Task.Factory.StartNew(async () =>
+            if (SettingsModel.ClearClipboardEnabled)
             {
-                await Task.Delay(10000);
-                Clipboard.Clear();
-            }, CancellationToken.None, TaskCreationOptions.None, uiScheduler);
+                tokenSource.Cancel();
+                tokenSource = new CancellationTokenSource();
+                var token =  tokenSource.Token;
+                var uiScheduler = TaskScheduler.FromCurrentSynchronizationContext();
+                LastClearTask = Task.Factory.StartNew(async () =>
+                {
+                    await Task.Delay(SettingsModel.SecondsToClearClipboard * 1000);
+                    if (!token.IsCancellationRequested)
+                    {
+                        Clipboard.Clear();
+                    }
+                    
+                },token, TaskCreationOptions.None, uiScheduler);
+
+                return LastClearTask;
+            }
+            return Task.Factory.StartNew(() => { });
         }
     }
 }

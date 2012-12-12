@@ -31,6 +31,14 @@ namespace MetroPass.UI.DataModel
             settings.Values[propertyName] = value;        
         }
 
+        public static bool LockDatabaseInactivityEnabled
+        {
+            get
+            {
+                return MinutesToLockDatabase > 0;
+            }
+        }
+
         public static int MinutesToLockDatabase
         {
             get
@@ -41,6 +49,15 @@ namespace MetroPass.UI.DataModel
             {
                 Set<int>(value);
             }
+        }
+
+        public static bool ClearClipboardEnabled
+        {
+            get
+            {
+                return SecondsToClearClipboard > 0;
+            }
+
         }
 
         public static int SecondsToClearClipboard
