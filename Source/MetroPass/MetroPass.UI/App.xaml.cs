@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Caliburn.Micro;
 using MetroPass.Core.Interfaces;
 using MetroPass.UI.Common;
@@ -40,9 +41,15 @@ namespace MetroPass.UI
 
             var privacyPolicyCommand = new SettingsCommand("privacyPolicy","Privacy Policy", a => LaunchPrivacyPolicyUrl());
             args.Request.ApplicationCommands.Add(privacyPolicyCommand);
-           
+
             var optionsCommand = new SettingsCommand("metroPassOptions", "Options", h =>
-                DialogService.ShowSettings<SettingsViewModel>(onClosed: SaveSettings, headerBrush: settingsColor));
+            {
+                if (PWDatabaseDataSource.Instance.PwDatabase != null) {
+                    DialogService.ShowSettings<SettingsViewModel>(onClosed: SaveSettings, headerBrush: settingsColor);
+                } else {
+                    DialogService.ShowSettings<DatabaseClosedSettingsViewModel>(headerBrush: settingsColor);
+                }
+            });
             args.Request.ApplicationCommands.Add(optionsCommand);
         }
 
