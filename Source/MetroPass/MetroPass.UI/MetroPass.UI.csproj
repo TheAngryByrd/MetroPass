@@ -136,6 +136,7 @@
     <Compile Include="ViewModels\AddGroupViewModel.cs" />
     <Compile Include="ViewModels\AdGroup.cs" />
     <Compile Include="ViewModels\AdItem.cs" />
+    <Compile Include="ViewModels\DatabaseClosedSettingsViewModel.cs" />
     <Compile Include="ViewModels\EntryEditViewModel.cs" />
     <Compile Include="ViewModels\NewDatabaseViewModel.cs" />
     <Compile Include="ViewModels\PasswordEntryScreen.cs" />
@@ -152,6 +153,9 @@
     </Compile>
     <Compile Include="Views\AddGroupView.xaml.cs">
       <DependentUpon>AddGroupView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DatabaseClosedSettingsView.xaml.cs">
+      <DependentUpon>DatabaseClosedSettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\EntryEditView.xaml.cs">
       <DependentUpon>EntryEditView.xaml</DependentUpon>
@@ -229,6 +233,10 @@
     <Page Include="Views\AddGroupView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\DatabaseClosedSettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\EntryEditView.xaml">
       <SubType>Designer</SubType>
