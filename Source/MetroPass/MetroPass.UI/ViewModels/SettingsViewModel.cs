@@ -50,7 +50,7 @@ namespace MetroPass.UI.ViewModels
             get
             {
 
-                return SettingsModel.MinutesToLockDatabase > 0;
+                return SettingsModel.LockDatabaseAfterInactivityEnabled;
             }
             set
             {
@@ -80,7 +80,7 @@ namespace MetroPass.UI.ViewModels
         {
             get
             {
-                return SettingsModel.SecondsToClearClipboard > 0;
+                return SettingsModel.ClearClipboardEnabled;
             }
             set
             {

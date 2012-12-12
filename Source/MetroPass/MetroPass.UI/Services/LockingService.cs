@@ -20,6 +20,8 @@ namespace MetroPass.UI.Services
 
         public void Lock()
         {
+            PWDatabaseDataSource.Instance.PwDatabase = null;
+            PWDatabaseDataSource.Instance.StorageFile = null;
             navigationService.UriFor<StartPageViewModel>().Navigate();
         }
 
@@ -27,7 +29,7 @@ namespace MetroPass.UI.Services
         {
             TimeSpan ts = DateTime.Now.Subtract(suspendedDate);
 
-            if (SettingsModel.MinutesToLockDatabase > 0)
+            if (SettingsModel.LockDatabaseAfterInactivityEnabled)
             {
                 if (ts.Seconds > SettingsModel.MinutesToLockDatabase)
                 {
