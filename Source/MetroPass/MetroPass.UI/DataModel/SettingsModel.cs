@@ -31,7 +31,7 @@ namespace MetroPass.UI.DataModel
             settings.Values[propertyName] = value;        
         }
 
-        public static bool LockDatabaseInactivityEnabled
+        public static bool LockDatabaseAfterInactivityEnabled
         {
             get
             {
