@@ -73,6 +73,7 @@ namespace MetroPass.UI
             _ninjectContainer.RegisterWinRTServices();
 
             _ninjectContainer.Kernel.Bind<IPageServices>().To<PageServices>();
+            _ninjectContainer.Kernel.Bind<ILockingService>().To<LockingService>();
             _ninjectContainer.Kernel.Bind<IClipboard>().To<MetroClipboard>();
             _ninjectContainer.Kernel.Bind<IKdbTree>().ToMethod(c => PWDatabaseDataSource.Instance.PwDatabase.Tree);
         }
@@ -113,9 +114,25 @@ namespace MetroPass.UI
         private async void OnSuspending(object sender, SuspendingEventArgs e)
         {
             var deferral = e.SuspendingOperation.GetDeferral();
+            ApplicationData.Current.LocalSettings.Values["SuspendDate"] = DateTime.Now.ToString();
             await SuspensionManager.SaveAsync();
             deferral.Complete();
+        
         }
+
+        
+        protected override void OnResuming(object sender, object e)
+        {
+          
+            if (ApplicationData.Current.LocalSettings.Values.ContainsKey("SuspendDate"))
+            {
+                DateTime suspendedDate = DateTime.Parse(ApplicationData.Current.LocalSettings.Values["SuspendDate"].ToString());
+                var locker =_ninjectContainer.Kernel.Get<ILockingService>();
+                locker.OnResumeLock(suspendedDate);
+            }
+        }
+
+
 
         protected override void OnSearchActivated(Windows.ApplicationModel.Activation.SearchActivatedEventArgs args)
         {
