@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:MetroPass.UI"
     xmlns:localData="using:MetroPass.UI.Data"
+       xmlns:common="using:MetroPass.UI.Common"
     xmlns:caliburn="using:Caliburn.Micro"
     >
 
@@ -52,6 +53,7 @@
 
             <x:String x:Key="AppName">MetroPass</x:String>
             <caliburn:BooleanToVisibilityConverter x:Key="BoolVisibilityConverter" />
+            <common:StringFormatConverter x:Key="StringFormatConverter"/>
         </ResourceDictionary>
     </Application.Resources>
 </caliburn:CaliburnApplication>
