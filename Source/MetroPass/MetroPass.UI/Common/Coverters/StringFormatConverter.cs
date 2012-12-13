@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Framework;
 using Windows.UI.Xaml.Data;
 
-namespace MetroPass.UI.Common
+namespace MetroPass.UI.Common.Coverters
 {
     public class StringFormatConverter : IValueConverter
     {

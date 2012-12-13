@@ -35,8 +35,10 @@
 
             <Button x:Name="GoBack" Style="{StaticResource BackButtonStyle}"/>
             <TextBlock x:Name="pageTitle" Grid.Column="1" Text="{StaticResource AppName}" Style="{StaticResource PageHeaderTextStyle}"/>
-            <StackPanel  HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="2">
-                <ProgressBar x:Name="indeterminateProgressBar" IsIndeterminate="True" Width="400" Visibility="{Binding IsIndeterminateProgressBarVisible, Converter={StaticResource BoolVisibilityConverter }}"/>
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Grid.ColumnSpan="3">
+                <ProgressBar x:Name="indeterminateProgressBar" IsIndeterminate="True" Width="200" Visibility="{Binding IsIndeterminateProgressBarVisible, Converter={StaticResource BoolVisibilityConverter }}"/>
+                <ProgressBar x:Name="decryptingProgressBar" IsIndeterminate="True" Width="200" Visibility="{Binding Progress, Converter={StaticResource HasValueToVisibilityCoverter}}"/>
+      
             </StackPanel>
         </Grid>
       
@@ -60,10 +62,7 @@
                 <TextBlock x:Name="OutputTextBlockKeyFile" Style="{StaticResource TitleTextStyle}" TextWrapping="Wrap"  Text="{Binding Path=KeyFile.Name}"/>
 
                 <Button Background="Orange" Foreground="White" x:Name="OpenDatabase" Content="Open Database" Width="300" Height="100" FontSize="24" Margin="0,50,0,0" />
-                <StackPanel  Margin="0,20">
-                    <TextBlock FontSize="20">Decrypting Progress</TextBlock>
-                    <ProgressBar x:Name="Progress" Height="20"></ProgressBar>
-                </StackPanel>
+                
             </StackPanel>
             <UI:AdControl Grid.Column="2" ApplicationId="f8df6ddc-bc72-41bf-bf1d-676ddf2af726" AdUnitId="10046064" Width="160" Height="600"/>
             
