@@ -45,7 +45,7 @@ namespace MetroPass.UI
             var privacyPolicyCommand = new SettingsCommand("privacyPolicy","Privacy Policy", a => LaunchUrl(PrivacyPolicyUrl));
             args.Request.ApplicationCommands.Add(privacyPolicyCommand);
 
-            var supportCommand = new SettingsCommand("support", "Support", a => LaunchUrl(SupportUrl));
+            var supportCommand = new SettingsCommand("support", "Support & Feedback", a => LaunchUrl(SupportUrl));
             args.Request.ApplicationCommands.Add(supportCommand);
 
             var optionsCommand = new SettingsCommand("metroPassOptions", "Options", h =>
