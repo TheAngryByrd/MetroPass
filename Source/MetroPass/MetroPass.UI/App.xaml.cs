@@ -23,6 +23,9 @@ namespace MetroPass.UI
     { 
         private NinjectContainer _ninjectContainer;
 
+        private const string PrivacyPolicyUrl = "http://metropass.azurewebsites.net/Privacy-Policy";
+        private const string SupportUrl = "https://metropasswin8.uservoice.com";
+
         public App()
         {
             this.InitializeComponent();
@@ -39,8 +42,11 @@ namespace MetroPass.UI
         {
             var settingsColor = App.Current.Resources["MainAppColor"] as SolidColorBrush;
 
-            var privacyPolicyCommand = new SettingsCommand("privacyPolicy","Privacy Policy", a => LaunchPrivacyPolicyUrl());
+            var privacyPolicyCommand = new SettingsCommand("privacyPolicy","Privacy Policy", a => LaunchUrl(PrivacyPolicyUrl));
             args.Request.ApplicationCommands.Add(privacyPolicyCommand);
+
+            var supportCommand = new SettingsCommand("support", "Support", a => LaunchUrl(SupportUrl));
+            args.Request.ApplicationCommands.Add(supportCommand);
 
             var optionsCommand = new SettingsCommand("metroPassOptions", "Options", h =>
             {
@@ -59,10 +65,11 @@ namespace MetroPass.UI
             PWDatabaseDataSource.Instance.SavePwDatabase();
         }
 
-        private async void LaunchPrivacyPolicyUrl()
-        {
-            Uri privacyPolicyUrl = new Uri("http://metropass.azurewebsites.net/Privacy-Policy");        
-            var result = await Windows.System.Launcher.LaunchUriAsync(privacyPolicyUrl);
+ 
+
+        private async void LaunchUrl(string url)
+        {                 
+            var result = await Windows.System.Launcher.LaunchUriAsync(new Uri(url));
         }
 
         protected override void Configure()
