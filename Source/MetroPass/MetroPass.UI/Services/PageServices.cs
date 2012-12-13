@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using NotificationsExtensions.ToastContent;
+using Windows.UI.Notifications;
 using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
 
@@ -30,6 +32,20 @@ namespace MetroPass.UI.Services
             }
 
             return unsnapped;
+        }
+
+
+        public void Toast(string message)
+        {
+            var template = ToastContentFactory.CreateToastText01();
+            template.TextBodyWrap.Text = message;
+            //var toast = new ToastNotification();
+            //ToastNotificationManager.CreateToastNotifier().Show(toast);
+            ToastNotification toast = template.CreateNotification();
+
+            // If you have other applications in your package, you can specify the AppId of
+            // the app to create a ToastNotifier for that application
+            ToastNotificationManager.CreateToastNotifier().Show(toast);
         }
     }
 }

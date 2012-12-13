@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Security;
@@ -253,8 +254,9 @@ namespace MetroPass.UI.ViewModels
             CanPickKeyFile = isEnabled;
         }
 
-    
-  
+
+        private const string FileNotFoundMessage = "MetroPass couldn't find your {0}.  It may have moved, been renamed or if it's on skydrive, check your internet connection.";
+
         private async Task TryLoadLastDatabase(ApplicationDataContainer roamingSettings, StorageItemMostRecentlyUsedList storageList)
         {
             var pickDatabase = true;
@@ -278,9 +280,13 @@ namespace MetroPass.UI.ViewModels
                         FocuxPassword();
                     }
                 }
+                catch (FileNotFoundException fnf)
+                {
+                    _pageServices.Toast(string.Format(FileNotFoundMessage, "database"));
+                }
                catch(Exception e)
                 {
-
+                    
                 }
        
            
@@ -301,13 +307,17 @@ namespace MetroPass.UI.ViewModels
                     var keeFileToken = roamingSettings.Values[mostRecentKeyFileKey].ToString();
                     if (storageList.ContainsItem(keeFileToken))
                     {
-                        //await Task.Delay(5000);
                         KeyFile = await storageList.GetFileAsync(keeFileToken);
                     }
                 }
             }
+            catch (FileNotFoundException fnf)
+            {
+                _pageServices.Toast(string.Format(FileNotFoundMessage, "keyfile"));
+            }
             catch (Exception e)
             {
+                
             }
         }
 
