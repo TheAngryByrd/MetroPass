@@ -10,10 +10,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Page.Resources>
- 
-    </Page.Resources>
-
     <Grid Style="{StaticResource LayoutRootStyle}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="186*"/>
@@ -38,21 +34,20 @@
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Grid.ColumnSpan="3">
                 <ProgressBar x:Name="indeterminateProgressBar" IsIndeterminate="True" Width="200" Visibility="{Binding IsIndeterminateProgressBarVisible, Converter={StaticResource BoolVisibilityConverter }}"/>
                 <ProgressBar x:Name="decryptingProgressBar" IsIndeterminate="True" Width="200" Visibility="{Binding Progress, Converter={StaticResource HasValueToVisibilityCoverter}}"/>
-      
             </StackPanel>
         </Grid>
       
         <Grid Grid.Row="1" x:Name="NormalDatabaseLoader" Grid.ColumnSpan="2">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="3*"></ColumnDefinition>
-                <ColumnDefinition Width="3*"></ColumnDefinition>
-                <ColumnDefinition Width="3*"></ColumnDefinition>
-                
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
          
             <StackPanel HorizontalAlignment="Center" Grid.Column="0" Grid.Row="0">
                 <Button x:Name="PickDatabase" Content="Pick database file" Width="300" Height="100" FontSize="24"/>
                 <TextBlock x:Name="OutputTextBlockDatabaseFile" Style="{StaticResource SubheaderTextStyle}" TextWrapping="Wrap" Text="{Binding Path=Database.Name}" />
+                <Button x:Name="ClearFiles" Content="Clear" FontSize="24" Margin="0 40 0 0" Width="120" Height="60" Visibility="{Binding CanClearFiles, Converter={StaticResource BoolVisibilityConverter}}" />
             </StackPanel>
             <StackPanel HorizontalAlignment="Center" Grid.Column="1" Grid.Row="0">
                 <TextBlock FontSize="24" Style="{StaticResource BasicTextStyle}">Enter Password:</TextBlock>
