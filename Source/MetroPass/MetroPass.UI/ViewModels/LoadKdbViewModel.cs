@@ -268,12 +268,19 @@ namespace MetroPass.UI.ViewModels
             }
             else if (roamingSettings.Values.ContainsKey(mostRecentDatabaseKey))
             {
-                var databaseToken = roamingSettings.Values[mostRecentDatabaseKey].ToString();
-                if (storageList.ContainsItem(databaseToken))
+                try
                 {
-                    Database = await storageList.GetFileAsync(databaseToken);
-                    pickDatabase = false;
-                    FocuxPassword();
+                    var databaseToken = roamingSettings.Values[mostRecentDatabaseKey].ToString();
+                    if (storageList.ContainsItem(databaseToken))
+                    {
+                        Database = await storageList.GetFileAsync(databaseToken);
+                        pickDatabase = false;
+                        FocuxPassword();
+                    }
+                }
+               catch(Exception e)
+                {
+
                 }
        
            
@@ -287,13 +294,20 @@ namespace MetroPass.UI.ViewModels
 
         private async Task TryLoadLastKeefile(ApplicationDataContainer roamingSettings, StorageItemMostRecentlyUsedList storageList)
         {
-            if (roamingSettings.Values.ContainsKey(mostRecentKeyFileKey))
+            try
             {
-                var keeFileToken = roamingSettings.Values[mostRecentKeyFileKey].ToString();
-                if (storageList.ContainsItem(keeFileToken))
+                if (roamingSettings.Values.ContainsKey(mostRecentKeyFileKey))
                 {
-                    KeyFile = await storageList.GetFileAsync(keeFileToken);
+                    var keeFileToken = roamingSettings.Values[mostRecentKeyFileKey].ToString();
+                    if (storageList.ContainsItem(keeFileToken))
+                    {
+                        //await Task.Delay(5000);
+                        KeyFile = await storageList.GetFileAsync(keeFileToken);
+                    }
                 }
+            }
+            catch (Exception e)
+            {
             }
         }
 
