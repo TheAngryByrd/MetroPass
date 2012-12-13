@@ -7,9 +7,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    d:DesignHeight="300"
+    d:DesignHeight="800"
     d:DesignWidth="400"
-     
     >
     <UserControl.Resources>
         
@@ -36,13 +35,15 @@
             <TextBlock Text="Recycle Bin enabled:" Style="{StaticResource SettingLabel}" />
    
             <ToggleSwitch x:Name="RecycleBinSwitch" IsOn="{Binding RecycleBinEnabled, Mode=TwoWay}" OnContent="Yes" OffContent="No" Style="{StaticResource SettingToggle}" />
-            <StackPanel Orientation="Vertical" Visibility="{Binding IsOn, ElementName=RecycleBinSwitch, Converter={StaticResource BoolVisibilityConverter}}">
+            <StackPanel Orientation="Vertical"
+                        Visibility="{Binding IsOn, ElementName=RecycleBinSwitch, Converter={StaticResource BoolVisibilityConverter}}">
                 <TextBlock Text="Recycle Bin:" Style="{StaticResource SettingLabel}" />
                 <ComboBox DisplayMemberPath="DisplayName"
                           ItemsSource="{Binding AvailableGroups}" 
                           SelectedItem="{Binding SelectedRecycleBinGroup, Mode=TwoWay}" />
             </StackPanel>
 
+            <TextBlock Text="Security" Style="{StaticResource SettingsSectionHeader}" />
             <TextBlock Text="Lock after inactivity" Style="{StaticResource SettingLabel}" />
             <ToggleSwitch x:Name="LockDatabaseAfterInactivitySwitch" Visibility="Visible" IsOn="{Binding LockDatabaseAfterInactivityEnabled, Mode=TwoWay}" OnContent="Yes" OffContent="No" Style="{StaticResource SettingToggle}" />
             <StackPanel Orientation="Vertical" Visibility="{Binding IsOn, ElementName=LockDatabaseAfterInactivitySwitch, Converter={StaticResource BoolVisibilityConverter}}">
