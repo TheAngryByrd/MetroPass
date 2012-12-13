@@ -161,15 +161,6 @@ namespace MetroPass.UI.ViewModels
             }
         }
   
-        private void AddRecentFile(IStorageFile file, string keyValue)
-        {
-        
-        }
-  
-        private void RemoveRecentFile(string keyValue)
-        {
-           
-        }
 
         public bool CanOpenDatabase
         {
@@ -349,7 +340,8 @@ namespace MetroPass.UI.ViewModels
             catch (SecurityException se)
             {
                 OpeningDatabase = false;
-                _pageServices.Show(se.Message);
+                Progress = 0;
+                _pageServices.Toast(se.Message);
             }
         }
     }
