@@ -294,6 +294,10 @@
     <Reference Include="Ninject.WinRT">
       <HintPath>..\..\..\Libs\Ninject.WinRT.dll</HintPath>
     </Reference>
+    <Reference Include="NotificationsExtensions, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Libs\NotificationsExtensions.winmd</HintPath>
+    </Reference>
     <Reference Include="Windows.UI.Interactivity, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Windows.UI.Interactivity.1.0.2.0\lib\winrt45\Windows.UI.Interactivity.dll</HintPath>

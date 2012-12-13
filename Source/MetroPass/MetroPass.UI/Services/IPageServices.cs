@@ -9,6 +9,8 @@ namespace MetroPass.UI.Services
 
         Task Show(string message);
 
+        void Toast(string message);
+
         Task<bool> EnsureUnsnapped();
     }
 }
