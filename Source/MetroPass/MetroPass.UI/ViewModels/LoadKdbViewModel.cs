@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Security;
 using System.Threading.Tasks;
 using Caliburn.Micro;
-using MetroPass.Core.Model;
 using MetroPass.Core.Model.Keys;
 using MetroPass.UI.DataModel;
 using MetroPass.UI.Services;
@@ -22,7 +20,12 @@ namespace MetroPass.UI.ViewModels
         private readonly IPageServices _pageServices;
         private readonly INavigationService _navigationService;
 
- 
+        public LoadKdbViewModel(IPageServices pageServices, INavigationService navigationService)
+            : base(navigationService)
+        {
+            _pageServices = pageServices;
+            _navigationService = navigationService;
+        }
 
         private string _path;
         public string Path
@@ -34,27 +37,6 @@ namespace MetroPass.UI.ViewModels
               
                 NotifyOfPropertyChange(() => Path);
             }
-        }
-        private string _parameter;
-        public string Parameter
-        {
-            get { return _parameter; }
-            set
-            {
-                _parameter = value;
-
-                NotifyOfPropertyChange(() => Parameter);
-            }
-        }
-
-
-        public LoadKdbViewModel(IPageServices pageServices, INavigationService navigationService) : base(navigationService)
-        {
-            _pageServices = pageServices;
-            _navigationService = navigationService;
-
-          
-     
         }
 
         private IStorageFile _database;
@@ -115,10 +97,14 @@ namespace MetroPass.UI.ViewModels
                 {
                     Database = file;
                     StoreMostRecentFile(mostRecentDatabaseKey, file);
-
-             
                 }
             }
+        }
+
+        public void ClearFiles()
+        {
+            Database = null;
+            KeyFile = null;
         }
   
         private void FocuxPassword()
@@ -145,7 +131,6 @@ namespace MetroPass.UI.ViewModels
                     StoreMostRecentFile(mostRecentKeyFileKey, file);
                     FocuxPassword();
                 }
-                   
             }
         }
 
@@ -170,33 +155,26 @@ namespace MetroPass.UI.ViewModels
         }
 
         private bool _canPickDatabase = true;
-
-        
-
         public bool CanPickDatabase
         {
-            get
-            {
-                return _canPickDatabase;
-            }
+            get { return _canPickDatabase; }
             set
             {
                 _canPickDatabase = value;
                 NotifyOfPropertyChange(() => CanPickDatabase);
+                NotifyOfPropertyChange(() => CanClearFiles);
             }
         }
 
         private bool _canPickKeyFile = true;
         public bool CanPickKeyFile
         {
-            get
-            {
-                return _canPickKeyFile;
-            }
+            get { return _canPickKeyFile; }
             set
             {
                 _canPickKeyFile = value;
                 NotifyOfPropertyChange(() => CanPickKeyFile);
+                NotifyOfPropertyChange(() => CanClearFiles);
             }
         }
 
@@ -214,16 +192,17 @@ namespace MetroPass.UI.ViewModels
         private bool _isIndeterminateProgressBarVisible;
         public bool IsIndeterminateProgressBarVisible
         {
-            get
-            {
-                return _isIndeterminateProgressBarVisible;
-            }
+            get { return _isIndeterminateProgressBarVisible; }
             set
             {
                 _isIndeterminateProgressBarVisible = value;
                 NotifyOfPropertyChange(() => IsIndeterminateProgressBarVisible);
             }
-          
+        }
+
+        public bool CanClearFiles 
+        {
+            get { return CanPickDatabase && CanPickKeyFile; }
         }
 
         protected async override void OnViewLoaded(object view)
@@ -253,7 +232,6 @@ namespace MetroPass.UI.ViewModels
             CanPickDatabase = isEnabled;
             CanPickKeyFile = isEnabled;
         }
-
 
         private const string FileNotFoundMessage = "MetroPass couldn't find your {0}.  It may have moved, been renamed or if it's on skydrive, check your internet connection.";
 
@@ -288,14 +266,11 @@ namespace MetroPass.UI.ViewModels
                 {
                     
                 }
-       
-           
             }
             if (pickDatabase)
             {
                 PickDatabase();
             }
-      
         }
 
         private async Task TryLoadLastKeefile(ApplicationDataContainer roamingSettings, StorageItemMostRecentlyUsedList storageList)
