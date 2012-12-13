@@ -46,6 +46,7 @@ namespace MetroPass.UI.ViewModels
             set
             {
                 _database = value;
+                ResaveRecentFile(mostRecentDatabaseKey, _database);
                 NotifyOfPropertyChange(() => Database);
                 NotifyOfPropertyChange(() => CanOpenDatabase);
             }
@@ -69,7 +70,9 @@ namespace MetroPass.UI.ViewModels
             set
             {
                 _keyFile = value;
+                ResaveRecentFile(mostRecentKeyFileKey, _keyFile);
                 NotifyOfPropertyChange(() => KeyFile);
+         
             }
         }
   
@@ -96,7 +99,7 @@ namespace MetroPass.UI.ViewModels
                 if (file != null)
                 {
                     Database = file;
-                    StoreMostRecentFile(mostRecentDatabaseKey, file);
+                   
                 }
             }
         }
@@ -128,7 +131,7 @@ namespace MetroPass.UI.ViewModels
                 if (file != null)
                 {
                     KeyFile = file;
-                    StoreMostRecentFile(mostRecentKeyFileKey, file);
+                
                     FocuxPassword();
                 }
             }
@@ -137,16 +140,35 @@ namespace MetroPass.UI.ViewModels
         private const string mostRecentDatabaseKey = "mostRecentDatabase";
         private const string mostRecentKeyFileKey = "mostRecentKeeFIle";
 
-        private void StoreMostRecentFile(string keyValue, StorageFile file)
+        private void ResaveRecentFile(string keyValue, IStorageFile file)
         {
             var storageList = StorageApplicationPermissions.MostRecentlyUsedList;
-            if (storageList.ContainsItem(keyValue))
-            {
-                storageList.Remove(keyValue);
-            }
+            string token = Guid.NewGuid().ToString();
 
-            var mruToken = StorageApplicationPermissions.MostRecentlyUsedList.Add(file);
-            ApplicationData.Current.RoamingSettings.Values[keyValue] = mruToken;
+            if (ApplicationData.Current.RoamingSettings.Values.ContainsKey(keyValue))
+            {
+                token = ApplicationData.Current.RoamingSettings.Values[keyValue].ToString();
+            }      
+
+            if (file != null)
+            {
+                StorageApplicationPermissions.MostRecentlyUsedList.AddOrReplace(token, file);
+                ApplicationData.Current.RoamingSettings.Values[keyValue] = token;
+            }
+            else if(file == null && StorageApplicationPermissions.MostRecentlyUsedList.ContainsItem(token))
+            {
+                StorageApplicationPermissions.MostRecentlyUsedList.Remove(token);
+            }
+        }
+  
+        private void AddRecentFile(IStorageFile file, string keyValue)
+        {
+        
+        }
+  
+        private void RemoveRecentFile(string keyValue)
+        {
+           
         }
 
         public bool CanOpenDatabase
