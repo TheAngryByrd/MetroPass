@@ -69,7 +69,7 @@
                     <ToggleSwitch x:Name="ClearClipboardSwitch" IsOn="{Binding SecondsToClearClipboardEnabled, Mode=TwoWay}" OnContent="Yes" OffContent="No" Style="{StaticResource SettingToggle}" />
                     <StackPanel Orientation="Vertical" Visibility="{Binding IsOn, ElementName=ClearClipboardSwitch, Converter={StaticResource BoolVisibilityConverter}}">
 
-                        <TextBlock Text="{Binding SecondsToClearClipboard, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0} second(s)'}"  Style="{StaticResource SettingLabel}"></TextBlock>
+                        <TextBlock Text="{Binding SecondsToClearClipboard, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0} seconds'}"  Style="{StaticResource SettingLabel}"></TextBlock>
                         <Slider Style="{StaticResource SliderLight}" Width="250" Minimum="10" Maximum="60" StepFrequency="1" Value="{Binding SecondsToClearClipboard, Mode=TwoWay}" IsThumbToolTipEnabled="False"/>
                     </StackPanel>
                 </StackPanel>
