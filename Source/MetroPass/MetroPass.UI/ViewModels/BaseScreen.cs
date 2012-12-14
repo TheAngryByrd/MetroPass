@@ -14,6 +14,7 @@ namespace MetroPass.UI.ViewModels
         public BaseScreen(INavigationService navigationService)
         {
             this._navigationService=navigationService;
+            IsAdVisible = true;
         }
 
         protected Page View { get; private set;}
@@ -58,5 +59,21 @@ namespace MetroPass.UI.ViewModels
         {
             VisualStateManager.GoToState(View, state, true);
         }
+
+        private bool _adVisibility;
+
+        public bool IsAdVisible
+        {
+            get { return _adVisibility; }
+            set
+            {
+                _adVisibility = value;
+                NotifyOfPropertyChange(() => IsAdVisible);
+            }
+        }
+
+
     }
+
+
 }
