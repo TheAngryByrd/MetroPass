@@ -238,6 +238,7 @@ namespace MetroPass.UI.ViewModels
             await loadLastTasks();
             EnablePickers(true);
             IsIndeterminateProgressBarVisible = false;
+            FocuxPassword();
         }
 
         private void EnablePickers(bool isEnabled)
@@ -256,7 +257,7 @@ namespace MetroPass.UI.ViewModels
             {
                 Database = PWDatabaseDataSource.Instance.StorageFile;
                 PWDatabaseDataSource.Instance.StorageFile = null;
-                FocuxPassword();
+    
                 pickDatabase = false;
             }
             else if (roamingSettings.Values.ContainsKey(mostRecentDatabaseKey))
@@ -268,7 +269,7 @@ namespace MetroPass.UI.ViewModels
                     {
                         Database = await storageList.GetFileAsync(databaseToken);
                         pickDatabase = false;
-                        FocuxPassword();
+             
                     }
                 }
                 catch (FileNotFoundException fnf)
