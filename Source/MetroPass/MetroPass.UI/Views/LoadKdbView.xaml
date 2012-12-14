@@ -59,7 +59,7 @@
                 <Button Background="Orange" Foreground="White" x:Name="OpenDatabase" Content="Open Database" Width="300" Height="100" FontSize="24" Margin="0,50,0,0" />
                 
             </StackPanel>
-            <UI:AdControl Grid.Column="2" ApplicationId="f8df6ddc-bc72-41bf-bf1d-676ddf2af726" AdUnitId="10046064" Width="160" Height="600"/>
+            <UI:AdControl Grid.Column="2" Visibility="{Binding IsAdVisible, Converter={StaticResource BoolVisibilityConverter}}" ApplicationId="f8df6ddc-bc72-41bf-bf1d-676ddf2af726" AdUnitId="10046064" Width="160" Height="600"/>
             
         </Grid>
 
