@@ -50,13 +50,31 @@ namespace MetroPass.UI
 
             var optionsCommand = new SettingsCommand("metroPassOptions", "Options", h =>
             {
-                if (PWDatabaseDataSource.Instance.PwDatabase != null) {
-                    DialogService.ShowSettings<SettingsViewModel>(onClosed: SaveSettings, headerBrush: settingsColor);
-                } else {
-                    DialogService.ShowSettings<DatabaseClosedSettingsViewModel>(headerBrush: settingsColor);
+                if (PWDatabaseDataSource.Instance.PwDatabase != null)
+                {
+                    DialogService.ShowSettings<SettingsViewModel>(onInitialize: (s) => { SetAds(false); }, onClosed: SettingsClosed, headerBrush: settingsColor);
+                }else
+                {
+                    DialogService.ShowSettings<DatabaseClosedSettingsViewModel>(onInitialize: (s) => { SetAds(false); }, onClosed: (s, v) => { SetAds(true); }, headerBrush: settingsColor);
                 }
             });
             args.Request.ApplicationCommands.Add(optionsCommand);
+        }
+  
+        private void SettingsClosed(SettingsViewModel s, UIElement v)
+        {
+            SetAds(true);
+            SaveSettings(s, v);
+        }
+
+        private void SetAds(bool value)
+        {     
+            var baseScreen = (RootFrame.Content as Page).DataContext as BaseScreen;
+
+            if (baseScreen != null)
+            {
+                baseScreen.IsAdVisible = value;         
+            }
         }
 
         private void SaveSettings(SettingsViewModel settingsViewModel, UIElement _)
@@ -80,14 +98,21 @@ namespace MetroPass.UI
             _ninjectContainer.RegisterWinRTServices();
 
             _ninjectContainer.Kernel.Bind<IPageServices>().To<PageServices>();
+  
             _ninjectContainer.Kernel.Bind<ILockingService>().To<LockingService>();
             _ninjectContainer.Kernel.Bind<IClipboard>().To<MetroClipboard>();
             _ninjectContainer.Kernel.Bind<IKdbTree>().ToMethod(c => PWDatabaseDataSource.Instance.PwDatabase.Tree);
+
         }
 
         protected override object GetInstance(Type service, string key)
         {    
-            var instance = _ninjectContainer.Kernel.Get(service, key); 
+            var instance = _ninjectContainer.Kernel.Get(service, key);
+            //if (instance is IHandle)
+            //{
+            //    _ninjectContainer.Kernel.Get<IEventAggregator>().Subscribe(instance);
+            //}
+            
             return instance;
         }
 
@@ -144,7 +169,7 @@ namespace MetroPass.UI
         protected override void OnSearchActivated(Windows.ApplicationModel.Activation.SearchActivatedEventArgs args)
         {
             var navigationService = _ninjectContainer.Kernel.Get<INavigationService>();
-
+            
             navigationService.UriFor<SearchResultsViewModel>().WithParam(vm => vm.QueryText, args.QueryText).Navigate();
         }
 

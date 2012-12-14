@@ -50,11 +50,11 @@ namespace MetroPass.UI.ViewModels
             get
             {
 
-                return SettingsModel.LockDatabaseAfterInactivityEnabled;
+                return SettingsModel.Instance.LockDatabaseAfterInactivityEnabled;
             }
             set
             {
-                SettingsModel.MinutesToLockDatabase = value ? MinMinutesToLockDatabase : 0;
+                SettingsModel.Instance.MinutesToLockDatabase = value ? MinMinutesToLockDatabase : 0;
 
                 NotifyOfPropertyChange(() => LockDatabaseAfterInactivityEnabled);
                 NotifyOfPropertyChange(() => MinutesToLockDatabase);
@@ -65,11 +65,11 @@ namespace MetroPass.UI.ViewModels
         {
             get
             {
-                return SettingsModel.MinutesToLockDatabase;
+                return SettingsModel.Instance.MinutesToLockDatabase;
             }
             set
             {
-                SettingsModel.MinutesToLockDatabase = value;
+                SettingsModel.Instance.MinutesToLockDatabase = value;
                 NotifyOfPropertyChange(() => MinutesToLockDatabase);
             }
         }
@@ -80,11 +80,11 @@ namespace MetroPass.UI.ViewModels
         {
             get
             {
-                return SettingsModel.ClearClipboardEnabled;
+                return SettingsModel.Instance.ClearClipboardEnabled;
             }
             set
             {
-                SettingsModel.SecondsToClearClipboard = value ? MinClearClipboardSeconds : 0;
+                SettingsModel.Instance.SecondsToClearClipboard = value ? MinClearClipboardSeconds : 0;
 
                 
                 NotifyOfPropertyChange(() => SecondsToClearClipboardEnabled);
@@ -96,11 +96,11 @@ namespace MetroPass.UI.ViewModels
         {
             get
             {
-                return SettingsModel.SecondsToClearClipboard;
+                return SettingsModel.Instance.SecondsToClearClipboard;
             }
             set
             {
-                SettingsModel.SecondsToClearClipboard = value;
+                SettingsModel.Instance.SecondsToClearClipboard = value;
                 NotifyOfPropertyChange(() => SecondsToClearClipboard);
             }
         }

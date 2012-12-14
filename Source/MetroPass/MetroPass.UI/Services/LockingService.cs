@@ -29,9 +29,9 @@ namespace MetroPass.UI.Services
         {
             TimeSpan ts = DateTime.Now.Subtract(suspendedDate);
 
-            if (SettingsModel.LockDatabaseAfterInactivityEnabled)
+            if (SettingsModel.Instance.LockDatabaseAfterInactivityEnabled)
             {
-                if (ts.Seconds > SettingsModel.MinutesToLockDatabase)
+                if (ts.Seconds > SettingsModel.Instance.MinutesToLockDatabase)
                 {
                     Lock();
                 }

@@ -11,7 +11,7 @@ namespace MetroPass.UI.Common
 
         public NinjectContainer()
         {
-            var settings = new NinjectSettings();
+            var settings = new NinjectSettings();            
             settings.LoadExtensions = false;
             Kernel = new StandardKernel(settings);
         }
@@ -19,7 +19,7 @@ namespace MetroPass.UI.Common
         public void RegisterWinRTServices(bool treatViewAsLoaded = false)
         {
             Kernel.Rebind<SimpleContainer>().ToConstant<SimpleContainer>(simple);
-            Kernel.Rebind<IEventAggregator>().To<EventAggregator>();
+            Kernel.Rebind<IEventAggregator>().To<EventAggregator>().InSingletonScope();
         }
 
         public void RegisterNavigationService(Frame rootFrame, bool treatViewAsLoaded = false)

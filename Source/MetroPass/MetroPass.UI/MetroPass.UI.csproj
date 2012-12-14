@@ -195,7 +195,7 @@
     <Compile Include="Views\StartPageView.xaml.cs">
       <DependentUpon>StartPageView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UIHelpers.cs" />
+
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">

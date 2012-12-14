@@ -15,9 +15,7 @@ namespace MetroPass.UI.Views
         {
             this.InitializeComponent();
         }
-
-
-
+        
         //HACK: This is wired up to a Caliburn Action, but it's not working due to an issue with the Windows.UI.Interactivity library
         private void EntryAppBar_Closed(object sender, object e)
         {
@@ -26,9 +24,7 @@ namespace MetroPass.UI.Views
             {
                 vm.DeselectItem();
                 vm.IsAdVisible = true;
-            }
-
-  
+            }  
         }
 
         private void EntryAppBar_Opened(object sender, object e)
@@ -39,15 +35,6 @@ namespace MetroPass.UI.Views
                 vm.IsAdVisible = true;
             }
             vm.IsAdVisible = false;
-        }
-
-        private void AdsShown(Visibility visible)
-        {
-            var ads = UIHelpers.Descendents(zoomedInEntries).OfType<AdControl>();
-            foreach (var ad in ads)
-            {
-                ad.Visibility = visible;
-            }
-        }
+        }          
     }
 }
