@@ -51,7 +51,7 @@
             <TextBlock Grid.Column="0" VerticalAlignment="Center" Grid.Row="0" Text="Folder Name:" Margin="10" FontSize="24"/>
             <TextBox Grid.Column="1" Grid.Row="0" Name="FolderName" Width="300" Margin="10" FontSize="20"/>
             <Button Grid.Column="1" Grid.Row="1" Name="Save" Margin="10" Content="Save" Width="100" Height="50" FontSize="24"/>
-            <UI:AdControl Grid.Column="3" Grid.RowSpan="7" ApplicationId="f8df6ddc-bc72-41bf-bf1d-676ddf2af726" AdUnitId="10052046" Width="160" Height="600"  HorizontalAlignment="Right"/>
+            <UI:AdControl Visibility="{Binding IsAdVisible, Converter={StaticResource BoolVisibilityConverter}}" Grid.Column="3" Grid.RowSpan="7" ApplicationId="f8df6ddc-bc72-41bf-bf1d-676ddf2af726" AdUnitId="10052046" Width="160" Height="600"  HorizontalAlignment="Right"/>
         </Grid>
 
         <StackPanel Orientation="Vertical" x:Name="SnappedEditView" Margin="20,0" Grid.Row="1" Width="300" HorizontalAlignment="Left" Visibility="Collapsed">

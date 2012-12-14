@@ -8,8 +8,15 @@ using Windows.Storage;
 
 namespace MetroPass.UI.DataModel
 {
-    public static class SettingsModel
+    public class SettingsModel
     {
+
+        private static SettingsModel instance = new SettingsModel();
+        private SettingsModel()
+        {
+            IsAdsVisible = true;
+        }
+        public static SettingsModel Instance { get { return instance; } }
 
         private static ApplicationDataContainer settings = ApplicationData.Current.RoamingSettings;
     
@@ -31,7 +38,7 @@ namespace MetroPass.UI.DataModel
             settings.Values[propertyName] = value;        
         }
 
-        public static bool LockDatabaseAfterInactivityEnabled
+        public bool LockDatabaseAfterInactivityEnabled
         {
             get
             {
@@ -39,7 +46,7 @@ namespace MetroPass.UI.DataModel
             }
         }
 
-        public static int MinutesToLockDatabase
+        public int MinutesToLockDatabase
         {
             get
             {
@@ -51,7 +58,7 @@ namespace MetroPass.UI.DataModel
             }
         }
 
-        public static bool ClearClipboardEnabled
+        public bool ClearClipboardEnabled
         {
             get
             {
@@ -60,7 +67,7 @@ namespace MetroPass.UI.DataModel
 
         }
 
-        public static int SecondsToClearClipboard
+        public int SecondsToClearClipboard
         {
 
             get
@@ -72,5 +79,16 @@ namespace MetroPass.UI.DataModel
                 Set<int>(value);
             }
         }
+
+        private bool _isAdsVisible;
+
+        public bool IsAdsVisible
+        {
+            get { return _isAdsVisible; }
+            set { _isAdsVisible = value; }
+        }
+        
+
+        
     }
 }

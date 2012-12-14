@@ -20,7 +20,7 @@ namespace MetroPass.UI.Services
 
         public Task ClearClipboard()
         {            
-            if (SettingsModel.ClearClipboardEnabled)
+            if (SettingsModel.Instance.ClearClipboardEnabled)
             {
                 tokenSource.Cancel();
                 tokenSource = new CancellationTokenSource();
@@ -28,7 +28,7 @@ namespace MetroPass.UI.Services
                 var uiScheduler = TaskScheduler.FromCurrentSynchronizationContext();
                 return Task.Factory.StartNew(async () =>
                 {
-                    await Task.Delay(SettingsModel.SecondsToClearClipboard * 1000);
+                    await Task.Delay(SettingsModel.Instance.SecondsToClearClipboard * 1000);
                     if (!token.IsCancellationRequested)
                     {
                         Clipboard.Clear();

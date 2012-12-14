@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Caliburn.Micro;
+using MetroPass.UI.DataModel;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -13,11 +14,13 @@ namespace MetroPass.UI.ViewModels
 
         public BaseScreen(INavigationService navigationService)
         {
+  
             this._navigationService=navigationService;
-            IsAdVisible = true;
         }
 
         protected Page View { get; private set;}
+
+        
 
         public void GoBack()
         {
@@ -35,8 +38,9 @@ namespace MetroPass.UI.ViewModels
             View = (Page)view;
 
             Window.Current.SizeChanged += Window_SizeChanged;
-
+            IsAdVisible = true;
             SetState(ApplicationView.Value);
+            
         }
 
         protected override void OnDeactivate(bool close)
@@ -60,20 +64,16 @@ namespace MetroPass.UI.ViewModels
             VisualStateManager.GoToState(View, state, true);
         }
 
-        private bool _adVisibility;
-
+        private bool _isPageAvailable;
         public bool IsAdVisible
         {
-            get { return _adVisibility; }
+            get { return SettingsModel.Instance.IsAdsVisible && _isPageAvailable; }
             set
             {
-                _adVisibility = value;
+                _isPageAvailable = value;
                 NotifyOfPropertyChange(() => IsAdVisible);
             }
         }
-
-
     }
-
-
+    
 }

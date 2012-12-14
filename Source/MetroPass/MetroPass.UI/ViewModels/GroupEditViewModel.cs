@@ -13,7 +13,7 @@ namespace MetroPass.UI.ViewModels
         private readonly IKdbTree _dbTree;
         private readonly INavigationService _navigationService;
 
-        public GroupEditViewModel(IKdbTree dbTree, INavigationService navigationService) : base(navigationService)
+        public GroupEditViewModel(IKdbTree dbTree, INavigationService navigationService)            : base(navigationService)
         {
             _dbTree = dbTree;
             _navigationService = navigationService;
