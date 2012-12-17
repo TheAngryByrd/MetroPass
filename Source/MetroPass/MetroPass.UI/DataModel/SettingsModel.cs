@@ -87,6 +87,23 @@ namespace MetroPass.UI.DataModel
             get { return _isAdsVisible; }
             set { _isAdsVisible = value; }
         }
+
+        public string FileExtensions
+        {
+            get
+            {
+               var val = Get<string>();
+                if(string.IsNullOrWhiteSpace(val))
+                {
+                    FileExtensions = ".doc .docx";
+                }
+                return Get<string>();
+            }
+            set
+            {
+                Set<string>(value);
+            }
+        }
         
 
         
