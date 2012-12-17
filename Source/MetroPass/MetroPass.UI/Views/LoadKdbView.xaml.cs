@@ -14,7 +14,7 @@ namespace MetroPass.UI.Views
 
         public void FocusPassword()
         {
-            this.Password.Focus(FocusState.Programmatic);
+            //this.Password.Focus(FocusState.Programmatic);
         }
 
         private void Password_KeyUp_1(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e)
