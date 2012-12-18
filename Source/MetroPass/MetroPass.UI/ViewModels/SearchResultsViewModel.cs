@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Linq;
 using Caliburn.Micro;
 using Framework;
@@ -16,14 +15,28 @@ namespace MetroPass.UI.ViewModels
             Results = new ObservableCollection<PwEntry>();
         }
 
+        public bool RedirectToLogin { get; set; }
+
         private string _queryText;
         public string QueryText
         {
             get { return this._queryText; }
             set
             {
-                this._queryText = value;
+                _queryText = value;
                 NotifyOfPropertyChange(() => QueryText);
+            }
+        }
+
+        //If the query string comes in this way, it's because the search was activated without MetroPass already running
+        //The user will need to login first before being able to perform their search
+        public string Parameter
+        {
+            get { return _queryText; }
+            set
+            {
+                QueryText = value;
+                RedirectToLogin = true;
             }
         }
 
@@ -37,6 +50,12 @@ namespace MetroPass.UI.ViewModels
 
         private void SearchEntries()
         {
+            if (RedirectToLogin)
+            {
+                SetState("NeedLogin");
+                return;
+            }
+
             var root = PWDatabaseDataSource.Instance.PwDatabase.Tree.Group;
 
             var matchingEntries = root.AllEntries()

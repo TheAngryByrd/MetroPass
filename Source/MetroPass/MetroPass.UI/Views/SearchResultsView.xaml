@@ -23,7 +23,6 @@
     </Page.BottomAppBar>
 
     <Page.Resources>
-        <caliburn:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         <x:String x:Key="AppName">MetroPass</x:String>
 
         <DataTemplate x:Key="SearchResultsItemTemplate">
@@ -127,6 +126,13 @@
             Visibility="Collapsed"
             Style="{StaticResource SubheaderTextStyle}"
             Text="No results match your search." />
+        <TextBlock
+            x:Name="NeedLoginMessage"
+            Grid.Row="1"
+            Margin="120 50 0 0"
+            Visibility="Collapsed"
+            Style="{StaticResource SubheaderTextStyle}"
+            Text="You must first login to your database to access search results" />
 
         <VisualStateManager.VisualStateGroups>
 
@@ -199,6 +205,16 @@
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="noResultsTextBlock" Storyboard.TargetProperty="Visibility">
                             <DiscreteObjectKeyFrame KeyTime="0" Value="Visible"/>
                         </ObjectAnimationUsingKeyFrames>						
+                    </Storyboard>
+                </VisualState>
+                <VisualState x:Name="NeedLogin">
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="resultsPanel" Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed"/>
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="NeedLoginMessage" Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Visible"/>
+                        </ObjectAnimationUsingKeyFrames>
                     </Storyboard>
                 </VisualState>
             </VisualStateGroup>
