@@ -151,7 +151,7 @@ namespace MetroPass.UI
             if (PWDatabaseDataSource.Instance.PwDatabase == null)
             {
                 Initialise();
-                DisplayRootView<SearchResultsView>(args.QueryText);
+                DisplayRootView<LoadKdbView>(args.QueryText);
             }
             else
             {
