@@ -20,11 +20,34 @@ namespace MetroPass.UI.ViewModels
         private readonly IPageServices _pageServices;
         private readonly INavigationService _navigationService;
 
-        public LoadKdbViewModel(IPageServices pageServices, INavigationService navigationService)
-            : base(navigationService)
+        public LoadKdbViewModel(IPageServices pageServices, INavigationService navigationService) : base(navigationService)
         {
             _pageServices = pageServices;
             _navigationService = navigationService;
+        }
+
+        //This parameter should only be set when the user is trying to search from the Search Charm but MetroPass is not running
+        //(or the database has been locked by the timer)
+        public string Parameter
+        {
+            get { return _searchText; }
+            set { SearchText = value; }
+        }
+
+        private string _searchText;
+        public string SearchText
+        {
+            get { return _searchText; }
+            set
+            {
+                _searchText = value;
+                NotifyOfPropertyChange(() => SearchText);
+            }
+        }
+
+        public bool ShouldRedirectToSearch
+        {
+            get { return !String.IsNullOrWhiteSpace(SearchText); }
         }
 
         private string _path;
@@ -52,8 +75,6 @@ namespace MetroPass.UI.ViewModels
             }
         }
 
-      
-
         public string FileExtension
         {
             get { return SettingsModel.Instance.FileExtensions; }
@@ -63,7 +84,6 @@ namespace MetroPass.UI.ViewModels
                 NotifyOfPropertyChange(() => FileExtension);
             }
         }
-
 
         private string _password;
         public string Password
@@ -251,6 +271,10 @@ namespace MetroPass.UI.ViewModels
         {
             base.OnViewLoaded(view);
 
+            if (ShouldRedirectToSearch) {
+                SetState("Searching");
+            }
+
             var storageList = StorageApplicationPermissions.MostRecentlyUsedList;
             var roamingSettings = ApplicationData.Current.RoamingSettings;
             var taskList = new List<Task>();
@@ -365,7 +389,14 @@ namespace MetroPass.UI.ViewModels
                 OpeningDatabase = false;
                 var encodedUUID = WebUtility.UrlEncode(PWDatabaseDataSource.Instance.PwDatabase.Tree.Group.UUID);
 
-                _navigationService.UriFor<EntryGroupListViewModel>().WithParam(vm => vm.GroupId, encodedUUID).Navigate();
+                if (ShouldRedirectToSearch)
+                {
+                    _navigationService.UriFor<SearchResultsViewModel>().WithParam(vm => vm.QueryText, SearchText).Navigate();
+                }
+                else
+                {
+                    _navigationService.UriFor<EntryGroupListViewModel>().WithParam(vm => vm.GroupId, encodedUUID).Navigate();
+                }
             }
             catch (SecurityException se)
             {
