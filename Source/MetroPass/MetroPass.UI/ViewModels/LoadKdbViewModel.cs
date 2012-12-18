@@ -391,6 +391,7 @@ namespace MetroPass.UI.ViewModels
 
                 if (ShouldRedirectToSearch)
                 {
+                    _navigationService.UriFor<EntryGroupListViewModel>().WithParam(vm => vm.GroupId, encodedUUID).Navigate();
                     _navigationService.UriFor<SearchResultsViewModel>().WithParam(vm => vm.QueryText, SearchText).Navigate();
                 }
                 else
