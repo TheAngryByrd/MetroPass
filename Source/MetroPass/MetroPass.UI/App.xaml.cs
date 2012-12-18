@@ -83,8 +83,6 @@ namespace MetroPass.UI
             PWDatabaseDataSource.Instance.SavePwDatabase();
         }
 
- 
-
         private async void LaunchUrl(string url)
         {                 
             var result = await Windows.System.Launcher.LaunchUriAsync(new Uri(url));
@@ -102,17 +100,11 @@ namespace MetroPass.UI
             _ninjectContainer.Kernel.Bind<ILockingService>().To<LockingService>();
             _ninjectContainer.Kernel.Bind<IClipboard>().To<MetroClipboard>();
             _ninjectContainer.Kernel.Bind<IKdbTree>().ToMethod(c => PWDatabaseDataSource.Instance.PwDatabase.Tree);
-
         }
 
         protected override object GetInstance(Type service, string key)
         {    
             var instance = _ninjectContainer.Kernel.Get(service, key);
-            //if (instance is IHandle)
-            //{
-            //    _ninjectContainer.Kernel.Get<IEventAggregator>().Subscribe(instance);
-            //}
-            
             return instance;
         }
 
@@ -136,26 +128,16 @@ namespace MetroPass.UI
             DisplayRootView<StartPageView>();
         }
 
-        /// <summary>
-        /// Invoked when application execution is being suspended.  Application state is saved
-        /// without knowing whether the application will be terminated or resumed with the contents
-        /// of memory still intact.
-        /// </summary>
-        /// <param name="sender">The source of the suspend request.</param>
-        /// <param name="e">Details about the suspend request.</param>
         private async void OnSuspending(object sender, SuspendingEventArgs e)
         {
             var deferral = e.SuspendingOperation.GetDeferral();
             ApplicationData.Current.LocalSettings.Values["SuspendDate"] = DateTime.Now.ToString();
             await SuspensionManager.SaveAsync();
             deferral.Complete();
-        
         }
-
         
         protected override void OnResuming(object sender, object e)
         {
-          
             if (ApplicationData.Current.LocalSettings.Values.ContainsKey("SuspendDate"))
             {
                 DateTime suspendedDate = DateTime.Parse(ApplicationData.Current.LocalSettings.Values["SuspendDate"].ToString());
@@ -164,13 +146,18 @@ namespace MetroPass.UI
             }
         }
 
-
-
         protected override void OnSearchActivated(Windows.ApplicationModel.Activation.SearchActivatedEventArgs args)
         {
-            var navigationService = _ninjectContainer.Kernel.Get<INavigationService>();
-            
-            navigationService.UriFor<SearchResultsViewModel>().WithParam(vm => vm.QueryText, args.QueryText).Navigate();
+            if (PWDatabaseDataSource.Instance.PwDatabase == null)
+            {
+                Initialise();
+                DisplayRootView<SearchResultsView>(args.QueryText);
+            }
+            else
+            {
+                var navigationService = _ninjectContainer.Kernel.Get<INavigationService>();
+                navigationService.UriFor<SearchResultsViewModel>().WithParam(vm => vm.QueryText, args.QueryText).Navigate();
+            }
         }
 
         protected override void OnFileActivated(FileActivatedEventArgs args)
