@@ -157,6 +157,8 @@ namespace MetroPass.UI.ViewModels
             Database = null;
             Password = string.Empty;
             KeyFile = null;
+            SearchText = string.Empty;
+            SetState("Normal");
         }
   
         private void FocuxPassword()
