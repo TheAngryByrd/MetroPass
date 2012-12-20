@@ -33,7 +33,7 @@
             <TextBlock x:Name="pageTitle" Grid.Column="1" Text="{StaticResource AppName}" Style="{StaticResource PageHeaderTextStyle}"/>
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Grid.ColumnSpan="3">
                 <ProgressBar x:Name="indeterminateProgressBar" IsIndeterminate="True" Width="200" Visibility="{Binding IsIndeterminateProgressBarVisible, Converter={StaticResource BoolVisibilityConverter }}"/>
-                <ProgressBar x:Name="decryptingProgressBar" IsIndeterminate="True" Width="200" Visibility="{Binding Progress, Converter={StaticResource HasValueToVisibilityCoverter}}"/>
+                <ProgressBar x:Name="Progress" Width="600" Visibility="{Binding Progress, Converter={StaticResource HasValueToVisibilityCoverter}}"/>
             </StackPanel>
         </Grid>
       
