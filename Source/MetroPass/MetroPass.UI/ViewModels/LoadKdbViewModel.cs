@@ -75,15 +75,7 @@ namespace MetroPass.UI.ViewModels
             }
         }
 
-        public string FileExtension
-        {
-            get { return SettingsModel.Instance.FileExtensions; }
-            set 
-            { 
-                SettingsModel.Instance.FileExtensions = value;             
-                NotifyOfPropertyChange(() => FileExtension);
-            }
-        }
+ 
 
         private string _password;
         public string Password
@@ -127,22 +119,8 @@ namespace MetroPass.UI.ViewModels
                 FileOpenPicker openPicker = new FileOpenPicker();
                 openPicker.ViewMode = PickerViewMode.List;
                 openPicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
-                openPicker.FileTypeFilter.Add(".kdbx");
-
-                try
-                {
-                    if (!string.IsNullOrWhiteSpace(FileExtension))
-                    {
-                        var fileExts = FileExtension.Split(' ');
-                        fileExts.ForEach(openPicker.FileTypeFilter.Add);                       
-                    }
-                }
-                catch (Exception e)
-                {
-
-                }
-               
-        
+                openPicker.FileTypeFilter.Add("*");
+                       
                 var file = await openPicker.PickSingleFileAsync();
                 if (file != null)
                 {
@@ -177,7 +155,7 @@ namespace MetroPass.UI.ViewModels
                 FileOpenPicker openPicker = new FileOpenPicker();
                 openPicker.ViewMode = PickerViewMode.List;
                 openPicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
-                openPicker.FileTypeFilter.Add(".key");
+                openPicker.FileTypeFilter.Add("*");
                 var file = await openPicker.PickSingleFileAsync();
                 if (file != null)
                 {

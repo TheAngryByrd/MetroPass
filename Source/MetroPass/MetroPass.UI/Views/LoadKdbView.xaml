@@ -76,10 +76,7 @@
 
                 <TextBlock x:Name="OutputTextBlockKeyFile" Style="{StaticResource BasicTextStyle}" TextWrapping="Wrap"  Grid.Column="0" Grid.Row="3" Text="{Binding Path=KeyFile.Name}"/>
                 <Button x:Name="PickKeyFile" Content="Pick Key File" Width="200" Height="75" FontSize="20" Grid.Column="1" Grid.Row="3"  />
-
-                <TextBlock Style="{StaticResource BasicTextStyle}"  HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="24" Grid.Column="0" Grid.Row="4" >Custom DB Extension:</TextBlock>
-                <TextBox ToolTipService.Placement="Bottom" ToolTipService.ToolTip="Example '.doc .docx' space delimited" x:Name="FileExtension" Width="300" Height="20" HorizontalAlignment="Left" VerticalAlignment="Center"   Grid.Column="1" Grid.Row="4" ></TextBox>
-                
+              
                 <Button x:Name="ClearFiles" Content="Clear" FontSize="20" Width="90" Height="45" IsEnabled="{Binding CanClearFiles}" Grid.Column="1" Grid.Row="6"  />
                 <Button x:Name="OpenDatabase" Content="Open Database" Background="Teal" Foreground="White" Width="200" Height="75" FontSize="20" Grid.Column="0" Grid.Row="6" />
             </Grid>
