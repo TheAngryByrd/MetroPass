@@ -46,6 +46,7 @@ local.properties
 [Rr]elease/
 [Dd]rops/
 AppPackages/
+PaidAppPackages/
 *_i.c
 *_p.c
 *.ilk
