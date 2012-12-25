@@ -20,7 +20,7 @@ namespace MetroPass.UI.ViewModels
         private readonly IPageServices _pageServices;
         private readonly INavigationService _navigationService;
 
-        public LoadKdbViewModel(IPageServices pageServices, INavigationService navigationService) : base(navigationService)
+        public LoadKdbViewModel(IPageServices pageServices, INavigationService navigationService) : base(navigationService, pageServices)
         {
             _pageServices = pageServices;
             _navigationService = navigationService;

@@ -2,6 +2,7 @@
 using MetroPass.Core.Interfaces;
 using MetroPass.Core.Model;
 using MetroPass.UI.DataModel;
+using MetroPass.UI.Services;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -13,7 +14,8 @@ namespace MetroPass.UI.ViewModels
         private readonly IKdbTree _dbTree;
         private readonly INavigationService _navigationService;
 
-        public GroupEditViewModel(IKdbTree dbTree, INavigationService navigationService)            : base(navigationService)
+        public GroupEditViewModel(IKdbTree dbTree, INavigationService navigationService, IPageServices pageServices)
+            : base(navigationService, pageServices)
         {
             _dbTree = dbTree;
             _navigationService = navigationService;

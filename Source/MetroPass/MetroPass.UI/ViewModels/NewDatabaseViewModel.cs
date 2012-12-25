@@ -21,7 +21,7 @@ namespace MetroPass.UI.ViewModels
 
         private readonly IPageServices _pageServices;
 
-        public NewDatabaseViewModel(INavigationService navigationService, IPageServices pageServices) : base(navigationService)
+        public NewDatabaseViewModel(INavigationService navigationService, IPageServices pageServices) : base(navigationService, pageServices)
         {
             this._pageServices = pageServices;
             _navigationService = navigationService;

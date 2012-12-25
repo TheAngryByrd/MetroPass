@@ -12,7 +12,8 @@ namespace MetroPass.UI.ViewModels
         private readonly INavigationService _navigationService;
         private readonly IClipboard _clipboard;
 
-        public PasswordEntryScreen(INavigationService navigationService, IClipboard clipboard) : base(navigationService)
+        public PasswordEntryScreen(INavigationService navigationService, IClipboard clipboard, IPageServices pageServices)
+            : base(navigationService, pageServices)
         {
             _navigationService = navigationService;
             _clipboard = clipboard;
@@ -60,6 +61,11 @@ namespace MetroPass.UI.ViewModels
         public bool ShowGroupCommands
         {
             get { return _selectedPasswordItem == null; }
+        }
+
+        public void OpenURL()
+        {
+            this.LaunchUrl((SelectedPasswordItem as PwEntry).Url);
         }
 
         public void EditEntry()

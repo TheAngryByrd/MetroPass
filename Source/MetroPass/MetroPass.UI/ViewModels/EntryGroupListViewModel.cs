@@ -20,7 +20,7 @@ namespace MetroPass.UI.ViewModels
         private readonly ObservableCollection<IGroup> _topLevelGroups;
         private readonly IKdbTree _dbTree;
 
-        public EntryGroupListViewModel(IKdbTree dbTree, INavigationService navigationService, IClipboard clipboard) : base(navigationService, clipboard)
+        public EntryGroupListViewModel(IKdbTree dbTree, INavigationService navigationService, IClipboard clipboard,  IPageServices pageServices) : base(navigationService, clipboard, pageServices)
         {
             _dbTree = dbTree;
             _navigationService = navigationService;

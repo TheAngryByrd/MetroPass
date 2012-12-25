@@ -22,8 +22,9 @@
                 <StackPanel x:Name="EntryCommands" Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="0" Visibility="{Binding ShowEntryCommands, Converter={StaticResource BoolVisibilityConverter}}" >
                     <Button x:Name="EditEntry" Style="{StaticResource EditAppBarButtonStyle}" AutomationProperties.Name="Edit Password"></Button>
                     <Button x:Name="DeleteEntry" Style="{StaticResource DeleteAppBarButtonStyle}" AutomationProperties.Name="Delete Password"></Button>
-                    <Button x:Name="CopyUsername" Style="{StaticResource CopyAppBarButtonStyle}" AutomationProperties.Name="Copy Username"></Button>
+                    <Button x:Name="CopyUsername" Style="{StaticResource ContactAppBarButtonStyle}" AutomationProperties.Name="Copy Username"></Button>
                     <Button x:Name="CopyPassword" Style="{StaticResource PermissionsAppBarButtonStyle}" AutomationProperties.Name="Copy Password"></Button>
+                    <Button x:Name="OpenURL" Style="{StaticResource WorldAppBarButtonStyle}" AutomationProperties.Name="Open URL"></Button>
                 </StackPanel>
             </Grid>
         </AppBar>
