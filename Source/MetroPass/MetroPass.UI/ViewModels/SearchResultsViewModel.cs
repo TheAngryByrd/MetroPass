@@ -10,7 +10,8 @@ namespace MetroPass.UI.ViewModels
 {
     public class SearchResultsViewModel : PasswordEntryScreen
     {
-        public SearchResultsViewModel(INavigationService navigationService, IClipboard clipboard) : base(navigationService, clipboard)
+        public SearchResultsViewModel(INavigationService navigationService, IClipboard clipboard, IPageServices pageServices)
+            : base(navigationService, clipboard, pageServices)
         {
             Results = new ObservableCollection<PwEntry>();
         }

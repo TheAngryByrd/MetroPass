@@ -5,6 +5,7 @@ using MetroPass.UI.DataModel;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using MetroPass.UI.Services;
 
 namespace MetroPass.UI.ViewModels
 {
@@ -12,15 +13,29 @@ namespace MetroPass.UI.ViewModels
     {
         private readonly INavigationService _navigationService;
 
-        public BaseScreen(INavigationService navigationService)
-        {
-  
+        public IPageServices _pageServices;
+        
+
+        public BaseScreen(INavigationService navigationService, IPageServices pageServices)
+        {  
             this._navigationService=navigationService;
+            this._pageServices = pageServices;
         }
 
         protected Page View { get; private set;}
 
-        
+        public async void LaunchUrl(string url)
+        {
+            try
+            {
+                var result = await Windows.System.Launcher.LaunchUriAsync(new Uri(url));
+            }
+            catch
+            {
+                _pageServices.Toast("This entry's url is invalid");
+            }
+          
+        }
 
         public void GoBack()
         {
@@ -74,6 +89,7 @@ namespace MetroPass.UI.ViewModels
                 NotifyOfPropertyChange(() => IsAdVisible);
             }
         }
+
     }
     
 }

@@ -20,7 +20,8 @@ namespace MetroPass.UI.ViewModels
         private readonly ObservableCollection<IGroup> _topLevelGroups;
         private readonly IKdbTree _dbTree;
 
-        public EntryGroupListViewModel(IKdbTree dbTree, INavigationService navigationService, IClipboard clipboard) : base(navigationService, clipboard)
+        public EntryGroupListViewModel(IKdbTree dbTree, INavigationService navigationService, IClipboard clipboard, IPageServices pageServices)
+            : base(navigationService, clipboard, pageServices)
         {
             _dbTree = dbTree;
             _navigationService = navigationService;
@@ -97,6 +98,7 @@ namespace MetroPass.UI.ViewModels
             _navigationService.UriFor<AddGroupViewModel>().WithParam(vm => vm.ParentGroupID, encodedUUID).Navigate();
         }
 
+  
         private bool PasswordIsInRecycleBin
         {
             get 

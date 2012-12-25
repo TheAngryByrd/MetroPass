@@ -7,6 +7,7 @@ using MetroPass.Core.Interfaces;
 using MetroPass.Core.Model;
 using MetroPass.UI.DataModel;
 using Ninject.Infrastructure.Introspection;
+using MetroPass.UI.Services;
 
 namespace MetroPass.UI.ViewModels
 {
@@ -15,7 +16,7 @@ namespace MetroPass.UI.ViewModels
         private readonly INavigationService _navigationService;
         private readonly IKdbTree _dbTree;
 
-        public AddGroupViewModel(IKdbTree dbTree, INavigationService navigationService) : base(navigationService)
+        public AddGroupViewModel(IKdbTree dbTree, INavigationService navigationService, IPageServices pageServices) : base(navigationService,pageServices)
         {
             _dbTree = dbTree;
             _navigationService = navigationService;
