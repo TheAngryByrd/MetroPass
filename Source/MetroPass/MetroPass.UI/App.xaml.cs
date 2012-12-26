@@ -42,9 +42,6 @@ namespace MetroPass.UI
         {
             var settingsColor = App.Current.Resources["MainAppColor"] as SolidColorBrush;
 
-            var privacyPolicyCommand = new SettingsCommand("privacyPolicy","Privacy Policy", a => LaunchUrl(PrivacyPolicyUrl));
-            args.Request.ApplicationCommands.Add(privacyPolicyCommand);
-
             var supportCommand = new SettingsCommand("support", "Support & Feedback", a => LaunchUrl(SupportUrl));
             args.Request.ApplicationCommands.Add(supportCommand);
 
