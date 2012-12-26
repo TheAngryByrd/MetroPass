@@ -7,6 +7,7 @@
     xmlns:local="using:MetroPass.UI"
     xmlns:common="using:MetroPass.UI.Common"
     xmlns:cal="using:Caliburn.Micro"
+    xmlns:converters="using:MetroPass.UI.Common.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
@@ -30,7 +31,7 @@
     </Page.BottomAppBar>
     
     <Page.Resources>
-        
+        <converters:GridViewGroupHeaderStyleConverter x:Key="GroupHeaderStyleConverter" ViewModel="{Binding ElementName=pageRoot, Path=DataContext}" />
         <common:TypedTemplateSelector x:Key="pwTemplateSelector"
                                  DefaultTemplateKey="Standard250x250ItemTemplate" />
         <DataTemplate x:Key="Type:PwGroup">
@@ -65,11 +66,11 @@
         </DataTemplate>
         <DataTemplate x:Key="GroupHeader">
             <Button Width="250"     cal:Message.Attach="SelectGroup($dataContext)"
-                                    AutomationProperties.Name="Group Title"                                    
+                                    AutomationProperties.Name="Group Title"
                                     Style="{StaticResource TextPrimaryButtonStyle}" >
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="{Binding Name}" Margin="3,-7,10,10" Style="{StaticResource GroupHeaderTextStyle}" />
-                    <TextBlock Text="{StaticResource ChevronGlyph}" FontFamily="Segoe UI Symbol" Margin="0,-7,0,10" Style="{StaticResource GroupHeaderTextStyle}"/>
+                    <TextBlock Text="{Binding Name}" Margin="3,-7,10,10" Style="{Binding UUID, Converter={StaticResource GroupHeaderStyleConverter}}" />
+                    <TextBlock Text="{StaticResource ChevronGlyph}" FontFamily="Segoe UI Symbol" Margin="0,-7,0,10" Style="{Binding UUID, Converter={StaticResource GroupHeaderStyleConverter}}" />
                 </StackPanel>
             </Button>
         </DataTemplate>
@@ -130,19 +131,6 @@
                             <GroupStyle.HeaderTemplateSelector>
                                 <common:EntryGroupListViewHeaderTemplateSelector AdvertTemplate="{StaticResource  ResourceKey=AdHeader}" NormalTemplate="{StaticResource ResourceKey=GroupHeader}"/> 
                             </GroupStyle.HeaderTemplateSelector>
-                            <!--<GroupStyle.HeaderTemplate>
-                                <DataTemplate>
-                                    <Button Width="250"
-                                            cal:Message.Attach="SelectGroup($dataContext)"
-                                    AutomationProperties.Name="Group Title"                                    
-                                    Style="{StaticResource TextPrimaryButtonStyle}" >
-                                        <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="{Binding Name}" Margin="3,-7,10,10" Style="{StaticResource GroupHeaderTextStyle}" />
-                                            <TextBlock Text="{StaticResource ChevronGlyph}" FontFamily="Segoe UI Symbol" Margin="0,-7,0,10" Style="{StaticResource GroupHeaderTextStyle}"/>
-                                        </StackPanel>
-                                    </Button>
-                                </DataTemplate>
-                            </GroupStyle.HeaderTemplate>-->
                         </GroupStyle>
                     </GridView.GroupStyle>
                 </GridView>

@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
 
-namespace MetroPass.UI.Common.Coverters
+namespace MetroPass.UI.Common.Converters
 {
     public class HasValueToVisibilityCoverter : IValueConverter
     {
@@ -17,8 +13,6 @@ namespace MetroPass.UI.Common.Coverters
             var defaultValue = GetDefaultValue(value.GetType());
 
             return (value.Equals( defaultValue)) ? Visibility.Collapsed : Visibility.Visible;
-
-            
         }
 
         public object GetDefaultValue(Type type)

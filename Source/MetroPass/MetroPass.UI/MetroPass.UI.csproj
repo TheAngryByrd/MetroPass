@@ -126,10 +126,11 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Common\Coverters\HasValueToVisibilityCoverter.cs" />
+    <Compile Include="Common\Converters\GridViewGroupHeaderStyleConverter.cs" />
+    <Compile Include="Common\Converters\HasValueToVisibilityCoverter.cs" />
     <Compile Include="Common\EntryGroupListViewHeaderTemplateSelector.cs" />
     <Compile Include="Common\NinjectContainer.cs" />
-    <Compile Include="Common\Coverters\StringFormatConverter.cs" />
+    <Compile Include="Common\Converters\StringFormatConverter.cs" />
     <Compile Include="Common\TypedTemplateSelector.cs" />
     <Compile Include="DataModel\KdbDatasource.cs" />
     <Compile Include="Common\EnumerableExtensions.cs" />
@@ -195,7 +196,6 @@
     <Compile Include="Views\StartPageView.xaml.cs">
       <DependentUpon>StartPageView.xaml</DependentUpon>
     </Compile>
-
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
