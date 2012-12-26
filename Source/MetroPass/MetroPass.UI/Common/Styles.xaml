@@ -3,8 +3,16 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:MetroPass.UI.Common">
 
-    <SolidColorBrush x:Key="MainAppColor" Color="#006E87" />
-
+    <SolidColorBrush x:Key="MainAppColor" Color="#006A87" />
+    <SolidColorBrush x:Key="MainFolderColor" Color="#003847" />
+    <SolidColorBrush x:Key="MainEntryColor" Color="#006A87" />
+    <SolidColorBrush x:Key="MainHighlightColor" Color="#C05E00" />
+    
+    <Style x:Key="ActionButton" TargetType="Button">
+        <Setter Property="Background" Value="{StaticResource MainHighlightColor}" />
+        <Setter Property="Foreground" Value="White" />
+    </Style>
+    
     <ItemsPanelTemplate x:Key="HorizontalItemPanelTemplate">
         <VirtualizingStackPanel Orientation="Horizontal"/>
     </ItemsPanelTemplate>
@@ -64,7 +72,7 @@
     </Style>
     
     <Style x:Key="GridViewHeaderRootStyle" TargetType="TextBlock" BasedOn="{StaticResource GridViewHeaderNormalStyle}">
-        <Setter Property="Foreground" Value="Orange"/>
+        <Setter Property="Foreground" Value="{StaticResource MainHighlightColor}"/>
         <Setter Property="FontWeight" Value="SemiBold"/>
     </Style>
 

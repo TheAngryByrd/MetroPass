@@ -35,7 +35,7 @@
         <common:TypedTemplateSelector x:Key="pwTemplateSelector"
                                  DefaultTemplateKey="Standard250x250ItemTemplate" />
         <DataTemplate x:Key="Type:PwGroup">
-            <Grid Height="70" Width="250" Background="#086C76">
+            <Grid Height="70" Width="250" Background="{StaticResource MainFolderColor}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
@@ -45,7 +45,7 @@
             </Grid>
         </DataTemplate>
         <DataTemplate x:Key="Type:PwEntry" >
-            <Grid Height="70" Width="250" Background="#18a8b5">
+            <Grid Height="70" Width="250" Background="{StaticResource MainEntryColor}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
