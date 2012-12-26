@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Framework;
 using Windows.UI.Xaml.Data;
 
-namespace MetroPass.UI.Common.Coverters
+namespace MetroPass.UI.Common.Converters
 {
     public class StringFormatConverter : IValueConverter
     {
@@ -27,6 +22,4 @@ namespace MetroPass.UI.Common.Coverters
             return value;
         }
     }
-
-
 }
