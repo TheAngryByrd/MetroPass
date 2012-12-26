@@ -78,7 +78,7 @@
                 <Button x:Name="PickKeyFile" Content="Pick Key File" Width="200" Height="75" FontSize="20" Grid.Column="1" Grid.Row="3"  />
               
                 <Button x:Name="ClearFiles" Content="Clear" FontSize="20" Width="90" Height="45" IsEnabled="{Binding CanClearFiles}" Grid.Column="1" Grid.Row="6"  />
-                <Button x:Name="OpenDatabase" Content="Open Database" Background="Teal" Foreground="White" Width="200" Height="75" FontSize="20" Grid.Column="0" Grid.Row="6" />
+                <Button x:Name="OpenDatabase" Content="Open Database" Style="{StaticResource ActionButton}" Width="200" Height="75" FontSize="20" Grid.Column="0" Grid.Row="6" />
             </Grid>
       
         </Grid>
