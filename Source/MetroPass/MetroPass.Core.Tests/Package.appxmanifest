@@ -50,7 +50,6 @@
     </Application>
   </Applications>
   <Capabilities>
-    <Capability Name="removableStorage" />
     <Capability Name="internetClient" />
   </Capabilities>
 </Package>
