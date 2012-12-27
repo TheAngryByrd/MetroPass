@@ -11,13 +11,21 @@ namespace MetroPass.Core.Tests
     [TestClass]
     public class GeneratePasswordTests
     {
-        bool FormatValid(string format, string characterSet)
+        bool ContainsCharactersFromFormat(string format, string characterSet)
         { 
             foreach (char c in format)
             {
-                // This is using String.Contains for .NET 2 compat.,
-                //   hence the requirement for ToString()
                 if (!characterSet.Contains(c.ToString()))
+                    return false;
+            }
+            return true;
+        }
+
+        bool DoesntContainCharactersFromFormat(string format, string characterSet)
+        {
+            foreach (char c in format)
+            {
+                if (characterSet.Contains(c.ToString()))
                     return false;
             }
             return true;
@@ -30,10 +38,10 @@ namespace MetroPass.Core.Tests
          
             PasswordGenerator generator = new PasswordGenerator();
             var characterSet = PasswordGenerator.Uppercase;
-            string password = generator.GeneratePassword(length, characterSet: characterSet);
+            string password = generator.GeneratePassword(length, new string[]{characterSet});
 
             Assert.AreEqual(length, password.Length);
-            Assert.IsTrue(FormatValid(password, characterSet));
+            Assert.IsTrue(ContainsCharactersFromFormat(password, characterSet));
         }
 
         [TestMethod]
@@ -43,10 +51,10 @@ namespace MetroPass.Core.Tests
 
             PasswordGenerator generator = new PasswordGenerator();
             var characterSet = PasswordGenerator.Uppercase;
-            string password = await generator.GeneratePasswordAsync(length, characterSet);
+            string password = await generator.GeneratePasswordAsync(length, new string[] { characterSet });
 
             Assert.AreEqual(length, password.Length);
-            Assert.IsTrue(FormatValid(password, characterSet));
+            Assert.IsTrue(ContainsCharactersFromFormat(password, characterSet));
         }
 
         [TestMethod]
@@ -59,7 +67,21 @@ namespace MetroPass.Core.Tests
             string password = await generator.GeneratePasswordAsync(length, characterSet);
 
             Assert.AreEqual(length, password.Length);
-            Assert.IsTrue(FormatValid(password, string.Join("",characterSet)));
+            Assert.IsTrue(ContainsCharactersFromFormat(password, string.Join("",characterSet)));
+        }
+
+        [TestMethod]
+        public async Task GeneratePasswordExcludingCharacter()
+        {
+            var length = 500;
+            string[] characterSet = new string[] { "AB" };
+            var excludeCharacters = "B";
+            PasswordGenerator generator = new PasswordGenerator();
+            string password = await generator.GeneratePasswordAsync(length, characterSet, excludeCharacters);
+
+            Assert.AreEqual(length, password.Length);
+            Assert.IsTrue(ContainsCharactersFromFormat(password, "A"));
+            Assert.IsTrue(DoesntContainCharactersFromFormat(password, "B"));
         }
 
     }
@@ -76,15 +98,15 @@ namespace MetroPass.Core.Tests
         public const string Brackets = "(){}[]<>";
 
         
-        public Task<string> GeneratePasswordAsync(int length, params string[] characterSet)
+        public Task<string> GeneratePasswordAsync(int length, string[] characterSet, string charactersToExclude = null)
         {
             return Task.Run<string>(() =>
             {
-                return GeneratePassword(length: length, characterSet:characterSet);
+                return GeneratePassword(length,  characterSet, charactersToExclude);
             }); 
-        }            
-        
-        public string GeneratePassword(int length, string charactersToExclude = null, params string[] characterSet)
+        }
+
+        public string GeneratePassword(int length, string[] characterSet, string charactersToExclude = null)
         {
             var joinedCharacterSet = string.Join("", characterSet);
 
@@ -92,7 +114,7 @@ namespace MetroPass.Core.Tests
 
                 foreach (var item in charactersToExclude)
 	            {
-		            joinedCharacterSet.Replace(item.ToString(),string.Empty);
+		           joinedCharacterSet=  joinedCharacterSet.Replace(item.ToString(),string.Empty);
 	            }              
             }
 
