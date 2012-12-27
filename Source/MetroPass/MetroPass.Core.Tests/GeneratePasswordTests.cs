@@ -29,8 +29,8 @@ namespace MetroPass.Core.Tests
             var length = 5;
          
             PasswordGenerator generator = new PasswordGenerator();
-            var characterSet = generator.Uppercase;
-            string password = generator.GeneratePassword(characterSet, length);
+            var characterSet = PasswordGenerator.Uppercase;
+            string password = generator.GeneratePassword(length, characterSet);
 
             Assert.AreEqual(length, password.Length);
             Assert.IsTrue(FormatValid(password, characterSet));
@@ -42,44 +42,58 @@ namespace MetroPass.Core.Tests
             var length = 5;
 
             PasswordGenerator generator = new PasswordGenerator();
-            var characterSet = generator.Uppercase;
-            string password = await generator.GeneratePasswordAsync(characterSet, length);
+            var characterSet = PasswordGenerator.Uppercase;
+            string password = await generator.GeneratePasswordAsync(length, characterSet);
 
             Assert.AreEqual(length, password.Length);
             Assert.IsTrue(FormatValid(password, characterSet));
         }
 
+        [TestMethod]
+        public async Task GeneratePasswordFromListAsync()
+        {
+            var length = 5;
 
+            PasswordGenerator generator = new PasswordGenerator();
+            string[] characterSet = new string[]{PasswordGenerator.Uppercase, PasswordGenerator.Lowercase, PasswordGenerator.Digits};
+            string password = await generator.GeneratePasswordAsync(length, characterSet);
 
+            Assert.AreEqual(length, password.Length);
+            Assert.IsTrue(FormatValid(password, string.Join("",characterSet)));
+        }
 
     }
 
     public class PasswordGenerator
     {
-        public string Uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        public string Lowercase = "abcdefhijklmnopqrstuvwxyz";
-        public string Digits = "0123456789";
-        public string Minus = "-";
-        public string Underscore = "_";
-        public string Space = " ";
-        public string Special = "!@#$%^&*+=?,.";
-        public string Brackets = "(){}[]<>";
+        public const string Uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        public const string Lowercase = "abcdefhijklmnopqrstuvwxyz";
+        public const string Digits = "0123456789";
+        public const string Minus = "-";
+        public const string Underscore = "_";
+        public const string Space = " ";
+        public const string Special = "!@#$%^&*+=?,.";
+        public const string Brackets = "(){}[]<>";
 
-        public Task<string> GeneratePasswordAsync(string characterSet, int length)
+        
+        public Task<string> GeneratePasswordAsync(int length, params string[] characterSet)
         {
-            return Task.Run<string>(() => {
-                return GeneratePassword(characterSet, length);
+            return Task.Run<string>(() =>
+            {
+                return GeneratePassword(length, characterSet);
             }); 
-        }
-
-        public string GeneratePassword(string characterSet, int length)
+        }            
+        
+        public string GeneratePassword(int length, params string[] characterSet)
         {
+            var joinedCharacterSet = string.Join("", characterSet);
+
             string retVal = string.Empty;
             var random = new Random();
             for (int i = 0; i < length; i++)
             {
-                var nextIndex = GenerateRandomNumber(characterSet.Length);
-                retVal += characterSet[nextIndex];
+                var nextIndex = GenerateRandomNumber(joinedCharacterSet.Length);
+                retVal += joinedCharacterSet[nextIndex];
             }
             return retVal;
         }
