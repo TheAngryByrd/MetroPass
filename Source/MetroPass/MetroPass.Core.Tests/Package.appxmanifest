@@ -51,8 +51,6 @@
   </Applications>
   <Capabilities>
     <Capability Name="removableStorage" />
-    <Capability Name="enterpriseAuthentication" />
-    <Capability Name="documentsLibrary" />
     <Capability Name="internetClient" />
   </Capabilities>
 </Package>
