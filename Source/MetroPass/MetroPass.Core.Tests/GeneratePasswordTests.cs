@@ -30,7 +30,7 @@ namespace MetroPass.Core.Tests
          
             PasswordGenerator generator = new PasswordGenerator();
             var characterSet = PasswordGenerator.Uppercase;
-            string password = generator.GeneratePassword(length, characterSet);
+            string password = generator.GeneratePassword(length, characterSet: characterSet);
 
             Assert.AreEqual(length, password.Length);
             Assert.IsTrue(FormatValid(password, characterSet));
@@ -80,13 +80,21 @@ namespace MetroPass.Core.Tests
         {
             return Task.Run<string>(() =>
             {
-                return GeneratePassword(length, characterSet);
+                return GeneratePassword(length: length, characterSet:characterSet);
             }); 
         }            
         
-        public string GeneratePassword(int length, params string[] characterSet)
+        public string GeneratePassword(int length, string charactersToExclude = null, params string[] characterSet)
         {
             var joinedCharacterSet = string.Join("", characterSet);
+
+            if(!string.IsNullOrEmpty(charactersToExclude)){
+
+                foreach (var item in charactersToExclude)
+	            {
+		            joinedCharacterSet.Replace(item.ToString(),string.Empty);
+	            }              
+            }
 
             string retVal = string.Empty;
             var random = new Random();
