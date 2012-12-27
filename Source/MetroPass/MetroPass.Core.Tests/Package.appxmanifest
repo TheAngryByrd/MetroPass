@@ -50,6 +50,9 @@
     </Application>
   </Applications>
   <Capabilities>
+    <Capability Name="enterpriseAuthentication" />
+    <Capability Name="documentsLibrary" />
+    <Capability Name="removableStorage" />
     <Capability Name="internetClient" />
   </Capabilities>
 </Package>
