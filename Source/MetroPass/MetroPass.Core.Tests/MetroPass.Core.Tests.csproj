@@ -119,6 +119,7 @@
   <ItemGroup>
     <Compile Include="Class1.cs" />
     <Compile Include="ComparedToMainKeepass\PassingTests.cs" />
+    <Compile Include="GeneratePasswordTests.cs" />
     <Compile Include="Helpers\Helpers.cs" />
     <Compile Include="Security\ProtectedBufferTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
