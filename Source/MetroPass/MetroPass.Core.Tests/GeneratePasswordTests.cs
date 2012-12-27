@@ -110,13 +110,7 @@ namespace MetroPass.Core.Tests
         {
             var joinedCharacterSet = string.Join("", characterSet);
 
-            if(!string.IsNullOrEmpty(charactersToExclude)){
-
-                foreach (var item in charactersToExclude)
-	            {
-		           joinedCharacterSet=  joinedCharacterSet.Replace(item.ToString(),string.Empty);
-	            }              
-            }
+            joinedCharacterSet = ExcludeCharactersFromString(charactersToExclude, joinedCharacterSet);
 
             string retVal = string.Empty;
             var random = new Random();
@@ -126,6 +120,18 @@ namespace MetroPass.Core.Tests
                 retVal += joinedCharacterSet[nextIndex];
             }
             return retVal;
+        }
+  
+        private string ExcludeCharactersFromString(string charactersToExclude, string joinedCharacterSet)
+        {
+            if (!string.IsNullOrEmpty(charactersToExclude))
+            {
+                foreach (var item in charactersToExclude)
+                {
+                    joinedCharacterSet = joinedCharacterSet.Replace(item.ToString(), string.Empty);
+                }
+            }
+            return joinedCharacterSet;
         }
   
         private int GenerateRandomNumber(int max)
