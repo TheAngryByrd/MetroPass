@@ -181,7 +181,7 @@ namespace MetroPass.UI.ViewModels
                 }
                 Root.Element.Remove();
                 await PWDatabaseDataSource.Instance.SavePwDatabase();
-                GoHome();
+                _navigationService.GoBack();
             }
         }
 
