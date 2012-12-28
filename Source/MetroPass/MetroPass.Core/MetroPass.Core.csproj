@@ -131,6 +131,7 @@
     <Compile Include="Model\PwUuid.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\HashedBlockStream.cs" />
+    <Compile Include="Security\PasswordGenerator.cs" />
     <Compile Include="Security\ProtectedBuffer.cs" />
     <Compile Include="Interfaces\IKdbTree.cs" />
     <Compile Include="Services\Kdb4\Kdb4Parser.cs" />
