@@ -104,5 +104,19 @@ namespace MetroPass.Core.Model
         {
             Element.Add(group.Element);
         }
+
+        public static PwGroup NullGroup
+        {
+            get
+            {
+                var emptyGroup = XElement.Parse(@"
+                <Group>
+                    <UUID></UUID>
+                    <Name></Name>
+                </Group>");
+
+                return new PwGroup(emptyGroup, false);
+            }
+        }
     }
 }

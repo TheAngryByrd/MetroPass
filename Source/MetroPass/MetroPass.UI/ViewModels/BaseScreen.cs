@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Collections.Generic;
 using Caliburn.Micro;
 using MetroPass.UI.DataModel;
 using Windows.UI.ViewManagement;
@@ -11,16 +10,15 @@ namespace MetroPass.UI.ViewModels
     public class BaseScreen : Screen
     {
         private readonly INavigationService _navigationService;
+        private Queue<string> _stateQueue;
 
         public BaseScreen(INavigationService navigationService)
         {
-  
-            this._navigationService=navigationService;
+            _navigationService=navigationService;
+            _stateQueue = new Queue<string>();
         }
 
         protected Page View { get; private set;}
-
-        
 
         public void GoBack()
         {
@@ -39,8 +37,12 @@ namespace MetroPass.UI.ViewModels
 
             Window.Current.SizeChanged += Window_SizeChanged;
             IsAdVisible = true;
-            SetState(ApplicationView.Value);
-            
+
+            if (_stateQueue.Count == 0)
+            {
+                _stateQueue.Enqueue(ApplicationView.Value.ToString());
+            }
+            SetState(_stateQueue.Dequeue());
         }
 
         protected override void OnDeactivate(bool close)
@@ -62,6 +64,11 @@ namespace MetroPass.UI.ViewModels
         protected void SetState(string state)
         {
             VisualStateManager.GoToState(View, state, true);
+        }
+
+        protected void QueueState(string state)
+        {
+            _stateQueue.Enqueue(state);
         }
 
         private bool _isPageAvailable;
