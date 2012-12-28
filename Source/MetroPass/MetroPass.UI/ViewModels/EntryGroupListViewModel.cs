@@ -141,5 +141,43 @@ namespace MetroPass.UI.ViewModels
                 await PWDatabaseDataSource.Instance.SavePwDatabase();
             }
         }
+
+        public async void DeleteGroup()
+        {
+            if (Root.UUID == _dbTree.Group.UUID)
+            {
+                var rootMessage = String.Format("{0} is the top folder in your database, which you cannot delete.{1}Doing so would delete the entire database.{1}To delete your database simply delete the database file from your system.", Root.Name, Environment.NewLine);
+                var rootDialog = new MessageDialog(rootMessage, "Can not delete database");
+                await rootDialog.ShowAsync();
+                return;
+            }
+            
+            var confirmMessage = String.Format("Are you sure you want to delete the {0} folder?{1}This will delete all of its contents too, which means all of the passwords and folders{1}you see now on the screen.", Root.Name, Environment.NewLine);
+            var confirmDialog = new MessageDialog(confirmMessage, "Confirm Delete");
+            bool result = false;
+
+            confirmDialog.Commands.Add(new UICommand("Yes", (cmd) => result = true));
+            confirmDialog.Commands.Add(new UICommand("No", (cmd) => result = false));
+            confirmDialog.DefaultCommandIndex = 0;
+            confirmDialog.CancelCommandIndex = 1;
+
+            await confirmDialog.ShowAsync();
+
+            if (result)
+            {
+                if (_dbTree.MetaData.RecycleBinEnabled)
+                {
+                    //Move the folder to the recycle bin in the document
+                    var recycleBinGroupElement = _dbTree.FindGroupByUuid(_dbTree.MetaData.RecycleBinUUID);
+                    var clonedElement = new XElement(Root.Element);
+                    recycleBinGroupElement.Add(clonedElement);
+                }
+                Root.Element.Remove();
+                await PWDatabaseDataSource.Instance.SavePwDatabase();
+
+                var dbRootUUID = WebUtility.UrlEncode(_dbTree.Group.UUID);
+                _navigationService.UriFor<EntryGroupListViewModel>().WithParam(vm => vm.GroupId, dbRootUUID).Navigate();
+            }
+        }
     }
 }
