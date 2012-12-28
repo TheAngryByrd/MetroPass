@@ -115,6 +115,7 @@
     <Compile Include="Helpers\StrUtil.cs" />
     <Compile Include="Interfaces\IKdbReader.cs" />
     <Compile Include="Interfaces\IKdbWriter.cs" />
+    <Compile Include="Security\PasswordGeneratorCharacterSets.cs" />
     <Compile Include="Model\IGroup.cs" />
     <Compile Include="Model\Kdb4\Kdb4File.cs" />
     <Compile Include="Model\Kdb4\Kdb4Tree.cs" />
@@ -131,6 +132,7 @@
     <Compile Include="Model\PwUuid.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\HashedBlockStream.cs" />
+    <Compile Include="Interfaces\IPasswordGenerator.cs" />
     <Compile Include="Security\PasswordGenerator.cs" />
     <Compile Include="Security\ProtectedBuffer.cs" />
     <Compile Include="Interfaces\IKdbTree.cs" />
