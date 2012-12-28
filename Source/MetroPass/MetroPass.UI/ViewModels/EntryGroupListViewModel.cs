@@ -1,15 +1,16 @@
-﻿using System.Collections.Generic;
-using System.Net;
-using System.Xml.Linq;
-using Caliburn.Micro;
+﻿using Caliburn.Micro;
+using Framework;
+using MetroPass.Core.Exceptions;
 using MetroPass.Core.Interfaces;
 using MetroPass.Core.Model;
-using Framework;
-using System;
-using System.Collections.ObjectModel;
-using System.Linq;
 using MetroPass.UI.DataModel;
 using MetroPass.UI.Services;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Net;
+using System.Xml.Linq;
 using Windows.UI.Popups;
 
 namespace MetroPass.UI.ViewModels
@@ -34,8 +35,14 @@ namespace MetroPass.UI.ViewModels
             set
             {
                 _groupId = value;
-                var groupElement = _dbTree.FindGroupByUuid(value);
-                Root = new PwGroup(groupElement);
+                try {
+                    var groupElement = _dbTree.FindGroupByUuid(value);
+                    Root = new PwGroup(groupElement);
+                }
+                catch (GroupNotFoundException) {
+                    Root = PwGroup.NullGroup;
+                    QueueState("GroupNotFound");
+                }
             }
         }
 
@@ -174,10 +181,14 @@ namespace MetroPass.UI.ViewModels
                 }
                 Root.Element.Remove();
                 await PWDatabaseDataSource.Instance.SavePwDatabase();
-
-                var dbRootUUID = WebUtility.UrlEncode(_dbTree.Group.UUID);
-                _navigationService.UriFor<EntryGroupListViewModel>().WithParam(vm => vm.GroupId, dbRootUUID).Navigate();
+                GoHome();
             }
+        }
+
+        public void GoHome()
+        {
+            var dbRootUUID = WebUtility.UrlEncode(_dbTree.Group.UUID);
+            _navigationService.UriFor<EntryGroupListViewModel>().WithParam(vm => vm.GroupId, dbRootUUID).Navigate();
         }
     }
 }
