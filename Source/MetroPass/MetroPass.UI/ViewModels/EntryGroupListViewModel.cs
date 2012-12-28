@@ -158,6 +158,14 @@ namespace MetroPass.UI.ViewModels
                 await rootDialog.ShowAsync();
                 return;
             }
+
+            if (_dbTree.MetaData.RecycleBinEnabled && Root.UUID == _dbTree.MetaData.RecycleBinUUID)
+            {
+                var recycleMessage = String.Format("The folder you are trying to delete is set as your Recycle Bin.{0}To delete this folder either choose another folder as your Recycle Bin,{0}or disable the Recycle Bin setting in your database options.", Environment.NewLine);
+                var recycleDialog = new MessageDialog(recycleMessage, "Can not delete recycle bin");
+                await recycleDialog.ShowAsync();
+                return;
+            }
             
             var confirmMessage = String.Format("Are you sure you want to delete the {0} folder?{1}This will delete all of its contents too, which means all of the passwords and folders{1}you see now on the screen.", Root.Name, Environment.NewLine);
             var confirmDialog = new MessageDialog(confirmMessage, "Confirm Delete");
