@@ -3,50 +3,26 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:MetroPass.UI.Views"
-  
+    
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     d:DesignHeight="800"
     d:DesignWidth="400"
     >
-    <UserControl.Resources>
-        
-        <Style x:Key="SettingsSectionHeader" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="24" />
-            <Setter Property="FontFamily" Value="Segoe UI" />
-            <Setter Property="Foreground" Value="{StaticResource MainAppColor}" />
-            <Setter Property="Margin" Value="0 10 0 0" />
-        </Style>
-        <Style x:Key="SettingLabel" TargetType="TextBlock">
-            <Setter Property="Foreground" Value="Black" />
-            <Setter Property="FontSize" Value="16" />
-            <Setter Property="Margin" Value="0 15 0 5" />
-        </Style>
-        <Style x:Key="SettingToggle" BasedOn="{StaticResource ToggleLight}" TargetType="ToggleSwitch">
-            <Setter Property="FontSize" Value="16" />
-            <Setter Property="Foreground" Value="Black" />
-        </Style>
-        <Style x:Key="SettingsSection" TargetType="Border">
-            <Setter Property="BorderBrush" Value="{StaticResource MainAppColor}" />
-            <Setter Property="BorderThickness" Value="0 0 0 2" />
-            <Setter Property="Padding" Value="0 0 0 10" />
-            <Setter Property="Width" Value="300" />
-        </Style>
 
-    </UserControl.Resources>
     <Grid Background="White">
         <StackPanel Orientation="Vertical">
             <!-- Recycle Bin settings -->
-            <Border Style="{StaticResource SettingsSection}">
+            <Border Style="{StaticResource FlyoutSection}">
                 <StackPanel>
-                    <TextBlock Text="Recycle Bin" Style="{StaticResource SettingsSectionHeader}" />
-                    <TextBlock Text="Recycle Bin enabled:" Style="{StaticResource SettingLabel}" />
-   
-                    <ToggleSwitch x:Name="RecycleBinSwitch" IsOn="{Binding RecycleBinEnabled, Mode=TwoWay}" OnContent="Yes" OffContent="No" Style="{StaticResource SettingToggle}" />
+                    <TextBlock Text="Recycle Bin" Style="{StaticResource FlyoutSectionHeader}" />
+                    <TextBlock Text="Recycle Bin enabled:" Style="{StaticResource FlyoutLabel}" />
+
+                    <ToggleSwitch x:Name="RecycleBinSwitch" IsOn="{Binding RecycleBinEnabled, Mode=TwoWay}" OnContent="Yes" OffContent="No" Style="{StaticResource FlyoutToggle}" />
                     <StackPanel Orientation="Vertical"
                                 Visibility="{Binding IsOn, ElementName=RecycleBinSwitch, Converter={StaticResource BoolVisibilityConverter}}">
-                        <TextBlock Text="Recycle Bin:" Style="{StaticResource SettingLabel}" />
+                        <TextBlock Text="Recycle Bin:" Style="{StaticResource FlyoutLabel}" />
                         <ComboBox DisplayMemberPath="DisplayName"
                                   ItemsSource="{Binding AvailableGroups}" 
                                   SelectedItem="{Binding SelectedRecycleBinGroup, Mode=TwoWay}" />
@@ -55,21 +31,21 @@
             </Border>
 
             <!-- Security settings -->
-            <Border Style="{StaticResource SettingsSection}">
+            <Border Style="{StaticResource FlyoutSection}">
                 <StackPanel>
-                    <TextBlock Text="Security" Style="{StaticResource SettingsSectionHeader}" />
-                    <TextBlock Text="Lock after inactivity" Style="{StaticResource SettingLabel}" />
-                    <ToggleSwitch x:Name="LockDatabaseAfterInactivitySwitch" Visibility="Visible" IsOn="{Binding LockDatabaseAfterInactivityEnabled, Mode=TwoWay}" OnContent="Yes" OffContent="No" Style="{StaticResource SettingToggle}" />
+                    <TextBlock Text="Security" Style="{StaticResource FlyoutSectionHeader}" />
+                    <TextBlock Text="Lock after inactivity" Style="{StaticResource FlyoutLabel}" />
+                    <ToggleSwitch x:Name="LockDatabaseAfterInactivitySwitch" Visibility="Visible" IsOn="{Binding LockDatabaseAfterInactivityEnabled, Mode=TwoWay}" OnContent="Yes" OffContent="No" Style="{StaticResource FlyoutToggle}" />
                     <StackPanel Orientation="Vertical" Visibility="{Binding IsOn, ElementName=LockDatabaseAfterInactivitySwitch, Converter={StaticResource BoolVisibilityConverter}}">
-                        <TextBlock Text="{Binding MinutesToLockDatabase, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0} minute(s)'}"  Style="{StaticResource SettingLabel}"></TextBlock>
+                        <TextBlock Text="{Binding MinutesToLockDatabase, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0} minute(s)'}"  Style="{StaticResource FlyoutLabel}"></TextBlock>
                         <Slider Style="{StaticResource SliderLight}" Width="250" Minimum="1" Maximum="60" StepFrequency="1" Value="{Binding MinutesToLockDatabase, Mode=TwoWay}" IsThumbToolTipEnabled="False"/>
                     </StackPanel>
                 
-                    <TextBlock Text="Clear clipboard" Style="{StaticResource SettingLabel}" />
-                    <ToggleSwitch x:Name="ClearClipboardSwitch" IsOn="{Binding SecondsToClearClipboardEnabled, Mode=TwoWay}" OnContent="Yes" OffContent="No" Style="{StaticResource SettingToggle}" />
+                    <TextBlock Text="Clear clipboard" Style="{StaticResource FlyoutLabel}" />
+                    <ToggleSwitch x:Name="ClearClipboardSwitch" IsOn="{Binding SecondsToClearClipboardEnabled, Mode=TwoWay}" OnContent="Yes" OffContent="No" Style="{StaticResource FlyoutToggle}" />
                     <StackPanel Orientation="Vertical" Visibility="{Binding IsOn, ElementName=ClearClipboardSwitch, Converter={StaticResource BoolVisibilityConverter}}">
 
-                        <TextBlock Text="{Binding SecondsToClearClipboard, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0} seconds'}"  Style="{StaticResource SettingLabel}"></TextBlock>
+                        <TextBlock Text="{Binding SecondsToClearClipboard, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0} seconds'}"  Style="{StaticResource FlyoutLabel}"></TextBlock>
                         <Slider Style="{StaticResource SliderLight}" Width="250" Minimum="10" Maximum="60" StepFrequency="1" Value="{Binding SecondsToClearClipboard, Mode=TwoWay}" IsThumbToolTipEnabled="False"/>
                     </StackPanel>
                 </StackPanel>

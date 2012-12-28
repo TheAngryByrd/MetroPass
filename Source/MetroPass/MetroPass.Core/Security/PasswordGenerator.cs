@@ -1,19 +1,13 @@
 using System;
 using System.Threading.Tasks;
+using MetroPass.Core.Interfaces;
 using Windows.Security.Cryptography;
 
 namespace MetroPass.Core.Security
 {
-    public class PasswordGenerator
+    public class PasswordGenerator : IPasswordGenerator
     {
-        public const string Uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        public const string Lowercase = "abcdefhijklmnopqrstuvwxyz";
-        public const string Digits = "0123456789";
-        public const string Minus = "-";
-        public const string Underscore = "_";
-        public const string Space = " ";
-        public const string Special = "!@#$%^&*+=?,.";
-        public const string Brackets = "(){}[]<>";
+      
 
         public Task<string> GeneratePasswordAsync(int length, string[] characterSet, string charactersToExclude = null)
         {
@@ -39,7 +33,7 @@ namespace MetroPass.Core.Security
             return retVal;
         }
     
-        private string ExcludeCharactersFromString(string charactersToExclude, string joinedCharacterSet)
+        public string ExcludeCharactersFromString(string charactersToExclude, string joinedCharacterSet)
         {
             if (!string.IsNullOrEmpty(charactersToExclude))
             {
@@ -51,7 +45,7 @@ namespace MetroPass.Core.Security
             return joinedCharacterSet;
         }
     
-        private int GenerateRandomNumber(int max)
+        public int GenerateRandomNumber(int max)
         {
             return Math.Abs((int)CryptographicBuffer.GenerateRandomNumber()) % (max);
         }

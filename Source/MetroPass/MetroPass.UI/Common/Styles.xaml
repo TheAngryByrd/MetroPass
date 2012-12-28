@@ -883,4 +883,28 @@
         <Setter Property="Margin" Value="0,0,10,0"/>
     </Style>
 
+
+    <!--Page flyout styles-->
+
+    <Style x:Key="FlyoutSectionHeader" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="24" />
+        <Setter Property="FontFamily" Value="Segoe UI" />
+        <Setter Property="Foreground" Value="{StaticResource MainAppColor}" />
+        <Setter Property="Margin" Value="0 10 0 0" />
+    </Style>
+    <Style x:Key="FlyoutLabel" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="Margin" Value="0 15 0 5" />
+    </Style>
+    <Style x:Key="FlyoutToggle" BasedOn="{StaticResource ToggleLight}" TargetType="ToggleSwitch">
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="Foreground" Value="Black" />
+    </Style>
+    <Style x:Key="FlyoutSection" TargetType="Border">
+        <Setter Property="BorderBrush" Value="{StaticResource MainAppColor}" />
+        <Setter Property="BorderThickness" Value="0 0 0 2" />
+        <Setter Property="Padding" Value="0 0 0 10" />
+        <Setter Property="Width" Value="300" />
+    </Style>
 </ResourceDictionary>
