@@ -5,6 +5,7 @@ using MetroPass.Core.Interfaces;
 using MetroPass.Core.Model;
 using MetroPass.UI.DataModel;
 using MetroPass.UI.Views;
+using Windows.UI.Xaml.Media;
 
 namespace MetroPass.UI.ViewModels
 {
@@ -148,6 +149,12 @@ namespace MetroPass.UI.ViewModels
                 _canSave = value;
                 NotifyOfPropertyChange(() => CanSave);
             }
+        }
+
+        public async void Generate()
+        {
+            var settingsColor = App.Current.Resources["MainAppColor"] as SolidColorBrush;
+            DialogService.ShowSettings<PasswordGeneratorViewModel>(headerBrush: settingsColor);
         }
 
         public async void Save()

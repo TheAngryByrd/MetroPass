@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Caliburn.Micro;
 using MetroPass.Core.Interfaces;
+using MetroPass.Core.Security;
 using MetroPass.UI.Common;
 using MetroPass.UI.DataModel;
 using MetroPass.UI.Services;
@@ -96,6 +97,7 @@ namespace MetroPass.UI
             _ninjectContainer.RegisterWinRTServices();
 
             _ninjectContainer.Kernel.Bind<IPageServices>().To<PageServices>();
+            _ninjectContainer.Kernel.Bind<IPasswordGenerator>().To<PasswordGenerator>();
   
             _ninjectContainer.Kernel.Bind<ILockingService>().To<LockingService>();
             _ninjectContainer.Kernel.Bind<IClipboard>().To<MetroClipboard>();

@@ -15,6 +15,7 @@ namespace MetroPass.UI.ViewModels
         public PasswordGeneratorViewModel(IPasswordGenerator passwordGenerator)
         {
             this.passwordGenerator = passwordGenerator;
+            this.DisplayName = "Generator";
         }
 
 
