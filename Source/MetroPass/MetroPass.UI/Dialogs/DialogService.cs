@@ -1,5 +1,6 @@
 ﻿using System;
 using Callisto.Controls;
+using MetroPass.UI.ViewModels;
 using Windows.UI.ApplicationSettings;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -44,7 +45,7 @@ namespace Caliburn.Micro
             var viewModelAndView = CreateViewModelAndView(onInitialize);
             var vm = viewModelAndView.Item1;
             var view = viewModelAndView.Item2;
-
+            
             var f = new SettingsFlyout
             {
                 HeaderText = vm.DisplayName,
@@ -61,6 +62,31 @@ namespace Caliburn.Micro
             if (onClosed != null)
                 f.Closed += (sender, o) => onClosed(vm, view);
         }
+
+        public static void ShowSettings<T>(BaseScreen currentScreen, Action<T> onInitialize = null, Action<T, UIElement> onClosed = null, SolidColorBrush headerBrush = null, SolidColorBrush backgroundBrush = null) where T : Screen
+        {
+            Action<T> newInit = a =>
+            {
+                currentScreen.IsAdVisible = false;
+                if (onInitialize != null)
+                {
+                    onInitialize(a);
+                }                
+            };
+            Action<T, UIElement> newClose = (t,ui) =>
+            {
+                if (onClosed != null)
+                {
+                    onClosed(t, ui);
+                }          
+                currentScreen.IsAdVisible = true;
+            };
+
+            DialogService.ShowSettings(newInit, newClose, headerBrush, backgroundBrush);
+        }
+
+    
+
 
         /// <summary>
         /// Shows a dialog
