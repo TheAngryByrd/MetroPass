@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Caliburn.Micro;
 using MetroPass.Core.Interfaces;
+using MetroPass.Core.Security;
 using MetroPass.UI.ViewModels.Messages;
 
 namespace MetroPass.UI.ViewModels
@@ -23,29 +25,28 @@ namespace MetroPass.UI.ViewModels
             this.Length = 6;
         }
 
-
         private bool capitals;
 
-        public bool CapitalSwitch
+        public bool UppercaseSwitch
         {
             get { return capitals; }
             set 
             { 
                 capitals = value;
-                NotifyOfPropertyChange(() => CapitalSwitch);
+                NotifyOfPropertyChange(() => UppercaseSwitch);
             }
         }
 
 
         private bool lowers;
 
-        public bool LowerSwitch
+        public bool LowercaseSwitch
         {
             get { return lowers; }
             set
             {
                 lowers = value;
-                NotifyOfPropertyChange(() => LowerSwitch);
+                NotifyOfPropertyChange(() => LowercaseSwitch);
             }
         }
 
@@ -130,8 +131,17 @@ namespace MetroPass.UI.ViewModels
         }  
           
 
-        public void Generate()
+        public async void Generate()
         {
+          
+            var onSwitches = this.GetType().GetRuntimeProperties().Where(p => p.Name.Contains("Switch") && (bool)p.GetValue(this) == true);
+            List<string> characterSets = new List<string>();
+            foreach (var item in onSwitches)
+            {
+
+                characterSets.Add(PasswordGeneratorCharacterSets.CharacterMap[item.Name.Replace("Switch", "")]);
+            }
+
             events.Publish(new PasswordGenerateMessage
             {
                 GeneratedPassword = "Hello"
