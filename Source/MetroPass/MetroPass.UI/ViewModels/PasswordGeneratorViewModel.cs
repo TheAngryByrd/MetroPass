@@ -27,6 +27,8 @@ namespace MetroPass.UI.ViewModels
 
         private bool capitals;
 
+    
+
         public bool UppercaseSwitch
         {
             get { return capitals; }
@@ -36,7 +38,6 @@ namespace MetroPass.UI.ViewModels
                 NotifyOfPropertyChange(() => UppercaseSwitch);
             }
         }
-
 
         private bool lowers;
 
@@ -133,19 +134,42 @@ namespace MetroPass.UI.ViewModels
 
         public async void Generate()
         {
-          
-            var onSwitches = this.GetType().GetRuntimeProperties().Where(p => p.Name.Contains("Switch") && (bool)p.GetValue(this) == true);
+            var onSwitches = OnSwitches();
+            List<string> characterSets = MapSwitchesToCharacterSets(onSwitches);
+
+            var password = await GeneratePassword(characterSets);
+
+            SendMessageToEntryEditScreen(password); 
+        }
+
+        public async Task<string> GeneratePassword(List<string> characterSets)
+        {
+            var password = await passwordGenerator.GeneratePasswordAsync(Length, characterSets.ToArray());
+            return password;
+        }
+  
+        public void SendMessageToEntryEditScreen(string password)
+        {
+            events.Publish(new PasswordGenerateMessage
+            {
+                GeneratedPassword = password
+            });
+        }
+  
+        public List<string> MapSwitchesToCharacterSets(IEnumerable<PropertyInfo> onSwitches)
+        {
             List<string> characterSets = new List<string>();
             foreach (var item in onSwitches)
             {
-
                 characterSets.Add(PasswordGeneratorCharacterSets.CharacterMap[item.Name.Replace("Switch", "")]);
             }
-
-            events.Publish(new PasswordGenerateMessage
-            {
-                GeneratedPassword = "Hello"
-            }); 
+            return characterSets;
+        }
+  
+        public IEnumerable<PropertyInfo> OnSwitches()
+        {
+            var onSwitches = this.GetType().GetRuntimeProperties().Where(p => p.Name.Contains("Switch") && (bool)p.GetValue(this) == true);
+            return onSwitches;
         }
 
     }
