@@ -31,6 +31,9 @@ namespace MetroPass.UI
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+            ConventionManager.AddElementConvention<ToggleSwitch>(ToggleSwitch.IsOnProperty, "IsOn", "Toggled");    
+            ConventionManager.AddElementConvention<Slider>(Slider.ValueProperty, "Value", "ValueChanged");
+            
         }
 
         protected override void OnWindowCreated(Windows.UI.Xaml.WindowCreatedEventArgs args)
@@ -53,13 +56,16 @@ namespace MetroPass.UI
             {
                 if (PWDatabaseDataSource.Instance.PwDatabase != null)
                 {
-                    DialogService.ShowSettings<SettingsViewModel>(GetBaseScreen(), onClosed: SettingsClosed, headerBrush: settingsColor);
+                    DialogService.ShowFlyout<SettingsViewModel>(GetBaseScreen(), onClosed: SettingsClosed, headerBrush: settingsColor);
                 }else
                 {
-                    DialogService.ShowSettings<DatabaseClosedSettingsViewModel>(GetBaseScreen(), headerBrush: settingsColor);
+                    DialogService.ShowFlyout<DatabaseClosedSettingsViewModel>(GetBaseScreen(), headerBrush: settingsColor);
                 }
             });
             args.Request.ApplicationCommands.Add(optionsCommand);
+
+        
+
         }
   
         private void SettingsClosed(SettingsViewModel s, UIElement v)
