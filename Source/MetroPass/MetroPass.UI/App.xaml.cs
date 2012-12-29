@@ -53,10 +53,10 @@ namespace MetroPass.UI
             {
                 if (PWDatabaseDataSource.Instance.PwDatabase != null)
                 {
-                    DialogService.ShowSettings<SettingsViewModel>(onInitialize: (s) => { SetAds(false); }, onClosed: SettingsClosed, headerBrush: settingsColor);
+                    DialogService.ShowSettings<SettingsViewModel>(GetBaseScreen(), onClosed: SettingsClosed, headerBrush: settingsColor);
                 }else
                 {
-                    DialogService.ShowSettings<DatabaseClosedSettingsViewModel>(onInitialize: (s) => { SetAds(false); }, onClosed: (s, v) => { SetAds(true); }, headerBrush: settingsColor);
+                    DialogService.ShowSettings<DatabaseClosedSettingsViewModel>(GetBaseScreen(), headerBrush: settingsColor);
                 }
             });
             args.Request.ApplicationCommands.Add(optionsCommand);
@@ -64,18 +64,23 @@ namespace MetroPass.UI
   
         private void SettingsClosed(SettingsViewModel s, UIElement v)
         {
-            SetAds(true);
             SaveSettings(s, v);
         }
 
         private void SetAds(bool value)
-        {     
-            var baseScreen = (RootFrame.Content as Page).DataContext as BaseScreen;
+        { 
+            var baseScreen = GetBaseScreen();
 
             if (baseScreen != null)
             {
                 baseScreen.IsAdVisible = value;         
             }
+        }
+  
+        private BaseScreen GetBaseScreen()
+        {
+            var baseScreen = (RootFrame.Content as Page).DataContext as BaseScreen;
+            return baseScreen;
         }
 
         private void SaveSettings(SettingsViewModel settingsViewModel, UIElement _)
