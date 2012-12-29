@@ -64,7 +64,7 @@ namespace MetroPass.Core.Tests
             var length = 5;
 
             PasswordGenerator generator = new PasswordGenerator();
-            string[] characterSet = new string[] { PasswordGeneratorCharacterSets.Uppercase, PasswordGeneratorCharacterSets.Lowercase, PasswordGeneratorCharacterSets.Digits };
+            string[] characterSet = new string[] { PasswordGeneratorCharacterSets.Uppercase, PasswordGeneratorCharacterSets.Lowercase, PasswordGeneratorCharacterSets.Digit };
             string password = await generator.GeneratePasswordAsync(length, characterSet);
 
             Assert.AreEqual(length, password.Length);
