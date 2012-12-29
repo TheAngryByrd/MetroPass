@@ -4,22 +4,24 @@ using System.Linq;
 using MetroPass.Core.Interfaces;
 using MetroPass.Core.Model;
 using MetroPass.UI.DataModel;
+using MetroPass.UI.ViewModels.Messages;
 using MetroPass.UI.Views;
 using Windows.UI.Xaml.Media;
 
 namespace MetroPass.UI.ViewModels
 {
-    public class EntryEditViewModel : BaseScreen
+    public class EntryEditViewModel : BaseScreen, IHandle<PasswordGenerateMessage>
     {
         private readonly INavigationService _navigationService;
         private bool _loadingData = true;
 
         private readonly IKdbTree _dbTree;
 
-        public EntryEditViewModel(IKdbTree dbTree, INavigationService navigationService) : base(navigationService)
+        public EntryEditViewModel(IKdbTree dbTree, INavigationService navigationService, IEventAggregator events) : base(navigationService)
         {
             _dbTree = dbTree;
             _navigationService = navigationService;
+            events.Subscribe(this);
         }
 
         private string _entryID;
@@ -154,7 +156,7 @@ namespace MetroPass.UI.ViewModels
         public async void Generate()
         {
             var settingsColor = App.Current.Resources["MainAppColor"] as SolidColorBrush;
-            DialogService.ShowSettings<PasswordGeneratorViewModel>(this,headerBrush: settingsColor);
+            DialogService.ShowFlyout<PasswordGeneratorViewModel>(this,headerBrush: settingsColor);
         }
 
         public async void Save()
@@ -167,6 +169,12 @@ namespace MetroPass.UI.ViewModels
             Entry.Notes = Notes;
             await PWDatabaseDataSource.Instance.SavePwDatabase();
             _navigationService.GoBack();
+        }
+
+        public void Handle(PasswordGenerateMessage message)
+        {
+            Password = message.GeneratedPassword;
+            Confirm = message.GeneratedPassword;
         }
     }
 }
