@@ -138,6 +138,7 @@
     <Compile Include="Dialogs\DialogService.cs" />
     <Compile Include="Services\ILockingService.cs" />
     <Compile Include="Services\LockingService.cs" />
+    <Compile Include="UserControls\NumberBox.cs" />
     <Compile Include="ViewModels\AddEntryViewModel.cs" />
     <Compile Include="ViewModels\AddGroupViewModel.cs" />
     <Compile Include="ViewModels\AdGroup.cs" />
@@ -318,6 +319,7 @@
       <Name>Microsoft Advertising SDK for Windows 8 %28Xaml%29</Name>
     </SDKReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">
     <VisualStudioVersion>11.0</VisualStudioVersion>
   </PropertyGroup>
