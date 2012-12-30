@@ -1,16 +1,17 @@
-﻿using Caliburn.Micro;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
+using System.Xml.Linq;
+using Caliburn.Micro;
 using Framework;
 using MetroPass.Core.Exceptions;
 using MetroPass.Core.Interfaces;
 using MetroPass.Core.Model;
 using MetroPass.UI.DataModel;
 using MetroPass.UI.Services;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Net;
-using System.Xml.Linq;
 using Windows.UI.Popups;
 
 namespace MetroPass.UI.ViewModels
@@ -115,18 +116,7 @@ namespace MetroPass.UI.ViewModels
 
         public async void DeleteEntry()
         {
-            var confirmMessage = String.Format("Are you sure you want to delete the password for {0}?", ((PwEntry)SelectedPasswordItem).Title);
-            var confirmDialog = new MessageDialog(confirmMessage, "Confirm Delete");
-            bool result = false;
-
-            confirmDialog.Commands.Add(new UICommand("Yes", (cmd) => result = true));
-            confirmDialog.Commands.Add(new UICommand("No", (cmd) => result = false));
-            confirmDialog.DefaultCommandIndex = 0;
-            confirmDialog.CancelCommandIndex = 1;
-
-            await confirmDialog.ShowAsync();
-
-            if (result)
+            if (await ConfirmDeletePassword())
             {
                 if (_dbTree.MetaData.RecycleBinEnabled && !PasswordIsInRecycleBin)
                 {
@@ -151,34 +141,10 @@ namespace MetroPass.UI.ViewModels
 
         public async void DeleteGroup()
         {
-            if (Root.UUID == _dbTree.Group.UUID)
-            {
-                var rootMessage = String.Format("{0} is the top folder in your database, which you cannot delete.{1}Doing so would delete the entire database.{1}To delete your database simply delete the database file from your system.", Root.Name, Environment.NewLine);
-                var rootDialog = new MessageDialog(rootMessage, "Can not delete database");
-                await rootDialog.ShowAsync();
-                return;
-            }
-
-            if (_dbTree.MetaData.RecycleBinEnabled && Root.UUID == _dbTree.MetaData.RecycleBinUUID)
-            {
-                var recycleMessage = String.Format("The folder you are trying to delete is set as your Recycle Bin.{0}To delete this folder either choose another folder as your Recycle Bin,{0}or disable the Recycle Bin setting in your database options.", Environment.NewLine);
-                var recycleDialog = new MessageDialog(recycleMessage, "Can not delete recycle bin");
-                await recycleDialog.ShowAsync();
-                return;
-            }
-            
-            var confirmMessage = String.Format("Are you sure you want to delete the {0} folder?{1}This will delete all of its contents too, which means all of the passwords and folders{1}you see now on the screen.", Root.Name, Environment.NewLine);
-            var confirmDialog = new MessageDialog(confirmMessage, "Confirm Delete");
-            bool result = false;
-
-            confirmDialog.Commands.Add(new UICommand("Yes", (cmd) => result = true));
-            confirmDialog.Commands.Add(new UICommand("No", (cmd) => result = false));
-            confirmDialog.DefaultCommandIndex = 0;
-            confirmDialog.CancelCommandIndex = 1;
-
-            await confirmDialog.ShowAsync();
-
-            if (result)
+            if (
+                await VerifyNotTopFolder() &&
+                await VerifyNotDeletingRecycleBin() &&
+                await ConfirmDeleteFolder())
             {
                 if (_dbTree.MetaData.RecycleBinEnabled)
                 {
@@ -197,6 +163,59 @@ namespace MetroPass.UI.ViewModels
         {
             var dbRootUUID = WebUtility.UrlEncode(_dbTree.Group.UUID);
             _navigationService.UriFor<EntryGroupListViewModel>().WithParam(vm => vm.GroupId, dbRootUUID).Navigate();
+        }
+
+        private async Task<bool> VerifyNotTopFolder()
+        {
+            if (Root.UUID == _dbTree.Group.UUID)
+            {
+                var rootMessage = String.Format("{0} is the top folder in your database, which you cannot delete.{1}Doing so would delete the entire database.{1}To delete your database simply delete the database file from your system.", Root.Name, Environment.NewLine);
+                var rootDialog = new MessageDialog(rootMessage, "Can not delete database");
+                await rootDialog.ShowAsync();
+                return false;
+            }
+            return true;
+        }
+
+        private async Task<bool> VerifyNotDeletingRecycleBin()
+        {
+            if (_dbTree.MetaData.RecycleBinEnabled && Root.UUID == _dbTree.MetaData.RecycleBinUUID)
+            {
+                var recycleMessage = String.Format("The folder you are trying to delete is set as your Recycle Bin.{0}To delete this folder either choose another folder as your Recycle Bin,{0}or disable the Recycle Bin setting in your database options.", Environment.NewLine);
+                var recycleDialog = new MessageDialog(recycleMessage, "Can not delete recycle bin");
+                await recycleDialog.ShowAsync();
+                return false;
+            }
+            return true;
+        }
+
+        private async Task<bool> ConfirmDeletePassword()
+        {
+            var confirmMessage = String.Format("Are you sure you want to delete the password for {0}?", ((PwEntry)SelectedPasswordItem).Title);
+            var confirmDialog = new MessageDialog(confirmMessage, "Confirm Delete");
+            bool result = false;
+
+            confirmDialog.Commands.Add(new UICommand("Yes", (cmd) => result = true));
+            confirmDialog.Commands.Add(new UICommand("No", (cmd) => result = false));
+            confirmDialog.DefaultCommandIndex = 0;
+            confirmDialog.CancelCommandIndex = 1;
+
+            await confirmDialog.ShowAsync();
+            return result;
+        }
+        private async Task<bool> ConfirmDeleteFolder()
+        {
+            var confirmMessage = String.Format("Are you sure you want to delete the {0} folder?{1}This will delete all of its contents too, which means all of the passwords and folders{1}you see now on the screen.", Root.Name, Environment.NewLine);
+            var confirmDialog = new MessageDialog(confirmMessage, "Confirm Delete");
+            bool result = false;
+
+            confirmDialog.Commands.Add(new UICommand("Yes", (cmd) => result = true));
+            confirmDialog.Commands.Add(new UICommand("No", (cmd) => result = false));
+            confirmDialog.DefaultCommandIndex = 0;
+            confirmDialog.CancelCommandIndex = 1;
+
+            await confirmDialog.ShowAsync();
+            return result;
         }
     }
 }
