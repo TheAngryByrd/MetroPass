@@ -22,7 +22,7 @@
                     <ToggleSwitch x:Name="RecycleBinSwitch" IsOn="{Binding RecycleBinEnabled, Mode=TwoWay}" OnContent="Yes" OffContent="No" Style="{StaticResource FlyoutToggle}" />
                     <StackPanel Orientation="Vertical"
                                 Visibility="{Binding IsOn, ElementName=RecycleBinSwitch, Converter={StaticResource BoolVisibilityConverter}}">
-                        <TextBlock Text="Recycle Bin:" Style="{StaticResource FlyoutLabel}" />
+                        <TextBlock Text="Recycle Bin folder:" Style="{StaticResource FlyoutLabel}" />
                         <ComboBox DisplayMemberPath="DisplayName"
                                   ItemsSource="{Binding AvailableGroups}" 
                                   SelectedItem="{Binding SelectedRecycleBinGroup, Mode=TwoWay}" />
