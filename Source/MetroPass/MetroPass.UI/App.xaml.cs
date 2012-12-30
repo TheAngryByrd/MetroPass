@@ -52,7 +52,7 @@ namespace MetroPass.UI
             var supportCommand = new SettingsCommand("support", "Support & Feedback", a => LaunchUrl(SupportUrl));
             args.Request.ApplicationCommands.Add(supportCommand);
 
-            var optionsCommand = new SettingsCommand("metroPassOptions", "Options", h =>
+            var optionsCommand = new SettingsCommand("metroPassOptions", "Database Options", h =>
             {
                 if (PWDatabaseDataSource.Instance.PwDatabase != null)
                 {
