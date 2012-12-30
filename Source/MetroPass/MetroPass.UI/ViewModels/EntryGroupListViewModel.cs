@@ -116,7 +116,10 @@ namespace MetroPass.UI.ViewModels
 
         public async void DeleteEntry()
         {
-            if (await ConfirmDeletePassword())
+            if (
+                await ConfirmDeletePassword() &&
+                await VerifyRecylceBinAvailable()
+            )
             {
                 if (_dbTree.MetaData.RecycleBinEnabled && !PasswordIsInRecycleBin)
                 {
@@ -144,6 +147,7 @@ namespace MetroPass.UI.ViewModels
             if (
                 await VerifyNotTopFolder() &&
                 await VerifyNotDeletingRecycleBin() &&
+                await VerifyRecylceBinAvailable() &&
                 await ConfirmDeleteFolder())
             {
                 if (_dbTree.MetaData.RecycleBinEnabled)
@@ -187,6 +191,29 @@ namespace MetroPass.UI.ViewModels
                 return false;
             }
             return true;
+        }
+
+        private async Task<bool> VerifyRecylceBinAvailable()
+        {
+            var recycleBinFound = true;
+
+            if (_dbTree.MetaData.RecycleBinEnabled) {
+                try
+                {
+                    var recycleBinGroupElement = _dbTree.FindGroupByUuid(_dbTree.MetaData.RecycleBinUUID);
+                }
+                catch (Exception)
+                {
+                    recycleBinFound = false;
+                }
+                if (!recycleBinFound) {
+                    var message = String.Format("The Recycle Bin option is turned on in your database settings,{0}however MetroPass could not find the Recycle Bin folder.{0}Please check the settings and ensure a folder in your database is selected as the Recycle Bin.", Environment.NewLine);
+                    var dialog = new MessageDialog(message, "Can not delete recycle bin");
+                    await dialog.ShowAsync();
+                }
+            }
+
+            return recycleBinFound;
         }
 
         private async Task<bool> ConfirmDeletePassword()
