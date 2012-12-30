@@ -78,7 +78,7 @@ namespace MetroPass.UI.Tests.ViewModels
         {
             var vm = new PasswordGeneratorViewModel(null, null);
 
-            bool canGenerate = vm.CanGenerate();
+            bool canGenerate = vm.CanGenerate;
 
             Assert.IsFalse(canGenerate);
         }
@@ -88,7 +88,7 @@ namespace MetroPass.UI.Tests.ViewModels
         {
             var vm = new PasswordGeneratorViewModel(null, null);
             vm.BracketSwitch = true;
-            bool canGenerate = vm.CanGenerate();
+            bool canGenerate = vm.CanGenerate;
 
             Assert.IsTrue(canGenerate);
         }
