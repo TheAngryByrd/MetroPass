@@ -27,7 +27,7 @@ namespace MetroPass.UI.ViewModels
 
         private bool capitals;
 
-    
+        
 
         public bool UppercaseSwitch
         {
@@ -36,6 +36,7 @@ namespace MetroPass.UI.ViewModels
             { 
                 capitals = value;
                 NotifyOfPropertyChange(() => UppercaseSwitch);
+                NotifyOfPropertyChange(() => CanGenerate);
             }
         }
 
@@ -48,6 +49,7 @@ namespace MetroPass.UI.ViewModels
             {
                 lowers = value;
                 NotifyOfPropertyChange(() => LowercaseSwitch);
+                NotifyOfPropertyChange(() => CanGenerate);
             }
         }
 
@@ -60,6 +62,7 @@ namespace MetroPass.UI.ViewModels
             {
                 digits = value;
                 NotifyOfPropertyChange(() => DigitSwitch);
+                NotifyOfPropertyChange(() => CanGenerate);
             }
         }
 
@@ -72,6 +75,7 @@ namespace MetroPass.UI.ViewModels
             {
                 specials = value;
                 NotifyOfPropertyChange(() => SpecialSwitch);
+                NotifyOfPropertyChange(() => CanGenerate);
             }
         }  
         
@@ -84,6 +88,7 @@ namespace MetroPass.UI.ViewModels
             {
                 underscores = value;
                 NotifyOfPropertyChange(() => UnderscoreSwitch);
+                NotifyOfPropertyChange(() => CanGenerate);
             }
         }  
         private bool spaces;
@@ -95,6 +100,7 @@ namespace MetroPass.UI.ViewModels
             {
                 spaces = value;
                 NotifyOfPropertyChange(() => SpaceSwitch);
+                NotifyOfPropertyChange(() => CanGenerate);
             }
         }  
         private bool minuses;
@@ -106,6 +112,7 @@ namespace MetroPass.UI.ViewModels
             {
                 minuses = value;
                 NotifyOfPropertyChange(() => MinusSwitch);
+                NotifyOfPropertyChange(() => CanGenerate);
             }
         }  
         private bool brackets;
@@ -117,6 +124,7 @@ namespace MetroPass.UI.ViewModels
             {
                 brackets = value;
                 NotifyOfPropertyChange(() => BracketSwitch);
+                NotifyOfPropertyChange(() => CanGenerate);
             }
         }  
         private int length;
@@ -128,9 +136,18 @@ namespace MetroPass.UI.ViewModels
             {
                 length = value;
                 NotifyOfPropertyChange(() => Length);
+                NotifyOfPropertyChange(() => CanGenerate);
             }
-        }  
-          
+        }
+
+        public bool CanGenerate
+        {
+            get
+            {
+                return OnSwitches().Count() > 0;
+            }
+        }
+        
 
         public async void Generate()
         {

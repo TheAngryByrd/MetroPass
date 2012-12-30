@@ -72,5 +72,25 @@ namespace MetroPass.UI.Tests.ViewModels
             var message = mockEventAggregator.Message as PasswordGenerateMessage;
             Assert.AreEqual(password, message.GeneratedPassword);
         }
+
+        [TestMethod]
+        public void ShouldDisableGenereateIfNoSwitchesAreOn()
+        {
+            var vm = new PasswordGeneratorViewModel(null, null);
+
+            bool canGenerate = vm.CanGenerate();
+
+            Assert.IsFalse(canGenerate);
+        }
+
+        [TestMethod]
+        public void ShouldEnabledGenerateIfASwitchIsOn()
+        {
+            var vm = new PasswordGeneratorViewModel(null, null);
+            vm.BracketSwitch = true;
+            bool canGenerate = vm.CanGenerate();
+
+            Assert.IsTrue(canGenerate);
+        }
     }
 }
