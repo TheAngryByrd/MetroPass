@@ -7,74 +7,7 @@
     <SolidColorBrush x:Key="MainFolderColor" Color="#003847" />
     <SolidColorBrush x:Key="MainEntryColor" Color="#006A87" />
     <SolidColorBrush x:Key="MainHighlightColor" Color="#C05E00" />
-    
-    <Style x:Key="ActionButton" TargetType="Button">
-        <Setter Property="Background" Value="{StaticResource MainHighlightColor}" />
-        <Setter Property="Foreground" Value="White" />
-    </Style>
-    
-    <ItemsPanelTemplate x:Key="HorizontalItemPanelTemplate">
-        <VirtualizingStackPanel Orientation="Horizontal"/>
-    </ItemsPanelTemplate>
-    <ItemsPanelTemplate x:Key="VerticalItemPanelTemplate">
-        <VirtualizingStackPanel Orientation="Vertical"/>
-    </ItemsPanelTemplate>
-    
-    <Style x:Key="IconFontStyle" TargetType="TextBlock">
-        <Setter Property="FontFamily" Value="Segoe UI Symbol" />
-        <Setter Property="FontSize" Value="32" />
-        <Setter Property="Width" Value="40" />
-        <Setter Property="Height" Value="40" />
-        <Setter Property="TextAlignment" Value="Center" />
-        <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="Margin" Value="15,15,15,15" />
-    </Style>
 
-    <Style x:Key="FolderTitleStyle" TargetType="TextBlock">
-        <Setter Property="FontWeight" Value="SemiBold"/>
-        <Setter Property="LineHeight" Value="20"/>
-        <Setter Property="LineStackingStrategy" Value="BlockLineHeight"/>
-        <Setter Property="Foreground" Value="{StaticResource ApplicationForegroundThemeBrush}"/>
-        <Setter Property="FontSize" Value="{StaticResource ControlContentThemeFontSize}"/>
-        <Setter Property="FontFamily" Value="{StaticResource ContentControlThemeFontFamily}"/>
-        <Setter Property="TextTrimming" Value="WordEllipsis"/>
-        <Setter Property="TextWrapping" Value="Wrap"/>
-        <Setter Property="Typography.StylisticSet20" Value="True"/>
-        <Setter Property="Typography.DiscretionaryLigatures" Value="True"/>
-        <Setter Property="Typography.CaseSensitiveForms" Value="True"/>
-        <!-- Properly align text along its baseline -->
-        <Setter Property="RenderTransform">
-            <Setter.Value>
-                <TranslateTransform X="-1" Y="2"/>
-            </Setter.Value>
-        </Setter>
-        
-        <Setter Property="Margin" Value="10,0,0,0"/>
-        <Setter Property="VerticalAlignment" Value="Center"/>
-    </Style>
-
-    <Style x:Key="GridViewHeaderNormalStyle" TargetType="TextBlock">
-        <Setter Property="FontFamily" Value="{StaticResource ContentControlThemeFontFamily}"/>
-        <Setter Property="TextTrimming" Value="WordEllipsis"/>
-        <Setter Property="TextWrapping" Value="NoWrap"/>
-        <Setter Property="Typography.StylisticSet20" Value="True"/>
-        <Setter Property="Typography.DiscretionaryLigatures" Value="True"/>
-        <Setter Property="Typography.CaseSensitiveForms" Value="True"/>
-        <Setter Property="FontSize" Value="26.667"/>
-        <Setter Property="LineStackingStrategy" Value="BlockLineHeight"/>
-        <Setter Property="FontWeight" Value="Light"/>
-        <Setter Property="LineHeight" Value="30"/>
-        <Setter Property="RenderTransform">
-            <Setter.Value>
-                <TranslateTransform X="-1" Y="6"/>
-            </Setter.Value>
-        </Setter>
-    </Style>
-    
-    <Style x:Key="GridViewHeaderRootStyle" TargetType="TextBlock" BasedOn="{StaticResource GridViewHeaderNormalStyle}">
-        <Setter Property="Foreground" Value="{StaticResource MainHighlightColor}"/>
-        <Setter Property="FontWeight" Value="SemiBold"/>
-    </Style>
 
     <Style x:Key="ToggleLight" TargetType="ToggleSwitch">
         <Setter Property="Foreground" Value="#FF000000" />
@@ -301,7 +234,7 @@
                                     <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
                                 <ContentPresenter x:Name="OffContentPresenter"
-                                              MinWidth="65"
+                                              MinWidth="45"
                                               Margin="6,5,0,16"
                                               Opacity="0"
                                               IsHitTestVisible="False"
@@ -310,7 +243,7 @@
                                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
                                 <ContentPresenter x:Name="OnContentPresenter"
-                                              MinWidth="65"
+                                              MinWidth="45"
                                               Margin="6,5,0,16"
                                               Opacity="0"
                                               IsHitTestVisible="False"
@@ -376,6 +309,115 @@
                             </Grid>
                         </Grid>
                     </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style> 
+
+    <Style x:Name="ButtonLight" TargetType="Button">
+        <Setter Property="Background" Value="#B3B6B6B6" />
+        <Setter Property="Foreground" Value="#FF000000"/>
+        <Setter Property="BorderBrush" Value="#33000000" />
+        <Setter Property="BorderThickness" Value="{StaticResource ButtonBorderThemeThickness}" />
+        <Setter Property="Padding" Value="12,4,12,4" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="FontFamily" Value="{StaticResource ContentControlThemeFontFamily}" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="FontSize" Value="{StaticResource ControlContentThemeFontSize}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Grid>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal" />
+                                <VisualState x:Name="PointerOver">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Border"
+                                                                   Storyboard.TargetProperty="Background">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="#D1CDCDCD" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
+                                                                   Storyboard.TargetProperty="Foreground">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="#FF000000" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Pressed">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Border"
+                                                                   Storyboard.TargetProperty="Background">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="#FF000000" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
+                                                                   Storyboard.TargetProperty="Foreground">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="#FFFFFFFF" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Disabled">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Border"
+                                                                   Storyboard.TargetProperty="Background">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="#66CACACA" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Border"
+                                                                   Storyboard.TargetProperty="BorderBrush">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="#66000000" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
+                                                                   Storyboard.TargetProperty="Foreground">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="#FF000000" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="FocusStates">
+                                <VisualState x:Name="Focused">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="FocusVisualWhite"
+                                                     Storyboard.TargetProperty="Opacity"
+                                                     To="1"
+                                                     Duration="0" />
+                                        <DoubleAnimation Storyboard.TargetName="FocusVisualBlack"
+                                                     Storyboard.TargetProperty="Opacity"
+                                                     To="1"
+                                                     Duration="0" />
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Unfocused" />
+                                <VisualState x:Name="PointerFocused" />
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <Border x:Name="Border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Margin="3">
+                            <ContentPresenter x:Name="ContentPresenter"
+                                          Content="{TemplateBinding Content}"
+                                          ContentTransitions="{TemplateBinding ContentTransitions}"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          Margin="{TemplateBinding Padding}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                        </Border>
+                        <Rectangle x:Name="FocusVisualWhite"
+                               IsHitTestVisible="False"
+                               Stroke="{StaticResource FocusVisualWhiteStrokeThemeBrush}"
+                               StrokeEndLineCap="Square"
+                               StrokeDashArray="1,1"
+                               Opacity="0"
+                               StrokeDashOffset="1.5" />
+                        <Rectangle x:Name="FocusVisualBlack"
+                               IsHitTestVisible="False"
+                               Stroke="{StaticResource FocusVisualBlackStrokeThemeBrush}"
+                               StrokeEndLineCap="Square"
+                               StrokeDashArray="1,1"
+                               Opacity="0"
+                               StrokeDashOffset="0.5" />
+                    </Grid>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -727,7 +769,78 @@
         </Setter>
     </Style>
 
+    <Style x:Key="ActionButton" TargetType="Button">
+        <Setter Property="Background" Value="{StaticResource MainHighlightColor}" />
+        <Setter Property="Foreground" Value="White" />
+    </Style>
+    <Style x:Key="LightActionButton" TargetType="Button" BasedOn="{StaticResource ButtonLight}">
+        <Setter Property="Background" Value="{StaticResource MainHighlightColor}" />
+        <Setter Property="Foreground" Value="White" />
+    </Style>
 
+
+    <ItemsPanelTemplate x:Key="HorizontalItemPanelTemplate">
+        <VirtualizingStackPanel Orientation="Horizontal"/>
+    </ItemsPanelTemplate>
+    <ItemsPanelTemplate x:Key="VerticalItemPanelTemplate">
+        <VirtualizingStackPanel Orientation="Vertical"/>
+    </ItemsPanelTemplate>
+    
+    <Style x:Key="IconFontStyle" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="Segoe UI Symbol" />
+        <Setter Property="FontSize" Value="32" />
+        <Setter Property="Width" Value="40" />
+        <Setter Property="Height" Value="40" />
+        <Setter Property="TextAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Margin" Value="15,15,15,15" />
+    </Style>
+
+    <Style x:Key="FolderTitleStyle" TargetType="TextBlock">
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="LineHeight" Value="20"/>
+        <Setter Property="LineStackingStrategy" Value="BlockLineHeight"/>
+        <Setter Property="Foreground" Value="{StaticResource ApplicationForegroundThemeBrush}"/>
+        <Setter Property="FontSize" Value="{StaticResource ControlContentThemeFontSize}"/>
+        <Setter Property="FontFamily" Value="{StaticResource ContentControlThemeFontFamily}"/>
+        <Setter Property="TextTrimming" Value="WordEllipsis"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="Typography.StylisticSet20" Value="True"/>
+        <Setter Property="Typography.DiscretionaryLigatures" Value="True"/>
+        <Setter Property="Typography.CaseSensitiveForms" Value="True"/>
+        <!-- Properly align text along its baseline -->
+        <Setter Property="RenderTransform">
+            <Setter.Value>
+                <TranslateTransform X="-1" Y="2"/>
+            </Setter.Value>
+        </Setter>
+        
+        <Setter Property="Margin" Value="10,0,0,0"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+    </Style>
+
+    <Style x:Key="GridViewHeaderNormalStyle" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource ContentControlThemeFontFamily}"/>
+        <Setter Property="TextTrimming" Value="WordEllipsis"/>
+        <Setter Property="TextWrapping" Value="NoWrap"/>
+        <Setter Property="Typography.StylisticSet20" Value="True"/>
+        <Setter Property="Typography.DiscretionaryLigatures" Value="True"/>
+        <Setter Property="Typography.CaseSensitiveForms" Value="True"/>
+        <Setter Property="FontSize" Value="26.667"/>
+        <Setter Property="LineStackingStrategy" Value="BlockLineHeight"/>
+        <Setter Property="FontWeight" Value="Light"/>
+        <Setter Property="LineHeight" Value="30"/>
+        <Setter Property="RenderTransform">
+            <Setter.Value>
+                <TranslateTransform X="-1" Y="6"/>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    <Style x:Key="GridViewHeaderRootStyle" TargetType="TextBlock" BasedOn="{StaticResource GridViewHeaderNormalStyle}">
+        <Setter Property="Foreground" Value="{StaticResource MainHighlightColor}"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+    </Style>
 
     <Style x:Key="ErrorTextBoxStyle" TargetType="TextBox">
     	<Setter Property="MinWidth" Value="{StaticResource TextControlThemeMinWidth}"/>
@@ -883,4 +996,28 @@
         <Setter Property="Margin" Value="0,0,10,0"/>
     </Style>
 
+
+    <!--Page flyout styles-->
+
+    <Style x:Key="FlyoutSectionHeader" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="24" />
+        <Setter Property="FontFamily" Value="Segoe UI" />
+        <Setter Property="Foreground" Value="{StaticResource MainAppColor}" />
+        <Setter Property="Margin" Value="0 10 0 0" />
+    </Style>
+    <Style x:Key="FlyoutLabel" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="Margin" Value="0 15 0 5" />
+    </Style>
+    <Style x:Key="FlyoutToggle" BasedOn="{StaticResource ToggleLight}" TargetType="ToggleSwitch">
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="Foreground" Value="Black" />
+    </Style>
+    <Style x:Key="FlyoutSection" TargetType="Border">
+        <Setter Property="BorderBrush" Value="{StaticResource MainAppColor}" />
+        <Setter Property="BorderThickness" Value="0 0 0 2" />
+        <Setter Property="Padding" Value="0 0 0 10" />
+        <Setter Property="Width" Value="300" />
+    </Style>
 </ResourceDictionary>

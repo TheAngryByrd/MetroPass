@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Caliburn.Micro;
 using MetroPass.Core.Interfaces;
+using MetroPass.Core.Security;
 using MetroPass.UI.Common;
 using MetroPass.UI.DataModel;
 using MetroPass.UI.Services;
@@ -30,6 +31,9 @@ namespace MetroPass.UI
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+            ConventionManager.AddElementConvention<ToggleSwitch>(ToggleSwitch.IsOnProperty, "IsOn", "Toggled");    
+            ConventionManager.AddElementConvention<Slider>(Slider.ValueProperty, "Value", "ValueChanged");
+            
         }
 
         protected override void OnWindowCreated(Windows.UI.Xaml.WindowCreatedEventArgs args)
@@ -45,33 +49,41 @@ namespace MetroPass.UI
             var supportCommand = new SettingsCommand("support", "Support & Feedback", a => LaunchUrl(SupportUrl));
             args.Request.ApplicationCommands.Add(supportCommand);
 
-            var optionsCommand = new SettingsCommand("metroPassOptions", "Options", h =>
+            var optionsCommand = new SettingsCommand("metroPassOptions", "Database Options", h =>
             {
                 if (PWDatabaseDataSource.Instance.PwDatabase != null)
                 {
-                    DialogService.ShowSettings<SettingsViewModel>(onInitialize: (s) => { SetAds(false); }, onClosed: SettingsClosed, headerBrush: settingsColor);
+                    DialogService.ShowFlyout<SettingsViewModel>(GetBaseScreen(), onClosed: SettingsClosed, headerBrush: settingsColor);
                 }else
                 {
-                    DialogService.ShowSettings<DatabaseClosedSettingsViewModel>(onInitialize: (s) => { SetAds(false); }, onClosed: (s, v) => { SetAds(true); }, headerBrush: settingsColor);
+                    DialogService.ShowFlyout<DatabaseClosedSettingsViewModel>(GetBaseScreen(), headerBrush: settingsColor);
                 }
             });
             args.Request.ApplicationCommands.Add(optionsCommand);
+
+        
+
         }
   
         private void SettingsClosed(SettingsViewModel s, UIElement v)
         {
-            SetAds(true);
             SaveSettings(s, v);
         }
 
         private void SetAds(bool value)
-        {     
-            var baseScreen = (RootFrame.Content as Page).DataContext as BaseScreen;
+        { 
+            var baseScreen = GetBaseScreen();
 
             if (baseScreen != null)
             {
                 baseScreen.IsAdVisible = value;         
             }
+        }
+  
+        private BaseScreen GetBaseScreen()
+        {
+            var baseScreen = (RootFrame.Content as Page).DataContext as BaseScreen;
+            return baseScreen;
         }
 
         private void SaveSettings(SettingsViewModel settingsViewModel, UIElement _)
@@ -93,6 +105,7 @@ namespace MetroPass.UI
             _ninjectContainer.RegisterWinRTServices();
 
             _ninjectContainer.Kernel.Bind<IPageServices>().To<PageServices>();
+            _ninjectContainer.Kernel.Bind<IPasswordGenerator>().To<PasswordGenerator>();
   
             _ninjectContainer.Kernel.Bind<ILockingService>().To<LockingService>();
             _ninjectContainer.Kernel.Bind<IClipboard>().To<MetroClipboard>();

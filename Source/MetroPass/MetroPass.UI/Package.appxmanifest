@@ -18,6 +18,10 @@
       <VisualElements DisplayName="MetroPass" Logo="Assets\Logo.png" SmallLogo="Assets\SmallLogo.png" Description="MetroPass" ForegroundText="light" BackgroundColor="#006A87" ToastCapable="true">
         <DefaultTile ShowName="allLogos" WideLogo="Assets\WideLogo.png" />
         <SplashScreen Image="Assets\SplashScreen.png" BackgroundColor="#006E87" />
+        <InitialRotationPreference>
+          <Rotation Preference="landscape" />
+          <Rotation Preference="landscapeFlipped" />
+        </InitialRotationPreference>
       </VisualElements>
       <Extensions>
         <Extension Category="windows.search" />

@@ -139,6 +139,7 @@
     <Compile Include="Dialogs\DialogService.cs" />
     <Compile Include="Services\ILockingService.cs" />
     <Compile Include="Services\LockingService.cs" />
+    <Compile Include="UserControls\NumberBox.cs" />
     <Compile Include="ViewModels\AddEntryViewModel.cs" />
     <Compile Include="ViewModels\AddGroupViewModel.cs" />
     <Compile Include="ViewModels\AdGroup.cs" />
@@ -147,6 +148,8 @@
     <Compile Include="ViewModels\EntryEditViewModel.cs" />
     <Compile Include="ViewModels\NewDatabaseViewModel.cs" />
     <Compile Include="ViewModels\PasswordEntryScreen.cs" />
+    <Compile Include="ViewModels\Messages\PasswordGenerateMessage.cs" />
+    <Compile Include="ViewModels\PasswordGeneratorViewModel.cs" />
     <Compile Include="ViewModels\SearchResultsViewModel.cs" />
     <Compile Include="Services\MetroClipboard.cs" />
     <Compile Include="Services\IClipboard.cs" />
@@ -187,6 +190,9 @@
     <Compile Include="ViewModels\LoadKdbViewModel.cs" />
     <Compile Include="Views\NewDatabaseView.xaml.cs">
       <DependentUpon>NewDatabaseView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PasswordGeneratorView.xaml.cs">
+      <DependentUpon>PasswordGeneratorView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SearchResultsView.xaml.cs">
       <DependentUpon>SearchResultsView.xaml</DependentUpon>
@@ -265,6 +271,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\PasswordGeneratorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\SearchResultsView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -305,6 +315,12 @@
       <HintPath>..\packages\Windows.UI.Interactivity.1.0.2.0\lib\winrt45\Windows.UI.Interactivity.dll</HintPath>
     </Reference>
   </ItemGroup>
+  <ItemGroup>
+    <SDKReference Include="MSAdvertisingXaml, Version=6.1">
+      <Name>Microsoft Advertising SDK for Windows 8 %28Xaml%29</Name>
+    </SDKReference>
+  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">
     <VisualStudioVersion>11.0</VisualStudioVersion>
   </PropertyGroup>

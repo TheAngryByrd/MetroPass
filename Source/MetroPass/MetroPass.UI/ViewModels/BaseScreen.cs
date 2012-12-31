@@ -1,23 +1,27 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Caliburn.Micro;
 using MetroPass.UI.DataModel;
+using MetroPass.UI.Services;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using MetroPass.UI.Services;
 
 namespace MetroPass.UI.ViewModels
 {
     public class BaseScreen : Screen
     {
         private readonly INavigationService _navigationService;
-        private readonly IPageServices _pageServices;
+        private Queue<string> _stateQueue;
+        private IPageServices _pageServices;
+
         public BaseScreen(INavigationService navigationService, IPageServices pageServices)
-        {
-  
+        {  
             this._navigationService=navigationService;
             this._pageServices = pageServices;
+            _stateQueue = new Queue<string>();
+
         }
 
         protected Page View { get; private set;}
@@ -28,11 +32,11 @@ namespace MetroPass.UI.ViewModels
             {
                 var result = await Windows.System.Launcher.LaunchUriAsync(new Uri(url));
             }
-            catch (Exception e)
+            catch
             {
-                _pageServices.Toast("This entry's URL is invalid.");
+                _pageServices.Toast("This entry's url is invalid");
             }
-        
+          
         }
 
         public void GoBack()
@@ -52,8 +56,12 @@ namespace MetroPass.UI.ViewModels
 
             Window.Current.SizeChanged += Window_SizeChanged;
             IsAdVisible = true;
-            SetState(ApplicationView.Value);
-            
+
+            if (_stateQueue.Count == 0)
+            {
+                _stateQueue.Enqueue(ApplicationView.Value.ToString());
+            }
+            SetState(_stateQueue.Dequeue());
         }
 
         protected override void OnDeactivate(bool close)
@@ -75,6 +83,11 @@ namespace MetroPass.UI.ViewModels
         protected void SetState(string state)
         {
             VisualStateManager.GoToState(View, state, true);
+        }
+
+        protected void QueueState(string state)
+        {
+            _stateQueue.Enqueue(state);
         }
 
         private bool _isPageAvailable;
