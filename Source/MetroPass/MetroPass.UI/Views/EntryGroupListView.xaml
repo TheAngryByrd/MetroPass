@@ -17,6 +17,7 @@
             <Grid>
                 <StackPanel x:Name="GroupCommands" Orientation="Horizontal"  HorizontalAlignment="Left" Grid.Row="0" Visibility="{Binding ShowGroupCommands, Converter={StaticResource BoolVisibilityConverter}}">
                     <Button x:Name="EditGroup" Style="{StaticResource EditAppBarButtonStyle}" AutomationProperties.Name="Edit Folder"></Button>
+                    <Button x:Name="DeleteGroup" Style="{StaticResource DeleteAppBarButtonStyle}" AutomationProperties.Name="Delete Folder"></Button>
                     <Button x:Name="AddEntry" Style="{StaticResource AddAppBarButtonStyle}" AutomationProperties.Name="Add Password"></Button>
                     <Button x:Name="AddGroup" Style="{StaticResource AddFolderAppBarButtonStyle}" AutomationProperties.Name="Add Folder"></Button>
                 </StackPanel>
@@ -193,6 +194,14 @@
             </ListView.HeaderTemplate>
         </ListView>
 
+        <StackPanel x:Name="GroupNotFoundMessage" Grid.Row="1" Margin="116,0,0,0" Width="700" HorizontalAlignment="Left" Visibility="Collapsed">
+            <TextBlock Text="The folder could no longer be found in the database. It may have been deleted. Use the Back button to go back to the previous screen, or use the button below to go back to your home folder."
+                       FontSize="24"
+                       Style="{StaticResource BasicTextStyle}"
+                       TextWrapping="Wrap"/>
+            <Button x:Name="GoHome" Style="{StaticResource ActionButton}" Content="Home" Margin="0 25 0 0" />
+        </StackPanel>
+
         <VisualStateManager.VisualStateGroups>
 
             <!-- Visual states reflect the application's view state -->
@@ -230,6 +239,20 @@
                         </ObjectAnimationUsingKeyFrames>
                     </Storyboard>
 
+                </VisualState>
+                
+                <VisualState x:Name="GroupNotFound">
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="groupedList" Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed"/>
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="snappedList" Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed"/>
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="GroupNotFoundMessage" Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Visible"/>
+                        </ObjectAnimationUsingKeyFrames>
+                    </Storyboard>
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>

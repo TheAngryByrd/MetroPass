@@ -1,4 +1,5 @@
-﻿using MetroPass.Core.Interfaces;
+﻿using MetroPass.Core.Exceptions;
+using MetroPass.Core.Interfaces;
 using System;
 using System.Linq;
 using System.Xml.Linq;
@@ -42,7 +43,7 @@ namespace MetroPass.Core.Model.Kdb4
             {
                 return groupElements.Single();
             }
-            throw new ArgumentException(string.Format("Cound not find Group with ID {0} in the database.", groupId), groupId);
+            throw new GroupNotFoundException(string.Format("Cound not find Group with ID {0} in the database.", groupId), groupId);
         }
     }
 }
