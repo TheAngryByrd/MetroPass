@@ -12,7 +12,7 @@ namespace MetroPass.UI.ViewModels
         private readonly INavigationService _navigationService;
         private readonly IClipboard _clipboard;
 
-        public PasswordEntryScreen(INavigationService navigationService, IClipboard clipboard) : base(navigationService)
+        public PasswordEntryScreen(INavigationService navigationService, IClipboard clipboard, IPageServices pageServices) : base(navigationService, pageServices)
         {
             _navigationService = navigationService;
             _clipboard = clipboard;
@@ -66,6 +66,11 @@ namespace MetroPass.UI.ViewModels
         {
             var encodedUUID = WebUtility.UrlEncode(SelectedPasswordItem.UUID);
             _navigationService.UriFor<EntryEditViewModel>().WithParam(vm => vm.EntryID, encodedUUID).Navigate();
+        }
+
+        public void OpenURL()
+        {
+            this.LaunchUrl((SelectedPasswordItem as PwEntry).Url);
         }
 
         public void DeselectItem()

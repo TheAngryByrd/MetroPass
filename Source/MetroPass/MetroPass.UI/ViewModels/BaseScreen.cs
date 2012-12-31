@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Caliburn.Micro;
 using MetroPass.UI.DataModel;
+using MetroPass.UI.Services;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -11,14 +14,30 @@ namespace MetroPass.UI.ViewModels
     {
         private readonly INavigationService _navigationService;
         private Queue<string> _stateQueue;
+        private IPageServices _pageServices;
 
-        public BaseScreen(INavigationService navigationService)
-        {
-            _navigationService=navigationService;
+        public BaseScreen(INavigationService navigationService, IPageServices pageServices)
+        {  
+            this._navigationService=navigationService;
+            this._pageServices = pageServices;
             _stateQueue = new Queue<string>();
+
         }
 
         protected Page View { get; private set;}
+
+        public async void LaunchUrl(string url)
+        {
+            try
+            {
+                var result = await Windows.System.Launcher.LaunchUriAsync(new Uri(url));
+            }
+            catch
+            {
+                _pageServices.Toast("This entry's url is invalid");
+            }
+          
+        }
 
         public void GoBack()
         {

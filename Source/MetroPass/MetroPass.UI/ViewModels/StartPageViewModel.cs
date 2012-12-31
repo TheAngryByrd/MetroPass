@@ -13,8 +13,8 @@ namespace MetroPass.UI.ViewModels
 
         private readonly INavigationService _navigationService;
 
-        public StartPageViewModel( INavigationService navigationService)
-            : base(navigationService)
+        public StartPageViewModel(INavigationService navigationService, IPageServices pageServices)
+            : base(navigationService, pageServices)
         {
 
             _navigationService = navigationService;
