@@ -1,4 +1,4 @@
-﻿<Page xmlns:UI="using:Microsoft.Advertising.WinRT.UI" 
+﻿<Page  
     x:Name="pageRoot"
     x:Class="MetroPass.UI.Views.LoadKdbView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
