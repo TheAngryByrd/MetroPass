@@ -6,6 +6,7 @@ using MetroPass.Core.Model;
 using MetroPass.UI.DataModel;
 using MetroPass.UI.ViewModels.Messages;
 using MetroPass.UI.Views;
+using MetroPass.UI.Services;
 using Windows.UI.Xaml.Media;
 
 namespace MetroPass.UI.ViewModels
@@ -17,7 +18,7 @@ namespace MetroPass.UI.ViewModels
 
         private readonly IKdbTree _dbTree;
 
-        public EntryEditViewModel(IKdbTree dbTree, INavigationService navigationService, IEventAggregator events) : base(navigationService)
+        public EntryEditViewModel(IKdbTree dbTree, INavigationService navigationService, IPageServices pageServices,IEventAggregator events) : base(navigationService, pageServices)
         {
             _dbTree = dbTree;
             _navigationService = navigationService;
