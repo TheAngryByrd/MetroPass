@@ -16,10 +16,7 @@ namespace MetroPass.UI.Common
       
         protected override DataTemplate SelectTemplateCore(object item, DependencyObject container)
           {
-              if (item is AdGroup)
-              {
-                  return AdvertTemplate;
-              }
+          
               return NormalTemplate;
           }
     }
