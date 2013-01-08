@@ -24,7 +24,7 @@
                     <Paragraph>
                         <Span>MetroPass is the premiere</Span>
                         <InlineUIContainer>
-                            <HyperlinkButton NavigateUri="http://keepass.info">KeePass</HyperlinkButton>
+                            <HyperlinkButton NavigateUri="http://keepass.info" Style="{StaticResource LightHyperlink}">KeePass</HyperlinkButton>
                         </InlineUIContainer>
                         <Span>client app for Windows 8 and Windows RT.</Span>
                         <Span>
@@ -32,7 +32,7 @@
                             <LineBreak />MetroPass comes in two versions. There is a free, ad-supported version which requires internet permissions for the advertisements. There is also a paid, ad-free version which has no internet permissions requirement.
                             <LineBreak />Learn more at the
                             <InlineUIContainer>
-                                <HyperlinkButton NavigateUri="http://metropass.windowsazurewebsites.net">MetroPass website</HyperlinkButton>
+                                <HyperlinkButton NavigateUri="http://metropass.azurewebsites.net" Style="{StaticResource LightHyperlink}">MetroPass website</HyperlinkButton>
                             </InlineUIContainer>
                         </Span>
                     </Paragraph>
