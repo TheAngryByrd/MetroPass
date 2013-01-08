@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using Caliburn.Micro;
 using MetroPass.Core.Interfaces;
 using MetroPass.Core.Security;
@@ -33,7 +32,6 @@ namespace MetroPass.UI
             this.Suspending += OnSuspending;
             ConventionManager.AddElementConvention<ToggleSwitch>(ToggleSwitch.IsOnProperty, "IsOn", "Toggled");    
             ConventionManager.AddElementConvention<Slider>(Slider.ValueProperty, "Value", "ValueChanged");
-            
         }
 
         protected override void OnWindowCreated(Windows.UI.Xaml.WindowCreatedEventArgs args)
@@ -46,11 +44,8 @@ namespace MetroPass.UI
         {
             var settingsColor = App.Current.Resources["MainAppColor"] as SolidColorBrush;
 
-            var privacyPolicyCommand = new SettingsCommand("privacyPolicy","Privacy Policy", a => LaunchUrl(PrivacyPolicyUrl));
-            args.Request.ApplicationCommands.Add(privacyPolicyCommand);
-
-            var supportCommand = new SettingsCommand("support", "Support & Feedback", a => LaunchUrl(SupportUrl));
-            args.Request.ApplicationCommands.Add(supportCommand);
+            var aboutCommand = new SettingsCommand("about", "About MetroPass", a => DialogService.ShowFlyout<AboutSettingsViewModel>(GetBaseScreen(), headerBrush: settingsColor));
+            args.Request.ApplicationCommands.Add(aboutCommand);
 
             var optionsCommand = new SettingsCommand("metroPassOptions", "Database Options", h =>
             {
@@ -64,7 +59,11 @@ namespace MetroPass.UI
             });
             args.Request.ApplicationCommands.Add(optionsCommand);
 
-        
+            var privacyPolicyCommand = new SettingsCommand("privacyPolicy", "Privacy Policy", a => LaunchUrl(PrivacyPolicyUrl));
+            args.Request.ApplicationCommands.Add(privacyPolicyCommand);
+
+            var supportCommand = new SettingsCommand("support", "Support & Feedback", a => LaunchUrl(SupportUrl));
+            args.Request.ApplicationCommands.Add(supportCommand);
 
         }
   
