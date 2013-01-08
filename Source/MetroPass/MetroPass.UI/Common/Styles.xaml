@@ -778,7 +778,7 @@
         <Setter Property="Foreground" Value="White" />
     </Style>
 
-    <Style TargetType="HyperlinkButton">
+    <Style x:Key="LightHyperlink" TargetType="HyperlinkButton">
         <Setter Property="Foreground" Value="{StaticResource MainHighlightColor}" />
         <Setter Property="Background" Value="White" />
         <Setter Property="BorderThickness" Value="0" />
