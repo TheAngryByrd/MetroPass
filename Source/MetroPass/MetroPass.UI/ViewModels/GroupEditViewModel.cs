@@ -67,9 +67,33 @@ namespace MetroPass.UI.ViewModels
             }
         }
 
+        private bool isProgressEnabled;
+
+        public bool IsProgressEnabled
+        {
+            get { return isProgressEnabled; }
+            set { isProgressEnabled = value;
+
+            NotifyOfPropertyChange(() => IsProgressEnabled);
+            }
+        }
+
+        private bool canGoBack = true;
+
+        public override bool CanGoBack
+        {
+            get { return base.CanGoBack && canGoBack; }
+            set { canGoBack = value;
+            NotifyOfPropertyChange(() => CanGoBack);
+            }
+        }
+
+
         public async void Save()
         {        	
             CanSave = false;
+            canGoBack = false;
+            IsProgressEnabled = true;
             await PWDatabaseDataSource.Instance.SavePwDatabase();
             _navigationService.GoBack();
         }
