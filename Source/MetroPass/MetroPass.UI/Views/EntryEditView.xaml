@@ -37,8 +37,13 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Button x:Name="GoBack" Style="{StaticResource BackButtonStyle}"/>
-            <TextBlock x:Name="PageTitle" Text="{Binding Title}" Grid.Column="1" Style="{StaticResource PageHeaderTextStyle}"/>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <ProgressBar x:Name="SavingProgress" IsIndeterminate="True" Grid.Row="0" Grid.ColumnSpan="2" Visibility="{Binding IsProgressEnabled, Converter={StaticResource BoolVisibilityConverter}}"></ProgressBar>
+            <Button x:Name="GoBack" Style="{StaticResource BackButtonStyle}" Grid.Row="1"/>
+            <TextBlock x:Name="PageTitle" Text="{Binding Title}" Grid.Column="1" Grid.Row="1" Style="{StaticResource PageHeaderTextStyle}"/>
         </Grid>
 
         <Grid Grid.Row="1" Margin="36,0" x:Name="NormalEditView">

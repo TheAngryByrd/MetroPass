@@ -154,6 +154,32 @@ namespace MetroPass.UI.ViewModels
             }
         }
 
+        private bool isProgressEnabled;
+
+        public bool IsProgressEnabled
+        {
+            get { return isProgressEnabled; }
+            set { isProgressEnabled = value;
+            NotifyOfPropertyChange(() => IsProgressEnabled);
+            }
+        }
+
+        private bool canGoBack = true;
+
+        public override bool CanGoBack
+        {
+            get
+            {
+                return base.CanGoBack && canGoBack;
+            }
+            set
+            {
+                canGoBack = value;
+                NotifyOfPropertyChange(() => CanGoBack);
+            }
+        }
+
+
         public async void Generate()
         {
             var settingsColor = App.Current.Resources["MainAppColor"] as SolidColorBrush;
@@ -162,6 +188,8 @@ namespace MetroPass.UI.ViewModels
 
         public async void Save()
         {
+            CanGoBack = false;
+            IsProgressEnabled = true;
             CanSave = false;
             Entry.Title = Title;
             Entry.Username = Username;
