@@ -44,9 +44,10 @@ namespace MetroPass.UI.ViewModels
             _navigationService.GoBack();
         }
 
-        public bool CanGoBack
+        public virtual bool CanGoBack
         {
             get { return _navigationService.CanGoBack; }
+            set { }
         }
 
         protected override void OnViewAttached(object view, object context)
