@@ -26,11 +26,11 @@ namespace MetroPass.UI.ViewModels
 
         protected Page View { get; private set;}
 
-        public async void LaunchUrl(string url)
+        public async void LaunchUrl(Uri uri)
         {
             try
             {
-                var result = await Windows.System.Launcher.LaunchUriAsync(new Uri(url));
+                var result = await Windows.System.Launcher.LaunchUriAsync(uri);
             }
             catch
             {

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Net;
 using Caliburn.Micro;
 using MetroPass.Core.Model;
@@ -71,7 +70,25 @@ namespace MetroPass.UI.ViewModels
 
         public void OpenURL()
         {
-            this.LaunchUrl((SelectedPasswordItem as PwEntry).Url);
+            var password = SelectedPasswordItem as PwEntry;
+            if (password != null)
+            {
+                Uri parsedUri;
+                Uri.TryCreate(password.Url, UriKind.RelativeOrAbsolute, out parsedUri);
+                if (parsedUri != null && parsedUri.IsWellFormedOriginalString())
+                {
+                    try
+                    {
+                        string uriScheme = parsedUri.Scheme;
+                    }
+                    catch (InvalidOperationException)
+                    {
+                        // I know ... WTF right?!?!? The Scheme property doesn't return null or empty if it wasn't part of the original URL string. It throws an exception.
+                        parsedUri = new Uri("http://" + parsedUri.OriginalString);
+                    }
+                    this.LaunchUrl(parsedUri);
+                }
+            }
         }
 
         public bool CanOpenURL
