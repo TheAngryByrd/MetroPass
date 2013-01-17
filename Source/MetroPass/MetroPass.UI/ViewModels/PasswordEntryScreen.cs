@@ -38,6 +38,7 @@ namespace MetroPass.UI.ViewModels
                 NotifyOfPropertyChange(() => SelectedPasswordItem);
                 NotifyOfPropertyChange(() => ShowEntryCommands);
                 NotifyOfPropertyChange(() => ShowGroupCommands);
+                NotifyOfPropertyChange(() => CanOpenURL);
             }
         }
 
@@ -71,6 +72,19 @@ namespace MetroPass.UI.ViewModels
         public void OpenURL()
         {
             this.LaunchUrl((SelectedPasswordItem as PwEntry).Url);
+        }
+
+        public bool CanOpenURL
+        {
+            get
+            {
+                var password = SelectedPasswordItem as PwEntry;
+                if (password != null)
+                {
+                    return !String.IsNullOrWhiteSpace(password.Url);
+                }
+                return false;
+            }
         }
 
         public void DeselectItem()
