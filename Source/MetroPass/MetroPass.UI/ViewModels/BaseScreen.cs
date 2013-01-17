@@ -84,11 +84,7 @@ namespace MetroPass.UI.ViewModels
         protected void SetState(string state)
         {
             VisualStateManager.GoToState(View, state, true);
-            var appBar = View.FindName("EntryAppBar") as AppBar;
-            if (appBar != null)
-            {
-                VisualStateManager.GoToState(appBar, state, true);
-            }
+            
             var viewHasAppBar = View as IHaveAppBar;
             if (viewHasAppBar != null)
             {
