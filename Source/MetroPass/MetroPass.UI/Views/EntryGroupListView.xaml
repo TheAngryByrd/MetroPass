@@ -15,18 +15,18 @@
     <Page.BottomAppBar>
         <AppBar VerticalAlignment="Bottom" x:Name="EntryAppBar" IsOpen="{Binding ShowAppBar, Mode=TwoWay}" IsSticky="True" Opened="EntryAppBar_Opened" Closed="EntryAppBar_Closed" cal:Message.Attach="[Event Closed] = [Action DeselectItem]">
             <Grid>
-                <StackPanel x:Name="GroupCommands" Orientation="Horizontal"  HorizontalAlignment="Left" Grid.Row="0" Visibility="{Binding ShowGroupCommands, Converter={StaticResource BoolVisibilityConverter}}">
-                    <Button x:Name="EditGroup" Style="{StaticResource EditAppBarButtonStyle}" AutomationProperties.Name="Edit Folder"></Button>
-                    <Button x:Name="DeleteGroup" Style="{StaticResource DeleteAppBarButtonStyle}" AutomationProperties.Name="Delete Folder"></Button>
-                    <Button x:Name="AddEntry" Style="{StaticResource AddAppBarButtonStyle}" AutomationProperties.Name="Add Password"></Button>
-                    <Button x:Name="AddGroup" Style="{StaticResource AddFolderAppBarButtonStyle}" AutomationProperties.Name="Add Folder"></Button>
+                <StackPanel x:Name="GroupCommands" Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="0" Visibility="{Binding ShowGroupCommands, Converter={StaticResource BoolVisibilityConverter}}">
+                    <Button x:Name="EditGroup" Loaded="AppBarButton_Loaded" Style="{StaticResource EditAppBarButtonStyle}" AutomationProperties.Name="Edit Folder"></Button>
+                    <Button x:Name="DeleteGroup" Loaded="AppBarButton_Loaded" Style="{StaticResource DeleteAppBarButtonStyle}" AutomationProperties.Name="Delete Folder"></Button>
+                    <Button x:Name="AddEntry" Loaded="AppBarButton_Loaded" Style="{StaticResource AddAppBarButtonStyle}" AutomationProperties.Name="Add Password"></Button>
+                    <Button x:Name="AddGroup" Loaded="AppBarButton_Loaded" Style="{StaticResource AddFolderAppBarButtonStyle}" AutomationProperties.Name="Add Folder"></Button>
                 </StackPanel>
                 <StackPanel x:Name="EntryCommands" Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="0" Visibility="{Binding ShowEntryCommands, Converter={StaticResource BoolVisibilityConverter}}" >
-                    <Button x:Name="EditEntry" Style="{StaticResource EditAppBarButtonStyle}" AutomationProperties.Name="Edit Password"></Button>
-                    <Button x:Name="DeleteEntry" Style="{StaticResource DeleteAppBarButtonStyle}" AutomationProperties.Name="Delete Password"></Button>
-                    <Button x:Name="CopyUsername" Style="{StaticResource ContactAppBarButtonStyle}" AutomationProperties.Name="Copy Username"></Button>
-                    <Button x:Name="CopyPassword" Style="{StaticResource PermissionsAppBarButtonStyle}" AutomationProperties.Name="Copy Password"></Button>
-                    <Button x:Name="OpenURL" Style="{StaticResource WorldAppBarButtonStyle}" AutomationProperties.Name="Open URL"></Button>      
+                    <Button x:Name="EditEntry" Loaded="AppBarButton_Loaded" Style="{StaticResource EditAppBarButtonStyle}" AutomationProperties.Name="Edit Password"></Button>
+                    <Button x:Name="DeleteEntry" Loaded="AppBarButton_Loaded" Style="{StaticResource DeleteAppBarButtonStyle}" AutomationProperties.Name="Delete Password"></Button>
+                    <Button x:Name="CopyUsername" Loaded="AppBarButton_Loaded" Style="{StaticResource ContactAppBarButtonStyle}" AutomationProperties.Name="Copy Username"></Button>
+                    <Button x:Name="CopyPassword" Loaded="AppBarButton_Loaded" Style="{StaticResource PermissionsAppBarButtonStyle}" AutomationProperties.Name="Copy Password"></Button>
+                    <Button x:Name="OpenURL" Loaded="AppBarButton_Loaded" Style="{StaticResource WorldAppBarButtonStyle}" AutomationProperties.Name="Open URL"></Button>      
                 </StackPanel>
             </Grid>
         </AppBar>
@@ -228,8 +228,11 @@
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="pageTitle" Storyboard.TargetProperty="Style">
                             <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource SnappedPageHeaderTextStyle}"/>
                         </ObjectAnimationUsingKeyFrames>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="DeleteEntry" Storyboard.TargetProperty="Visibility">
-                            <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed"/>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="GroupCommands" Storyboard.TargetProperty="HorizontalAlignment">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Center"/>
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="EntryCommands" Storyboard.TargetProperty="HorizontalAlignment">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Center"/>
                         </ObjectAnimationUsingKeyFrames>
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="groupedList" Storyboard.TargetProperty="Visibility">
                             <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed"/>
