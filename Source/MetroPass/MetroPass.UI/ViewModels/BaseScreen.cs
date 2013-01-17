@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Caliburn.Micro;
 using MetroPass.UI.DataModel;
 using MetroPass.UI.Services;
+using MetroPass.UI.Views;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -84,6 +84,16 @@ namespace MetroPass.UI.ViewModels
         protected void SetState(string state)
         {
             VisualStateManager.GoToState(View, state, true);
+            var appBar = View.FindName("EntryAppBar") as AppBar;
+            if (appBar != null)
+            {
+                VisualStateManager.GoToState(appBar, state, true);
+            }
+            var viewHasAppBar = View as IHaveAppBar;
+            if (viewHasAppBar != null)
+            {
+                viewHasAppBar.SetAppBarState(state);
+            }
         }
 
         protected void QueueState(string state)
