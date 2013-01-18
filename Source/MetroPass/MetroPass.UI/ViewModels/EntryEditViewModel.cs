@@ -1,6 +1,4 @@
 ﻿using Caliburn.Micro;
-using System;
-using System.Linq;
 using MetroPass.Core.Interfaces;
 using MetroPass.Core.Model;
 using MetroPass.UI.DataModel;
@@ -155,7 +153,6 @@ namespace MetroPass.UI.ViewModels
         }
 
         private bool isProgressEnabled;
-
         public bool IsProgressEnabled
         {
             get { return isProgressEnabled; }
@@ -179,6 +176,11 @@ namespace MetroPass.UI.ViewModels
             }
         }
 
+        public void OpenUrl()
+        {
+            var uri = GetPasswordUri(Entry);
+            LaunchUrl(uri);
+        }
 
         public async void Generate()
         {
