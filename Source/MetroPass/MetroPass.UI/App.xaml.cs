@@ -47,17 +47,21 @@ namespace MetroPass.UI
             var aboutCommand = new SettingsCommand("about", "About MetroPass", a => DialogService.ShowFlyout<AboutSettingsViewModel>(GetBaseScreen(), headerBrush: settingsColor));
             args.Request.ApplicationCommands.Add(aboutCommand);
 
-            var optionsCommand = new SettingsCommand("metroPassOptions", "Database Options", h =>
+            var dbOptionsCommand = new SettingsCommand("databaseOptions", "Database Options", h =>
             {
                 if (PWDatabaseDataSource.Instance.PwDatabase != null)
                 {
                     DialogService.ShowFlyout<DatabaseSettingsViewModel>(GetBaseScreen(), onClosed: SettingsClosed, headerBrush: settingsColor);
-                }else
+                }
+                else
                 {
                     DialogService.ShowFlyout<DatabaseClosedSettingsViewModel>(GetBaseScreen(), headerBrush: settingsColor);
                 }
             });
-            args.Request.ApplicationCommands.Add(optionsCommand);
+            args.Request.ApplicationCommands.Add(dbOptionsCommand);
+
+            var appOptionsCommand = new SettingsCommand("metroPassOptions", "MetroPass Options", h => DialogService.ShowFlyout<AppSettingsViewModel>(GetBaseScreen(), headerBrush: settingsColor));
+            args.Request.ApplicationCommands.Add(appOptionsCommand);
 
             var privacyPolicyCommand = new SettingsCommand("privacyPolicy", "Privacy Policy", a => LaunchUrl(PrivacyPolicyUrl));
             args.Request.ApplicationCommands.Add(privacyPolicyCommand);

@@ -144,6 +144,7 @@
     <Compile Include="ViewModels\AdGroup.cs" />
     <Compile Include="ViewModels\AdItem.cs" />
     <Compile Include="ViewModels\AboutSettingsViewModel.cs" />
+    <Compile Include="ViewModels\AppSettingsViewModel.cs" />
     <Compile Include="ViewModels\DatabaseClosedSettingsViewModel.cs" />
     <Compile Include="ViewModels\EntryEditViewModel.cs" />
     <Compile Include="ViewModels\NewDatabaseViewModel.cs" />
@@ -166,6 +167,9 @@
     </Compile>
     <Compile Include="Views\AboutSettingsView.xaml.cs">
       <DependentUpon>AboutSettingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AppSettingsView.xaml.cs">
+      <DependentUpon>AppSettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\DatabaseClosedSettingsView.xaml.cs">
       <DependentUpon>DatabaseClosedSettingsView.xaml</DependentUpon>
@@ -254,6 +258,10 @@
     <Page Include="Views\AboutSettingsView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\AppSettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\DatabaseClosedSettingsView.xaml">
       <SubType>Designer</SubType>

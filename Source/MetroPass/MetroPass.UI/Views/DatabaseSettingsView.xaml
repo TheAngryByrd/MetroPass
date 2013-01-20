@@ -29,28 +29,6 @@
                     </StackPanel>
                 </StackPanel>
             </Border>
-
-            <!-- Security settings -->
-            <Border Style="{StaticResource FlyoutSection}">
-                <StackPanel>
-                    <TextBlock Text="Security" Style="{StaticResource FlyoutSectionHeader}" />
-                    <TextBlock Text="Lock after inactivity" Style="{StaticResource FlyoutLabel}" />
-                    <ToggleSwitch x:Name="LockDatabaseAfterInactivitySwitch" Visibility="Visible" IsOn="{Binding LockDatabaseAfterInactivityEnabled, Mode=TwoWay}" OnContent="Yes" OffContent="No" Style="{StaticResource FlyoutToggle}" />
-                    <StackPanel Orientation="Vertical" Visibility="{Binding IsOn, ElementName=LockDatabaseAfterInactivitySwitch, Converter={StaticResource BoolVisibilityConverter}}">
-                        <TextBlock Text="{Binding MinutesToLockDatabase, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0} minute(s)'}"  Style="{StaticResource FlyoutLabel}"></TextBlock>
-                        <Slider Style="{StaticResource SliderLight}" Width="250" Minimum="1" Maximum="60" StepFrequency="1" Value="{Binding MinutesToLockDatabase, Mode=TwoWay}" IsThumbToolTipEnabled="False"/>
-                    </StackPanel>
-                
-                    <TextBlock Text="Clear clipboard" Style="{StaticResource FlyoutLabel}" />
-                    <ToggleSwitch x:Name="ClearClipboardSwitch" IsOn="{Binding SecondsToClearClipboardEnabled, Mode=TwoWay}" OnContent="Yes" OffContent="No" Style="{StaticResource FlyoutToggle}" />
-                    <StackPanel Orientation="Vertical" Visibility="{Binding IsOn, ElementName=ClearClipboardSwitch, Converter={StaticResource BoolVisibilityConverter}}">
-
-                        <TextBlock Text="{Binding SecondsToClearClipboard, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0} seconds'}"  Style="{StaticResource FlyoutLabel}"></TextBlock>
-                        <Slider Style="{StaticResource SliderLight}" Width="250" Minimum="10" Maximum="60" StepFrequency="1" Value="{Binding SecondsToClearClipboard, Mode=TwoWay}" IsThumbToolTipEnabled="False"/>
-                    </StackPanel>
-                </StackPanel>
-            </Border>
-
         </StackPanel>
     </Grid>
 </UserControl>
