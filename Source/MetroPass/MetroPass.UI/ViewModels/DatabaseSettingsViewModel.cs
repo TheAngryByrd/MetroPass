@@ -9,12 +9,12 @@ using MetroPass.UI.DataModel;
 
 namespace MetroPass.UI.ViewModels
 {
-    public class SettingsViewModel : Screen
+    public class DatabaseSettingsViewModel : Screen
     {
         private readonly IKdbTree _dbTree;
         private readonly List<PwGroupLevels> _availablRecycleBinGroups = new List<PwGroupLevels>();
 
-        public SettingsViewModel(IKdbTree dbTree)
+        public DatabaseSettingsViewModel(IKdbTree dbTree)
         {
             _dbTree = dbTree;
             FillGroups(dbTree.Group, 0);
