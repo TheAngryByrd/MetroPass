@@ -6,7 +6,7 @@ namespace MetroPass.UI.ViewModels
     {
         public DatabaseClosedSettingsViewModel()
         {
-            this.DisplayName = "Options";
+            this.DisplayName = "Database Options";
         }
     }
 }

@@ -5,7 +5,6 @@ using Caliburn.Micro;
 using Framework;
 using MetroPass.Core.Interfaces;
 using MetroPass.Core.Model;
-using MetroPass.UI.DataModel;
 
 namespace MetroPass.UI.ViewModels
 {
@@ -19,7 +18,7 @@ namespace MetroPass.UI.ViewModels
             _dbTree = dbTree;
             FillGroups(dbTree.Group, 0);
 
-            this.DisplayName = "Options";
+            this.DisplayName = "Database Options";
         }
 
         private void FillGroups(PwGroup rootGroup, int level)
@@ -44,67 +43,6 @@ namespace MetroPass.UI.ViewModels
                 }
             }
         }
-        public const int MinMinutesToLockDatabase = 1;
-        public bool LockDatabaseAfterInactivityEnabled
-        {
-            get
-            {
-
-                return SettingsModel.Instance.LockDatabaseAfterInactivityEnabled;
-            }
-            set
-            {
-                SettingsModel.Instance.MinutesToLockDatabase = value ? MinMinutesToLockDatabase : 0;
-
-                NotifyOfPropertyChange(() => LockDatabaseAfterInactivityEnabled);
-                NotifyOfPropertyChange(() => MinutesToLockDatabase);
-            }
-        }
-
-        public int MinutesToLockDatabase
-        {
-            get
-            {
-                return SettingsModel.Instance.MinutesToLockDatabase;
-            }
-            set
-            {
-                SettingsModel.Instance.MinutesToLockDatabase = value;
-                NotifyOfPropertyChange(() => MinutesToLockDatabase);
-            }
-        }
-
-        public const int MinClearClipboardSeconds = 10;
-
-        public bool SecondsToClearClipboardEnabled
-        {
-            get
-            {
-                return SettingsModel.Instance.ClearClipboardEnabled;
-            }
-            set
-            {
-                SettingsModel.Instance.SecondsToClearClipboard = value ? MinClearClipboardSeconds : 0;
-
-                
-                NotifyOfPropertyChange(() => SecondsToClearClipboardEnabled);
-                NotifyOfPropertyChange(() => SecondsToClearClipboard);
-            }
-        }
-
-        public int SecondsToClearClipboard
-        {
-            get
-            {
-                return SettingsModel.Instance.SecondsToClearClipboard;
-            }
-            set
-            {
-                SettingsModel.Instance.SecondsToClearClipboard = value;
-                NotifyOfPropertyChange(() => SecondsToClearClipboard);
-            }
-        }
-
 
         public IEnumerable<PwGroupLevels> AvailableGroups
         {
