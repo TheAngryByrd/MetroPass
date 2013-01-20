@@ -51,7 +51,7 @@ namespace MetroPass.UI
             {
                 if (PWDatabaseDataSource.Instance.PwDatabase != null)
                 {
-                    DialogService.ShowFlyout<SettingsViewModel>(GetBaseScreen(), onClosed: SettingsClosed, headerBrush: settingsColor);
+                    DialogService.ShowFlyout<DatabaseSettingsViewModel>(GetBaseScreen(), onClosed: SettingsClosed, headerBrush: settingsColor);
                 }else
                 {
                     DialogService.ShowFlyout<DatabaseClosedSettingsViewModel>(GetBaseScreen(), headerBrush: settingsColor);
@@ -67,7 +67,7 @@ namespace MetroPass.UI
 
         }
   
-        private void SettingsClosed(SettingsViewModel s, UIElement v)
+        private void SettingsClosed(DatabaseSettingsViewModel s, UIElement v)
         {
             SaveSettings(s, v);
         }
@@ -88,7 +88,7 @@ namespace MetroPass.UI
             return baseScreen;
         }
 
-        private void SaveSettings(SettingsViewModel settingsViewModel, UIElement _)
+        private void SaveSettings(DatabaseSettingsViewModel settingsViewModel, UIElement _)
         {
             //The settings view model sets the properties directly on the IKdbTree, so we just need to save the database here
             PWDatabaseDataSource.Instance.SavePwDatabase();

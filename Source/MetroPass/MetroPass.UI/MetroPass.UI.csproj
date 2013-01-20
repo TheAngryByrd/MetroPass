@@ -156,7 +156,7 @@
     <Compile Include="Services\IPageServices.cs" />
     <Compile Include="ViewModels\BaseScreen.cs" />
     <Compile Include="ViewModels\GroupEditViewModel.cs" />
-    <Compile Include="ViewModels\SettingsViewModel.cs" />
+    <Compile Include="ViewModels\DatabaseSettingsViewModel.cs" />
     <Compile Include="ViewModels\StartPageViewModel.cs" />
     <Compile Include="Views\AddEntryView.xaml.cs">
       <DependentUpon>AddEntryView.xaml</DependentUpon>
@@ -201,8 +201,8 @@
     <Compile Include="Views\SearchResultsView.xaml.cs">
       <DependentUpon>SearchResultsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SettingsView.xaml.cs">
-      <DependentUpon>SettingsView.xaml</DependentUpon>
+    <Compile Include="Views\DatabaseSettingsView.xaml.cs">
+      <DependentUpon>DatabaseSettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\StartPageView.xaml.cs">
       <DependentUpon>StartPageView.xaml</DependentUpon>
@@ -287,7 +287,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\SettingsView.xaml">
+    <Page Include="Views\DatabaseSettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
