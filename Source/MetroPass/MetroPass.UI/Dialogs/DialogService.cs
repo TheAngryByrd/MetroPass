@@ -34,7 +34,7 @@ namespace Caliburn.Micro
     public static class DialogService
     {
 
-        public static void ShowFlyout<T>(PlacementMode placement, UIElement placementTarget, Action<T> onInitialize = null, Action<T, UIElement> onClosed = null) where T : Screen
+        public static Flyout ShowFlyout<T>(PlacementMode placement, UIElement placementTarget, Action<T> onInitialize = null, Action<T, UIElement> onClosed = null) where T : Screen
         {
             var viewModelAndView = CreateViewModelAndView(onInitialize);
             var vm = viewModelAndView.Item1;
@@ -51,6 +51,8 @@ namespace Caliburn.Micro
 
             if (onClosed != null)
             f.Closed += (sender, o) => onClosed(vm, view);
+
+            return f;
         }
 
         /// <summary>

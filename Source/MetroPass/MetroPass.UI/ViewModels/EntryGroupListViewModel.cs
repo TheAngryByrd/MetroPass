@@ -110,9 +110,11 @@ namespace MetroPass.UI.ViewModels
             _navigationService.UriFor<AddGroupViewModel>().WithParam(vm => vm.ParentGroupID, encodedUUID).Navigate();
         }
 
+
+        private Flyout FolderFlyout;
         public void MoveEntry(FrameworkElement source)
         {
-            DialogService.ShowFlyout<FolderPickerViewModel>(PlacementMode.Top, source, SetupMoveEntry);
+            FolderFlyout = DialogService.ShowFlyout<FolderPickerViewModel>(PlacementMode.Top, source, SetupMoveEntry);
         }
 
         public void SetupMoveEntry(FolderPickerViewModel fp)
@@ -120,9 +122,10 @@ namespace MetroPass.UI.ViewModels
             fp.SelectedGroupChange += fp_SelectedGroupChange; 
         }
 
-        void fp_SelectedGroupChange(object sender, string e)
+        async void fp_SelectedGroupChange(object sender, string e)
         {
-            
+            await MoveItem(e, SelectedPasswordItem);
+            FolderFlyout.IsOpen = false;
         }
 
   
@@ -161,6 +164,24 @@ namespace MetroPass.UI.ViewModels
                 ((PwEntry)SelectedPasswordItem).Remove();
                 await PWDatabaseDataSource.Instance.SavePwDatabase();
             }
+        }
+
+        public async Task MoveItem(string UUID, PwCommon selectedItem)
+        {
+            var folder = _dbTree.FindGroupByUuid(UUID);
+            var clonedElement = new XElement(selectedItem.Element);
+            folder.Add(clonedElement);
+            var UIFolder = TopLevelGroups.FirstOrDefault(g => g.UUID == UUID);
+            if (UIFolder != null)
+            {
+                var clonedEntry = new PwEntry(clonedElement, (PwGroup)UIFolder);
+                UIFolder.SubGroupsAndEntries.Add(clonedEntry);
+     
+            }
+            selectedItem.Element.Remove();
+            ((PwEntry)selectedItem).Remove();
+
+            await PWDatabaseDataSource.Instance.SavePwDatabase();
         }
 
         public async void DeleteGroup()
