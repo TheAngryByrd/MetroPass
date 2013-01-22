@@ -10,7 +10,11 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-	<Page.Resources>
+    <Page.Resources>
+        <Style x:Key="NormalTextboxStyle" TargetType="TextBox">
+            <Setter Property="HorizontalAlignment" Value="Left"></Setter>
+        </Style>
+        
 		<Style x:Key="SnappedLabelStyle" TargetType="TextBlock">
 			<Setter Property="FontSize" Value="24"/>
 			<Setter Property="Margin" Value="0,10,10,0"/>
@@ -54,20 +58,25 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Column="0" VerticalAlignment="Center" Grid.Row="0" Text="Title:" Margin="10" FontSize="24"/>
-                <TextBox Grid.Column="1" Grid.Row="0" Name="Title" Width="300" Margin="10" FontSize="20"/>
+                <TextBox Style="{StaticResource NormalTextboxStyle}" Grid.Column="1" Grid.Row="0" Name="Title" Width="300" Margin="10" FontSize="20"/>
                 <TextBlock Grid.Column="0" VerticalAlignment="Center" Grid.Row="1" Text="Username:" Margin="10" FontSize="24"/>
-                <TextBox Grid.Column="1" Grid.Row="1" Name="Username" Width="300" Margin="10" FontSize="20"/>
+                <TextBox Style="{StaticResource NormalTextboxStyle}" Grid.Column="1" Grid.Row="1" Name="Username" Width="300" Margin="10" FontSize="20"/>
                 <TextBlock Grid.Column="0" VerticalAlignment="Center" Grid.Row="2" Text="Password:" Margin="10" FontSize="24"/>
-                <TextBox Grid.Column="1" Grid.Row="2" Name="Password" Width="300" Margin="10" FontSize="20" />
+                <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="2">
+                    <TextBox Style="{StaticResource NormalTextboxStyle}" Name="Password" Width="300" Margin="10" FontSize="20" />
+                    <Button x:Name="Generate"  Content="Generate"></Button>
+                </StackPanel>
+
+
                 <TextBlock Grid.Column="0" VerticalAlignment="Center" Grid.Row="3" Text="Confirm:" Margin="10" FontSize="24"/>
-                <TextBox Grid.Column="1" Grid.Row="3" Name="Confirm" Width="300" Margin="10" FontSize="20" Style="{StaticResource ErrorTextBoxStyle}" />
+                <TextBox HorizontalAlignment="Left" Grid.Column="1" Grid.Row="3" Name="Confirm" Width="300" Margin="10" FontSize="20" Style="{StaticResource ErrorTextBoxStyle}" />
                 <TextBlock Grid.Column="0" VerticalAlignment="Top" Grid.Row="4" Text="URL:" Margin="10" FontSize="24"/>
                 <StackPanel Grid.Column="1" Grid.Row="4" Orientation="Vertical">
-                    <TextBox Name="Url" Width="300" Margin="10" FontSize="20" InputScope="Url" />
+                    <TextBox Style="{StaticResource NormalTextboxStyle}" Name="Url" Width="300" Margin="10" FontSize="20" InputScope="Url" />
                     <HyperlinkButton NavigateUri="{Binding Text, ElementName=Url}" Content="{Binding Text, ElementName=Url}" />
                 </StackPanel>
                 <TextBlock Grid.Column="0" VerticalAlignment="Top" Grid.Row="5" Text="Notes:" Margin="10" FontSize="24"/>
-                <TextBox Grid.Column="1" Grid.Row="5" Name="Notes" Width="300" Margin="10" FontSize="20" Height="200" TextWrapping="Wrap" AcceptsReturn="True"/>
+                <TextBox Style="{StaticResource NormalTextboxStyle}" Grid.Column="1" Grid.Row="5" Name="Notes" Width="300" Margin="10" FontSize="20" Height="200" TextWrapping="Wrap" AcceptsReturn="True"/>
                 <Button Grid.Column="1" Grid.Row="6" Name="Save" Margin="10" Content="Save" Width="100" Height="50" FontSize="24"/>
                 <UI:AdControl Grid.Column="3" Visibility="{Binding IsAdVisible, Converter={StaticResource BoolVisibilityConverter}}" Grid.RowSpan="7" ApplicationId="f8df6ddc-bc72-41bf-bf1d-676ddf2af726" AdUnitId="10052046" Width="160" Height="600"  HorizontalAlignment="Right"/>
             </Grid>
