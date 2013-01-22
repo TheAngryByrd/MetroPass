@@ -3,6 +3,7 @@ using Callisto.Controls;
 using MetroPass.UI.ViewModels;
 using Windows.UI.ApplicationSettings;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Media;
 
@@ -21,7 +22,7 @@ namespace Caliburn.Micro
         {
             var header = IoC.Get<T>().DisplayName;
 
-            var cmd = new SettingsCommand(header, header, command => DialogService.ShowFlyout(onInitialize, onClosed));
+            var cmd = new SettingsCommand(header, header, command => DialogService.ShowSettingsFlyout(onInitialize, onClosed));
 
             args.Request.ApplicationCommands.Add(cmd);
         }
@@ -32,6 +33,26 @@ namespace Caliburn.Micro
     /// </summary>
     public static class DialogService
     {
+
+        public static void ShowFlyout<T>(PlacementMode placement, UIElement placementTarget, Action<T> onInitialize = null, Action<T, UIElement> onClosed = null) where T : Screen
+        {
+            var viewModelAndView = CreateViewModelAndView(onInitialize);
+            var vm = viewModelAndView.Item1;
+            var view = viewModelAndView.Item2;
+            var content = new Border() { Child = view };      
+            var f = new Flyout
+            {
+                Content = content,
+                Placement = placement,
+                PlacementTarget = placementTarget
+            };
+            
+            f.IsOpen = true;
+
+            if (onClosed != null)
+            f.Closed += (sender, o) => onClosed(vm, view);
+        }
+
         /// <summary>
         /// Shows a settings dialog
         /// </summary>
@@ -40,7 +61,7 @@ namespace Caliburn.Micro
         /// <param name="onClosed">Method which is executed after the dialog has been closed</param>
         /// <param name="headerBrush">Setting pane's header color</param>
         /// <param name="backgroundBrush">Setting pane's backgruond color</param>
-        public static void ShowFlyout<T>(Action<T> onInitialize = null, Action<T, UIElement> onClosed = null, SolidColorBrush headerBrush = null, SolidColorBrush backgroundBrush = null) where T : Screen
+        public static void ShowSettingsFlyout<T>(Action<T> onInitialize = null, Action<T, UIElement> onClosed = null, SolidColorBrush headerBrush = null, SolidColorBrush backgroundBrush = null) where T : Screen
         {
             var viewModelAndView = CreateViewModelAndView(onInitialize);
             var vm = viewModelAndView.Item1;
@@ -63,7 +84,7 @@ namespace Caliburn.Micro
                 f.Closed += (sender, o) => onClosed(vm, view);
         }
 
-        public static void ShowFlyout<T>(BaseScreen currentScreen, Action<T> onInitialize = null, Action<T, UIElement> onClosed = null, SolidColorBrush headerBrush = null, SolidColorBrush backgroundBrush = null) where T : Screen
+        public static void ShowSettingsFlyout<T>(BaseScreen currentScreen, Action<T> onInitialize = null, Action<T, UIElement> onClosed = null, SolidColorBrush headerBrush = null, SolidColorBrush backgroundBrush = null) where T : Screen
         {
             Action<T> newInit = a =>
             {
@@ -82,7 +103,7 @@ namespace Caliburn.Micro
                 currentScreen.IsAdVisible = true;
             };
 
-            DialogService.ShowFlyout(newInit, newClose, headerBrush, backgroundBrush);
+            DialogService.ShowSettingsFlyout(newInit, newClose, headerBrush, backgroundBrush);
         }
 
     

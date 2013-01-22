@@ -44,23 +44,23 @@ namespace MetroPass.UI
         {
             var settingsColor = App.Current.Resources["MainAppColor"] as SolidColorBrush;
 
-            var aboutCommand = new SettingsCommand("about", "About MetroPass", a => DialogService.ShowFlyout<AboutSettingsViewModel>(GetBaseScreen(), headerBrush: settingsColor));
+            var aboutCommand = new SettingsCommand("about", "About MetroPass", a => DialogService.ShowSettingsFlyout<AboutSettingsViewModel>(GetBaseScreen(), headerBrush: settingsColor));
             args.Request.ApplicationCommands.Add(aboutCommand);
 
             var dbOptionsCommand = new SettingsCommand("databaseOptions", "Database Options", h =>
             {
                 if (PWDatabaseDataSource.Instance.PwDatabase != null)
                 {
-                    DialogService.ShowFlyout<DatabaseSettingsViewModel>(GetBaseScreen(), onClosed: SettingsClosed, headerBrush: settingsColor);
+                    DialogService.ShowSettingsFlyout<DatabaseSettingsViewModel>(GetBaseScreen(), onClosed: SettingsClosed, headerBrush: settingsColor);
                 }
                 else
                 {
-                    DialogService.ShowFlyout<DatabaseClosedSettingsViewModel>(GetBaseScreen(), headerBrush: settingsColor);
+                    DialogService.ShowSettingsFlyout<DatabaseClosedSettingsViewModel>(GetBaseScreen(), headerBrush: settingsColor);
                 }
             });
             args.Request.ApplicationCommands.Add(dbOptionsCommand);
 
-            var appOptionsCommand = new SettingsCommand("metroPassOptions", "MetroPass Options", h => DialogService.ShowFlyout<AppSettingsViewModel>(GetBaseScreen(), headerBrush: settingsColor));
+            var appOptionsCommand = new SettingsCommand("metroPassOptions", "MetroPass Options", h => DialogService.ShowSettingsFlyout<AppSettingsViewModel>(GetBaseScreen(), headerBrush: settingsColor));
             args.Request.ApplicationCommands.Add(appOptionsCommand);
 
             var privacyPolicyCommand = new SettingsCommand("privacyPolicy", "Privacy Policy", a => LaunchUrl(PrivacyPolicyUrl));
