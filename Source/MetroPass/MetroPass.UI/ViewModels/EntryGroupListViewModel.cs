@@ -6,6 +6,7 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using Caliburn.Micro;
+using Callisto.Controls;
 using Framework;
 using MetroPass.Core.Exceptions;
 using MetroPass.Core.Interfaces;
@@ -13,6 +14,9 @@ using MetroPass.Core.Model;
 using MetroPass.UI.DataModel;
 using MetroPass.UI.Services;
 using Windows.UI.Popups;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
 
 namespace MetroPass.UI.ViewModels
 {
@@ -104,6 +108,21 @@ namespace MetroPass.UI.ViewModels
         {
             var encodedUUID = WebUtility.UrlEncode(Root.UUID);
             _navigationService.UriFor<AddGroupViewModel>().WithParam(vm => vm.ParentGroupID, encodedUUID).Navigate();
+        }
+
+        public void MoveEntry(FrameworkElement source)
+        {
+            DialogService.ShowFlyout<FolderPickerViewModel>(PlacementMode.Top, source, SetupMoveEntry);
+        }
+
+        public void SetupMoveEntry(FolderPickerViewModel fp)
+        {
+            fp.SelectedGroupChange += fp_SelectedGroupChange; 
+        }
+
+        void fp_SelectedGroupChange(object sender, string e)
+        {
+            
         }
 
   

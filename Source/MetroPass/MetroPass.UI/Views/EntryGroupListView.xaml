@@ -21,6 +21,7 @@
                     <Button x:Name="CopyUsername" Loaded="AppBarButton_Loaded" Style="{StaticResource ContactAppBarButtonStyle}" AutomationProperties.Name="Copy Username"></Button>
                     <Button x:Name="CopyPassword" Loaded="AppBarButton_Loaded" Style="{StaticResource PermissionsAppBarButtonStyle}" AutomationProperties.Name="Copy Password"></Button>
                     <Button x:Name="OpenURL" Loaded="AppBarButton_Loaded" Style="{StaticResource WorldAppBarButtonStyle}" AutomationProperties.Name="Open URL"></Button>
+                    <Button x:Name="MoveEntry" Style="{StaticResource MoveToFolderAppBarButtonStyle}" AutomationProperties.Name="Move"/>
                 </StackPanel>
                 <StackPanel x:Name="GroupCommands" Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="0" Visibility="{Binding ShowGroupCommands, Converter={StaticResource BoolVisibilityConverter}}">
                     <Button x:Name="EditGroup" Loaded="AppBarButton_Loaded" Style="{StaticResource EditAppBarButtonStyle}" AutomationProperties.Name="Edit Folder"></Button>

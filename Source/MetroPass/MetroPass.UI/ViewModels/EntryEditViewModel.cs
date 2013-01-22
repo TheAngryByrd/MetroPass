@@ -185,7 +185,7 @@ namespace MetroPass.UI.ViewModels
         public void Generate()
         {
             var settingsColor = App.Current.Resources["MainAppColor"] as SolidColorBrush;
-            DialogService.ShowFlyout<PasswordGeneratorViewModel>(this,headerBrush: settingsColor);
+            DialogService.ShowSettingsFlyout<PasswordGeneratorViewModel>(this,headerBrush: settingsColor);
         }
 
         public async void Save()
