@@ -61,5 +61,7 @@ namespace MetroPass.Core.Model
             get { return DateTime.Parse(Times.Element().Value); }
             set { Times.Element().Value = value.ToString("yyyy-MM-ddTHH:mm:ssZ"); }
         }
+
+
     }
 }
