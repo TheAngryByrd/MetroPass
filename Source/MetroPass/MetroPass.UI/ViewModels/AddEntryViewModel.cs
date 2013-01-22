@@ -8,19 +8,23 @@ using MetroPass.Core.Model;
 using MetroPass.UI.DataModel;
 using MetroPass.UI.Views;
 using MetroPass.UI.Services;
+using MetroPass.UI.ViewModels.Messages;
+using Windows.UI.Xaml.Media;
+using System.Net;
 
 namespace MetroPass.UI.ViewModels
 {
-    public class AddEntryViewModel : BaseScreen
+    public class AddEntryViewModel : BaseScreen, IHandle<PasswordGenerateMessage>
     {
         private readonly INavigationService _navigationService;
         private readonly IKdbTree _dbTree;
 
-        public AddEntryViewModel(IKdbTree dbTree, INavigationService navigationService, IPageServices pageServices)
+        public AddEntryViewModel(IKdbTree dbTree, INavigationService navigationService, IPageServices pageServices, IEventAggregator events)
             : base(navigationService, pageServices)
         {
             _dbTree = dbTree;
             _navigationService = navigationService;
+            events.Subscribe(this);
         }
 
         private string _parentGroupID;
@@ -56,6 +60,11 @@ namespace MetroPass.UI.ViewModels
                 }
                 return String.Format("New Password ({0})", Title);
             }
+        }
+
+        public string Sanitize(string text)
+        {
+            return WebUtility.HtmlEncode(WebUtility.HtmlDecode(text));
         }
 
         private string _title;
@@ -202,10 +211,24 @@ namespace MetroPass.UI.ViewModels
                 </Entry>
             ";
             var uuid = new PwUuid(true);
-            entryTemplate = String.Format(entryTemplate, Convert.ToBase64String(uuid.UuidBytes), DateTime.Now.ToFormattedUtcTime(), Title, Username, Password, Url, Notes);
+
+            entryTemplate = String.Format(entryTemplate, Convert.ToBase64String(uuid.UuidBytes), DateTime.Now.ToFormattedUtcTime(), Sanitize(Title), Sanitize(Username), Sanitize(Password) ,Sanitize(Url) , Sanitize(Notes));
 
             var element = XElement.Parse(entryTemplate);
             return element;
         }
+
+        public void Generate()
+        {
+            var settingsColor = App.Current.Resources["MainAppColor"] as SolidColorBrush;
+            DialogService.ShowFlyout<PasswordGeneratorViewModel>(this, headerBrush: settingsColor);
+        }
+
+        public void Handle(PasswordGenerateMessage message)
+        {
+            Password = message.GeneratedPassword;
+            Confirm = message.GeneratedPassword;
+        }
+
     }
 }
