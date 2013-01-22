@@ -13,23 +13,33 @@ namespace MetroPass.UI.ViewModels
         private readonly IKdbTree _dbTree;
         private readonly List<PwGroupLevels> _availablRecycleBinGroups = new List<PwGroupLevels>();
 
-        public DatabaseSettingsViewModel(IKdbTree dbTree)
-        {
-            _dbTree = dbTree;
-            FillGroups(dbTree.Group, 0);
+        public FolderPickerViewModel FolderPickerViewModel {get;set;}
 
+        public DatabaseSettingsViewModel(IKdbTree dbTree, FolderPickerViewModel folderPicker)
+        {
+            this.FolderPickerViewModel = folderPicker;    
+            _dbTree = dbTree;
             this.DisplayName = "Database Options";
+
+            var recycleBin = FolderPickerViewModel.AvailableGroups.FirstOrDefault(g => g.Group.UUID == _dbTree.MetaData.RecycleBinUUID);
+            if (recycleBin.Group != null)
+            {
+                FolderPickerViewModel.SelectedGroup = recycleBin;
+            }
+   
+            this.FolderPickerViewModel.SelectedGroupChange += FolderPickerViewModel_SelectedGroupChange;
         }
 
-        private void FillGroups(PwGroup rootGroup, int level)
+        void FolderPickerViewModel_SelectedGroupChange(object sender, string e)
         {
-            _availablRecycleBinGroups.Add(new PwGroupLevels { Group = rootGroup, Level = level });
-            level++;
-            foreach (var subGroup in rootGroup.SubGroups)
+            if (_dbTree.MetaData.RecycleBinUUID != e)
             {
-                FillGroups(subGroup, level);
+                _dbTree.MetaData.RecycleBinUUID = e;
+                _dbTree.MetaData.RecycleBinChanged = DateTime.Now.ToFormattedUtcTime();   
             }
         }
+
+ 
 
         public bool RecycleBinEnabled
         {
@@ -42,43 +52,7 @@ namespace MetroPass.UI.ViewModels
                     NotifyOfPropertyChange(() => RecycleBinEnabled);
                 }
             }
-        }
-
-        public IEnumerable<PwGroupLevels> AvailableGroups
-        {
-            get
-            {
-                return _availablRecycleBinGroups;
-            }
-        }
-
-        public PwGroupLevels SelectedRecycleBinGroup
-        {
-            get
-            {
-                return _availablRecycleBinGroups.FirstOrDefault(g => g.Group.UUID == _dbTree.MetaData.RecycleBinUUID);
-            }
-            set
-            {
-                if (_dbTree.MetaData.RecycleBinUUID != value.Group.UUID) {
-                    _dbTree.MetaData.RecycleBinUUID = value.Group.UUID;
-                    _dbTree.MetaData.RecycleBinChanged = DateTime.Now.ToFormattedUtcTime();
-                    NotifyOfPropertyChange(() => SelectedRecycleBinGroup);
-                }
-            }
-        }
+        } 
     }
 
-    public struct PwGroupLevels
-    {
-        public int Level { get; set; }
-        public PwGroup Group { get; set; }
-        public string DisplayName
-        {
-            get
-            {
-                return string.Format("{0}{1}", new string(' ', Level * 2), Group.Name);
-            }
-        }
-    }
 }
