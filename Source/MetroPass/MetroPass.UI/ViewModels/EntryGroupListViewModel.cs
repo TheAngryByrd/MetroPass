@@ -119,6 +119,7 @@ namespace MetroPass.UI.ViewModels
 
         public void SetupMoveEntry(FolderPickerViewModel fp)
         {
+            fp.SelectedGroup = fp.AvailableGroups.FirstOrDefault(a => a.Group.UUID == ((PwEntry)SelectedPasswordItem).ParentGroup.UUID);
             fp.SelectedGroupChange += fp_SelectedGroupChange; 
         }
 
@@ -126,6 +127,7 @@ namespace MetroPass.UI.ViewModels
         {
             await MoveItem(e, SelectedPasswordItem);
             FolderFlyout.IsOpen = false;
+            ShowAppBar = false;
         }
 
   
