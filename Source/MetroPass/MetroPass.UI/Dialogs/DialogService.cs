@@ -1,6 +1,8 @@
 ﻿using System;
 using Callisto.Controls;
+using MetroPass.UI;
 using MetroPass.UI.ViewModels;
+using Windows.UI;
 using Windows.UI.ApplicationSettings;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -39,7 +41,8 @@ namespace Caliburn.Micro
             var viewModelAndView = CreateViewModelAndView(onInitialize);
             var vm = viewModelAndView.Item1;
             var view = viewModelAndView.Item2;
-            var content = new Border() { Child = view };      
+            var settingsColor = App.Current.Resources["MainAppColor"] as SolidColorBrush;
+            var content = new Border() { Child = view, BorderBrush = settingsColor, Padding = new Thickness(10), BorderThickness = new Thickness(2) };      
             var f = new Flyout
             {
                 Content = content,
