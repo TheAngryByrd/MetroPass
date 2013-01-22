@@ -147,6 +147,7 @@
     <Compile Include="ViewModels\AppSettingsViewModel.cs" />
     <Compile Include="ViewModels\DatabaseClosedSettingsViewModel.cs" />
     <Compile Include="ViewModels\EntryEditViewModel.cs" />
+    <Compile Include="ViewModels\FolderPickerVIewModel.cs" />
     <Compile Include="ViewModels\NewDatabaseViewModel.cs" />
     <Compile Include="ViewModels\PasswordEntryScreen.cs" />
     <Compile Include="ViewModels\Messages\PasswordGenerateMessage.cs" />
@@ -179,6 +180,9 @@
     </Compile>
     <Compile Include="Views\EntryGroupListView.xaml.cs">
       <DependentUpon>EntryGroupListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FolderPickerView.xaml.cs">
+      <DependentUpon>FolderPickerView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\GroupEditView.xaml.cs">
       <DependentUpon>GroupEditView.xaml</DependentUpon>
@@ -272,6 +276,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\EntryGroupListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\FolderPickerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
