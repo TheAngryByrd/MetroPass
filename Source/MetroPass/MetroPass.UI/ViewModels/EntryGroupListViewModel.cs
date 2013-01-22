@@ -13,10 +13,12 @@ using MetroPass.Core.Interfaces;
 using MetroPass.Core.Model;
 using MetroPass.UI.DataModel;
 using MetroPass.UI.Services;
+using Windows.UI;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Media;
 
 namespace MetroPass.UI.ViewModels
 {
@@ -114,11 +116,19 @@ namespace MetroPass.UI.ViewModels
         private Flyout FolderFlyout;
         public void MoveEntry(FrameworkElement source)
         {
-            FolderFlyout = DialogService.ShowFlyout<FolderPickerViewModel>(PlacementMode.Top, source, SetupMoveEntry);
+            FolderFlyout = DialogService.ShowFlyout<FolderPickerViewModel>(PlacementMode.Top, source, SetupMoveEntry, onContentAdd: onContentAdd );
+        }
+  
+        private object onContentAdd(UIElement view)
+        {
+            var settingsColor = App.Current.Resources["MainAppColor"] as SolidColorBrush;
+            Border content = new Border() { Child = view, BorderBrush = new SolidColorBrush(Colors.Black), Padding = (new Thickness(2)), BorderThickness = new Thickness(3) };
+            return content;
         }
 
         public void SetupMoveEntry(FolderPickerViewModel fp)
         {
+
             fp.SelectedGroup = fp.AvailableGroups.FirstOrDefault(a => a.Group.UUID == ((PwEntry)SelectedPasswordItem).ParentGroup.UUID);
             fp.SelectedGroupChange += fp_SelectedGroupChange; 
         }

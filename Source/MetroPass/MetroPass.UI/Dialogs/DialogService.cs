@@ -36,13 +36,17 @@ namespace Caliburn.Micro
     public static class DialogService
     {
 
-        public static Flyout ShowFlyout<T>(PlacementMode placement, UIElement placementTarget, Action<T> onInitialize = null, Action<T, UIElement> onClosed = null) where T : Screen
+        public static Flyout ShowFlyout<T>(PlacementMode placement, UIElement placementTarget, Action<T> onInitialize = null, Action<T, UIElement> onClosed = null, Func<UIElement,object> onContentAdd = null) where T : Screen
         {
             var viewModelAndView = CreateViewModelAndView(onInitialize);
             var vm = viewModelAndView.Item1;
             var view = viewModelAndView.Item2;
-            var settingsColor = App.Current.Resources["MainAppColor"] as SolidColorBrush;
-            var content = new Border() { Child = view, BorderBrush = settingsColor, Padding = new Thickness(10), BorderThickness = new Thickness(2) };      
+    
+            object content = view;
+            if (onContentAdd != null)
+            {
+                content = onContentAdd(view);
+            }
             var f = new Flyout
             {
                 Content = content,
