@@ -13,6 +13,7 @@ using MetroPass.Core.Interfaces;
 using MetroPass.Core.Model;
 using MetroPass.UI.DataModel;
 using MetroPass.UI.Services;
+using MetroPass.UI.ViewModels.Messages;
 using Windows.UI;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
@@ -22,18 +23,30 @@ using Windows.UI.Xaml.Media;
 
 namespace MetroPass.UI.ViewModels
 {
-    public class EntryGroupListViewModel : PasswordEntryScreen
+    public class EntryGroupListViewModel : PasswordEntryScreen, IHandle<FolderSelectedMessage>
     {
         private readonly INavigationService _navigationService;
         private readonly ObservableCollection<IGroup> _topLevelGroups;
         private readonly IKdbTree _dbTree;
-
-        public EntryGroupListViewModel(IKdbTree dbTree, INavigationService navigationService, IClipboard clipboard, IPageServices pageServices)
+        private readonly IEventAggregator _eventAggregator;
+        
+        public EntryGroupListViewModel(IKdbTree dbTree,
+            INavigationService navigationService,
+            IEventAggregator eventAggregator,
+            IClipboard clipboard,
+            IPageServices pageServices)
             : base(navigationService, clipboard, pageServices)
         {
+            _eventAggregator = eventAggregator;
             _dbTree = dbTree;
             _navigationService = navigationService;
             _topLevelGroups = new ObservableCollection<IGroup>();
+        }
+
+        protected override void OnDeactivate(bool close)
+        {
+            base.OnDeactivate(close);
+            _eventAggregator.Unsubscribe(this);
         }
 
         private string _groupId;
@@ -112,13 +125,19 @@ namespace MetroPass.UI.ViewModels
             _navigationService.UriFor<AddGroupViewModel>().WithParam(vm => vm.ParentGroupID, encodedUUID).Navigate();
         }
 
-
         private Flyout FolderFlyout;
         public void MoveEntry(FrameworkElement source)
         {
             FolderFlyout = DialogService.ShowFlyout<FolderPickerViewModel>(PlacementMode.Top, source, SetupMoveEntry, onContentAdd: onContentAdd );
         }
-  
+
+        public async void Handle(FolderSelectedMessage message)
+        {
+            await MoveItem(message.FolderUUID, (PwEntry)SelectedPasswordItem);
+            FolderFlyout.IsOpen = false;
+            ShowAppBar = false;
+        }
+
         private object onContentAdd(UIElement view)
         {
             var settingsColor = App.Current.Resources["MainAppColor"] as SolidColorBrush;
@@ -128,19 +147,9 @@ namespace MetroPass.UI.ViewModels
 
         public void SetupMoveEntry(FolderPickerViewModel fp)
         {
-
-            fp.SelectedGroup = fp.AvailableGroups.FirstOrDefault(a => a.Group.UUID == ((PwEntry)SelectedPasswordItem).ParentGroup.UUID);
-            fp.SelectedGroupChange += fp_SelectedGroupChange; 
+            fp.CurrentFolderUUID = ((PwEntry)SelectedPasswordItem).ParentGroup.UUID;
         }
 
-        async void fp_SelectedGroupChange(object sender, string e)
-        {
-            await MoveItem(e, SelectedPasswordItem);
-            FolderFlyout.IsOpen = false;
-            ShowAppBar = false;
-        }
-
-  
         private bool PasswordIsInRecycleBin
         {
             get 

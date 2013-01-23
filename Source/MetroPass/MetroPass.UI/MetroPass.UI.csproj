@@ -147,7 +147,8 @@
     <Compile Include="ViewModels\AppSettingsViewModel.cs" />
     <Compile Include="ViewModels\DatabaseClosedSettingsViewModel.cs" />
     <Compile Include="ViewModels\EntryEditViewModel.cs" />
-    <Compile Include="ViewModels\FolderPickerVIewModel.cs" />
+    <Compile Include="ViewModels\FolderPickerViewModel.cs" />
+    <Compile Include="ViewModels\Messages\FolderSelectedMessage.cs" />
     <Compile Include="ViewModels\NewDatabaseViewModel.cs" />
     <Compile Include="ViewModels\PasswordEntryScreen.cs" />
     <Compile Include="ViewModels\Messages\PasswordGenerateMessage.cs" />
