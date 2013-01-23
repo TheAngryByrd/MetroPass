@@ -6,8 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d" >
-
-    <ComboBox DisplayMemberPath="DisplayName"
+    <ComboBox DisplayMemberPath="DisplayName" Width="200"
                                   ItemsSource="{Binding AvailableGroups}" 
                                   SelectedItem="{Binding SelectedGroup, Mode=TwoWay}"/>
 </UserControl>
