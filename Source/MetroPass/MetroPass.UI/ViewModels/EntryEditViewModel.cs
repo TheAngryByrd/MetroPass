@@ -16,11 +16,14 @@ namespace MetroPass.UI.ViewModels
 
         private readonly IKdbTree _dbTree;
 
-        public EntryEditViewModel(IKdbTree dbTree, INavigationService navigationService, IPageServices pageServices,IEventAggregator events) : base(navigationService, pageServices)
+        public EntryEditViewModel(IKdbTree dbTree,
+            INavigationService navigationService,
+            IPageServices pageServices,
+            IEventAggregator eventAggregator) :
+            base(navigationService, eventAggregator, pageServices)
         {
             _dbTree = dbTree;
             _navigationService = navigationService;
-            events.Subscribe(this);
         }
 
         private string _entryID;

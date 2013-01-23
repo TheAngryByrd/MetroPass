@@ -28,25 +28,17 @@ namespace MetroPass.UI.ViewModels
         private readonly INavigationService _navigationService;
         private readonly ObservableCollection<IGroup> _topLevelGroups;
         private readonly IKdbTree _dbTree;
-        private readonly IEventAggregator _eventAggregator;
         
         public EntryGroupListViewModel(IKdbTree dbTree,
             INavigationService navigationService,
             IEventAggregator eventAggregator,
             IClipboard clipboard,
             IPageServices pageServices)
-            : base(navigationService, clipboard, pageServices)
+            : base(navigationService, eventAggregator, clipboard, pageServices)
         {
-            _eventAggregator = eventAggregator;
             _dbTree = dbTree;
             _navigationService = navigationService;
             _topLevelGroups = new ObservableCollection<IGroup>();
-        }
-
-        protected override void OnDeactivate(bool close)
-        {
-            base.OnDeactivate(close);
-            _eventAggregator.Unsubscribe(this);
         }
 
         private string _groupId;

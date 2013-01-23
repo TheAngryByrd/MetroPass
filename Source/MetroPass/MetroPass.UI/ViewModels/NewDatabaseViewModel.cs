@@ -9,7 +9,6 @@ using MetroPass.UI.Services;
 using MetroPass.UI.Views;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Xml.Linq;
 using Windows.Storage.Pickers;
 
@@ -21,7 +20,11 @@ namespace MetroPass.UI.ViewModels
 
         private readonly IPageServices _pageServices;
 
-        public NewDatabaseViewModel(INavigationService navigationService, IPageServices pageServices) : base(navigationService, pageServices)
+        public NewDatabaseViewModel(
+            INavigationService navigationService,
+            IEventAggregator eventAggregator,
+            IPageServices pageServices) :
+            base(navigationService, eventAggregator, pageServices)
         {
             this._pageServices = pageServices;
             _navigationService = navigationService;

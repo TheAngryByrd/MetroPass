@@ -11,14 +11,15 @@ namespace MetroPass.UI.ViewModels
     public class DatabaseSettingsViewModel : Screen, IHandle<RecycleBinSelectedMessage>
     {
         private readonly IKdbTree _dbTree;
+        private readonly IEventAggregator _eventAggregator;
         private readonly List<PwGroupLevels> _availablRecycleBinGroups = new List<PwGroupLevels>();
+        public FolderPickerViewModel FolderPickerViewModel { get; set; }
 
-        public FolderPickerViewModel FolderPickerViewModel {get;set;}
-
-        public DatabaseSettingsViewModel(IKdbTree dbTree, FolderPickerViewModel folderPicker)
+        public DatabaseSettingsViewModel(IKdbTree dbTree, IEventAggregator eventAggregator, FolderPickerViewModel folderPicker)
         {
-            this.FolderPickerViewModel = folderPicker;    
+            _eventAggregator = eventAggregator;
             _dbTree = dbTree;
+            this.FolderPickerViewModel = folderPicker;
             this.DisplayName = "Database Options";
 
             folderPicker.Mode = FolderPickerMode.RecycleBin;
@@ -27,6 +28,12 @@ namespace MetroPass.UI.ViewModels
             {
                 FolderPickerViewModel.CurrentFolderUUID = recycleBin.Group.UUID;
             }
+        }
+
+        protected override void OnDeactivate(bool close)
+        {
+            base.OnDeactivate(close);
+            _eventAggregator.Unsubscribe(this);
         }
 
         public void Handle(RecycleBinSelectedMessage message)
