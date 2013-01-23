@@ -14,13 +14,15 @@ namespace MetroPass.UI.ViewModels
     public class BaseScreen : Screen
     {
         private readonly INavigationService _navigationService;
+        private readonly IEventAggregator _eventAggregator;
         private Queue<string> _stateQueue;
         private IPageServices _pageServices;
 
-        public BaseScreen(INavigationService navigationService, IPageServices pageServices)
-        {  
-            this._navigationService=navigationService;
-            this._pageServices = pageServices;
+        public BaseScreen(INavigationService navigationService, IEventAggregator eventAggregator, IPageServices pageServices)
+        { 
+            _eventAggregator = eventAggregator;
+            _navigationService = navigationService;
+            _pageServices = pageServices;
             _stateQueue = new Queue<string>();
         }
 
@@ -91,6 +93,7 @@ namespace MetroPass.UI.ViewModels
         {
             base.OnDeactivate(close);
             Window.Current.SizeChanged -= Window_SizeChanged;
+            _eventAggregator.Unsubscribe(this);
         }
 
         private void Window_SizeChanged(object sender, Windows.UI.Core.WindowSizeChangedEventArgs e)

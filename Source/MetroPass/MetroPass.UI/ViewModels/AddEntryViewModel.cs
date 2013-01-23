@@ -1,16 +1,15 @@
-﻿using System.Xml.Linq;
-using Caliburn.Micro;
-using System;
-using System.Linq;
+﻿using Caliburn.Micro;
 using Framework;
 using MetroPass.Core.Interfaces;
 using MetroPass.Core.Model;
 using MetroPass.UI.DataModel;
-using MetroPass.UI.Views;
 using MetroPass.UI.Services;
 using MetroPass.UI.ViewModels.Messages;
-using Windows.UI.Xaml.Media;
+using MetroPass.UI.Views;
+using System;
 using System.Net;
+using System.Xml.Linq;
+using Windows.UI.Xaml.Media;
 
 namespace MetroPass.UI.ViewModels
 {
@@ -19,12 +18,14 @@ namespace MetroPass.UI.ViewModels
         private readonly INavigationService _navigationService;
         private readonly IKdbTree _dbTree;
 
-        public AddEntryViewModel(IKdbTree dbTree, INavigationService navigationService, IPageServices pageServices, IEventAggregator events)
-            : base(navigationService, pageServices)
+        public AddEntryViewModel(IKdbTree dbTree,
+            INavigationService navigationService,
+            IPageServices pageServices,
+            IEventAggregator eventAggregator)
+            : base(navigationService, eventAggregator, pageServices)
         {
             _dbTree = dbTree;
             _navigationService = navigationService;
-            events.Subscribe(this);
         }
 
         private string _parentGroupID;
