@@ -1,26 +1,33 @@
 ﻿using Caliburn.Micro;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MetroPass.Core.Interfaces;
 using MetroPass.Core.Model;
+using MetroPass.UI.ViewModels.Messages;
 
 namespace MetroPass.UI.ViewModels
 {
+    public enum FolderPickerMode
+    {
+        Move,
+        RecycleBin
+    }
+
     public class FolderPickerViewModel : Screen
     {
         private readonly IKdbTree dbTree;
-
-        public event EventHandler<string> SelectedGroupChange;
-
-        public FolderPickerViewModel(IKdbTree dbTree)
+        private readonly IEventAggregator _eventAggregator;
+        
+        public FolderPickerViewModel(IKdbTree dbTree, IEventAggregator eventAggregator)
         {
+            _eventAggregator = eventAggregator;
             this.dbTree = dbTree;
-            FillGroups(dbTree.Group, 0);
 
+            Mode = FolderPickerMode.Move;
+            FillGroups(dbTree.Group, 0);
         }
+
+        public FolderPickerMode Mode { get; set; }
 
         private void FillGroups(PwGroup rootGroup, int level)
         {
@@ -42,7 +49,6 @@ namespace MetroPass.UI.ViewModels
         }
 
         public string _selectedUUId;
-
         public PwGroupLevels SelectedGroup
         {
             get
@@ -56,11 +62,23 @@ namespace MetroPass.UI.ViewModels
                     _selectedUUId = value.Group.UUID;
 
                     NotifyOfPropertyChange(() => SelectedGroup);
-                    if (SelectedGroupChange != null)
+                    if (Mode == FolderPickerMode.Move)
                     {
-                        SelectedGroupChange(this, _selectedUUId);
-                    }                   
+                        _eventAggregator.Publish(new FolderSelectedMessage { FolderUUID = _selectedUUId });
+                    } else {
+                        _eventAggregator.Publish(new RecycleBinSelectedMessage { FolderUUID = _selectedUUId });
+                    }
                 }
+            }
+        }
+
+        public string CurrentFolderUUID
+        {
+            get { return _selectedUUId; }
+            set
+            {
+                _selectedUUId = value;
+                NotifyOfPropertyChange(() => SelectedGroup);
             }
         }
     }

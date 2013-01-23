@@ -4,11 +4,11 @@ using System.Linq;
 using Caliburn.Micro;
 using Framework;
 using MetroPass.Core.Interfaces;
-using MetroPass.Core.Model;
+using MetroPass.UI.ViewModels.Messages;
 
 namespace MetroPass.UI.ViewModels
 {
-    public class DatabaseSettingsViewModel : Screen
+    public class DatabaseSettingsViewModel : Screen, IHandle<RecycleBinSelectedMessage>
     {
         private readonly IKdbTree _dbTree;
         private readonly List<PwGroupLevels> _availablRecycleBinGroups = new List<PwGroupLevels>();
@@ -21,25 +21,22 @@ namespace MetroPass.UI.ViewModels
             _dbTree = dbTree;
             this.DisplayName = "Database Options";
 
+            folderPicker.Mode = FolderPickerMode.RecycleBin;
             var recycleBin = FolderPickerViewModel.AvailableGroups.FirstOrDefault(g => g.Group.UUID == _dbTree.MetaData.RecycleBinUUID);
             if (recycleBin.Group != null)
             {
-                FolderPickerViewModel.SelectedGroup = recycleBin;
+                FolderPickerViewModel.CurrentFolderUUID = recycleBin.Group.UUID;
             }
-   
-            this.FolderPickerViewModel.SelectedGroupChange += FolderPickerViewModel_SelectedGroupChange;
         }
 
-        void FolderPickerViewModel_SelectedGroupChange(object sender, string e)
+        public void Handle(RecycleBinSelectedMessage message)
         {
-            if (_dbTree.MetaData.RecycleBinUUID != e)
+            if (_dbTree.MetaData.RecycleBinUUID != message.FolderUUID)
             {
-                _dbTree.MetaData.RecycleBinUUID = e;
-                _dbTree.MetaData.RecycleBinChanged = DateTime.Now.ToFormattedUtcTime();   
+                _dbTree.MetaData.RecycleBinUUID = message.FolderUUID;
+                _dbTree.MetaData.RecycleBinChanged = DateTime.Now.ToFormattedUtcTime();
             }
         }
-
- 
 
         public bool RecycleBinEnabled
         {
@@ -54,5 +51,4 @@ namespace MetroPass.UI.ViewModels
             }
         } 
     }
-
 }

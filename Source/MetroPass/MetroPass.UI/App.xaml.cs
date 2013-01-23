@@ -121,6 +121,10 @@ namespace MetroPass.UI
         protected override object GetInstance(Type service, string key)
         {    
             var instance = _ninjectContainer.Kernel.Get(service, key);
+            if (instance is IHandle)
+            {
+                _ninjectContainer.Kernel.Get<IEventAggregator>().Subscribe(instance);
+            }
             return instance;
         }
 
