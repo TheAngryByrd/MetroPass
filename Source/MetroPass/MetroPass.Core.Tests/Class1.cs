@@ -14,6 +14,7 @@ namespace MetroPass.Core.Tests
     public class Class1
     {
         [TestMethod]
+        [Ignore]
         public void blah()
         {
             var grandChild = new XElement("Name", "My Name");
