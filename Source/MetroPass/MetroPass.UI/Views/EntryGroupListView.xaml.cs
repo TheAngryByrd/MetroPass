@@ -28,9 +28,8 @@ namespace MetroPass.UI.Views
             var vm = this.DataContext as EntryGroupListViewModel;
             if (vm != null)
             {
-                vm.IsAdVisible = true;
+                vm.IsAdVisible = false;
             }
-            vm.IsAdVisible = false;
         }
 
         private void AppBarButton_Loaded(object sender, RoutedEventArgs e)
