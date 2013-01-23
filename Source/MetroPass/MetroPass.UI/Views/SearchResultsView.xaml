@@ -27,11 +27,12 @@
         <x:String x:Key="AppName">MetroPass</x:String>
 
         <DataTemplate x:Key="SearchResultsItemTemplate">
-            <Grid Height="70" Margin="6" Width="250" Background="Teal">
+            <Grid Height="70" Width="250" Background="{StaticResource MainEntryColor}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
+                <TextBlock Style="{StaticResource IconFontStyle}" Text="&#xE192;" />
                 <StackPanel Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,0,0,0" >
                     <TextBlock Text="{Binding Title}" Style="{StaticResource TitleTextStyle}" TextWrapping="NoWrap"/>
                     <TextBlock Text="{Binding Username}" Style="{StaticResource CaptionTextStyle}" TextWrapping="NoWrap"/>
@@ -78,13 +79,6 @@
                     ItemTemplate="{StaticResource SearchResultsItemTemplate}"
                     SelectedItem="{Binding SelectedPasswordItem, Mode=TwoWay}"
                     >
-                    
-                    <GridView.ItemContainerStyle>
-                        <Style TargetType="Control">
-                            <Setter Property="Height" Value="70"/>
-                            <Setter Property="Margin" Value="0,0,38,8"/>
-                       </Style>
-                    </GridView.ItemContainerStyle>
                 </GridView>
             </Grid>
 
