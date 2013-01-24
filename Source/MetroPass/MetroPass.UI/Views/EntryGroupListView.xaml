@@ -16,18 +16,18 @@
         <AppBar VerticalAlignment="Bottom" x:Name="EntryAppBar" IsOpen="{Binding ShowAppBar, Mode=TwoWay}" IsSticky="True" Opened="EntryAppBar_Opened" Closed="EntryAppBar_Closed" cal:Message.Attach="[Event Closed] = [Action DeselectItem]">
             <Grid>
                 <StackPanel x:Name="EntryCommands" Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="0" Visibility="{Binding ShowEntryCommands, Converter={StaticResource BoolVisibilityConverter}}" >
-                    <Button x:Name="EditEntry" Loaded="AppBarButton_Loaded" Style="{StaticResource EditAppBarButtonStyle}" AutomationProperties.Name="Edit Password"></Button>
-                    <Button x:Name="DeleteEntry" Loaded="AppBarButton_Loaded" Style="{StaticResource DeleteAppBarButtonStyle}" AutomationProperties.Name="Delete Password"></Button>
-                    <Button x:Name="CopyUsername" Loaded="AppBarButton_Loaded" Style="{StaticResource ContactAppBarButtonStyle}" AutomationProperties.Name="Copy Username"></Button>
-                    <Button x:Name="CopyPassword" Loaded="AppBarButton_Loaded" Style="{StaticResource PermissionsAppBarButtonStyle}" AutomationProperties.Name="Copy Password"></Button>
-                    <Button x:Name="OpenURL" Loaded="AppBarButton_Loaded" Style="{StaticResource WorldAppBarButtonStyle}" AutomationProperties.Name="Open URL"></Button>
-                    <Button x:Name="MoveEntry" Style="{StaticResource MoveToFolderAppBarButtonStyle}" AutomationProperties.Name="Move"/>
+                    <Button x:Name="EditEntry" Loaded="AppBarButton_Loaded" Style="{StaticResource EditAppBarButtonStyle}" AutomationProperties.Name="Edit Password" ToolTipService.ToolTip="Edit Password"></Button>
+                    <Button x:Name="DeleteEntry" Loaded="AppBarButton_Loaded" Style="{StaticResource DeleteAppBarButtonStyle}" AutomationProperties.Name="Delete Password" ToolTipService.ToolTip="Delete Password"></Button>
+                    <Button x:Name="CopyUsername" Loaded="AppBarButton_Loaded" Style="{StaticResource ContactAppBarButtonStyle}" AutomationProperties.Name="Copy Username" ToolTipService.ToolTip="Copy Username"></Button>
+                    <Button x:Name="CopyPassword" Loaded="AppBarButton_Loaded" Style="{StaticResource PermissionsAppBarButtonStyle}" AutomationProperties.Name="Copy Password" ToolTipService.ToolTip="Copy Password"></Button>
+                    <Button x:Name="OpenURL" Loaded="AppBarButton_Loaded" Style="{StaticResource WorldAppBarButtonStyle}" AutomationProperties.Name="Open URL" ToolTipService.ToolTip="Open URL"></Button>
+                    <Button x:Name="MoveEntry" Style="{StaticResource MoveToFolderAppBarButtonStyle}" AutomationProperties.Name="Move" ToolTipService.ToolTip="Move Password"/>
                 </StackPanel>
                 <StackPanel x:Name="GroupCommands" Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="0" Visibility="{Binding ShowGroupCommands, Converter={StaticResource BoolVisibilityConverter}}">
-                    <Button x:Name="EditGroup" Loaded="AppBarButton_Loaded" Style="{StaticResource EditAppBarButtonStyle}" AutomationProperties.Name="Edit Folder"></Button>
-                    <Button x:Name="DeleteGroup" Loaded="AppBarButton_Loaded" Style="{StaticResource DeleteAppBarButtonStyle}" AutomationProperties.Name="Delete Folder"></Button>
-                    <Button x:Name="AddEntry" Loaded="AppBarButton_Loaded" Style="{StaticResource AddAppBarButtonStyle}" AutomationProperties.Name="Add Password"></Button>
-                    <Button x:Name="AddGroup" Loaded="AppBarButton_Loaded" Style="{StaticResource AddFolderAppBarButtonStyle}" AutomationProperties.Name="Add Folder"></Button>
+                    <Button x:Name="EditGroup" Loaded="AppBarButton_Loaded" Style="{StaticResource EditAppBarButtonStyle}" AutomationProperties.Name="Edit Folder" ToolTipService.ToolTip="Edit Folder"></Button>
+                    <Button x:Name="DeleteGroup" Loaded="AppBarButton_Loaded" Style="{StaticResource DeleteAppBarButtonStyle}" AutomationProperties.Name="Delete Folder" ToolTipService.ToolTip="Delete Folder"></Button>
+                    <Button x:Name="AddEntry" Loaded="AppBarButton_Loaded" Style="{StaticResource AddAppBarButtonStyle}" AutomationProperties.Name="Add Password" ToolTipService.ToolTip="Add Password"></Button>
+                    <Button x:Name="AddGroup" Loaded="AppBarButton_Loaded" Style="{StaticResource AddFolderAppBarButtonStyle}" AutomationProperties.Name="Add Folder" ToolTipService.ToolTip="Add Folder"></Button>
                 </StackPanel>
             </Grid>
         </AppBar>
