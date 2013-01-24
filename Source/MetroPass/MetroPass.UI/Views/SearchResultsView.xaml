@@ -56,8 +56,6 @@
             </Grid.ColumnDefinitions>
             <Button x:Name="GoBack" Style="{StaticResource BackButtonStyle}"/>
             <TextBlock x:Name="pageTitle" Grid.Column="1" Text="{StaticResource AppName}" IsHitTestVisible="false" Style="{StaticResource PageHeaderTextStyle}"  />
-            <TextBlock x:Name="resultText" Grid.Column="2" Text="Results for&#x00a0;" IsHitTestVisible="false" Style="{StaticResource PageSubheaderTextStyle}"/>
-            <TextBlock x:Name="queryText" Grid.Column="3" Text="{Binding QueryText}" IsHitTestVisible="false" Style="{StaticResource PageSubheaderTextStyle}"/>
         </Grid>
 
         <Grid x:Name="resultsPanel" Grid.Row="1">
@@ -66,7 +64,10 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-
+                <TextBlock Style="{StaticResource PageSubheaderTextStyle}" Margin="120,0,0,0">
+                    <Run Text="Results for : " />
+                    <Run Text="{Binding QueryText}" Foreground="{StaticResource MainHighlightColor}" />
+                </TextBlock>
                 <GridView
                     x:Name="resultsGridView"
                     AutomationProperties.AutomationId="ResultsGridView"
@@ -87,29 +88,23 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-
+                <StackPanel Orientation="Vertical" Margin="50,0,0,0">
+                    <TextBlock Text="Results for:" Style="{StaticResource PageSubheaderTextStyle}" Margin="0,0,0,5" />
+                    <TextBlock Text="{Binding QueryText}" Style="{StaticResource PageSubheaderTextStyle}" Foreground="{StaticResource MainHighlightColor}" />
+                </StackPanel>
                 <ListView
                     x:Name="resultsListView"
                     AutomationProperties.AutomationId="ResultsListView"
                     AutomationProperties.Name="Search Results"
-                    TabIndex="1"
                     Grid.Row="1"
-                    Margin="10,0,0,0"
-                    Padding="0,0,0,60"
+                    Margin="0,0,0,100"
+                    Padding="50,0,40,46"
                     SelectionMode="Single"
-                    IsSwipeEnabled="false"
                     IsItemClickEnabled="False"
                     ItemsSource="{Binding Results}"
                     SelectedItem="{Binding SelectedPasswordItem, Mode=TwoWay}"
                     ItemTemplate="{StaticResource SearchResultsItemTemplate}"
                     >
-
-                    <ListView.ItemContainerStyle>
-                        <Style TargetType="Control">
-                            <Setter Property="Height" Value="70"/>
-                            <Setter Property="Margin" Value="0,0,18,8"/>
-                        </Style>
-                    </ListView.ItemContainerStyle>
                 </ListView>
             </Grid>
         </Grid>
@@ -124,12 +119,10 @@
 
         <VisualStateManager.VisualStateGroups>
 
-            <!-- Visual states reflect the application's view state -->
             <VisualStateGroup x:Name="ApplicationViewStates">
                 <VisualState x:Name="FullScreenLandscape"/>
                 <VisualState x:Name="Filled"/>
 
-                <!-- The entire page respects the narrower 100-pixel margin convention for portrait -->
                 <VisualState x:Name="FullScreenPortrait">
                     <Storyboard>
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="GoBack" Storyboard.TargetProperty="Style">
@@ -144,25 +137,13 @@
                     </Storyboard>
                 </VisualState>
 
-                <!--
-                    The back button and title have different styles when snapped in addition to more extensive changes:
-                    * The query text becomes the page header
-                    * A different representation for filter selection and search results is used
-                -->
                 <VisualState x:Name="Snapped">
                     <Storyboard>
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="GoBack" Storyboard.TargetProperty="Style">
                             <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource SnappedBackButtonStyle}"/>
                         </ObjectAnimationUsingKeyFrames>
-
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="queryText" Storyboard.TargetProperty="Style">
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="pageTitle" Storyboard.TargetProperty="Style">
                             <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource SnappedPageHeaderTextStyle}"/>
-                        </ObjectAnimationUsingKeyFrames>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="pageTitle" Storyboard.TargetProperty="Visibility">
-                            <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed"/>
-                        </ObjectAnimationUsingKeyFrames>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="resultText" Storyboard.TargetProperty="Visibility">
-                            <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed"/>
                         </ObjectAnimationUsingKeyFrames>
 
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="typicalPanel" Storyboard.TargetProperty="Visibility">
