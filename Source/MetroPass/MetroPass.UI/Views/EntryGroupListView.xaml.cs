@@ -1,5 +1,6 @@
 ﻿using MetroPass.UI.ViewModels;
-using Microsoft.Advertising.WinRT.UI;
+
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 

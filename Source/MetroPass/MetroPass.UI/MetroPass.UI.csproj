@@ -141,8 +141,6 @@
     <Compile Include="UserControls\NumberBox.cs" />
     <Compile Include="ViewModels\AddEntryViewModel.cs" />
     <Compile Include="ViewModels\AddGroupViewModel.cs" />
-    <Compile Include="ViewModels\AdGroup.cs" />
-    <Compile Include="ViewModels\AdItem.cs" />
     <Compile Include="ViewModels\AboutSettingsViewModel.cs" />
     <Compile Include="ViewModels\AppSettingsViewModel.cs" />
     <Compile Include="ViewModels\DatabaseClosedSettingsViewModel.cs" />
