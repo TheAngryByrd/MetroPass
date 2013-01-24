@@ -5,11 +5,28 @@ using Windows.UI.Xaml.Controls;
 
 namespace MetroPass.UI.Views
 {
-    public sealed partial class SearchResultsView : Page, IHaveAppBar
+    public sealed partial class SearchResultsView : Page
     {
         public SearchResultsView()
         {
             this.InitializeComponent();
+        }
+
+        protected override void OnNavigatedTo(Windows.UI.Xaml.Navigation.NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            this.ApplicationViewStates.CurrentStateChanging += ApplicationViewStates_CurrentStateChanging;
+        }
+
+        protected override void OnNavigatingFrom(Windows.UI.Xaml.Navigation.NavigatingCancelEventArgs e)
+        {
+            base.OnNavigatingFrom(e);
+            this.ApplicationViewStates.CurrentStateChanging -= ApplicationViewStates_CurrentStateChanging;
+        }
+
+        void ApplicationViewStates_CurrentStateChanging(object sender, VisualStateChangedEventArgs e)
+        {
+            SetAppBarState(e.NewState.Name);
         }
 
         private void AppBarButton_Loaded(object sender, RoutedEventArgs e)
@@ -41,7 +58,7 @@ namespace MetroPass.UI.Views
             }
         }
 
-        public void SetAppBarState(string state)
+        private void SetAppBarState(string state)
         {
             VisualStateManager.GoToState(EditEntry, state, true);
             VisualStateManager.GoToState(CopyUsername, state, true);
