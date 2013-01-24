@@ -5,11 +5,28 @@ using Windows.UI.Xaml.Controls;
 
 namespace MetroPass.UI.Views
 {
-    public sealed partial class EntryGroupListView : Page, IHaveAppBar
+    public sealed partial class EntryGroupListView : Page
     {
         public EntryGroupListView()
         {
             this.InitializeComponent();
+        }
+
+        protected override void OnNavigatedTo(Windows.UI.Xaml.Navigation.NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            this.ApplicationViewStates.CurrentStateChanging += ApplicationViewStates_CurrentStateChanging;
+        }
+
+        protected override void OnNavigatingFrom(Windows.UI.Xaml.Navigation.NavigatingCancelEventArgs e)
+        {
+            base.OnNavigatingFrom(e);
+            this.ApplicationViewStates.CurrentStateChanging -= ApplicationViewStates_CurrentStateChanging;
+        }
+
+        void ApplicationViewStates_CurrentStateChanging(object sender, VisualStateChangedEventArgs e)
+        {
+            SetAppBarState(e.NewState.Name);
         }
 
         //HACK: This is wired up to a Caliburn Action, but it's not working due to an issue with the Windows.UI.Interactivity library
@@ -41,7 +58,7 @@ namespace MetroPass.UI.Views
             }
         }
 
-        public void SetAppBarState(string state)
+        private void SetAppBarState(string state)
         {
             VisualStateManager.GoToState(EditGroup, state, true);
             VisualStateManager.GoToState(DeleteGroup, state, true);
