@@ -133,7 +133,9 @@ namespace MetroPass.UI.ViewModels
         private object onContentAdd(UIElement view)
         {
             var settingsColor = App.Current.Resources["MainAppColor"] as SolidColorBrush;
-            Border content = new Border() { Child = view, BorderBrush = new SolidColorBrush(Colors.Black), Padding = (new Thickness(2)), BorderThickness = new Thickness(3) };
+
+
+            Border content = new Border() { Child = view, BorderBrush = new SolidColorBrush(Colors.Black), Padding = (new Thickness(5,5,5,10)), BorderThickness = new Thickness(3) };
             return content;
         }
 
