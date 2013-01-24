@@ -23,6 +23,7 @@
     </SccAuxPath>
     <SccProvider>
     </SccProvider>
+    <PackageCertificateThumbprint>F1366F8A426D4000340101F50FFE7E6DD42ED5A8</PackageCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -117,7 +118,6 @@
     <SDKReference Include="TestPlatform, Version=11.0" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
     <Compile Include="ComparedToMainKeepass\PassingTests.cs" />
     <Compile Include="GeneratePasswordTests.cs" />
     <Compile Include="Helpers\Helpers.cs" />
@@ -175,6 +175,9 @@
       <Project>{c08eec72-cb2e-4cb9-b6ee-d2c5d070d95c}</Project>
       <Name>MetroPass.Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="MetroPass.Core.Tests_TemporaryKey.pfx" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">
     <VisualStudioVersion>11.0</VisualStudioVersion>

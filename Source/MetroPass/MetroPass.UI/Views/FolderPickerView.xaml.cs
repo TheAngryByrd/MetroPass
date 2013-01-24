@@ -16,9 +16,9 @@ using Windows.UI.Xaml.Navigation;
 
 namespace MetroPass.UI.Views
 {
-    public sealed partial class SettingsView : UserControl
+    public sealed partial class FolderPickerView : UserControl
     {
-        public SettingsView()
+        public FolderPickerView()
         {
             this.InitializeComponent();
         }

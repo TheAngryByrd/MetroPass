@@ -1,11 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using MetroPass.UI.ViewModels;
-using MetroPass.UI;
-
+﻿using MetroPass.UI.ViewModels;
+using Microsoft.Advertising.WinRT.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media;
 
 namespace MetroPass.UI.Views
 {
@@ -15,7 +11,24 @@ namespace MetroPass.UI.Views
         {
             this.InitializeComponent();
         }
-        
+
+        protected override void OnNavigatedTo(Windows.UI.Xaml.Navigation.NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            this.ApplicationViewStates.CurrentStateChanging += ApplicationViewStates_CurrentStateChanging;
+        }
+
+        protected override void OnNavigatingFrom(Windows.UI.Xaml.Navigation.NavigatingCancelEventArgs e)
+        {
+            base.OnNavigatingFrom(e);
+            this.ApplicationViewStates.CurrentStateChanging -= ApplicationViewStates_CurrentStateChanging;
+        }
+
+        void ApplicationViewStates_CurrentStateChanging(object sender, VisualStateChangedEventArgs e)
+        {
+            SetAppBarState(e.NewState.Name);
+        }
+
         //HACK: This is wired up to a Caliburn Action, but it's not working due to an issue with the Windows.UI.Interactivity library
         private void EntryAppBar_Closed(object sender, object e)
         {
@@ -32,9 +45,31 @@ namespace MetroPass.UI.Views
             var vm = this.DataContext as EntryGroupListViewModel;
             if (vm != null)
             {
-                vm.IsAdVisible = true;
+                vm.IsAdVisible = false;
             }
-            vm.IsAdVisible = false;
-        }          
+        }
+
+        private void AppBarButton_Loaded(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            if (button != null)
+            {
+                VisualStateManager.GoToState(button, ApplicationView.Value.ToString(), true);
+            }
+        }
+
+        private void SetAppBarState(string state)
+        {
+            VisualStateManager.GoToState(EditGroup, state, true);
+            VisualStateManager.GoToState(DeleteGroup, state, true);
+            VisualStateManager.GoToState(AddEntry, state, true);
+            VisualStateManager.GoToState(AddGroup, state, true);
+
+            VisualStateManager.GoToState(EditEntry, state, true);
+            VisualStateManager.GoToState(DeleteEntry, state, true);
+            VisualStateManager.GoToState(CopyUsername, state, true);
+            VisualStateManager.GoToState(CopyPassword, state, true);
+            VisualStateManager.GoToState(OpenURL, state, true);
+        }
     }
 }

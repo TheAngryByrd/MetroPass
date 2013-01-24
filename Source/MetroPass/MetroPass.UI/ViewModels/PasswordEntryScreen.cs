@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Net;
 using Caliburn.Micro;
 using MetroPass.Core.Model;
@@ -12,7 +11,11 @@ namespace MetroPass.UI.ViewModels
         private readonly INavigationService _navigationService;
         private readonly IClipboard _clipboard;
 
-        public PasswordEntryScreen(INavigationService navigationService, IClipboard clipboard, IPageServices pageServices) : base(navigationService, pageServices)
+        public PasswordEntryScreen(
+            INavigationService navigationService,
+            IEventAggregator eventAggregator,
+            IClipboard clipboard,
+            IPageServices pageServices) : base(navigationService, eventAggregator, pageServices)
         {
             _navigationService = navigationService;
             _clipboard = clipboard;
@@ -38,6 +41,7 @@ namespace MetroPass.UI.ViewModels
                 NotifyOfPropertyChange(() => SelectedPasswordItem);
                 NotifyOfPropertyChange(() => ShowEntryCommands);
                 NotifyOfPropertyChange(() => ShowGroupCommands);
+                NotifyOfPropertyChange(() => CanOpenURL);
             }
         }
 
@@ -70,7 +74,22 @@ namespace MetroPass.UI.ViewModels
 
         public void OpenURL()
         {
-            this.LaunchUrl((SelectedPasswordItem as PwEntry).Url);
+            var password = SelectedPasswordItem as PwEntry;
+            var uri = GetPasswordUri(password);
+            LaunchUrl(uri);
+        }
+
+        public bool CanOpenURL
+        {
+            get
+            {
+                var password = SelectedPasswordItem as PwEntry;
+                if (password != null)
+                {
+                    return !String.IsNullOrWhiteSpace(password.Url);
+                }
+                return false;
+            }
         }
 
         public void DeselectItem()

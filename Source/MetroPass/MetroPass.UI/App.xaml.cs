@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using Caliburn.Micro;
 using MetroPass.Core.Interfaces;
 using MetroPass.Core.Security;
@@ -33,7 +32,6 @@ namespace MetroPass.UI
             this.Suspending += OnSuspending;
             ConventionManager.AddElementConvention<ToggleSwitch>(ToggleSwitch.IsOnProperty, "IsOn", "Toggled");    
             ConventionManager.AddElementConvention<Slider>(Slider.ValueProperty, "Value", "ValueChanged");
-            
         }
 
         protected override void OnWindowCreated(Windows.UI.Xaml.WindowCreatedEventArgs args)
@@ -46,29 +44,34 @@ namespace MetroPass.UI
         {
             var settingsColor = App.Current.Resources["MainAppColor"] as SolidColorBrush;
 
-            var privacyPolicyCommand = new SettingsCommand("privacyPolicy","Privacy Policy", a => LaunchUrl(PrivacyPolicyUrl));
+            var aboutCommand = new SettingsCommand("about", "About MetroPass", a => DialogService.ShowSettingsFlyout<AboutSettingsViewModel>(GetBaseScreen(), headerBrush: settingsColor));
+            args.Request.ApplicationCommands.Add(aboutCommand);
+
+            var dbOptionsCommand = new SettingsCommand("databaseOptions", "Database Options", h =>
+            {
+                if (PWDatabaseDataSource.Instance.PwDatabase != null)
+                {
+                    DialogService.ShowSettingsFlyout<DatabaseSettingsViewModel>(GetBaseScreen(), onClosed: SettingsClosed, headerBrush: settingsColor);
+                }
+                else
+                {
+                    DialogService.ShowSettingsFlyout<DatabaseClosedSettingsViewModel>(GetBaseScreen(), headerBrush: settingsColor);
+                }
+            });
+            args.Request.ApplicationCommands.Add(dbOptionsCommand);
+
+            var appOptionsCommand = new SettingsCommand("metroPassOptions", "MetroPass Options", h => DialogService.ShowSettingsFlyout<AppSettingsViewModel>(GetBaseScreen(), headerBrush: settingsColor));
+            args.Request.ApplicationCommands.Add(appOptionsCommand);
+
+            var privacyPolicyCommand = new SettingsCommand("privacyPolicy", "Privacy Policy", a => LaunchUrl(PrivacyPolicyUrl));
             args.Request.ApplicationCommands.Add(privacyPolicyCommand);
 
             var supportCommand = new SettingsCommand("support", "Support & Feedback", a => LaunchUrl(SupportUrl));
             args.Request.ApplicationCommands.Add(supportCommand);
 
-            var optionsCommand = new SettingsCommand("metroPassOptions", "Database Options", h =>
-            {
-                if (PWDatabaseDataSource.Instance.PwDatabase != null)
-                {
-                    DialogService.ShowFlyout<SettingsViewModel>(GetBaseScreen(), onClosed: SettingsClosed, headerBrush: settingsColor);
-                }else
-                {
-                    DialogService.ShowFlyout<DatabaseClosedSettingsViewModel>(GetBaseScreen(), headerBrush: settingsColor);
-                }
-            });
-            args.Request.ApplicationCommands.Add(optionsCommand);
-
-        
-
         }
   
-        private void SettingsClosed(SettingsViewModel s, UIElement v)
+        private void SettingsClosed(DatabaseSettingsViewModel s, UIElement v)
         {
             SaveSettings(s, v);
         }
@@ -89,7 +92,7 @@ namespace MetroPass.UI
             return baseScreen;
         }
 
-        private void SaveSettings(SettingsViewModel settingsViewModel, UIElement _)
+        private void SaveSettings(DatabaseSettingsViewModel settingsViewModel, UIElement _)
         {
             //The settings view model sets the properties directly on the IKdbTree, so we just need to save the database here
             PWDatabaseDataSource.Instance.SavePwDatabase();
@@ -118,6 +121,10 @@ namespace MetroPass.UI
         protected override object GetInstance(Type service, string key)
         {    
             var instance = _ninjectContainer.Kernel.Get(service, key);
+            if (instance is IHandle)
+            {
+                _ninjectContainer.Kernel.Get<IEventAggregator>().Subscribe(instance);
+            }
             return instance;
         }
 

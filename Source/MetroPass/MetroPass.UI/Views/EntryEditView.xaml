@@ -37,8 +37,13 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Button x:Name="GoBack" Style="{StaticResource BackButtonStyle}"/>
-            <TextBlock x:Name="PageTitle" Text="{Binding Title}" Grid.Column="1" Style="{StaticResource PageHeaderTextStyle}"/>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <ProgressBar x:Name="SavingProgress" IsIndeterminate="True" Grid.Row="0" Grid.ColumnSpan="2" Visibility="{Binding IsProgressEnabled, Converter={StaticResource BoolVisibilityConverter}}"></ProgressBar>
+            <Button x:Name="GoBack" Style="{StaticResource BackButtonStyle}" Grid.Row="1"/>
+            <TextBlock x:Name="PageTitle" Text="{Binding Title}" Grid.Column="1" Grid.Row="1" Style="{StaticResource PageHeaderTextStyle}"/>
         </Grid>
 
         <Grid Grid.Row="1" Margin="36,0" x:Name="NormalEditView">
@@ -72,7 +77,7 @@
             <TextBlock Grid.Column="0" VerticalAlignment="Top" Grid.Row="4" Text="URL:" Margin="10" FontSize="24"/>
             <StackPanel Grid.Column="1" Grid.Row="4" Orientation="Vertical">
                 <TextBox Style="{StaticResource NormalTextboxStyle}" Name="Url" Width="300" Margin="10" FontSize="20" InputScope="Url"/>
-                <HyperlinkButton NavigateUri="{Binding Text, ElementName=Url}" Content="{Binding Text, ElementName=Url}" />
+                <HyperlinkButton Content="{Binding Text, ElementName=Url}" cal:Message.Attach="OpenUrl" />
             </StackPanel>
             <TextBlock Grid.Column="0" VerticalAlignment="Top" Grid.Row="5" Text="Notes:" Margin="10" FontSize="24"/>
             <TextBox Style="{StaticResource NormalTextboxStyle}" Grid.Column="1" Grid.Row="5" Name="Notes" Width="300" Margin="10" FontSize="20" Height="200" TextWrapping="Wrap" AcceptsReturn="True"/>
@@ -91,7 +96,7 @@
             <TextBox x:Name="ConfirmSnapped" Text="{Binding Confirm, Mode=TwoWay}" Style="{StaticResource ErrorTextBoxStyleSnapped}"/>
             <TextBlock VerticalAlignment="Center" Text="URL:" Style="{StaticResource SnappedLabelStyle}"/>
             <TextBox x:Name="URLSnapped" InputScope="Url" Text="{Binding Url, Mode=TwoWay}" Style="{StaticResource SnappedTextboxStyle}"/>
-            <HyperlinkButton NavigateUri="{Binding Text, ElementName=URLSnapped}" Content="{Binding Text, ElementName=URLSnapped}" />
+            <HyperlinkButton Content="{Binding Text, ElementName=URLSnapped}" cal:Message.Attach="OpenUrl" />
             <TextBlock VerticalAlignment="Center" Text="Notes:" Style="{StaticResource SnappedLabelStyle}"/>
             <TextBox x:Name="Notesnapped" Text="{Binding Notes, Mode=TwoWay}" Style="{StaticResource SnappedTextboxStyle}" Height="100" TextWrapping="Wrap" AcceptsReturn="True"/>
             <Button Name="SaveSnapped" cal:Message.Attach="Save" Margin="0 20 0 0" Content="Save" Width="80" Height="40" FontSize="18"/>

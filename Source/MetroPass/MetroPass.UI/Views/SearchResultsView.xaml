@@ -11,12 +11,13 @@
     d:ExtensionType="Search">
 
     <Page.BottomAppBar>
-        <AppBar VerticalAlignment="Bottom" x:Name="EntryAppBar" IsOpen="{Binding ShowAppBar, Mode=TwoWay}" IsSticky="True" caliburn:Message.Attach="[Event Closed] = [Action DeselectItem]">
+        <AppBar VerticalAlignment="Bottom" x:Name="EntryAppBar" IsOpen="{Binding ShowAppBar, Mode=TwoWay}" IsSticky="True" Opened="EntryAppBar_Opened" Closed="EntryAppBar_Closed" caliburn:Message.Attach="[Event Closed] = [Action DeselectItem]">
             <Grid>
-                <StackPanel x:Name="EntryCommands" Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="0" Visibility="{Binding ShowEntryCommands, Converter={StaticResource BoolVisibilityConverter}}" >
-                    <Button x:Name="EditEntry" Style="{StaticResource EditAppBarButtonStyle}" AutomationProperties.Name="Edit Entry"></Button>
-                    <Button x:Name="CopyUsername" Style="{StaticResource CopyAppBarButtonStyle}" AutomationProperties.Name="Copy Username"></Button>
-                    <Button x:Name="CopyPassword" Style="{StaticResource PermissionsAppBarButtonStyle}" AutomationProperties.Name="Copy Password"></Button>
+                <StackPanel x:Name="EntryCommands" Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="0" Visibility="{Binding ShowEntryCommands, Converter={StaticResource BoolVisibilityConverter}}" >
+                    <Button x:Name="EditEntry" Loaded="AppBarButton_Loaded" Style="{StaticResource EditAppBarButtonStyle}" AutomationProperties.Name="Edit Password" ToolTipService.ToolTip="Edit Password"></Button>
+                    <Button x:Name="CopyUsername" Loaded="AppBarButton_Loaded" Style="{StaticResource CopyAppBarButtonStyle}" AutomationProperties.Name="Copy Username" ToolTipService.ToolTip="Copy Username"></Button>
+                    <Button x:Name="CopyPassword" Loaded="AppBarButton_Loaded" Style="{StaticResource PermissionsAppBarButtonStyle}" AutomationProperties.Name="Copy Password" ToolTipService.ToolTip="Copy Password"></Button>
+                    <Button x:Name="OpenURL" Loaded="AppBarButton_Loaded" Style="{StaticResource WorldAppBarButtonStyle}" AutomationProperties.Name="Open URL" ToolTipService.ToolTip="Open URL"></Button>
                 </StackPanel>
             </Grid>
         </AppBar>
@@ -26,11 +27,12 @@
         <x:String x:Key="AppName">MetroPass</x:String>
 
         <DataTemplate x:Key="SearchResultsItemTemplate">
-            <Grid Height="70" Margin="6" Width="250" Background="Teal">
+            <Grid Height="70" Width="250" Background="{StaticResource MainEntryColor}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
+                <TextBlock Style="{StaticResource IconFontStyle}" Text="&#xE192;" />
                 <StackPanel Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,0,0,0" >
                     <TextBlock Text="{Binding Title}" Style="{StaticResource TitleTextStyle}" TextWrapping="NoWrap"/>
                     <TextBlock Text="{Binding Username}" Style="{StaticResource CaptionTextStyle}" TextWrapping="NoWrap"/>
@@ -54,8 +56,6 @@
             </Grid.ColumnDefinitions>
             <Button x:Name="GoBack" Style="{StaticResource BackButtonStyle}"/>
             <TextBlock x:Name="pageTitle" Grid.Column="1" Text="{StaticResource AppName}" IsHitTestVisible="false" Style="{StaticResource PageHeaderTextStyle}"  />
-            <TextBlock x:Name="resultText" Grid.Column="2" Text="Results for&#x00a0;" IsHitTestVisible="false" Style="{StaticResource PageSubheaderTextStyle}"/>
-            <TextBlock x:Name="queryText" Grid.Column="3" Text="{Binding QueryText}" IsHitTestVisible="false" Style="{StaticResource PageSubheaderTextStyle}"/>
         </Grid>
 
         <Grid x:Name="resultsPanel" Grid.Row="1">
@@ -64,7 +64,10 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-
+                <TextBlock Style="{StaticResource PageSubheaderTextStyle}" Margin="120,0,0,0">
+                    <Run Text="Results for : " />
+                    <Run Text="{Binding QueryText}" Foreground="{StaticResource MainHighlightColor}" />
+                </TextBlock>
                 <GridView
                     x:Name="resultsGridView"
                     AutomationProperties.AutomationId="ResultsGridView"
@@ -77,13 +80,6 @@
                     ItemTemplate="{StaticResource SearchResultsItemTemplate}"
                     SelectedItem="{Binding SelectedPasswordItem, Mode=TwoWay}"
                     >
-                    
-                    <GridView.ItemContainerStyle>
-                        <Style TargetType="Control">
-                            <Setter Property="Height" Value="70"/>
-                            <Setter Property="Margin" Value="0,0,38,8"/>
-                       </Style>
-                    </GridView.ItemContainerStyle>
                 </GridView>
             </Grid>
 
@@ -92,29 +88,23 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-
+                <StackPanel Orientation="Vertical" Margin="50,0,0,0">
+                    <TextBlock Text="Results for:" Style="{StaticResource PageSubheaderTextStyle}" Margin="0,0,0,5" />
+                    <TextBlock Text="{Binding QueryText}" Style="{StaticResource PageSubheaderTextStyle}" Foreground="{StaticResource MainHighlightColor}" />
+                </StackPanel>
                 <ListView
                     x:Name="resultsListView"
                     AutomationProperties.AutomationId="ResultsListView"
                     AutomationProperties.Name="Search Results"
-                    TabIndex="1"
                     Grid.Row="1"
-                    Margin="10,0,0,0"
-                    Padding="0,0,0,60"
+                    Margin="0,0,0,100"
+                    Padding="50,0,40,46"
                     SelectionMode="Single"
-                    IsSwipeEnabled="false"
                     IsItemClickEnabled="False"
                     ItemsSource="{Binding Results}"
                     SelectedItem="{Binding SelectedPasswordItem, Mode=TwoWay}"
                     ItemTemplate="{StaticResource SearchResultsItemTemplate}"
                     >
-
-                    <ListView.ItemContainerStyle>
-                        <Style TargetType="Control">
-                            <Setter Property="Height" Value="70"/>
-                            <Setter Property="Margin" Value="0,0,18,8"/>
-                        </Style>
-                    </ListView.ItemContainerStyle>
                 </ListView>
             </Grid>
         </Grid>
@@ -129,12 +119,10 @@
 
         <VisualStateManager.VisualStateGroups>
 
-            <!-- Visual states reflect the application's view state -->
             <VisualStateGroup x:Name="ApplicationViewStates">
                 <VisualState x:Name="FullScreenLandscape"/>
                 <VisualState x:Name="Filled"/>
 
-                <!-- The entire page respects the narrower 100-pixel margin convention for portrait -->
                 <VisualState x:Name="FullScreenPortrait">
                     <Storyboard>
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="GoBack" Storyboard.TargetProperty="Style">
@@ -149,25 +137,13 @@
                     </Storyboard>
                 </VisualState>
 
-                <!--
-                    The back button and title have different styles when snapped in addition to more extensive changes:
-                    * The query text becomes the page header
-                    * A different representation for filter selection and search results is used
-                -->
                 <VisualState x:Name="Snapped">
                     <Storyboard>
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="GoBack" Storyboard.TargetProperty="Style">
                             <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource SnappedBackButtonStyle}"/>
                         </ObjectAnimationUsingKeyFrames>
-
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="queryText" Storyboard.TargetProperty="Style">
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="pageTitle" Storyboard.TargetProperty="Style">
                             <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource SnappedPageHeaderTextStyle}"/>
-                        </ObjectAnimationUsingKeyFrames>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="pageTitle" Storyboard.TargetProperty="Visibility">
-                            <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed"/>
-                        </ObjectAnimationUsingKeyFrames>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="resultText" Storyboard.TargetProperty="Visibility">
-                            <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed"/>
                         </ObjectAnimationUsingKeyFrames>
 
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="typicalPanel" Storyboard.TargetProperty="Visibility">
@@ -175,6 +151,9 @@
                         </ObjectAnimationUsingKeyFrames>
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="snappedPanel" Storyboard.TargetProperty="Visibility">
                             <DiscreteObjectKeyFrame KeyTime="0" Value="Visible"/>
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="EntryCommands" Storyboard.TargetProperty="HorizontalAlignment">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Center"/>
                         </ObjectAnimationUsingKeyFrames>
 
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="noResultsTextBlock" Storyboard.TargetProperty="Margin">
