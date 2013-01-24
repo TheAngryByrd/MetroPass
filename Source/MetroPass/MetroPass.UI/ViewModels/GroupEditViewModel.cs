@@ -3,9 +3,7 @@ using MetroPass.Core.Interfaces;
 using MetroPass.Core.Model;
 using MetroPass.UI.DataModel;
 using MetroPass.UI.Services;
-using System;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 
 namespace MetroPass.UI.ViewModels
 {
@@ -14,8 +12,11 @@ namespace MetroPass.UI.ViewModels
         private readonly IKdbTree _dbTree;
         private readonly INavigationService _navigationService;
 
-        public GroupEditViewModel(IKdbTree dbTree, INavigationService navigationService, IPageServices pageServices)
-            : base(navigationService,pageServices)
+        public GroupEditViewModel(IKdbTree dbTree,
+            INavigationService navigationService,
+            IEventAggregator eventAggregator,
+            IPageServices pageServices)
+            : base(navigationService, eventAggregator, pageServices)
         {
             _dbTree = dbTree;
             _navigationService = navigationService;
@@ -67,9 +68,33 @@ namespace MetroPass.UI.ViewModels
             }
         }
 
+        private bool isProgressEnabled;
+
+        public bool IsProgressEnabled
+        {
+            get { return isProgressEnabled; }
+            set { isProgressEnabled = value;
+
+            NotifyOfPropertyChange(() => IsProgressEnabled);
+            }
+        }
+
+        private bool canGoBack = true;
+
+        public override bool CanGoBack
+        {
+            get { return base.CanGoBack && canGoBack; }
+            set { canGoBack = value;
+            NotifyOfPropertyChange(() => CanGoBack);
+            }
+        }
+
+
         public async void Save()
         {        	
             CanSave = false;
+            canGoBack = false;
+            IsProgressEnabled = true;
             await PWDatabaseDataSource.Instance.SavePwDatabase();
             _navigationService.GoBack();
         }

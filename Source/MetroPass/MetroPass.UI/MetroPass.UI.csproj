@@ -143,8 +143,12 @@
     <Compile Include="ViewModels\AddGroupViewModel.cs" />
     <Compile Include="ViewModels\AdGroup.cs" />
     <Compile Include="ViewModels\AdItem.cs" />
+    <Compile Include="ViewModels\AboutSettingsViewModel.cs" />
+    <Compile Include="ViewModels\AppSettingsViewModel.cs" />
     <Compile Include="ViewModels\DatabaseClosedSettingsViewModel.cs" />
     <Compile Include="ViewModels\EntryEditViewModel.cs" />
+    <Compile Include="ViewModels\FolderPickerViewModel.cs" />
+    <Compile Include="ViewModels\Messages\FolderSelectedMessage.cs" />
     <Compile Include="ViewModels\NewDatabaseViewModel.cs" />
     <Compile Include="ViewModels\PasswordEntryScreen.cs" />
     <Compile Include="ViewModels\Messages\PasswordGenerateMessage.cs" />
@@ -155,13 +159,19 @@
     <Compile Include="Services\IPageServices.cs" />
     <Compile Include="ViewModels\BaseScreen.cs" />
     <Compile Include="ViewModels\GroupEditViewModel.cs" />
-    <Compile Include="ViewModels\SettingsViewModel.cs" />
+    <Compile Include="ViewModels\DatabaseSettingsViewModel.cs" />
     <Compile Include="ViewModels\StartPageViewModel.cs" />
     <Compile Include="Views\AddEntryView.xaml.cs">
       <DependentUpon>AddEntryView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\AddGroupView.xaml.cs">
       <DependentUpon>AddGroupView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AboutSettingsView.xaml.cs">
+      <DependentUpon>AboutSettingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AppSettingsView.xaml.cs">
+      <DependentUpon>AppSettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\DatabaseClosedSettingsView.xaml.cs">
       <DependentUpon>DatabaseClosedSettingsView.xaml</DependentUpon>
@@ -171,6 +181,9 @@
     </Compile>
     <Compile Include="Views\EntryGroupListView.xaml.cs">
       <DependentUpon>EntryGroupListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FolderPickerView.xaml.cs">
+      <DependentUpon>FolderPickerView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\GroupEditView.xaml.cs">
       <DependentUpon>GroupEditView.xaml</DependentUpon>
@@ -196,8 +209,8 @@
     <Compile Include="Views\SearchResultsView.xaml.cs">
       <DependentUpon>SearchResultsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SettingsView.xaml.cs">
-      <DependentUpon>SettingsView.xaml</DependentUpon>
+    <Compile Include="Views\DatabaseSettingsView.xaml.cs">
+      <DependentUpon>DatabaseSettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\StartPageView.xaml.cs">
       <DependentUpon>StartPageView.xaml</DependentUpon>
@@ -246,6 +259,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\AboutSettingsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\AppSettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\DatabaseClosedSettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -255,6 +276,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\EntryGroupListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\FolderPickerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -278,7 +303,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\SettingsView.xaml">
+    <Page Include="Views\DatabaseSettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

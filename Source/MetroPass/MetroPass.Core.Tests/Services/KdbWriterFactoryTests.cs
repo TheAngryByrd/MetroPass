@@ -1,4 +1,5 @@
-﻿using MetroPass.Core.Model.Kdb4;
+﻿using System.Xml.Linq;
+using MetroPass.Core.Model.Kdb4;
 using MetroPass.Core.Services;
 using MetroPass.Core.Services.Kdb4;
 using MetroPass.Core.Services.Kdb4.Writer;
@@ -18,7 +19,7 @@ namespace MetroPass.Core.Tests.Services
        public void CanCreateKdb4Writer()
        {
            KdbWriterFactory factory = new KdbWriterFactory();
-           var kdb4Tree = new Kdb4Tree(null);
+           var kdb4Tree = new Kdb4Tree(new XDocument());
            var writer = factory.CreateWriter(kdb4Tree);
 
            Assert.IsInstanceOfType(writer, typeof(Kdb4Writer));

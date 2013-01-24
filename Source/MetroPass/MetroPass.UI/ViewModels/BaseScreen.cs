@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Caliburn.Micro;
+using MetroPass.Core.Model;
 using MetroPass.UI.DataModel;
 using MetroPass.UI.Services;
 using Windows.UI.ViewManagement;
@@ -13,30 +13,53 @@ namespace MetroPass.UI.ViewModels
     public class BaseScreen : Screen
     {
         private readonly INavigationService _navigationService;
+        private readonly IEventAggregator _eventAggregator;
         private Queue<string> _stateQueue;
         private IPageServices _pageServices;
 
-        public BaseScreen(INavigationService navigationService, IPageServices pageServices)
-        {  
-            this._navigationService=navigationService;
-            this._pageServices = pageServices;
+        public BaseScreen(INavigationService navigationService, IEventAggregator eventAggregator, IPageServices pageServices)
+        { 
+            _eventAggregator = eventAggregator;
+            _navigationService = navigationService;
+            _pageServices = pageServices;
             _stateQueue = new Queue<string>();
-
         }
 
         protected Page View { get; private set;}
 
-        public async void LaunchUrl(string url)
+        public async void LaunchUrl(Uri uri)
         {
             try
             {
-                var result = await Windows.System.Launcher.LaunchUriAsync(new Uri(url));
+                var result = await Windows.System.Launcher.LaunchUriAsync(uri);
             }
             catch
             {
                 _pageServices.Toast("This entry's url is invalid");
             }
-          
+        }
+
+        protected Uri GetPasswordUri(PwEntry password)
+        {
+            if (password != null)
+            {
+                Uri parsedUri;
+                Uri.TryCreate(password.Url, UriKind.RelativeOrAbsolute, out parsedUri);
+                if (parsedUri != null && parsedUri.IsWellFormedOriginalString())
+                {
+                    try
+                    {
+                        string uriScheme = parsedUri.Scheme;
+                    }
+                    catch (InvalidOperationException)
+                    {
+                        // I know ... WTF right?!?!? The Scheme property doesn't return null or empty if it wasn't part of the original URL string. It throws an exception.
+                        parsedUri = new Uri("http://" + parsedUri.OriginalString);
+                    }
+                    return parsedUri;
+                }
+            }
+            return new Uri("");
         }
 
         public void GoBack()
@@ -44,9 +67,10 @@ namespace MetroPass.UI.ViewModels
             _navigationService.GoBack();
         }
 
-        public bool CanGoBack
+        public virtual bool CanGoBack
         {
             get { return _navigationService.CanGoBack; }
+            set { }
         }
 
         protected override void OnViewAttached(object view, object context)
@@ -68,6 +92,7 @@ namespace MetroPass.UI.ViewModels
         {
             base.OnDeactivate(close);
             Window.Current.SizeChanged -= Window_SizeChanged;
+            _eventAggregator.Unsubscribe(this);
         }
 
         private void Window_SizeChanged(object sender, Windows.UI.Core.WindowSizeChangedEventArgs e)
@@ -101,5 +126,4 @@ namespace MetroPass.UI.ViewModels
             }
         }
     }
-    
 }

@@ -9,7 +9,7 @@
     d:DesignHeight="300"
     d:DesignWidth="400">
     <Grid Background="White">
-        <TextBlock Text="MetroPass options will be available after opening your database."
+        <TextBlock Text="Database options will be available after opening your database."
                    TextWrapping="Wrap"
                    Foreground="Black" FontSize="16" Margin="10" />
     </Grid>
