@@ -63,7 +63,7 @@
         <DataTemplate x:Key="Type:AdItem">
             <UI:AdControl Grid.Column="2" ApplicationId="f8df6ddc-bc72-41bf-bf1d-676ddf2af726" AdUnitId="10052848" Width="160" Height="600"  Visibility="{Binding ElementName=zoomedInEntries, Path=DataContext.IsAdVisible, Converter={StaticResource BoolVisibilityConverter}}"/>
         </DataTemplate>
-        
+
         <DataTemplate x:Key="AdHeader">
            
         </DataTemplate>
@@ -131,13 +131,77 @@
                 </GridView>
             </SemanticZoom.ZoomedInView>
             <SemanticZoom.ZoomedOutView>
-                <GridView x:Name="zoomedOutEntries"
+                <ListView x:Name="zoomedOutEntries"
+                          Margin="116,0,40,46"
+                          ItemsSource="{Binding GroupsOnThisLevel}"
+                          VerticalAlignment="Center"
+                          >
+                    <ListView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapGrid Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ListView.ItemsPanel>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid
+                                Width="250" Height="175"
+                                IsHitTestVisible="True"
+                                cal:Message.Attach="[Event Tapped] = [Action SelectGroup($dataContext)]"
+                                >
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="25" />
+                                    <RowDefinition Height="150" />
+                                </Grid.RowDefinitions>
+                                <Rectangle
+                                    Fill="{StaticResource MainFolderColor}"
+                                    HorizontalAlignment="Left"
+                                    Height="25" Width="100"
+                                    RenderTransformOrigin="0.5,0.5">
+                                    <Rectangle.RenderTransform>
+                                        <CompositeTransform SkewX="45" TranslateX="37.5"/>
+                                    </Rectangle.RenderTransform>
+                                </Rectangle>
+                                <Rectangle
+                                    Fill="{StaticResource MainFolderColor}"
+                                    HorizontalAlignment="Left"
+                                    Height="25" Width="100"
+                                    RenderTransformOrigin="0.5,0.5">
+                                    <Rectangle.RenderTransform>
+                                        <CompositeTransform SkewX="-45" TranslateX="12.5" />
+                                    </Rectangle.RenderTransform>
+                                </Rectangle>
+                                <StackPanel Orientation="Vertical"
+                                            Grid.Row="1"
+                                            Background="{StaticResource MainFolderColor}">
+                                    <TextBlock Text="{Binding Name}"
+                                               Style="{StaticResource TitleTextStyle}"
+                                               FontSize="28" Margin="10 20 10 10"
+                                               TextWrapping="NoWrap"
+                                               TextTrimming="WordEllipsis"/>
+                                    <TextBlock Style="{StaticResource TitleTextStyle}" FontSize="18" Margin="20 10 10 10">
+                                        <TextBlock.Inlines>
+                                            <Run Text="{Binding EntryCount}" />
+                                            <Run Text=" passwords" />
+                                        </TextBlock.Inlines>
+                                    </TextBlock>
+                                    <TextBlock Style="{StaticResource TitleTextStyle}" FontSize="18" Margin="20 10 10 10">
+                                        <TextBlock.Inlines>
+                                            <Run Text="{Binding SubGroupCount}" />
+                                            <Run Text=" folders" />
+                                        </TextBlock.Inlines>
+                                    </TextBlock>
+                                </StackPanel>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <!--<GridView x:Name="zoomedOutEntries"
                           Margin="116,0,40,46"
                           ItemsSource="{Binding GroupsOnThisLevel}"
                           ItemsPanel="{StaticResource HorizontalItemPanelTemplate}">
                     <GridView.ItemTemplate>
                         <DataTemplate>
-                            <Border Padding="10" cal:Message.Attach="[Event Tapped] = [Action SelectGroup($dataContext)]">
+                            <Border Padding="10" Background="Red" cal:Message.Attach="[Event Tapped] = [Action SelectGroup($dataContext)]">
                                 <Grid Width="Auto" Height="Auto">
                                     <StackPanel Orientation="Vertical">
                                         <TextBlock Text="{Binding Name}" Style="{StaticResource TitleTextStyle}" FontSize="28" Margin="12"/>
@@ -158,7 +222,7 @@
                             </Border>
                         </DataTemplate>
                     </GridView.ItemTemplate>
-                </GridView>
+                </GridView>-->
             </SemanticZoom.ZoomedOutView>
         </SemanticZoom>
         
