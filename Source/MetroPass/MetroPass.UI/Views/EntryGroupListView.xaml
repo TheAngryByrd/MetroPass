@@ -195,34 +195,6 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-                <!--<GridView x:Name="zoomedOutEntries"
-                          Margin="116,0,40,46"
-                          ItemsSource="{Binding GroupsOnThisLevel}"
-                          ItemsPanel="{StaticResource HorizontalItemPanelTemplate}">
-                    <GridView.ItemTemplate>
-                        <DataTemplate>
-                            <Border Padding="10" Background="Red" cal:Message.Attach="[Event Tapped] = [Action SelectGroup($dataContext)]">
-                                <Grid Width="Auto" Height="Auto">
-                                    <StackPanel Orientation="Vertical">
-                                        <TextBlock Text="{Binding Name}" Style="{StaticResource TitleTextStyle}" FontSize="28" Margin="12"/>
-                                        <TextBlock Style="{StaticResource TitleTextStyle}" FontSize="18" Margin="12">
-                                            <TextBlock.Inlines>
-                                                <Run Text="{Binding EntryCount}" />
-                                                <Run Text=" passwords" />
-                                            </TextBlock.Inlines>
-                                        </TextBlock>
-                                        <TextBlock Style="{StaticResource TitleTextStyle}" FontSize="18" Margin="12">
-                                            <TextBlock.Inlines>
-                                                <Run Text="{Binding SubGroupCount}" />
-                                                <Run Text=" folders" />
-                                            </TextBlock.Inlines>
-                                        </TextBlock>
-                                    </StackPanel>
-                                </Grid>
-                            </Border>
-                        </DataTemplate>
-                    </GridView.ItemTemplate>
-                </GridView>-->
             </SemanticZoom.ZoomedOutView>
         </SemanticZoom>
         
@@ -258,6 +230,26 @@
                        TextWrapping="Wrap"/>
             <Button x:Name="GoHome" Style="{StaticResource ActionButton}" Content="Home" Margin="0 25 0 0" />
         </StackPanel>
+        <!--<Grid HorizontalAlignment="Left" Height="25" Margin="25,779,0,-246" Grid.Row="1" VerticalAlignment="Top" Width="250">
+            <Rectangle
+                Fill="{StaticResource MainFolderColor}"
+                HorizontalAlignment="Left"
+                Height="25" Width="100"
+                RenderTransformOrigin="0.5,0.5" RadiusX="3" RadiusY="3">
+                <Rectangle.RenderTransform>
+                    <CompositeTransform SkewX="45" TranslateX="37.5"/>
+                </Rectangle.RenderTransform>
+            </Rectangle>
+            <Rectangle
+                Fill="{StaticResource MainFolderColor}"
+                HorizontalAlignment="Left"
+                Height="25" Width="100"
+                RenderTransformOrigin="0.5,0.5" RadiusX="3" RadiusY="3">
+                <Rectangle.RenderTransform>
+                    <CompositeTransform SkewX="-45" TranslateX="12.5" />
+                </Rectangle.RenderTransform>
+            </Rectangle>
+        </Grid>-->
 
         <VisualStateManager.VisualStateGroups>
 
