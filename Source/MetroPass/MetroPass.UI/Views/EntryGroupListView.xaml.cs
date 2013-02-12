@@ -71,5 +71,18 @@ namespace MetroPass.UI.Views
             VisualStateManager.GoToState(CopyPassword, state, true);
             VisualStateManager.GoToState(OpenURL, state, true);
         }
+
+        private void SemanticZoom_ViewChangeCompleted(object sender, SemanticZoomViewChangedEventArgs e)
+        {
+            var vm = this.DataContext as EntryGroupListViewModel;
+            if (e.IsSourceZoomedInView)
+            {
+                vm.IsAdVisible = false;
+            }
+            else
+            {
+                vm.IsAdVisible = true;
+            }
+        }
     }
 }
