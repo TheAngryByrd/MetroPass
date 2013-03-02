@@ -22,6 +22,8 @@
     </SccAuxPath>
     <SccProvider>
     </SccProvider>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -113,6 +115,7 @@
     <Compile Include="Helpers\Cipher\CryptoRandomStream.cs" />
     <Compile Include="Helpers\MemUtil.cs" />
     <Compile Include="Helpers\StrUtil.cs" />
+    <Compile Include="Interfaces\IEncryptionEngine.cs" />
     <Compile Include="Interfaces\IKdbReader.cs" />
     <Compile Include="Interfaces\IKdbWriter.cs" />
     <Compile Include="Security\PasswordGeneratorCharacterSets.cs" />
@@ -136,6 +139,8 @@
     <Compile Include="Security\PasswordGenerator.cs" />
     <Compile Include="Security\ProtectedBuffer.cs" />
     <Compile Include="Interfaces\IKdbTree.cs" />
+    <Compile Include="Services\Crypto\BouncyCastleCrypto.cs" />
+    <Compile Include="Services\Crypto\WinRTCrypto.cs" />
     <Compile Include="Services\Kdb4\Kdb4Parser.cs" />
     <Compile Include="Services\Kdb4\Kdb4Reader.cs" />
     <Compile Include="Services\Kdb4\Writer\Kdb4HeaderWriter.cs" />
@@ -150,10 +155,19 @@
       <Name>Framework</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Reference Include="WinRTBouncyCastle">
+      <HintPath>..\packages\WinRTBouncyCastle.0.1.0\lib\windows8\WinRTBouncyCastle.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">
     <VisualStudioVersion>11.0</VisualStudioVersion>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
