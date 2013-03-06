@@ -32,12 +32,54 @@
             <Button x:Name="GoBack" Style="{StaticResource BackButtonStyle}"/>
             <TextBlock x:Name="pageTitle" Grid.Column="1" Text="{StaticResource AppName}" Style="{StaticResource PageHeaderTextStyle}"/>
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Grid.ColumnSpan="3">
-                <ProgressBar x:Name="indeterminateProgressBar" IsIndeterminate="True" Width="200" Visibility="{Binding IsIndeterminateProgressBarVisible, Converter={StaticResource BoolVisibilityConverter }}"/>
-                <ProgressBar x:Name="Progress" Width="600" Visibility="{Binding Progress, Converter={StaticResource HasValueToVisibilityCoverter}}"/>
+                
             </StackPanel>
         </Grid>
-      
-        <Grid Grid.Row="1" x:Name="NormalDatabaseLoader" Grid.ColumnSpan="2" Margin="-1,10,1,-10" Visibility="Visible">
+        <Grid x:Name="NormalDatabaseLoader" Grid.Row="1" Grid.ColumnSpan="2" Visibility="Visible" Margin="120,0,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" HorizontalAlignment="Left">
+                <TextBlock Text="Database" Style="{StaticResource SubheaderTextStyle}" Margin="0,5"></TextBlock>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <TextBox FontSize="24" Grid.Column="0" Width="500" Height="50" IsEnabled="False" Background="White" Text="{Binding Path=Database.Name}"></TextBox>
+                    <Button Grid.Column="1" x:Name="PickDatabase" Content="Pick Database" Margin="5,0" Width="170" Height="55" FontSize="20" Grid.Row="1" />
+                </Grid>               
+            </StackPanel>
+            <StackPanel Grid.Row="1" HorizontalAlignment="Left">
+                <TextBlock  Text="Password" Style="{StaticResource SubheaderTextStyle}" Margin="0,5"></TextBlock>
+                <PasswordBox FontSize="24" x:Name="Password" Grid.Column="0" Width="500" Height="50"  IsPasswordRevealButtonEnabled="True" KeyUp="Password_KeyUp_1" ></PasswordBox>
+            </StackPanel>
+            <StackPanel Grid.Row="2" HorizontalAlignment="Left">
+                <TextBlock Text="Key File" Style="{StaticResource SubheaderTextStyle}" Margin="0,5"></TextBlock>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <TextBox FontSize="24" Grid.Column="0" Width="500" Height="50" IsEnabled="False" Background="White" Text="{Binding Path=KeyFile.Name}"></TextBox>
+                    <Button Grid.Column="1" x:Name="PickKeyFile" Content="Pick Key File" Margin="5,0" Width="170" Height="55" FontSize="20" Grid.Row="1" />
+                </Grid>
+            </StackPanel>
+            <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0,20">
+                <Button x:Name="OpenDatabase" Content="Open Database" Style="{StaticResource ActionButton}" Width="200" Height="75" FontSize="20" Grid.Column="0" Grid.Row="6" Margin="0,0,10,0" />
+                <Button x:Name="ClearFiles" Content="Clear" FontSize="20" Width="200" Height="75" IsEnabled="{Binding CanClearFiles}" Grid.Column="1" Grid.Row="6" />                
+            </StackPanel>
+
+            <StackPanel Grid.Row="4" HorizontalAlignment="Left">
+                <TextBlock Text="Progress" Style="{StaticResource SubheaderTextStyle}" Visibility="{Binding Progress, Converter={StaticResource HasValueToVisibilityCoverter}}" Margin="0,0,0,10"></TextBlock>
+                <ProgressBar x:Name="Progress" Width="407" Height="20" Visibility="{Binding Progress, Converter={StaticResource HasValueToVisibilityCoverter}}"/>
+            </StackPanel>
+        </Grid>
+            <!--<Grid Grid.Row="1" x:Name="NormalDatabaseLoader" Grid.ColumnSpan="2" Margin="-1,10,1,-10" Visibility="Visible">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
@@ -81,7 +123,7 @@
                 <Button x:Name="OpenDatabase" Content="Open Database" Style="{StaticResource ActionButton}" Width="200" Height="75" FontSize="20" Grid.Column="0" Grid.Row="6" />
             </Grid>
             <UI:AdControl Grid.Column="2" Visibility="{Binding IsAdVisible, Converter={StaticResource BoolVisibilityConverter}}" ApplicationId="f8df6ddc-bc72-41bf-bf1d-676ddf2af726" AdUnitId="10046064" Width="160" Height="600"/>
-        </Grid>
+        </Grid>-->
 
         <StackPanel x:Name="SnappedDatabaseLoader" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.RowSpan="1" Grid.Row="1" Margin="18,0,0,0" Visibility="Collapsed" >
             <TextBlock x:Name="SearchMessageSnapped"
