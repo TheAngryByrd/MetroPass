@@ -93,10 +93,8 @@ namespace MetroPass.Core.Services
 
         public async Task<IBuffer> GenerateAESKey()
         {
-
-            var generatedKey = await file.pwDatabase.MasterKey.GenerateKeyAsync(file.pbTransformSeed, file.pwDatabase.KeyEncryptionRounds);
-
-            var aesKey = SHA256Hasher.Hash(file.pbMasterSeed, generatedKey);
+           
+            var aesKey = await file.pwDatabase.MasterKey.GenerateHashedKeyAsync(file.pbMasterSeed, file.pbTransformSeed, file.pwDatabase.KeyEncryptionRounds);
 
             return aesKey;
         }
