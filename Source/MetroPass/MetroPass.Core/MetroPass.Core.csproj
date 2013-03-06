@@ -140,6 +140,7 @@
     <Compile Include="Security\ProtectedBuffer.cs" />
     <Compile Include="Interfaces\IKdbTree.cs" />
     <Compile Include="Services\Crypto\BouncyCastleCrypto.cs" />
+    <Compile Include="Services\Crypto\MultiThreadedBouncyCastleCrypto.cs" />
     <Compile Include="Services\Crypto\WinRTCrypto.cs" />
     <Compile Include="Services\Kdb4\Kdb4Parser.cs" />
     <Compile Include="Services\Kdb4\Kdb4Reader.cs" />
