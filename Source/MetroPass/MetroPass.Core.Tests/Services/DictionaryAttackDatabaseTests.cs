@@ -14,8 +14,7 @@ using MetroPass.Core.Interfaces;
 namespace MetroPass.Core.Tests.Services
 {
     [TestClass]
-    [Ignore]
-    public class DictionaryAttackProofDatabaseTests
+     public class DictionaryAttackProofDatabaseTests
     {
         CompositeKey composite;
         private const string PasswordDatabasePath = "Data\\DictionaryAttackProofDatabase.kdbx";

@@ -46,7 +46,8 @@ namespace MetroPass.Core.Model.Keys
         {
             IBuffer rawCompositeKey = await CreateRawCompositeKey32();
 
-            var cryptoEngine = new BouncyCastleCrypto(CryptoAlgoritmType.AES_ECB);
+            var cryptoEngine = new MultiThreadedBouncyCastleCrypto(CryptoAlgoritmType.AES_ECB);
+
             var data = await cryptoEngine.Encrypt(rawCompositeKey, transformSeed, null, (int)rounds, PercentComplete);
             
             return SHA256Hasher.Hash(data);
