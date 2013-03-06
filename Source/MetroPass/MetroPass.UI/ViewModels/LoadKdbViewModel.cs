@@ -203,7 +203,7 @@ namespace MetroPass.UI.ViewModels
         private bool _canPickDatabase = true;
         public bool CanPickDatabase
         {
-            get { return _canPickDatabase; }
+            get { return _canPickDatabase && !OpeningDatabase; }
             set
             {
                 _canPickDatabase = value;
@@ -215,7 +215,7 @@ namespace MetroPass.UI.ViewModels
         private bool _canPickKeyFile = true;
         public bool CanPickKeyFile
         {
-            get { return _canPickKeyFile; }
+            get { return _canPickKeyFile && !OpeningDatabase; }
             set
             {
                 _canPickKeyFile = value;
@@ -231,7 +231,12 @@ namespace MetroPass.UI.ViewModels
             set
             {
                 _openingDatabase = value;
+                NotifyOfPropertyChange(() => CanPickKeyFile);
+                NotifyOfPropertyChange(() => CanPickDatabase);
+
                 NotifyOfPropertyChange(() => CanOpenDatabase);
+                NotifyOfPropertyChange(() => CanClearFiles);
+                NotifyOfPropertyChange(() => OpeningDatabase);
             }
         }
 
@@ -248,7 +253,7 @@ namespace MetroPass.UI.ViewModels
 
         public bool CanClearFiles 
         {
-            get { return CanPickDatabase && CanPickKeyFile; }
+            get { return CanPickDatabase && CanPickKeyFile && !OpeningDatabase; }
         }
 
         protected async override void OnViewLoaded(object view)
