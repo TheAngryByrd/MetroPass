@@ -32,24 +32,27 @@ namespace MetroPass.UI.Views
                 {
                     case VirtualKey.B: InvokeCommand(CopyUsername); break;
                     case VirtualKey.C: InvokeCommand(CopyPassword); break;
-          
+                    case VirtualKey.U: InvokeCommand(OpenURL); break;                  
                 }
             }
         }
 
         private void InvokeCommand(Button button)
         {
-
-            ButtonAutomationPeer peer =  new ButtonAutomationPeer(button);
-            IInvokeProvider invokeProv =  peer.GetPattern(PatternInterface.Invoke)  as IInvokeProvider;
-            invokeProv.Invoke();
-
-            Task.Factory.StartFromCurrentUIContext(async () =>
+            try
             {
-                VisualStateManager.GoToState(button, "Pressed", true);
-                await Task.Delay(75);
-                VisualStateManager.GoToState(button, "Normal", true);
-            });
+                ButtonAutomationPeer peer = new ButtonAutomationPeer(button);
+                IInvokeProvider invokeProv = peer.GetPattern(PatternInterface.Invoke) as IInvokeProvider;
+                invokeProv.Invoke();
+
+                Task.Factory.StartFromCurrentUIContext(async () =>
+                {
+                    VisualStateManager.GoToState(button, "Pressed", true);
+                    await Task.Delay(75);
+                    VisualStateManager.GoToState(button, "Normal", true);
+                });
+            }
+            catch { }
         }
 
         void CoreWindow_KeyUp(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.KeyEventArgs e)
