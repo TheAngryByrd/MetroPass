@@ -10,16 +10,16 @@
     xmlns:converters="using:MetroPass.UI.Common.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    mc:Ignorable="d" >
 
     <Page.BottomAppBar>
         <AppBar VerticalAlignment="Bottom" x:Name="EntryAppBar" IsOpen="{Binding ShowAppBar, Mode=TwoWay}" IsSticky="True" Opened="EntryAppBar_Opened" Closed="EntryAppBar_Closed" cal:Message.Attach="[Event Closed] = [Action DeselectItem]">
             <Grid>
-                <StackPanel x:Name="EntryCommands" Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="0" Visibility="{Binding ShowEntryCommands, Converter={StaticResource BoolVisibilityConverter}}" >
+                <StackPanel x:Name="EntryCommands" Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="0" Visibility="{Binding ShowEntryCommands, Converter={StaticResource BoolVisibilityConverter}}"  >
                     <Button x:Name="EditEntry" Loaded="AppBarButton_Loaded" Style="{StaticResource EditAppBarButtonStyle}" AutomationProperties.Name="Edit Password" ToolTipService.ToolTip="Edit Password"></Button>
                     <Button x:Name="DeleteEntry" Loaded="AppBarButton_Loaded" Style="{StaticResource DeleteAppBarButtonStyle}" AutomationProperties.Name="Delete Password" ToolTipService.ToolTip="Delete Password"></Button>
-                    <Button x:Name="CopyUsername" Loaded="AppBarButton_Loaded" Style="{StaticResource ContactAppBarButtonStyle}" AutomationProperties.Name="Copy Username" ToolTipService.ToolTip="Copy Username"></Button>
-                    <Button x:Name="CopyPassword" Loaded="AppBarButton_Loaded" Style="{StaticResource PermissionsAppBarButtonStyle}" AutomationProperties.Name="Copy Password" ToolTipService.ToolTip="Copy Password"></Button>
+                    <Button x:Name="CopyUsername" Loaded="AppBarButton_Loaded" Style="{StaticResource ContactAppBarButtonStyle}" AutomationProperties.Name="Copy Username" AutomationProperties.AcceleratorKey="Control B" ToolTipService.ToolTip="Copy Username, Shortcut Ctrl+B"></Button>
+                    <Button x:Name="CopyPassword" Loaded="AppBarButton_Loaded" Style="{StaticResource PermissionsAppBarButtonStyle}" AutomationProperties.Name="Copy Password" AutomationProperties.AcceleratorKey="Control C" ToolTipService.ToolTip="Copy Password, Shortcut Ctrl+C"></Button>
                     <Button x:Name="OpenURL" Loaded="AppBarButton_Loaded" Style="{StaticResource WorldAppBarButtonStyle}" AutomationProperties.Name="Open URL" ToolTipService.ToolTip="Open URL"></Button>
                     <Button x:Name="MoveEntry" Style="{StaticResource MoveToFolderAppBarButtonStyle}" AutomationProperties.Name="Move" ToolTipService.ToolTip="Move Password"/>
                 </StackPanel>
@@ -48,7 +48,7 @@
             </Grid>
         </DataTemplate>
         <DataTemplate x:Key="Type:PwEntry" >
-            <Grid Height="70" Width="250" Background="{StaticResource MainEntryColor}">
+            <Grid Height="70" Width="250" Background="{StaticResource MainEntryColor}" >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>

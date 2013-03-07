@@ -1,4 +1,6 @@
-﻿using MetroPass.UI.ViewModels;
+﻿using Caliburn.Micro;
+using MetroPass.UI.ViewModels;
+using Windows.System;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -7,9 +9,36 @@ namespace MetroPass.UI.Views
 {
     public sealed partial class EntryGroupListView : Page
     {
+        private bool isCtrlKeyPressed;
+
         public EntryGroupListView()
         {
             this.InitializeComponent();
+            Window.Current.CoreWindow.KeyUp += CoreWindow_KeyUp;
+            Window.Current.CoreWindow.KeyDown += CoreWindow_KeyDown;
+        }
+
+        void CoreWindow_KeyDown(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.KeyEventArgs e)
+        {
+            if (e.VirtualKey == VirtualKey.Control) isCtrlKeyPressed = true;
+            else if (isCtrlKeyPressed)
+            {
+
+                var entryListVM = ViewModelLocator.LocateForView(this) as EntryGroupListViewModel;
+                
+                switch (e.VirtualKey)
+                {
+                    case VirtualKey.B: entryListVM.CopyUsername(); break;
+                    case VirtualKey.C: entryListVM.CopyPassword(); break;
+          
+                }
+            }
+        }
+
+        void CoreWindow_KeyUp(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.KeyEventArgs e)
+        {
+            if (e.VirtualKey == VirtualKey.Control)
+                this.isCtrlKeyPressed = false;
         }
 
         protected override void OnNavigatedTo(Windows.UI.Xaml.Navigation.NavigationEventArgs e)
@@ -84,5 +113,9 @@ namespace MetroPass.UI.Views
                 vm.IsAdVisible = true;
             }
         }
+
+
+  
+
     }
 }
