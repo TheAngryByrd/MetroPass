@@ -14,7 +14,7 @@ using MetroPass.Core.Interfaces;
 namespace MetroPass.Core.Tests.Services
 {
     [TestClass]
-     public class DictionaryAttackProofDatabaseTests
+    public class HighEncryptionRoundDatabaseTests
     {
         CompositeKey composite;
         private const string PasswordDatabasePath = "Data\\DictionaryAttackProofDatabase.kdbx";
@@ -29,7 +29,7 @@ namespace MetroPass.Core.Tests.Services
         }
 
         [TestMethod]
-        public async Task CanOpenDictionaryAttackProof()
+        public async Task HighEncryptionRoundDatabase()
         {
             var tree = await Scenarios.LoadDatabase(PasswordDatabasePath, DatabasePassword, KeyFileath);
    
