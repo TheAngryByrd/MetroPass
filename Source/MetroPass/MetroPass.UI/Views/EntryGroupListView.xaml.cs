@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Reflection;
-using System.Threading;
 using System.Threading.Tasks;
-using Caliburn.Micro;
-using Callisto.Controls;
+using Framework;
 using MetroPass.UI.ViewModels;
 using Windows.System;
 using Windows.UI.ViewManagement;
@@ -47,12 +44,12 @@ namespace MetroPass.UI.Views
             IInvokeProvider invokeProv =  peer.GetPattern(PatternInterface.Invoke)  as IInvokeProvider;
             invokeProv.Invoke();
 
-            Task.Factory.StartNew(async () =>
+            Task.Factory.StartFromCurrentUIContext(async () =>
             {
                 VisualStateManager.GoToState(button, "Pressed", true);
-                await Task.Delay(100);
+                await Task.Delay(75);
                 VisualStateManager.GoToState(button, "Normal", true);
-            }, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.FromCurrentSynchronizationContext());
+            });
         }
 
         void CoreWindow_KeyUp(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.KeyEventArgs e)
