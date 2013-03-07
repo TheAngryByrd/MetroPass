@@ -1,8 +1,15 @@
-﻿using Caliburn.Micro;
+﻿using System;
+using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
+using Caliburn.Micro;
+using Callisto.Controls;
 using MetroPass.UI.ViewModels;
 using Windows.System;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Automation.Peers;
+using Windows.UI.Xaml.Automation.Provider;
 using Windows.UI.Xaml.Controls;
 
 namespace MetroPass.UI.Views
@@ -22,17 +29,30 @@ namespace MetroPass.UI.Views
         {
             if (e.VirtualKey == VirtualKey.Control) isCtrlKeyPressed = true;
             else if (isCtrlKeyPressed)
-            {
-
-                var entryListVM = ViewModelLocator.LocateForView(this) as EntryGroupListViewModel;
-                
+            {        
+        
                 switch (e.VirtualKey)
                 {
-                    case VirtualKey.B: entryListVM.CopyUsername(); break;
-                    case VirtualKey.C: entryListVM.CopyPassword(); break;
+                    case VirtualKey.B: InvokeCommand(CopyUsername); break;
+                    case VirtualKey.C: InvokeCommand(CopyPassword); break;
           
                 }
             }
+        }
+
+        private void InvokeCommand(Button button)
+        {
+
+            ButtonAutomationPeer peer =  new ButtonAutomationPeer(button);
+            IInvokeProvider invokeProv =  peer.GetPattern(PatternInterface.Invoke)  as IInvokeProvider;
+            invokeProv.Invoke();
+
+            Task.Factory.StartNew(async () =>
+            {
+                VisualStateManager.GoToState(button, "Pressed", true);
+                await Task.Delay(100);
+                VisualStateManager.GoToState(button, "Normal", true);
+            }, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         void CoreWindow_KeyUp(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.KeyEventArgs e)
