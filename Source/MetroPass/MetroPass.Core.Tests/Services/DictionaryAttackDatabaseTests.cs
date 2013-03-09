@@ -10,6 +10,7 @@ using Windows.Storage;
 using MetroPass.Core.Services;
 using Windows.ApplicationModel;
 using MetroPass.Core.Interfaces;
+using Windows.Storage.Search;
 
 namespace MetroPass.Core.Tests.Services
 {
@@ -34,5 +35,36 @@ namespace MetroPass.Core.Tests.Services
             var tree = await Scenarios.LoadDatabase(PasswordDatabasePath, DatabasePassword, KeyFileath);
    
         }
+
+        [TestMethod]
+        public async Task KeepassFilesThatPassOrFail()
+        {
+            var queryOptions = new QueryOptions(CommonFileQuery.OrderByName, new[] { ".kdbx" });
+            queryOptions.FolderDepth = FolderDepth.Shallow;
+
+
+            var samples = await Package.Current.InstalledLocation.GetFolderAsync("Samples");
+            var query = samples.CreateFileQueryWithOptions(queryOptions);
+            IReadOnlyList<StorageFile> fileList = await query.GetFilesAsync();
+
+            var listOfFails = new List<object>();
+
+            foreach (var file in fileList)
+            {
+                string lastFileToTry = file.Name;
+                try
+                {
+                    await Scenarios.LoadDatabase(file, "password", null);
+
+                }
+                catch (Exception e)
+                {
+                    listOfFails.Add(lastFileToTry);
+                }
+            }
+
+            Assert.AreEqual(listOfFails.Count(), 7);
+        }
+ 
     }
 }
