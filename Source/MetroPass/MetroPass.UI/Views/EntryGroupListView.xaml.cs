@@ -1,16 +1,66 @@
-﻿using MetroPass.UI.ViewModels;
+
+﻿using System;
+using System.Threading.Tasks;
+using Framework;
+using MetroPass.UI.ViewModels;
+using Windows.System;
 
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Automation.Peers;
+using Windows.UI.Xaml.Automation.Provider;
 using Windows.UI.Xaml.Controls;
 
 namespace MetroPass.UI.Views
 {
     public sealed partial class EntryGroupListView : Page
     {
+        private bool isCtrlKeyPressed;
+
         public EntryGroupListView()
         {
             this.InitializeComponent();
+            Window.Current.CoreWindow.KeyUp += CoreWindow_KeyUp;
+            Window.Current.CoreWindow.KeyDown += CoreWindow_KeyDown;
+        }
+
+        void CoreWindow_KeyDown(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.KeyEventArgs e)
+        {
+            if (e.VirtualKey == VirtualKey.Control) isCtrlKeyPressed = true;
+            else if (isCtrlKeyPressed)
+            {        
+        
+                switch (e.VirtualKey)
+                {
+                    case VirtualKey.B: InvokeCommand(CopyUsername); break;
+                    case VirtualKey.C: InvokeCommand(CopyPassword); break;
+                    case VirtualKey.U: InvokeCommand(OpenURL); break;                  
+                }
+            }
+        }
+
+        private void InvokeCommand(Button button)
+        {
+            try
+            {
+                ButtonAutomationPeer peer = new ButtonAutomationPeer(button);
+                IInvokeProvider invokeProv = peer.GetPattern(PatternInterface.Invoke) as IInvokeProvider;
+                invokeProv.Invoke();
+
+                Task.Factory.StartFromCurrentUIContext(async () =>
+                {
+                    VisualStateManager.GoToState(button, "Pressed", true);
+                    await Task.Delay(75);
+                    VisualStateManager.GoToState(button, "Normal", true);
+                });
+            }
+            catch { }
+        }
+
+        void CoreWindow_KeyUp(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.KeyEventArgs e)
+        {
+            if (e.VirtualKey == VirtualKey.Control)
+                this.isCtrlKeyPressed = false;
         }
 
         protected override void OnNavigatedTo(Windows.UI.Xaml.Navigation.NavigationEventArgs e)
@@ -72,5 +122,22 @@ namespace MetroPass.UI.Views
             VisualStateManager.GoToState(CopyPassword, state, true);
             VisualStateManager.GoToState(OpenURL, state, true);
         }
+
+        private void SemanticZoom_ViewChangeCompleted(object sender, SemanticZoomViewChangedEventArgs e)
+        {
+            var vm = this.DataContext as EntryGroupListViewModel;
+            if (e.IsSourceZoomedInView)
+            {
+                vm.IsAdVisible = false;
+            }
+            else
+            {
+                vm.IsAdVisible = true;
+            }
+        }
+
+
+  
+
     }
 }

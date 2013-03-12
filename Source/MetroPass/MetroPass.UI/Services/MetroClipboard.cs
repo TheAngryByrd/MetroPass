@@ -12,10 +12,17 @@ namespace MetroPass.UI.Services
         CancellationTokenSource tokenSource = new CancellationTokenSource();
         public Task CopyToClipboard(string textToCopy)
         {
-            var dataPackage = new DataPackage();
-            dataPackage.SetText(textToCopy);
-            Clipboard.SetContent(dataPackage);
-            return ClearClipboard();
+            Task retVal = Task.Delay(0);
+            try
+            {
+                var dataPackage = new DataPackage();
+                dataPackage.SetText(textToCopy);
+                Clipboard.SetContent(dataPackage);
+
+                return ClearClipboard();
+            }
+            catch { }
+           return retVal;
         }
 
         public Task ClearClipboard()

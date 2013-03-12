@@ -10,16 +10,16 @@
     xmlns:converters="using:MetroPass.UI.Common.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    mc:Ignorable="d" >
 
     <Page.BottomAppBar>
         <AppBar VerticalAlignment="Bottom" x:Name="EntryAppBar" IsOpen="{Binding ShowAppBar, Mode=TwoWay}" IsSticky="True" Opened="EntryAppBar_Opened" Closed="EntryAppBar_Closed" cal:Message.Attach="[Event Closed] = [Action DeselectItem]">
             <Grid>
-                <StackPanel x:Name="EntryCommands" Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="0" Visibility="{Binding ShowEntryCommands, Converter={StaticResource BoolVisibilityConverter}}" >
+                <StackPanel x:Name="EntryCommands" Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="0" Visibility="{Binding ShowEntryCommands, Converter={StaticResource BoolVisibilityConverter}}"  >
                     <Button x:Name="EditEntry" Loaded="AppBarButton_Loaded" Style="{StaticResource EditAppBarButtonStyle}" AutomationProperties.Name="Edit Password" ToolTipService.ToolTip="Edit Password"></Button>
                     <Button x:Name="DeleteEntry" Loaded="AppBarButton_Loaded" Style="{StaticResource DeleteAppBarButtonStyle}" AutomationProperties.Name="Delete Password" ToolTipService.ToolTip="Delete Password"></Button>
-                    <Button x:Name="CopyUsername" Loaded="AppBarButton_Loaded" Style="{StaticResource ContactAppBarButtonStyle}" AutomationProperties.Name="Copy Username" ToolTipService.ToolTip="Copy Username"></Button>
-                    <Button x:Name="CopyPassword" Loaded="AppBarButton_Loaded" Style="{StaticResource PermissionsAppBarButtonStyle}" AutomationProperties.Name="Copy Password" ToolTipService.ToolTip="Copy Password"></Button>
+                    <Button x:Name="CopyUsername" Loaded="AppBarButton_Loaded" Style="{StaticResource ContactAppBarButtonStyle}" AutomationProperties.Name="Copy Username" AutomationProperties.AcceleratorKey="Control B" ToolTipService.ToolTip="Copy Username, Shortcut Ctrl+B"></Button>
+                    <Button x:Name="CopyPassword" Loaded="AppBarButton_Loaded" Style="{StaticResource PermissionsAppBarButtonStyle}" AutomationProperties.Name="Copy Password" AutomationProperties.AcceleratorKey="Control C" ToolTipService.ToolTip="Copy Password, Shortcut Ctrl+C"></Button>
                     <Button x:Name="OpenURL" Loaded="AppBarButton_Loaded" Style="{StaticResource WorldAppBarButtonStyle}" AutomationProperties.Name="Open URL" ToolTipService.ToolTip="Open URL"></Button>
                     <Button x:Name="MoveEntry" Style="{StaticResource MoveToFolderAppBarButtonStyle}" AutomationProperties.Name="Move" ToolTipService.ToolTip="Move Password"/>
                 </StackPanel>
@@ -48,7 +48,7 @@
             </Grid>
         </DataTemplate>
         <DataTemplate x:Key="Type:PwEntry" >
-            <Grid Height="70" Width="250" Background="{StaticResource MainEntryColor}">
+            <Grid Height="70" Width="250" Background="{StaticResource MainEntryColor}" >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
@@ -63,7 +63,7 @@
         <DataTemplate x:Key="Type:AdItem">
        
         </DataTemplate>
-        
+
         <DataTemplate x:Key="AdHeader">
            
         </DataTemplate>
@@ -100,7 +100,7 @@
             <TextBlock x:Name="pageTitle" Grid.Column="1" Text="{StaticResource AppName}" Style="{StaticResource PageHeaderTextStyle}"/>
         </Grid>
         
-        <SemanticZoom x:Name="groupedList" Grid.Row="1">
+        <SemanticZoom x:Name="groupedList" Grid.Row="1" ViewChangeCompleted="SemanticZoom_ViewChangeCompleted">
             <SemanticZoom.ZoomedInView>
                 <GridView x:Name="zoomedInEntries" 
                     Padding="116,0,40,46"
@@ -131,34 +131,82 @@
                 </GridView>
             </SemanticZoom.ZoomedInView>
             <SemanticZoom.ZoomedOutView>
-                <GridView x:Name="zoomedOutEntries"
+                <ListView x:Name="zoomedOutEntries"
                           Margin="116,0,40,46"
+                          VerticalAlignment="Center"
                           ItemsSource="{Binding GroupsOnThisLevel}"
-                          ItemsPanel="{StaticResource HorizontalItemPanelTemplate}">
-                    <GridView.ItemTemplate>
+                          ItemContainerStyle="{StaticResource SemanticZoomFolderStyle}"
+                          >
+                    <ListView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapGrid Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ListView.ItemsPanel>
+                    <ListView.ItemTemplate>
                         <DataTemplate>
-                            <Border Padding="10" cal:Message.Attach="[Event Tapped] = [Action SelectGroup($dataContext)]">
-                                <Grid Width="Auto" Height="Auto">
+                            <Grid
+                                Width="250" Height="175"
+                                VerticalAlignment="Center"
+                                IsHitTestVisible="True"
+                                cal:Message.Attach="[Event Tapped] = [Action SelectGroup($dataContext)]"
+                                >
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="25" />
+                                    <RowDefinition Height="150" />
+                                </Grid.RowDefinitions>
+                                <Border
+                                    Background="{StaticResource MainFolderColor}"
+                                    HorizontalAlignment="Left"
+                                    Height="25" Width="100"
+                                    CornerRadius="3,3,0,0"
+                                    RenderTransformOrigin="0.5,0.5">
+                                    <Border.RenderTransform>
+                                        <CompositeTransform SkewX="45" TranslateX="37.5"/>
+                                    </Border.RenderTransform>
+                                </Border>
+                                <Border
+                                    Background="{StaticResource MainFolderColor}"
+                                    HorizontalAlignment="Left"
+                                    Height="25" Width="100"
+                                    CornerRadius="3,3,0,0"
+                                    RenderTransformOrigin="0.5,0.5">
+                                    <Border.RenderTransform>
+                                        <CompositeTransform SkewX="-45" TranslateX="12.0" />
+                                    </Border.RenderTransform>
+                                </Border>
+                                <Border
+                                    Grid.Row="1"
+                                    Height="150"
+                                    CornerRadius="0,3,3,3"
+                                    Background="{StaticResource MainFolderColor}"
+                                    >
+                                    <Border.RenderTransform>
+                                        <TranslateTransform Y="-1" />
+                                    </Border.RenderTransform>
                                     <StackPanel Orientation="Vertical">
-                                        <TextBlock Text="{Binding Name}" Style="{StaticResource TitleTextStyle}" FontSize="28" Margin="12"/>
-                                        <TextBlock Style="{StaticResource TitleTextStyle}" FontSize="18" Margin="12">
+                                        <TextBlock Text="{Binding Name}"
+                                                   Style="{StaticResource TitleTextStyle}"
+                                                   FontSize="28" Margin="10 20 10 10"
+                                                   TextWrapping="NoWrap"
+                                                   TextTrimming="WordEllipsis"/>
+                                        <TextBlock Style="{StaticResource TitleTextStyle}" FontSize="18" Margin="20 10 10 10">
                                             <TextBlock.Inlines>
                                                 <Run Text="{Binding EntryCount}" />
                                                 <Run Text=" passwords" />
                                             </TextBlock.Inlines>
                                         </TextBlock>
-                                        <TextBlock Style="{StaticResource TitleTextStyle}" FontSize="18" Margin="12">
+                                        <TextBlock Style="{StaticResource TitleTextStyle}" FontSize="18" Margin="20 10 10 10">
                                             <TextBlock.Inlines>
                                                 <Run Text="{Binding SubGroupCount}" />
                                                 <Run Text=" folders" />
                                             </TextBlock.Inlines>
                                         </TextBlock>
                                     </StackPanel>
-                                </Grid>
-                            </Border>
+                                </Border>
+                            </Grid>
                         </DataTemplate>
-                    </GridView.ItemTemplate>
-                </GridView>
+                    </ListView.ItemTemplate>
+                </ListView>
             </SemanticZoom.ZoomedOutView>
         </SemanticZoom>
         
@@ -194,7 +242,68 @@
                        TextWrapping="Wrap"/>
             <Button x:Name="GoHome" Style="{StaticResource ActionButton}" Content="Home" Margin="0 25 0 0" />
         </StackPanel>
-
+        
+        <!-- Design for semantic zoom view -->
+        <!--<Grid
+            Margin="270,784,846,-331"
+            Grid.Row="1"
+            Width="250" Height="175"
+            >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="25" />
+                <RowDefinition Height="150" />
+            </Grid.RowDefinitions>
+            <Border
+                Background="{StaticResource MainFolderColor}"
+                HorizontalAlignment="Left"
+                Height="25" Width="100"
+                CornerRadius="3,3,0,0"
+                RenderTransformOrigin="0.5,0.5">
+                <Border.RenderTransform>
+                    <CompositeTransform SkewX="45" TranslateX="37.5"/>
+                </Border.RenderTransform>
+            </Border>
+            <Border
+                Background="{StaticResource MainFolderColor}"
+                HorizontalAlignment="Left"
+                Height="25" Width="100"
+                CornerRadius="3,3,0,0"
+                RenderTransformOrigin="0.5,0.5">
+                <Border.RenderTransform>
+                    <CompositeTransform SkewX="-45" TranslateX="12.0" />
+                </Border.RenderTransform>
+            </Border>
+            <Border
+                Grid.Row="1"
+                Height="150"
+                CornerRadius="0,3,3,3"
+                Background="{StaticResource MainFolderColor}"
+                >
+                <Border.RenderTransform>
+                    <TranslateTransform Y="-1" />
+                </Border.RenderTransform>
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="Telerik"
+                                Style="{StaticResource TitleTextStyle}"
+                                FontSize="28" Margin="10 20 10 10"
+                                TextWrapping="NoWrap"
+                                TextTrimming="WordEllipsis"/>
+                    <TextBlock Style="{StaticResource TitleTextStyle}" FontSize="18" Margin="20 10 10 10">
+                        <TextBlock.Inlines>
+                            <Run Text="15" />
+                            <Run Text=" passwords" />
+                        </TextBlock.Inlines>
+                    </TextBlock>
+                    <TextBlock Style="{StaticResource TitleTextStyle}" FontSize="18" Margin="20 10 10 10">
+                        <TextBlock.Inlines>
+                            <Run Text="5" />
+                            <Run Text=" folders" />
+                        </TextBlock.Inlines>
+                    </TextBlock>
+                </StackPanel>
+            </Border>
+        </Grid>-->
+        
         <VisualStateManager.VisualStateGroups>
 
             <VisualStateGroup x:Name="ApplicationViewStates">

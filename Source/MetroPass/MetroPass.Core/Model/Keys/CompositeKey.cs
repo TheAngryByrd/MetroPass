@@ -5,6 +5,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MetroPass.Core.Interfaces;
+using MetroPass.Core.Services.Crypto;
+using Org.BouncyCastle.Crypto.Parameters;
+using Org.BouncyCastle.Security;
 using Windows.Security.Cryptography.Core;
 using Windows.Storage.Streams;
 
@@ -42,12 +46,37 @@ namespace MetroPass.Core.Model.Keys
         {
             IBuffer rawCompositeKey = await CreateRawCompositeKey32();
 
-            SymmetricKeyAlgorithmProvider symKeyProvider = SymmetricKeyAlgorithmProvider.OpenAlgorithm(SymmetricAlgorithmNames.AesEcb);
-            var transformSeedKey = symKeyProvider.CreateSymmetricKey(transformSeed);
-            var transformedMasterKey = await TransformKeyAsync(rawCompositeKey, transformSeedKey, rounds);
+            var cryptoEngine = new MultiThreadedBouncyCastleCrypto(CryptoAlgoritmType.AES_ECB);
+
+            var data = await cryptoEngine.Encrypt(rawCompositeKey, transformSeed, null, (int)rounds, PercentComplete);
+            
+            return SHA256Hasher.Hash(data);
+        }
 
 
-            return transformedMasterKey;
+        public async Task<IBuffer> TransformKeyAsync(IBuffer rawCompositeKey, IBuffer transformSeed, ulong rounds)
+        {       
+            var data = await Task.Run(() =>
+                {
+                    var cipher = CipherUtilities.GetCipher("AES/ECB/NOPADDING");
+                    cipher.Init(true, new KeyParameter(transformSeed.AsBytes()));
+                    var byteCompositeKey = rawCompositeKey.AsBytes();
+                    var roundsInDouble = (double)rounds;
+                    for (var i = 0; i < roundsInDouble; ++i)
+                    {
+                        if (i % 1000 == 0)
+                        {
+                            PercentComplete.Report(i / roundsInDouble * 100);
+
+                        }
+
+                        byteCompositeKey = cipher.ProcessBytes(byteCompositeKey);
+
+                    }
+                    return byteCompositeKey.AsBuffer();
+                });
+
+            return SHA256Hasher.Hash(data);
         }
 
         public async Task<IBuffer> TransformKeyAsync(IBuffer rawCompositeKey, CryptographicKey transFormKey, ulong rounds)
@@ -55,6 +84,8 @@ namespace MetroPass.Core.Model.Keys
             var transformedCompositeKey = await TransformKeyManagedAsync(rawCompositeKey, transFormKey, null, rounds);
             return SHA256Hasher.Hash(transformedCompositeKey);
         }
+
+
 
         private IBuffer TransformKeyManaged(IBuffer rawCompositeKey, CryptographicKey transFormKey, IBuffer iv, ulong rounds)
         {
