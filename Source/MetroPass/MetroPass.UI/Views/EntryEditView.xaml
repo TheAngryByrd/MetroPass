@@ -68,12 +68,19 @@
             <TextBox Style="{StaticResource NormalTextboxStyle}" Grid.Column="1" Grid.Row="1" Name="Username" Width="300" Margin="10" FontSize="20"/>
             <TextBlock Grid.Column="0" VerticalAlignment="Center" Grid.Row="2" Text="Password:" Margin="10" FontSize="24"/>
             <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="2">
-                <TextBox Style="{StaticResource NormalTextboxStyle}" Name="Password" Width="300" Margin="10" FontSize="20" />
+                <TextBox Style="{StaticResource NormalTextboxStyle}" Name="PasswordTextBox" Width="300" Margin="10" FontSize="20" GotFocus="Password_GotFocus" LostFocus="Password_LostFocus" />
                 <Button x:Name="Generate"  Content="Generate"></Button>
             </StackPanel>
            
             <TextBlock Grid.Column="0" VerticalAlignment="Center" Grid.Row="3" Text="Confirm:" Margin="10" FontSize="24"/>
-            <TextBox HorizontalAlignment="Left" Grid.Column="1" Grid.Row="3" Name="Confirm" Width="300" Margin="10" FontSize="20" Style="{StaticResource ErrorTextBoxStyle}" />
+            <TextBox HorizontalAlignment="Left" 
+                     Grid.Column="1" Grid.Row="3" 
+                     Name="ConfirmTextBox" 
+                     Width="300" Margin="10" 
+                     FontSize="20" 
+                     GotFocus="ConfirmTextBox_GotFocus"
+                     LostFocus="ConfirmTextBox_LostFocus"
+                     Style="{StaticResource ErrorTextBoxStyle}" />
             <TextBlock Grid.Column="0" VerticalAlignment="Top" Grid.Row="4" Text="URL:" Margin="10" FontSize="24"/>
             <StackPanel Grid.Column="1" Grid.Row="4" Orientation="Vertical">
                 <TextBox Style="{StaticResource NormalTextboxStyle}" Name="Url" Width="300" Margin="10" FontSize="20" InputScope="Url"/>

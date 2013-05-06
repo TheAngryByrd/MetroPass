@@ -12,23 +12,37 @@ namespace MetroPass.UI.Views
             this.InitializeComponent();
 
             //HACK: Needed due to lack of UpdateSourceTrigger in WinRT XAML
-            Password.KeyUp += ForceUpdatePassword;
+            PasswordTextBox.KeyUp += ForceUpdatePassword;
             PasswordSnapped.KeyUp += ForceUpdatePassword;
-            Confirm.KeyUp += ForceUpdateConfirmPassword;
+            ConfirmTextBox.KeyUp += ForceUpdateConfirmPassword;
             ConfirmSnapped.KeyUp += ForceUpdateConfirmPassword;
+            Loaded += EntryEditView_Loaded;
+        }
+
+        void EntryEditView_Loaded(object sender, RoutedEventArgs e)
+        {
+            PasswordTextBox.Text = ViewModel.MaskedPassword;
+            ConfirmTextBox.Text = ViewModel.MaskedConfirm;
         }
 
         public void SetPasswordState(bool passwordsMatch)
         {
             if (passwordsMatch)
             {
-                VisualStateManager.GoToState(this.Confirm, "NoError", true);
+                VisualStateManager.GoToState(this.ConfirmTextBox, "NoError", true);
                 VisualStateManager.GoToState(this.ConfirmSnapped, "NoError", true);
             }
             else
             {
-                VisualStateManager.GoToState(this.Confirm, "Error", true);
+                VisualStateManager.GoToState(this.ConfirmTextBox, "Error", true);
                 VisualStateManager.GoToState(this.ConfirmSnapped, "Error", true);
+            }
+        }
+        private EntryEditViewModel ViewModel
+        {
+            get
+            {
+                return this.DataContext as EntryEditViewModel;
             }
         }
 
@@ -48,6 +62,26 @@ namespace MetroPass.UI.Views
             {
                 vm.Confirm = ((TextBox)sender).Text;
             }
+        }
+
+        private void Password_GotFocus(object sender, RoutedEventArgs e)
+        {
+            PasswordTextBox.Text = ViewModel.Password;
+        }
+
+        private void Password_LostFocus(object sender, RoutedEventArgs e)
+        {
+            PasswordTextBox.Text = ViewModel.MaskedPassword;
+        }
+
+        private void ConfirmTextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            ConfirmTextBox.Text = ViewModel.Confirm;
+        }
+
+        private void ConfirmTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            ConfirmTextBox.Text = ViewModel.MaskedConfirm;
         }
     }
 }
