@@ -1,4 +1,5 @@
-﻿using Caliburn.Micro;
+﻿using System.Linq;
+using Caliburn.Micro;
 using MetroPass.Core.Interfaces;
 using MetroPass.Core.Model;
 using MetroPass.UI.DataModel;
@@ -58,6 +59,7 @@ namespace MetroPass.UI.ViewModels
         }
 
         private string _title;
+
         public string Title
         {
         	get	{ return _title; }
@@ -68,8 +70,9 @@ namespace MetroPass.UI.ViewModels
                 NotifyOfPropertyChange(() => Title);
             }
         }
-
+  
         private string _userName;
+  
         public string Username
         {
             get { return _userName; }
@@ -81,7 +84,16 @@ namespace MetroPass.UI.ViewModels
             }
         }
 
+        public string MaskedPassword
+        {
+            get
+            {
+                return string.Concat(Password.ToCharArray().Select(x => '*'));
+            }
+        }
+
         private string _password;
+  
         public string Password
         {
             get { return _password; }
@@ -94,7 +106,16 @@ namespace MetroPass.UI.ViewModels
             }
         }
 
+        public string MaskedConfirm
+        {
+            get
+            {
+                return string.Concat(Confirm.ToCharArray().Select(x => '*'));
+            }
+        }
+
         private string _confirm;
+
         public string Confirm
         {
             get { return _confirm; }
@@ -122,6 +143,7 @@ namespace MetroPass.UI.ViewModels
         }
 
         private string _url;
+
         public string Url
         {
         	get { return _url; }
@@ -133,6 +155,7 @@ namespace MetroPass.UI.ViewModels
         }
 
         private string _notes;
+
         public string Notes
         {
         	get { return _notes; }
@@ -141,10 +164,10 @@ namespace MetroPass.UI.ViewModels
                 _notes = value;
                 NotifyOfPropertyChange(() => Notes);
             }
-        
         }
 
         private bool _canSave = true;
+
         public bool CanSave
         {
             get { return _canSave; }
@@ -156,6 +179,7 @@ namespace MetroPass.UI.ViewModels
         }
 
         private bool isProgressEnabled;
+
         public bool IsProgressEnabled
         {
             get { return isProgressEnabled; }
