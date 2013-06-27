@@ -24,18 +24,25 @@ namespace MetroPass.UI.Views
             Window.Current.CoreWindow.KeyDown += CoreWindow_KeyDown;
         }
 
-        void CoreWindow_KeyDown(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.KeyEventArgs e)
+        async void CoreWindow_KeyDown(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.KeyEventArgs e)
         {
             if (e.VirtualKey == VirtualKey.Control) isCtrlKeyPressed = true;
             else if (isCtrlKeyPressed)
-            {        
-        
+            {
+
                 switch (e.VirtualKey)
                 {
                     case VirtualKey.B: InvokeCommand(CopyUsername); break;
                     case VirtualKey.C: InvokeCommand(CopyPassword); break;
-                    case VirtualKey.U: InvokeCommand(OpenURL); break;                  
+                    case VirtualKey.U: InvokeCommand(OpenURL); break;
                 }
+            }
+            else
+            {
+          
+
+                Windows.ApplicationModel.Search.SearchPane.GetForCurrentView().TrySetQueryText(e.VirtualKey.ToString());
+                Windows.ApplicationModel.Search.SearchPane.GetForCurrentView().Show();
             }
         }
 
@@ -47,6 +54,7 @@ namespace MetroPass.UI.Views
                 IInvokeProvider invokeProv = peer.GetPattern(PatternInterface.Invoke) as IInvokeProvider;
                 invokeProv.Invoke();
 
+                //To get UI to flash update
                 Task.Factory.StartFromCurrentUIContext(async () =>
                 {
                     VisualStateManager.GoToState(button, "Pressed", true);
