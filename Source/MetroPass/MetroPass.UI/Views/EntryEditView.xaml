@@ -10,28 +10,28 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-	<Page.Resources>
+    <Page.Resources>
         <Style x:Key="NormalTextboxStyle" TargetType="TextBox">
             <Setter Property="HorizontalAlignment" Value="Left"></Setter>
         </Style>
-        
-		<Style x:Key="SnappedLabelStyle" TargetType="TextBlock">
-			<Setter Property="FontSize" Value="24"/>
-			<Setter Property="Margin" Value="0,10,10,0"/>
-		</Style>
+
+        <Style x:Key="SnappedLabelStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="Margin" Value="0,10,10,0"/>
+        </Style>
         <Style x:Key="SnappedTextboxStyle" TargetType="TextBox">
-			<Setter Property="FontSize" Value="20"/>
-			<Setter Property="Margin" Value="0,0,10,0"/>
-         
-		</Style>
-	</Page.Resources>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="Margin" Value="0,0,10,0"/>
+
+        </Style>
+    </Page.Resources>
 
     <Grid Style="{StaticResource LayoutRootStyle}">
         <Grid.RowDefinitions>
             <RowDefinition Height="140"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        
+
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
@@ -68,12 +68,19 @@
             <TextBox Style="{StaticResource NormalTextboxStyle}" Grid.Column="1" Grid.Row="1" Name="Username" Width="300" Margin="10" FontSize="20"/>
             <TextBlock Grid.Column="0" VerticalAlignment="Center" Grid.Row="2" Text="Password:" Margin="10" FontSize="24"/>
             <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="2">
-                <TextBox Style="{StaticResource NormalTextboxStyle}" Name="Password" Width="300" Margin="10" FontSize="20" />
+                <TextBox Style="{StaticResource NormalTextboxStyle}" Name="PasswordTextBox" Width="300" Margin="10" FontSize="20" GotFocus="Password_GotFocus" LostFocus="Password_LostFocus" />
                 <Button x:Name="Generate"  Content="Generate"></Button>
             </StackPanel>
-           
+
             <TextBlock Grid.Column="0" VerticalAlignment="Center" Grid.Row="3" Text="Confirm:" Margin="10" FontSize="24"/>
-            <TextBox HorizontalAlignment="Left" Grid.Column="1" Grid.Row="3" Name="Confirm" Width="300" Margin="10" FontSize="20" Style="{StaticResource ErrorTextBoxStyle}" />
+            <TextBox HorizontalAlignment="Left" 
+                     Grid.Column="1" Grid.Row="3" 
+                     Name="ConfirmTextBox" 
+                     Width="300" Margin="10" 
+                     FontSize="20" 
+                     GotFocus="ConfirmTextBox_GotFocus"
+                     LostFocus="ConfirmTextBox_LostFocus"
+                     Style="{StaticResource ErrorTextBoxStyle}" />
             <TextBlock Grid.Column="0" VerticalAlignment="Top" Grid.Row="4" Text="URL:" Margin="10" FontSize="24"/>
             <StackPanel Grid.Column="1" Grid.Row="4" Orientation="Vertical">
                 <TextBox Style="{StaticResource NormalTextboxStyle}" Name="Url" Width="300" Margin="10" FontSize="20" InputScope="Url"/>
@@ -101,7 +108,7 @@
             <TextBox x:Name="Notesnapped" Text="{Binding Notes, Mode=TwoWay}" Style="{StaticResource SnappedTextboxStyle}" Height="100" TextWrapping="Wrap" AcceptsReturn="True"/>
             <Button Name="SaveSnapped" cal:Message.Attach="Save" Margin="0 20 0 0" Content="Save" Width="80" Height="40" FontSize="18"/>
         </StackPanel>
-        
+
         <VisualStateManager.VisualStateGroups>
             <!-- Visual states reflect the application's view state -->
             <VisualStateGroup x:Name="ApplicationViewStates">
