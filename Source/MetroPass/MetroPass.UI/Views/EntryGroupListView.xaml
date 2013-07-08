@@ -72,8 +72,9 @@
                                     AutomationProperties.Name="Group Title"
                                     Style="{StaticResource TextPrimaryButtonStyle}" >
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="{Binding Name}" Margin="3,-7,10,10" Style="{Binding UUID, Converter={StaticResource GroupHeaderStyleConverter}}" />
-                    <TextBlock Text="{StaticResource ChevronGlyph}" FontFamily="Segoe UI Symbol" Margin="0,-7,0,10" Style="{Binding UUID, Converter={StaticResource GroupHeaderStyleConverter}}" />
+                    <TextBlock Text="{Binding Name}" Margin="3,-7,10,10" Style="{StaticResource GridViewHeaderNormalStyle}" /> 
+                    <!--<TextBlock Text="{Binding Name}" Margin="3,-7,10,10" Style="{Binding UUID, Converter={StaticResource GroupHeaderStyleConverter}}" />-->
+                    <!--<TextBlock Text="{StaticResource ChevronGlyph}" FontFamily="Segoe UI Symbol" Margin="0,-7,0,10" Style="{Binding UUID, Converter={StaticResource GroupHeaderStyleConverter}}" />-->
                 </StackPanel>
             </Button>
         </DataTemplate>
@@ -123,9 +124,9 @@
                                     <VariableSizedWrapGrid Orientation="Vertical" Margin="0,0,40,0"/>
                                 </ItemsPanelTemplate>
                             </GroupStyle.Panel>
-                            <!--<GroupStyle.HeaderTemplateSelector>
-                                <common:EntryGroupListViewHeaderTemplateSelector AdvertTemplate="{StaticResource  ResourceKey=AdHeader}" NormalTemplate="{StaticResource ResourceKey=GroupHeader}"/> 
-                            </GroupStyle.HeaderTemplateSelector>-->
+                            <GroupStyle.HeaderTemplateSelector>
+                                <common:EntryGroupListViewHeaderTemplateSelector AdvertTemplate="{StaticResource AdHeader}" NormalTemplate="{StaticResource GroupHeader}"/> 
+                            </GroupStyle.HeaderTemplateSelector>
                         </GroupStyle>
                     </GridView.GroupStyle>
                 </GridView>
