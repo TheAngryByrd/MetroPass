@@ -117,7 +117,7 @@ namespace MetroPass.UI.ViewModels
             _navigationService.UriFor<AddGroupViewModel>().WithParam(vm => vm.ParentGroupID, encodedUUID).Navigate();
         }
 
-        private Flyout FolderFlyout;
+        private Callisto.Controls.Flyout FolderFlyout;
         public void MoveEntry(FrameworkElement source)
         {
             FolderFlyout = DialogService.ShowFlyout<FolderPickerViewModel>(PlacementMode.Top, source, SetupMoveEntry, onContentAdd: onContentAdd );

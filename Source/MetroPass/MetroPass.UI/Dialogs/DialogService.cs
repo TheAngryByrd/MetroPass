@@ -36,7 +36,7 @@ namespace Caliburn.Micro
     public static class DialogService
     {
 
-        public static Flyout ShowFlyout<T>(PlacementMode placement, UIElement placementTarget, Action<T> onInitialize = null, Action<T, UIElement> onClosed = null, Func<UIElement,object> onContentAdd = null) where T : Screen
+        public static Callisto.Controls.Flyout ShowFlyout<T>(PlacementMode placement, UIElement placementTarget, Action<T> onInitialize = null, Action<T, UIElement> onClosed = null, Func<UIElement,object> onContentAdd = null) where T : Screen
         {
             var viewModelAndView = CreateViewModelAndView(onInitialize);
             var vm = viewModelAndView.Item1;
@@ -47,7 +47,7 @@ namespace Caliburn.Micro
             {
                 content = onContentAdd(view);
             }
-            var f = new Flyout
+            var f = new Callisto.Controls.Flyout
             {
                 Content = content,
                 Placement = placement,
@@ -75,8 +75,8 @@ namespace Caliburn.Micro
             var viewModelAndView = CreateViewModelAndView(onInitialize);
             var vm = viewModelAndView.Item1;
             var view = viewModelAndView.Item2;
-            
-            var f = new SettingsFlyout
+
+            var f = new Callisto.Controls.SettingsFlyout
             {
                 HeaderText = vm.DisplayName,
                 Content = view,
@@ -132,7 +132,7 @@ namespace Caliburn.Micro
             var vm = viewModelAndView.Item1;
             var view = viewModelAndView.Item2;
 
-            var f = new Flyout
+            var f = new Callisto.Controls.Flyout
                         {
                             Content = view,
                             Placement = placement,
