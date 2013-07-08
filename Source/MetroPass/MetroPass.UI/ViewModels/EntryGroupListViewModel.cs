@@ -6,7 +6,7 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using Caliburn.Micro;
-using Callisto.Controls;
+
 using Framework;
 using MetroPass.Core.Exceptions;
 using MetroPass.Core.Interfaces;
@@ -117,16 +117,16 @@ namespace MetroPass.UI.ViewModels
             _navigationService.UriFor<AddGroupViewModel>().WithParam(vm => vm.ParentGroupID, encodedUUID).Navigate();
         }
 
-        private Callisto.Controls.Flyout FolderFlyout;
+        private Flyout FolderFlyout;
         public void MoveEntry(FrameworkElement source)
         {
-            FolderFlyout = DialogService.ShowFlyout<FolderPickerViewModel>(PlacementMode.Top, source, SetupMoveEntry, onContentAdd: onContentAdd );
+            FolderFlyout = DialogService.ShowFlyout<FolderPickerViewModel>(FlyoutPlacementMode.Top, source, SetupMoveEntry, onContentAdd: onContentAdd);
         }
 
         public async void Handle(FolderSelectedMessage message)
         {
             await MoveItem(message.FolderUUID, (PwEntry)SelectedPasswordItem);
-            FolderFlyout.IsOpen = false;
+            FolderFlyout.Hide();
             ShowAppBar = false;
         }
 

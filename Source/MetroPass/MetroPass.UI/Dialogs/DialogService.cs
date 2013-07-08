@@ -1,5 +1,5 @@
 ﻿using System;
-using Callisto.Controls;
+
 using MetroPass.UI;
 using MetroPass.UI.ViewModels;
 using Windows.UI;
@@ -36,7 +36,7 @@ namespace Caliburn.Micro
     public static class DialogService
     {
 
-        public static Callisto.Controls.Flyout ShowFlyout<T>(PlacementMode placement, UIElement placementTarget, Action<T> onInitialize = null, Action<T, UIElement> onClosed = null, Func<UIElement,object> onContentAdd = null) where T : Screen
+        public static Flyout ShowFlyout<T>(FlyoutPlacementMode placement, UIElement placementTarget, Action<T> onInitialize = null, Action<T, UIElement> onClosed = null, Func<UIElement, object> onContentAdd = null) where T : Screen
         {
             var viewModelAndView = CreateViewModelAndView(onInitialize);
             var vm = viewModelAndView.Item1;
@@ -47,14 +47,14 @@ namespace Caliburn.Micro
             {
                 content = onContentAdd(view);
             }
-            var f = new Callisto.Controls.Flyout
+            var f = new Flyout
             {
-                Content = content,
-                Placement = placement,
-                PlacementTarget = placementTarget
+                Content = view,
+                Placement = placement
+                //PlacementTarget = placementTarget
             };
-            
-            f.IsOpen = true;
+
+            f.ShowAt((FrameworkElement)placementTarget);
 
             if (onClosed != null)
             f.Closed += (sender, o) => onClosed(vm, view);
@@ -76,21 +76,21 @@ namespace Caliburn.Micro
             var vm = viewModelAndView.Item1;
             var view = viewModelAndView.Item2;
 
-            var f = new Callisto.Controls.SettingsFlyout
+            var f = new SettingsFlyout
             {
-                HeaderText = vm.DisplayName,
+                //HeaderText = vm.DisplayName,
                 Content = view,
             };
 
-            if (headerBrush != null)
-                f.HeaderBrush = headerBrush;
+            //if (headerBrush != null)
+            //    f.HeaderBrush = headerBrush;
             if (backgroundBrush != null)
                 f.Background = backgroundBrush;
 
-            f.IsOpen = true;
+            f.Show();
 
-            if (onClosed != null)
-                f.Closed += (sender, o) => onClosed(vm, view);
+            //if (onClosed != null)
+            //    f.Closed += (sender, o) => onClosed(vm, view);
         }
 
         public static void ShowSettingsFlyout<T>(BaseScreen currentScreen, Action<T> onInitialize = null, Action<T, UIElement> onClosed = null, SolidColorBrush headerBrush = null, SolidColorBrush backgroundBrush = null) where T : Screen
@@ -126,20 +126,19 @@ namespace Caliburn.Micro
         /// <param name="placementTarget">The control which is used as a placement target. Example: Placement target can be a button the view. Placement-property defines if the dialog is shown above, under, left or right of the button.</param>
         /// <param name="onInitialize">Method which is executed before the dialog is shown</param>
         /// <param name="onClose">Method which is executed after the dialog has been closed</param>
-        public static void ShowDialog<T>(PlacementMode placement, UIElement placementTarget, Action<T> onInitialize = null, Action<T, UIElement> onClose = null) where T : Screen
+        public static void ShowDialog<T>(FlyoutPlacementMode placement, UIElement placementTarget, Action<T> onInitialize = null, Action<T, UIElement> onClose = null) where T : Screen
         {
             var viewModelAndView = CreateViewModelAndView(onInitialize);
             var vm = viewModelAndView.Item1;
             var view = viewModelAndView.Item2;
 
-            var f = new Callisto.Controls.Flyout
+            var f = new Flyout
                         {
                             Content = view,
                             Placement = placement,
-                            PlacementTarget = placementTarget,
-                            IsOpen = true,
+           
                         };
-
+            f.ShowAt((FrameworkElement)placementTarget);
             if (onClose != null)
                 f.Closed += (sender, o) => onClose(vm, view);
         }
