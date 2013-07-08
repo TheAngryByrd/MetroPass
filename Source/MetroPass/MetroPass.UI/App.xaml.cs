@@ -185,5 +185,10 @@ namespace MetroPass.UI
             PWDatabaseDataSource.Instance.StorageFile = args.Files[0] as StorageFile;
             DisplayRootView<LoadKdbView>();
         }
+
+        protected override void OnUnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            base.OnUnhandledException(sender, e);
+        }
     }
 }
