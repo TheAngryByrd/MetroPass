@@ -78,7 +78,7 @@
                 <TextBlock Grid.Column="0" VerticalAlignment="Top" Grid.Row="5" Text="Notes:" Margin="10" FontSize="24"/>
                 <TextBox Style="{StaticResource NormalTextboxStyle}" Grid.Column="1" Grid.Row="5" Name="Notes" Width="300" Margin="10" FontSize="20" Height="200" TextWrapping="Wrap" AcceptsReturn="True"/>
                 <Button Grid.Column="1" Grid.Row="6" Name="Save" Margin="10" Content="Save" Width="100" Height="50" FontSize="24"/>
-                <UI:AdControl Grid.Column="3" Visibility="{Binding IsAdVisible, Converter={StaticResource BoolVisibilityConverter}}" Grid.RowSpan="7" ApplicationId="f8df6ddc-bc72-41bf-bf1d-676ddf2af726" AdUnitId="10052046" Width="160" Height="600"  HorizontalAlignment="Right"/>
+                <UI:AdControl Grid.Column="3" Grid.RowSpan="7" ApplicationId="f8df6ddc-bc72-41bf-bf1d-676ddf2af726" AdUnitId="10052046" Width="160" Height="600"  HorizontalAlignment="Right"/>
             </Grid>
         </ScrollViewer>
 

@@ -95,17 +95,12 @@ namespace MetroPass.UI.Views
             if (vm != null)
             {
                 vm.DeselectItem();
-                vm.IsAdVisible = true;
             }  
         }
 
         private void EntryAppBar_Opened(object sender, object e)
         {
             var vm = this.DataContext as EntryGroupListViewModel;
-            if (vm != null)
-            {
-                vm.IsAdVisible = false;
-            }
         }
 
         private void AppBarButton_Loaded(object sender, RoutedEventArgs e)
@@ -130,22 +125,5 @@ namespace MetroPass.UI.Views
             VisualStateManager.GoToState(CopyPassword, state, true);
             VisualStateManager.GoToState(OpenURL, state, true);
         }
-
-        private void SemanticZoom_ViewChangeCompleted(object sender, SemanticZoomViewChangedEventArgs e)
-        {
-            var vm = this.DataContext as EntryGroupListViewModel;
-            if (e.IsSourceZoomedInView)
-            {
-                vm.IsAdVisible = false;
-            }
-            else
-            {
-                vm.IsAdVisible = true;
-            }
-        }
-
-
-  
-
     }
 }

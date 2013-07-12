@@ -61,7 +61,7 @@
             </Grid>
         </DataTemplate>
         <DataTemplate x:Key="Type:AdItem">
-            <UI:AdControl Grid.Column="2" ApplicationId="f8df6ddc-bc72-41bf-bf1d-676ddf2af726" AdUnitId="10052848" Width="160" Height="600"  Visibility="{Binding ElementName=zoomedInEntries, Path=DataContext.IsAdVisible, Converter={StaticResource BoolVisibilityConverter}}"/>
+            <UI:AdControl Grid.Column="2" ApplicationId="f8df6ddc-bc72-41bf-bf1d-676ddf2af726" AdUnitId="10052848" Width="160" Height="600" />
         </DataTemplate>
 
         <DataTemplate x:Key="AdHeader">
@@ -101,7 +101,7 @@
             <TextBlock x:Name="pageTitle" Grid.Column="1" Text="{StaticResource AppName}" Style="{StaticResource PageHeaderTextStyle}"/>
         </Grid>
         
-        <SemanticZoom x:Name="groupedList" Grid.Row="1" ViewChangeCompleted="SemanticZoom_ViewChangeCompleted">
+        <SemanticZoom x:Name="groupedList" Grid.Row="1">
             <SemanticZoom.ZoomedInView>
                 <GridView x:Name="zoomedInEntries" 
                     Padding="116,0,40,46"

@@ -79,7 +79,6 @@ namespace MetroPass.UI.ViewModels
             View = (Page)view;
 
             Window.Current.SizeChanged += Window_SizeChanged;
-            IsAdVisible = true;
 
             if (_stateQueue.Count == 0)
             {
@@ -116,14 +115,6 @@ namespace MetroPass.UI.ViewModels
         }
 
         private bool _isPageAvailable;
-        public bool IsAdVisible
-        {
-            get { return SettingsModel.Instance.IsAdsVisible && _isPageAvailable; }
-            set
-            {
-                _isPageAvailable = value;
-                NotifyOfPropertyChange(() => IsAdVisible);
-            }
-        }
+ 
     }
 }

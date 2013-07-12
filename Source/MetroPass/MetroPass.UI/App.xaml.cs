@@ -44,23 +44,23 @@ namespace MetroPass.UI
         {
             var settingsColor = App.Current.Resources["MainAppColor"] as SolidColorBrush;
 
-            var aboutCommand = new SettingsCommand("about", "About MetroPass", a => DialogService.ShowSettingsFlyout<AboutSettingsViewModel>(GetBaseScreen(), headerBrush: settingsColor));
+            var aboutCommand = new SettingsCommand("about", "About MetroPass", a => DialogService.ShowSettingsFlyout<AboutSettingsViewModel>(headerBrush: settingsColor));
             args.Request.ApplicationCommands.Add(aboutCommand);
 
             var dbOptionsCommand = new SettingsCommand("databaseOptions", "Database Options", h =>
             {
                 if (PWDatabaseDataSource.Instance.PwDatabase != null)
                 {
-                    DialogService.ShowSettingsFlyout<DatabaseSettingsViewModel>(GetBaseScreen(), onClosed: SettingsClosed, headerBrush: settingsColor);
+                    DialogService.ShowSettingsFlyout<DatabaseSettingsViewModel>( onClosed: SettingsClosed, headerBrush: settingsColor);
                 }
                 else
                 {
-                    DialogService.ShowSettingsFlyout<DatabaseClosedSettingsViewModel>(GetBaseScreen(), headerBrush: settingsColor);
+                    DialogService.ShowSettingsFlyout<DatabaseClosedSettingsViewModel>(headerBrush: settingsColor);
                 }
             });
             args.Request.ApplicationCommands.Add(dbOptionsCommand);
 
-            var appOptionsCommand = new SettingsCommand("metroPassOptions", "MetroPass Options", h => DialogService.ShowSettingsFlyout<AppSettingsViewModel>(GetBaseScreen(), headerBrush: settingsColor));
+            var appOptionsCommand = new SettingsCommand("metroPassOptions", "MetroPass Options", h => DialogService.ShowSettingsFlyout<AppSettingsViewModel>( headerBrush: settingsColor));
             args.Request.ApplicationCommands.Add(appOptionsCommand);
 
             var privacyPolicyCommand = new SettingsCommand("privacyPolicy", "Privacy Policy", a => LaunchUrl(PrivacyPolicyUrl));
@@ -74,22 +74,6 @@ namespace MetroPass.UI
         private void SettingsClosed(DatabaseSettingsViewModel s, UIElement v)
         {
             SaveSettings(s, v);
-        }
-
-        private void SetAds(bool value)
-        { 
-            var baseScreen = GetBaseScreen();
-
-            if (baseScreen != null)
-            {
-                baseScreen.IsAdVisible = value;         
-            }
-        }
-  
-        private BaseScreen GetBaseScreen()
-        {
-            var baseScreen = (RootFrame.Content as Page).DataContext as BaseScreen;
-            return baseScreen;
         }
 
         private void SaveSettings(DatabaseSettingsViewModel settingsViewModel, UIElement _)

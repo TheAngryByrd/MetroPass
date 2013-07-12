@@ -45,17 +45,12 @@ namespace MetroPass.UI.Views
             if (vm != null)
             {
                 vm.DeselectItem();
-                vm.IsAdVisible = true;
             }
         }
 
         private void EntryAppBar_Opened(object sender, object e)
         {
             var vm = this.DataContext as SearchResultsViewModel;
-            if (vm != null)
-            {
-                vm.IsAdVisible = false;
-            }
         }
 
         private void SetAppBarState(string state)

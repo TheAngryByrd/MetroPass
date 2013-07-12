@@ -51,7 +51,6 @@ namespace Caliburn.Micro
             {
                 Content = view,
                 Placement = placement
-                //PlacementTarget = placementTarget
             };
 
             f.ShowAt((FrameworkElement)placementTarget);
@@ -78,42 +77,27 @@ namespace Caliburn.Micro
 
             var f = new SettingsFlyout
             {
-                //HeaderText = vm.DisplayName,
+                Name = vm.DisplayName,
+                
+
                 Content = view,
             };
 
-            //if (headerBrush != null)
-            //    f.HeaderBrush = headerBrush;
+            if (headerBrush != null)
+                f.HeaderBackground = headerBrush;
             if (backgroundBrush != null)
                 f.Background = backgroundBrush;
 
             f.Show();
-
-            //if (onClosed != null)
-            //    f.Closed += (sender, o) => onClosed(vm, view);
+           
+            if (onClosed != null)
+                f.Unloaded += (sender, o) => onClosed(vm, view);
         }
 
-        public static void ShowSettingsFlyout<T>(BaseScreen currentScreen, Action<T> onInitialize = null, Action<T, UIElement> onClosed = null, SolidColorBrush headerBrush = null, SolidColorBrush backgroundBrush = null) where T : Screen
-        {
-            Action<T> newInit = a =>
-            {
-                currentScreen.IsAdVisible = false;
-                if (onInitialize != null)
-                {
-                    onInitialize(a);
-                }                
-            };
-            Action<T, UIElement> newClose = (t,ui) =>
-            {
-                if (onClosed != null)
-                {
-                    onClosed(t, ui);
-                }          
-                currentScreen.IsAdVisible = true;
-            };
-
-            DialogService.ShowSettingsFlyout(newInit, newClose, headerBrush, backgroundBrush);
-        }
+        //public static void ShowSettingsFlyout<T>(BaseScreen currentScreen, Action<T> onInitialize = null, Action<T, UIElement> onClosed = null, SolidColorBrush headerBrush = null, SolidColorBrush backgroundBrush = null) where T : Screen
+        //{
+        //    DialogService.ShowSettingsFlyout(newInit, newClose, headerBrush, backgroundBrush);
+        //}
 
     
 
