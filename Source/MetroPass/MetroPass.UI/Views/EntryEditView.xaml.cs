@@ -10,19 +10,6 @@ namespace MetroPass.UI.Views
         public EntryEditView()
         {
             this.InitializeComponent();
-
-            //HACK: Needed due to lack of UpdateSourceTrigger in WinRT XAML
-            PasswordTextBox.KeyUp += ForceUpdatePassword;
-            PasswordSnapped.KeyUp += ForceUpdatePassword;
-            ConfirmTextBox.KeyUp += ForceUpdateConfirmPassword;
-            ConfirmSnapped.KeyUp += ForceUpdateConfirmPassword;
-            Loaded += EntryEditView_Loaded;
-        }
-
-        void EntryEditView_Loaded(object sender, RoutedEventArgs e)
-        {
-            PasswordTextBox.Text = ViewModel.MaskedPassword;
-            ConfirmTextBox.Text = ViewModel.MaskedConfirm;
         }
 
         public void SetPasswordState(bool passwordsMatch)
@@ -40,48 +27,27 @@ namespace MetroPass.UI.Views
         }
         private EntryEditViewModel ViewModel
         {
-            get
-            {
-                return this.DataContext as EntryEditViewModel;
-            }
-        }
-
-        private void ForceUpdatePassword(object sender, KeyRoutedEventArgs e)
-        {
-            var vm = this.DataContext as EntryEditViewModel;
-            if (vm != null)
-            {
-                vm.Password = ((TextBox)sender).Text;
-            }
-        }
-
-        private void ForceUpdateConfirmPassword(object sender, KeyRoutedEventArgs e)
-        {
-            var vm = this.DataContext as EntryEditViewModel;
-            if (vm != null)
-            {
-                vm.Confirm = ((TextBox)sender).Text;
-            }
+            get { return this.DataContext as EntryEditViewModel; }
         }
 
         private void Password_GotFocus(object sender, RoutedEventArgs e)
         {
-            PasswordTextBox.Text = ViewModel.Password;
+            PasswordTextBox.FontFamily = App.NormalFont;
         }
 
         private void Password_LostFocus(object sender, RoutedEventArgs e)
         {
-            PasswordTextBox.Text = ViewModel.MaskedPassword;
+            PasswordTextBox.FontFamily = App.PasswordFont;
         }
 
         private void ConfirmTextBox_GotFocus(object sender, RoutedEventArgs e)
         {
-            ConfirmTextBox.Text = ViewModel.Confirm;
+            ConfirmTextBox.FontFamily = App.NormalFont;
         }
 
         private void ConfirmTextBox_LostFocus(object sender, RoutedEventArgs e)
         {
-            ConfirmTextBox.Text = ViewModel.MaskedConfirm;
+            ConfirmTextBox.FontFamily = App.PasswordFont;
         }
     }
 }

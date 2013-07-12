@@ -84,14 +84,6 @@ namespace MetroPass.UI.ViewModels
             }
         }
 
-        public string MaskedPassword
-        {
-            get
-            {
-                return string.Concat(Password.ToCharArray().Select(x => '*'));
-            }
-        }
-
         private string _password;
   
         public string Password
@@ -103,14 +95,6 @@ namespace MetroPass.UI.ViewModels
                 _password = value;
                 ConfirmPassword();
                 NotifyOfPropertyChange(() => Password);
-            }
-        }
-
-        public string MaskedConfirm
-        {
-            get
-            {
-                return string.Concat(Confirm.ToCharArray().Select(x => '*'));
             }
         }
 

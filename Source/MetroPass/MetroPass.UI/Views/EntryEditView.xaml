@@ -68,19 +68,33 @@
             <TextBox Style="{StaticResource NormalTextboxStyle}" Grid.Column="1" Grid.Row="1" Name="Username" Width="300" Margin="10" FontSize="20"/>
             <TextBlock Grid.Column="0" VerticalAlignment="Center" Grid.Row="2" Text="Password:" Margin="10" FontSize="24"/>
             <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="2">
-                <TextBox Style="{StaticResource NormalTextboxStyle}" Name="PasswordTextBox" Width="300" Margin="10" FontSize="20" GotFocus="Password_GotFocus" LostFocus="Password_LostFocus" />
+                <TextBox
+                    x:Name="PasswordTextBox"
+                    Text="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    Style="{StaticResource NormalTextboxStyle}" 
+                    FontFamily="Assets/Fonts/password.ttf#Password"
+                    Width="300"
+                    Margin="10"
+                    FontSize="20"
+                    GotFocus="Password_GotFocus"
+                    LostFocus="Password_LostFocus"
+                    />
                 <Button x:Name="Generate"  Content="Generate"></Button>
             </StackPanel>
            
             <TextBlock Grid.Column="0" VerticalAlignment="Center" Grid.Row="3" Text="Confirm:" Margin="10" FontSize="24"/>
-            <TextBox HorizontalAlignment="Left" 
-                     Grid.Column="1" Grid.Row="3" 
-                     Name="ConfirmTextBox" 
-                     Width="300" Margin="10" 
-                     FontSize="20" 
-                     GotFocus="ConfirmTextBox_GotFocus"
-                     LostFocus="ConfirmTextBox_LostFocus"
-                     Style="{StaticResource ErrorTextBoxStyle}" />
+            <TextBox
+                x:Name="ConfirmTextBox"
+                Text="{Binding Confirm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                Style="{StaticResource ErrorTextBoxStyle}"
+                FontFamily="Assets/Fonts/password.ttf#Password"
+                HorizontalAlignment="Left" 
+                Grid.Column="1" Grid.Row="3" 
+                Width="300" Margin="10" 
+                FontSize="20" 
+                GotFocus="ConfirmTextBox_GotFocus"
+                LostFocus="ConfirmTextBox_LostFocus"
+                />
             <TextBlock Grid.Column="0" VerticalAlignment="Top" Grid.Row="4" Text="URL:" Margin="10" FontSize="24"/>
             <StackPanel Grid.Column="1" Grid.Row="4" Orientation="Vertical">
                 <TextBox Style="{StaticResource NormalTextboxStyle}" Name="Url" Width="300" Margin="10" FontSize="20" InputScope="Url"/>
@@ -98,9 +112,9 @@
             <TextBlock VerticalAlignment="Center" Text="Username:" Style="{StaticResource SnappedLabelStyle}"/>
             <TextBox x:Name="UsernameSnapped" Text="{Binding Username, Mode=TwoWay}" Style="{StaticResource SnappedTextboxStyle}"/>
             <TextBlock VerticalAlignment="Center" Text="Password:" Style="{StaticResource SnappedLabelStyle}"/>
-            <TextBox x:Name="PasswordSnapped" Text="{Binding Password, Mode=TwoWay}" Style="{StaticResource SnappedTextboxStyle}"/>
+            <TextBox x:Name="PasswordSnapped" Text="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource SnappedTextboxStyle}"/>
             <TextBlock VerticalAlignment="Center" Text="Confirm:" Style="{StaticResource SnappedLabelStyle}"/>
-            <TextBox x:Name="ConfirmSnapped" Text="{Binding Confirm, Mode=TwoWay}" Style="{StaticResource ErrorTextBoxStyleSnapped}"/>
+            <TextBox x:Name="ConfirmSnapped" Text="{Binding Confirm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ErrorTextBoxStyleSnapped}"/>
             <TextBlock VerticalAlignment="Center" Text="URL:" Style="{StaticResource SnappedLabelStyle}"/>
             <TextBox x:Name="URLSnapped" InputScope="Url" Text="{Binding Url, Mode=TwoWay}" Style="{StaticResource SnappedTextboxStyle}"/>
             <HyperlinkButton Content="{Binding Text, ElementName=URLSnapped}" cal:Message.Attach="OpenUrl" />
