@@ -79,6 +79,8 @@ namespace MetroPass.UI.Views
         {
             base.OnNavigatingFrom(e);
             this.ApplicationViewStates.CurrentStateChanging -= ApplicationViewStates_CurrentStateChanging;
+            Window.Current.CoreWindow.KeyUp -= CoreWindow_KeyUp;
+            Window.Current.CoreWindow.KeyDown -= CoreWindow_KeyDown;
         }
 
         void ApplicationViewStates_CurrentStateChanging(object sender, VisualStateChangedEventArgs e)
