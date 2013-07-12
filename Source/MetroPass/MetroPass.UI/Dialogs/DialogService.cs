@@ -76,10 +76,8 @@ namespace Caliburn.Micro
             var view = viewModelAndView.Item2;
 
             var f = new SettingsFlyout
-            {
-                Name = vm.DisplayName,
-                
-
+            {                
+                Title = vm.DisplayName,
                 Content = view,
             };
 
