@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest">
-  <Identity Name="49783TheAngryByrd.MetroPass" Publisher="CN=0177370B-9B3C-4000-B690-0EAE70085CFD" Version="1.0.12.24" />
+  <Identity Name="49783TheAngryByrd.MetroPass" Publisher="CN=0177370B-9B3C-4000-B690-0EAE70085CFD" Version="1.0.13.25" />
   <Properties>
     <DisplayName>MetroPass Free</DisplayName>
     <PublisherDisplayName>TheAngryByrd</PublisherDisplayName>
