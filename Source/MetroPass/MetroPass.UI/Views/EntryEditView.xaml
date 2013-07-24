@@ -61,6 +61,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <TextBlock Grid.Column="0" VerticalAlignment="Center" Grid.Row="0" Text="Title:" Margin="10" FontSize="24"/>
             <TextBox Style="{StaticResource NormalTextboxStyle}" Grid.Column="1" Grid.Row="0" Name="Title" Width="300" Margin="10" FontSize="20"/>
@@ -88,7 +89,25 @@
             </StackPanel>
             <TextBlock Grid.Column="0" VerticalAlignment="Top" Grid.Row="5" Text="Notes:" Margin="10" FontSize="24"/>
             <TextBox Style="{StaticResource NormalTextboxStyle}" Grid.Column="1" Grid.Row="5" Name="Notes" Width="300" Margin="10" FontSize="20" Height="200" TextWrapping="Wrap" AcceptsReturn="True"/>
-            <Button Grid.Column="1" Grid.Row="6" Name="Save" Margin="10" Content="Save" Width="100" Height="50" FontSize="24"/>
+            <StackPanel Grid.Row="6" Grid.Column="0">
+                <ItemsControl ItemsSource="{Binding Entry.CustomFields}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Key.Value}" Margin="10" FontSize="24" VerticalAlignment="Top"></TextBlock>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+            <StackPanel Grid.Row="6" Grid.Column="1">
+                <ItemsControl ItemsSource="{Binding Entry.CustomFields}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <TextBox Style="{StaticResource NormalTextboxStyle}"  Width="300" Margin="10" FontSize="20"  Text="{Binding Value.Value}"></TextBox>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+            <Button Grid.Column="1" Grid.Row="7" Name="Save" Margin="10" Content="Save" Width="100" Height="50" FontSize="24"/>
             <UI:AdControl Visibility="{Binding IsAdVisible, Converter={StaticResource BoolVisibilityConverter}}" Grid.Column="3" Grid.RowSpan="7" ApplicationId="f8df6ddc-bc72-41bf-bf1d-676ddf2af726" AdUnitId="10052046" Width="160" Height="600"  HorizontalAlignment="Right"/>
         </Grid>
 

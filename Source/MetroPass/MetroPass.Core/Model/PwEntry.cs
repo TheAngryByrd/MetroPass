@@ -22,6 +22,7 @@ namespace MetroPass.Core.Model
             CustomFields.Remove(GetElementKey("password"));
             CustomFields.Remove(GetElementKey("url"));
             CustomFields.Remove(GetElementKey("notes"));
+
         }
 
         public IEnumerable<XElement> Meta
