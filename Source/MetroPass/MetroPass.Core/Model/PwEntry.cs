@@ -15,7 +15,13 @@ namespace MetroPass.Core.Model
             _parentGroup = parentGroup;
             Element = element;
 
-            Fields = Meta.ToDictionary(m => m.Element("Key").Value, m=> m.Element("Value").Value);     
+            CustomFields = Meta.ToDictionary(m => m.Element("Key"), m=> m.Element("Value"));     
+
+            CustomFields.Remove(GetElementKey("title"));
+            CustomFields.Remove(GetElementKey("username"));
+            CustomFields.Remove(GetElementKey("password"));
+            CustomFields.Remove(GetElementKey("url"));
+            CustomFields.Remove(GetElementKey("notes"));
         }
 
         public IEnumerable<XElement> Meta
@@ -35,7 +41,18 @@ namespace MetroPass.Core.Model
 
         private XElement GetElement([CallerMemberName] String propertyName = null)
         {
-            var foundElement = Meta.FirstOrDefault(a => a.Element("Key").Value.ToLower() == propertyName.ToLower());
+            return Meta.FirstOrDefault(a => a.Element("Key").Value.ToLower() == propertyName.ToLower());
+        }
+
+
+        private XElement GetElementKey([CallerMemberName] String propertyName = null)
+        {
+            return GetElement(propertyName).Element("Key");
+        }
+
+        private XElement GetElementValue([CallerMemberName] String propertyName = null)
+        {
+            var foundElement = GetElement(propertyName);
 
             if(foundElement == null)
             {
@@ -47,35 +64,35 @@ namespace MetroPass.Core.Model
            
         public string Title
         {
-            get { return GetElement().Value; }
-            set { GetElement().Value = value; }
+            get { return GetElementValue().Value; }
+            set { GetElementValue().Value = value; }
         }
 
         public string Username
         {
-            get { return GetElement().Value; }
-            set { GetElement().Value = value; }
+            get { return GetElementValue().Value; }
+            set { GetElementValue().Value = value; }
         }
 
         public string Password
         {
-            get { return GetElement().Value; }
-            set { GetElement().Value = value; }
+            get { return GetElementValue().Value; }
+            set { GetElementValue().Value = value; }
         }
 
         public string Url
         {
-            get { return GetElement().Value; }
-            set { GetElement().Value = value; }
+            get { return GetElementValue().Value; }
+            set { GetElementValue().Value = value; }
         }
 
         public string Notes
         {
-            get { return GetElement().Value; }
-            set { GetElement().Value = value; }
+            get { return GetElementValue().Value; }
+            set { GetElementValue().Value = value; }
         }
 
-        public IDictionary<string, string> Fields
+        public IDictionary<XElement, XElement> CustomFields
         {
             get;
             set;
