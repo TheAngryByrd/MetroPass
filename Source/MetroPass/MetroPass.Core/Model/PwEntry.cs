@@ -14,6 +14,8 @@ namespace MetroPass.Core.Model
         {
             _parentGroup = parentGroup;
             Element = element;
+
+            Fields = Meta.ToDictionary(m => m.Element("Key").Value, m=> m.Element("Value").Value);     
         }
 
         public IEnumerable<XElement> Meta
@@ -71,6 +73,12 @@ namespace MetroPass.Core.Model
         {
             get { return GetElement().Value; }
             set { GetElement().Value = value; }
+        }
+
+        public IDictionary<string, string> Fields
+        {
+            get;
+            set;
         }
     }
 }
