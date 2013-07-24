@@ -45,36 +45,37 @@
             <Button x:Name="GoBack" Style="{StaticResource BackButtonStyle}" Grid.Row="1"/>
             <TextBlock x:Name="PageTitle" Text="{Binding Title}" Grid.Column="1" Grid.Row="1" Style="{StaticResource PageHeaderTextStyle}"/>
         </Grid>
+        <ScrollViewer Grid.Row="1">
+            <Grid Margin="36,0" x:Name="NormalEditView">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="480"/>
+                    <ColumnDefinition Width="160"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
 
-        <Grid Grid.Row="1" Margin="36,0" x:Name="NormalEditView">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="480"/>
-                <ColumnDefinition Width="160"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-            <TextBlock Grid.Column="0" VerticalAlignment="Center" Grid.Row="0" Text="Title:" Margin="10" FontSize="24"/>
-            <TextBox Style="{StaticResource NormalTextboxStyle}" Grid.Column="1" Grid.Row="0" Name="Title" Width="300" Margin="10" FontSize="20"/>
-            <TextBlock Grid.Column="0" VerticalAlignment="Center" Grid.Row="1" Text="Username:" Margin="10" FontSize="24"/>
-            <TextBox Style="{StaticResource NormalTextboxStyle}" Grid.Column="1" Grid.Row="1" Name="Username" Width="300" Margin="10" FontSize="20"/>
-            <TextBlock Grid.Column="0" VerticalAlignment="Center" Grid.Row="2" Text="Password:" Margin="10" FontSize="24"/>
-            <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="2">
-                <TextBox Style="{StaticResource NormalTextboxStyle}" Name="PasswordTextBox" Width="300" Margin="10" FontSize="20" GotFocus="Password_GotFocus" LostFocus="Password_LostFocus" />
-                <Button x:Name="Generate"  Content="Generate"></Button>
-            </StackPanel>
-           
-            <TextBlock Grid.Column="0" VerticalAlignment="Center" Grid.Row="3" Text="Confirm:" Margin="10" FontSize="24"/>
-            <TextBox HorizontalAlignment="Left" 
+                <TextBlock Grid.Column="0" VerticalAlignment="Center" Grid.Row="0" Text="Title:" Margin="10" FontSize="24"/>
+                <TextBox Style="{StaticResource NormalTextboxStyle}" Grid.Column="1" Grid.Row="0" Name="Title" Width="300" Margin="10" FontSize="20"/>
+                <TextBlock Grid.Column="0" VerticalAlignment="Center" Grid.Row="1" Text="Username:" Margin="10" FontSize="24"/>
+                <TextBox Style="{StaticResource NormalTextboxStyle}" Grid.Column="1" Grid.Row="1" Name="Username" Width="300" Margin="10" FontSize="20"/>
+                <TextBlock Grid.Column="0" VerticalAlignment="Center" Grid.Row="2" Text="Password:" Margin="10" FontSize="24"/>
+                <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="2">
+                    <TextBox Style="{StaticResource NormalTextboxStyle}" Name="PasswordTextBox" Width="300" Margin="10" FontSize="20" GotFocus="Password_GotFocus" LostFocus="Password_LostFocus" />
+                    <Button x:Name="Generate"  Content="Generate"></Button>
+                </StackPanel>
+
+                <TextBlock Grid.Column="0" VerticalAlignment="Center" Grid.Row="3" Text="Confirm:" Margin="10" FontSize="24"/>
+                <TextBox HorizontalAlignment="Left" 
                      Grid.Column="1" Grid.Row="3" 
                      Name="ConfirmTextBox" 
                      Width="300" Margin="10" 
@@ -82,35 +83,35 @@
                      GotFocus="ConfirmTextBox_GotFocus"
                      LostFocus="ConfirmTextBox_LostFocus"
                      Style="{StaticResource ErrorTextBoxStyle}" />
-            <TextBlock Grid.Column="0" VerticalAlignment="Top" Grid.Row="4" Text="URL:" Margin="10" FontSize="24"/>
-            <StackPanel Grid.Column="1" Grid.Row="4" Orientation="Vertical">
-                <TextBox Style="{StaticResource NormalTextboxStyle}" Name="Url" Width="300" Margin="10" FontSize="20" InputScope="Url"/>
-                <HyperlinkButton Content="{Binding Text, ElementName=Url}" cal:Message.Attach="OpenUrl" />
-            </StackPanel>
-            <TextBlock Grid.Column="0" VerticalAlignment="Top" Grid.Row="5" Text="Notes:" Margin="10" FontSize="24"/>
-            <TextBox Style="{StaticResource NormalTextboxStyle}" Grid.Column="1" Grid.Row="5" Name="Notes" Width="300" Margin="10" FontSize="20" Height="200" TextWrapping="Wrap" AcceptsReturn="True"/>
-            <StackPanel Grid.Row="6" Grid.Column="0">
-                <ItemsControl ItemsSource="{Binding Entry.CustomFields}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Key.Value}" Margin="10" FontSize="24" VerticalAlignment="Top"></TextBlock>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </StackPanel>
-            <StackPanel Grid.Row="6" Grid.Column="1">
-                <ItemsControl ItemsSource="{Binding Entry.CustomFields}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <TextBox Style="{StaticResource NormalTextboxStyle}"  Width="300" Margin="10" FontSize="20"  Text="{Binding Value.Value}"></TextBox>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </StackPanel>
-            <Button Grid.Column="1" Grid.Row="7" Name="Save" Margin="10" Content="Save" Width="100" Height="50" FontSize="24"/>
-            <UI:AdControl Visibility="{Binding IsAdVisible, Converter={StaticResource BoolVisibilityConverter}}" Grid.Column="3" Grid.RowSpan="7" ApplicationId="f8df6ddc-bc72-41bf-bf1d-676ddf2af726" AdUnitId="10052046" Width="160" Height="600"  HorizontalAlignment="Right"/>
-        </Grid>
-
+                <TextBlock Grid.Column="0" VerticalAlignment="Top" Grid.Row="4" Text="URL:" Margin="10" FontSize="24"/>
+                <StackPanel Grid.Column="1" Grid.Row="4" Orientation="Vertical">
+                    <TextBox Style="{StaticResource NormalTextboxStyle}" Name="Url" Width="300" Margin="10" FontSize="20" InputScope="Url"/>
+                    <HyperlinkButton Content="{Binding Text, ElementName=Url}" cal:Message.Attach="OpenUrl" />
+                </StackPanel>
+                <TextBlock Grid.Column="0" VerticalAlignment="Top" Grid.Row="5" Text="Notes:" Margin="10" FontSize="24"/>
+                <TextBox Style="{StaticResource NormalTextboxStyle}" Grid.Column="1" Grid.Row="5" Name="Notes" Width="300" Margin="10" FontSize="20" Height="200" TextWrapping="Wrap" AcceptsReturn="True"/>
+                <StackPanel Grid.Row="6" Grid.Column="0">
+                    <ItemsControl ItemsSource="{Binding Entry.CustomFields}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Key.Value}" Margin="10" FontSize="24" VerticalAlignment="Top"></TextBlock>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+                <StackPanel Grid.Row="6" Grid.Column="1">
+                    <ItemsControl ItemsSource="{Binding Entry.CustomFields}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <TextBox Style="{StaticResource NormalTextboxStyle}"  Width="300" Margin="10" FontSize="20"  Text="{Binding Value.Value, Mode=TwoWay}"></TextBox>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+                <Button Grid.Column="1" Grid.Row="7" Name="Save" Margin="10" Content="Save" Width="100" Height="50" FontSize="24"/>
+                <UI:AdControl Visibility="{Binding IsAdVisible, Converter={StaticResource BoolVisibilityConverter}}" Grid.Column="3" Grid.RowSpan="7" ApplicationId="f8df6ddc-bc72-41bf-bf1d-676ddf2af726" AdUnitId="10052046" Width="160" Height="600"  HorizontalAlignment="Right"/>
+            </Grid>
+        </ScrollViewer>
         <StackPanel Orientation="Vertical" x:Name="SnappedEditView" Margin="20,0" Grid.Row="1" Width="300" HorizontalAlignment="Left" Visibility="Collapsed">
             <TextBlock VerticalAlignment="Center" Text="Title:" Style="{StaticResource SnappedLabelStyle}"/>
             <TextBox x:Name="TitleSnapped" Text="{Binding Title, Mode=TwoWay}" Style="{StaticResource SnappedTextboxStyle}"/>
