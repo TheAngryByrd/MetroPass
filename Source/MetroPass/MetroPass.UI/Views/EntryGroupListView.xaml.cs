@@ -68,17 +68,17 @@ namespace MetroPass.UI.Views
             if (e.VirtualKey == VirtualKey.Control)
                 this.isCtrlKeyPressed = false;
         }
-
         protected override void OnNavigatedTo(Windows.UI.Xaml.Navigation.NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
             this.ApplicationViewStates.CurrentStateChanging += ApplicationViewStates_CurrentStateChanging;
         }
-
         protected override void OnNavigatingFrom(Windows.UI.Xaml.Navigation.NavigatingCancelEventArgs e)
         {
             base.OnNavigatingFrom(e);
             this.ApplicationViewStates.CurrentStateChanging -= ApplicationViewStates_CurrentStateChanging;
+            Window.Current.CoreWindow.KeyUp -= CoreWindow_KeyUp;
+            Window.Current.CoreWindow.KeyDown -= CoreWindow_KeyDown;
         }
 
         void ApplicationViewStates_CurrentStateChanging(object sender, VisualStateChangedEventArgs e)
