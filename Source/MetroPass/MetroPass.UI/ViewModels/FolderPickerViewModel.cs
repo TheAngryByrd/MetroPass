@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using MetroPass.Core.Interfaces;
-using MetroPass.Core.Model;
 using MetroPass.UI.ViewModels.Messages;
+using Metropass.Core.PCL.Model;
 
 namespace MetroPass.UI.ViewModels
 {

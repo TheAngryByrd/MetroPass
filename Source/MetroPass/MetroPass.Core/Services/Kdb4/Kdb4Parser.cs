@@ -1,13 +1,12 @@
 ﻿using MetroPass.Core.Helpers.Cipher;
-using MetroPass.Core.Model;
 using MetroPass.Core.Model.Kdb4;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml;
 using System.Xml.Linq;
+using Metropass.Core.PCL.Model;
 
 namespace MetroPass.Core.Services
 {

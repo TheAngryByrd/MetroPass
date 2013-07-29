@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Net;
 using Caliburn.Micro;
-using MetroPass.Core.Model;
 using MetroPass.UI.Services;
+using Metropass.Core.PCL.Model;
 
 namespace MetroPass.UI.ViewModels
 {

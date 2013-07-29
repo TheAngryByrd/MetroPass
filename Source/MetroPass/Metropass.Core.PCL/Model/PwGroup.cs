@@ -3,9 +3,9 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Xml.Linq;
 
-namespace MetroPass.Core.Model
+namespace Metropass.Core.PCL.Model
 {
-    public class PwGroup : PwCommon, IGroup
+    public class PwGroup : Metropass.Core.PCL.Model.PwCommon, MetroPass.Core.Model.IGroup
     { 
         private readonly IEnumerable<XElement> _entries;
         private readonly IEnumerable<XElement> _subGroups;
@@ -27,7 +27,7 @@ namespace MetroPass.Core.Model
                 {
                     _subGroups = new XElement[0];
                 }
-                _subGroupsAndEntries = new ObservableCollection<PwCommon>(this.SubGroups.Union(this.Entries.Cast<PwCommon>()));
+                _subGroupsAndEntries = new ObservableCollection<Metropass.Core.PCL.Model.PwCommon>(this.SubGroups.Union(this.Entries.Cast<PwCommon>()));
             }
     
         }
@@ -78,8 +78,9 @@ namespace MetroPass.Core.Model
             get { return _subGroups.Count(); }
         }
 
-        private readonly ObservableCollection<PwCommon> _subGroupsAndEntries;
-        public ObservableCollection<PwCommon> SubGroupsAndEntries
+        private readonly ObservableCollection<Metropass.Core.PCL.Model.PwCommon> _subGroupsAndEntries;
+
+        public ObservableCollection<Metropass.Core.PCL.Model.PwCommon> SubGroupsAndEntries
         {
             get
             {

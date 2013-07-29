@@ -1,7 +1,6 @@
 ﻿using Caliburn.Micro;
 using Framework;
 using MetroPass.Core.Interfaces;
-using MetroPass.Core.Model;
 using MetroPass.UI.DataModel;
 using MetroPass.UI.Services;
 using MetroPass.UI.ViewModels.Messages;
@@ -9,6 +8,7 @@ using MetroPass.UI.Views;
 using System;
 using System.Net;
 using System.Xml.Linq;
+using Metropass.Core.PCL.Model;
 using Windows.UI.Xaml.Media;
 
 namespace MetroPass.UI.ViewModels

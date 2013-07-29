@@ -4,7 +4,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Xml.Linq;
 
-namespace MetroPass.Core.Model
+namespace Metropass.Core.PCL.Model
 {
     public class PwEntry : PwCommon
     {

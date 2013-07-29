@@ -3,6 +3,7 @@ using MetroPass.Core.Interfaces;
 using System;
 using System.Linq;
 using System.Xml.Linq;
+using Metropass.Core.PCL.Model;
 
 namespace MetroPass.Core.Model.Kdb4
 {

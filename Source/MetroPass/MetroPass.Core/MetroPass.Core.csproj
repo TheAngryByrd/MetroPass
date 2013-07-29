@@ -119,7 +119,6 @@
     <Compile Include="Interfaces\IKdbReader.cs" />
     <Compile Include="Interfaces\IKdbWriter.cs" />
     <Compile Include="Security\PasswordGeneratorCharacterSets.cs" />
-    <Compile Include="Model\IGroup.cs" />
     <Compile Include="Model\Kdb4\Kdb4File.cs" />
     <Compile Include="Model\Kdb4\Kdb4Tree.cs" />
     <Compile Include="Model\Kdb4\Kdb4TreeMetaData.cs" />
@@ -127,12 +126,7 @@
     <Compile Include="Model\Keys\IUserKey.cs" />
     <Compile Include="Model\Keys\KcpKeyfile.cs" />
     <Compile Include="Model\Keys\KcpPassword.cs" />
-    <Compile Include="Model\PwCommon.cs" />
     <Compile Include="Model\PwDatabase.cs" />
-    <Compile Include="Model\PwEntry.cs" />
-    <Compile Include="Model\PwEnums.cs" />
-    <Compile Include="Model\PwGroup.cs" />
-    <Compile Include="Model\PwUuid.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\HashedBlockStream.cs" />
     <Compile Include="Interfaces\IPasswordGenerator.cs" />
@@ -154,6 +148,10 @@
     <ProjectReference Include="..\Framework\Framework.csproj">
       <Project>{7f4c7dcb-9379-459b-9d8b-191804a5d3d6}</Project>
       <Name>Framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Metropass.Core.PCL\Metropass.Core.PCL.csproj">
+      <Project>{40AC1A3B-9796-4F90-8903-108C86CFBD15}</Project>
+      <Name>Metropass.Core.PCL</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

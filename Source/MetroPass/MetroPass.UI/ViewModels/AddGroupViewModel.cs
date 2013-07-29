@@ -3,9 +3,9 @@ using System.Xml.Linq;
 using Caliburn.Micro;
 using Framework;
 using MetroPass.Core.Interfaces;
-using MetroPass.Core.Model;
 using MetroPass.UI.DataModel;
 using MetroPass.UI.Services;
+using Metropass.Core.PCL.Model;
 
 namespace MetroPass.UI.ViewModels
 {

@@ -120,29 +120,24 @@ namespace MetroPass.Core.Model.Keys
         /// Creates the composite key from the supplied user key sources (password,
         /// key file, user account, computer ID, etc.).
         /// </summary>
-        public Task<IBuffer> CreateRawCompositeKey32()
+        public async Task<IBuffer> CreateRawCompositeKey32()
         {
-            return Task.Run<IBuffer>(() => {
+            var x = HashAlgorithmProvider.OpenAlgorithm(HashAlgorithmNames.Sha256);
+            var hash = x.CreateHash();
 
-                var x = HashAlgorithmProvider.OpenAlgorithm(HashAlgorithmNames.Sha256);
-                var hash = x.CreateHash();
-
-                // Concatenate user key data
-                foreach (IUserKey pKey in UserKeys)
+            // Concatenate user key data
+            foreach (IUserKey pKey in UserKeys)
+            {
+                IBuffer b = pKey.KeyData;
+                if (b != null)
                 {
-                    IBuffer b = pKey.KeyData;
-                    if (b != null)
-                    {
-                        var pbKeyData = pKey.KeyData;
-                        hash.Append(pbKeyData);
-                        pbKeyData = null;
-                    }
+                    var pbKeyData = pKey.KeyData;
+                    hash.Append(pbKeyData);
+                    pbKeyData = null;
                 }
+            }
 
-                return hash.GetValueAndReset();
-            
-            });
-
+            return hash.GetValueAndReset();
         }
     }
 }

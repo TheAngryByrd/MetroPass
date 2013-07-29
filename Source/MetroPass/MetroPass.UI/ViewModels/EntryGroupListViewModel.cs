@@ -14,6 +14,7 @@ using MetroPass.Core.Model;
 using MetroPass.UI.DataModel;
 using MetroPass.UI.Services;
 using MetroPass.UI.ViewModels.Messages;
+using Metropass.Core.PCL.Model;
 using Windows.UI;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;

@@ -4,16 +4,8 @@ using System.Runtime.CompilerServices;
 using System.Xml;
 using System.Xml.Linq;
 
-namespace MetroPass.Core.Model
+namespace Metropass.Core.PCL.Model
 {
-    public static class XmlEx
-    {
-        public static XElement Element(this XElement element, [CallerMemberName] String propertyName = null)
-        {
-            return element.Element(propertyName);
-        }
-    }
-
     public abstract class PwCommon
     {
         public XElement Element { get; protected set; }

@@ -1,10 +1,6 @@
 ﻿using MetroPass.Core.Interfaces;
 using MetroPass.Core.Model.Keys;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Metropass.Core.PCL.Model;
 
 namespace MetroPass.Core.Model
 {
