@@ -15,14 +15,17 @@ namespace Metropass.Core.PCL.Model
             _parentGroup = parentGroup;
             Element = element;
 
-            CustomFields = Meta.ToDictionary(m => m.Element("Key"), m=> m.Element("Value"));     
+            CustomFields = Meta.ToDictionary(m => m.Element("Key"), m=> m.Element("Value"));
 
-            CustomFields.Remove(GetElementKey("title"));
-            CustomFields.Remove(GetElementKey("username"));
-            CustomFields.Remove(GetElementKey("password"));
-            CustomFields.Remove(GetElementKey("url"));
-            CustomFields.Remove(GetElementKey("notes"));
-
+            try
+            {
+                CustomFields.Remove(GetElementKey("title"));
+                CustomFields.Remove(GetElementKey("username"));
+                CustomFields.Remove(GetElementKey("password"));
+                CustomFields.Remove(GetElementKey("url"));
+                CustomFields.Remove(GetElementKey("notes"));
+            }
+            catch { }
         }
 
         public IEnumerable<XElement> Meta
