@@ -7,6 +7,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Security;
 using System.Threading.Tasks;
+using MetroPass.WinRT.Infrastructure.Hashing;
 using Metropass.Core.PCL.Model;
 using Windows.Storage.Streams;
 using Windows.Security.Cryptography.Core;
@@ -45,7 +46,7 @@ namespace MetroPass.Core.Services
             {
                 throw new SecurityException("Invalid protected stream key!");
             }
-            return new CryptoRandomStream(file.craInnerRandomStream, file.pbProtectedStreamKey.AsBytes());
+            return new CryptoRandomStream(file.craInnerRandomStream, file.pbProtectedStreamKey.AsBytes(), new SHA256HasherRT());
         }
 
         public Stream ConfigureStream(IDataReader decryptedDatabase)

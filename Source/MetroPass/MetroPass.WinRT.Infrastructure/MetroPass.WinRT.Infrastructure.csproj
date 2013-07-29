@@ -6,29 +6,19 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{C08EEC72-CB2E-4CB9-B6EE-D2C5D070D95C}</ProjectGuid>
+    <ProjectGuid>{49748D29-F9CE-45C6-B807-415BF7A8A3EF}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MetroPass.Core</RootNamespace>
-    <AssemblyName>MetroPass.Core</AssemblyName>
+    <RootNamespace>MetroPass.WinRT.Infrastructure</RootNamespace>
+    <AssemblyName>MetroPass.WinRT.Infrastructure</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{BC8A1FFA-BEE3-4634-8014-F334798102B3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <SccProjectName>
-    </SccProjectName>
-    <SccLocalPath>
-    </SccLocalPath>
-    <SccAuxPath>
-    </SccAuxPath>
-    <SccProvider>
-    </SccProvider>
-    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
-    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE;NETFX_CORE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -109,38 +99,7 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Constants.cs" />
-    <Compile Include="Exceptions\GroupNotFoundException.cs" />
-    <Compile Include="Interfaces\IEncryptionEngine.cs" />
-    <Compile Include="Interfaces\IKdbReader.cs" />
-    <Compile Include="Interfaces\IKdbWriter.cs" />
-    <Compile Include="Security\PasswordGeneratorCharacterSets.cs" />
-    <Compile Include="Model\Kdb4\Kdb4File.cs" />
-    <Compile Include="Model\Kdb4\Kdb4Tree.cs" />
-    <Compile Include="Model\Kdb4\Kdb4TreeMetaData.cs" />
-    <Compile Include="Model\Keys\CompositeKey.cs" />
-    <Compile Include="Model\Keys\IUserKey.cs" />
-    <Compile Include="Model\Keys\KcpKeyfile.cs" />
-    <Compile Include="Model\Keys\KcpPassword.cs" />
-    <Compile Include="Model\PwDatabase.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Security\HashedBlockStream.cs" />
-    <Compile Include="Interfaces\IPasswordGenerator.cs" />
-    <Compile Include="Security\PasswordGenerator.cs" />
-    <Compile Include="Security\ProtectedBuffer.cs" />
-    <Compile Include="Interfaces\IKdbTree.cs" />
-    <Compile Include="Services\Crypto\BouncyCastleCrypto.cs" />
-    <Compile Include="Services\Crypto\MultiThreadedBouncyCastleCrypto.cs" />
-    <Compile Include="Services\Crypto\WinRTCrypto.cs" />
-    <Compile Include="Services\Kdb4\Kdb4Parser.cs" />
-    <Compile Include="Services\Kdb4\Kdb4Reader.cs" />
-    <Compile Include="Services\Kdb4\Writer\Kdb4HeaderWriter.cs" />
-    <Compile Include="Services\Kdb4\Writer\Kdb4Persister.cs" />
-    <Compile Include="Services\Kdb4\Writer\Kdb4Writer.cs" />
-    <Compile Include="Services\KdbReaderFactory.cs" />
-    <Compile Include="Services\KdbWriterFactory.cs" />
-  </ItemGroup>
-  <ItemGroup>
+    <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
     <ProjectReference Include="..\Framework\Framework.csproj">
       <Project>{7f4c7dcb-9379-459b-9d8b-191804a5d3d6}</Project>
       <Name>Framework</Name>
@@ -149,24 +108,15 @@
       <Project>{40AC1A3B-9796-4F90-8903-108C86CFBD15}</Project>
       <Name>Metropass.Core.PCL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MetroPass.WinRT.Infrastructure\MetroPass.WinRT.Infrastructure.csproj">
-      <Project>{49748D29-F9CE-45C6-B807-415BF7A8A3EF}</Project>
-      <Name>MetroPass.WinRT.Infrastructure</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="WinRTBouncyCastle">
-      <HintPath>..\packages\WinRTBouncyCastle.0.1.0\lib\windows8\WinRTBouncyCastle.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
+    <Compile Include="Hashing\SHA256HasherRT.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">
     <VisualStudioVersion>11.0</VisualStudioVersion>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
-  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

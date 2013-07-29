@@ -24,6 +24,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PCL", "PCL", "{F23C0AF3-BC1
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Metropass.Core.PCL", "Metropass.Core.PCL\Metropass.Core.PCL.csproj", "{40AC1A3B-9796-4F90-8903-108C86CFBD15}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetroPass.WinRT.Infrastructure", "MetroPass.WinRT.Infrastructure\MetroPass.WinRT.Infrastructure.csproj", "{49748D29-F9CE-45C6-B807-415BF7A8A3EF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -148,6 +150,22 @@ Global
 		{40AC1A3B-9796-4F90-8903-108C86CFBD15}.Release|ARM.ActiveCfg = Release|Any CPU
 		{40AC1A3B-9796-4F90-8903-108C86CFBD15}.Release|x64.ActiveCfg = Release|Any CPU
 		{40AC1A3B-9796-4F90-8903-108C86CFBD15}.Release|x86.ActiveCfg = Release|Any CPU
+		{49748D29-F9CE-45C6-B807-415BF7A8A3EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49748D29-F9CE-45C6-B807-415BF7A8A3EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49748D29-F9CE-45C6-B807-415BF7A8A3EF}.Debug|ARM.ActiveCfg = Debug|ARM
+		{49748D29-F9CE-45C6-B807-415BF7A8A3EF}.Debug|ARM.Build.0 = Debug|ARM
+		{49748D29-F9CE-45C6-B807-415BF7A8A3EF}.Debug|x64.ActiveCfg = Debug|x64
+		{49748D29-F9CE-45C6-B807-415BF7A8A3EF}.Debug|x64.Build.0 = Debug|x64
+		{49748D29-F9CE-45C6-B807-415BF7A8A3EF}.Debug|x86.ActiveCfg = Debug|x86
+		{49748D29-F9CE-45C6-B807-415BF7A8A3EF}.Debug|x86.Build.0 = Debug|x86
+		{49748D29-F9CE-45C6-B807-415BF7A8A3EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49748D29-F9CE-45C6-B807-415BF7A8A3EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49748D29-F9CE-45C6-B807-415BF7A8A3EF}.Release|ARM.ActiveCfg = Release|ARM
+		{49748D29-F9CE-45C6-B807-415BF7A8A3EF}.Release|ARM.Build.0 = Release|ARM
+		{49748D29-F9CE-45C6-B807-415BF7A8A3EF}.Release|x64.ActiveCfg = Release|x64
+		{49748D29-F9CE-45C6-B807-415BF7A8A3EF}.Release|x64.Build.0 = Release|x64
+		{49748D29-F9CE-45C6-B807-415BF7A8A3EF}.Release|x86.ActiveCfg = Release|x86
+		{49748D29-F9CE-45C6-B807-415BF7A8A3EF}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

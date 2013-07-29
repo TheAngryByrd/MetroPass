@@ -36,6 +36,10 @@
     <!-- A reference to the entire .NET Framework is automatically included -->
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cipher\CryptoRandomStream.cs" />
+    <Compile Include="Cipher\Salsa20Cipher.cs" />
+    <Compile Include="Hashing\ICan256Hash.cs" />
+    <Compile Include="Helpers\StrUtil.cs" />
     <Compile Include="Model\IGroup.cs" />
     <Compile Include="KdbConstants.cs" />
     <Compile Include="Helpers\MemUtil.cs" />

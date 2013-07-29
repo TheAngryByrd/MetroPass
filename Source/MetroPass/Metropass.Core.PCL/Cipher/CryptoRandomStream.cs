@@ -1,9 +1,5 @@
-﻿using Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
+using Metropass.Core.PCL.Hashing;
 
 namespace MetroPass.Core.Helpers.Cipher
 {
@@ -43,6 +39,8 @@ namespace MetroPass.Core.Helpers.Cipher
 
         private Salsa20Cipher m_salsa20 = null;
 
+        private readonly ICan256Hash _hasher;
+
         /// <summary>
         /// Construct a new cryptographically secure random stream object.
         /// </summary>
@@ -54,8 +52,9 @@ namespace MetroPass.Core.Helpers.Cipher
         /// <exception cref="System.ArgumentException">Thrown if the
         /// <paramref name="pbKey" /> parameter contains no bytes or the
         /// algorithm is unknown.</exception>
-        public CryptoRandomStream(CrsAlgorithm genAlgorithm, byte[] pbKey)
+        public CryptoRandomStream(CrsAlgorithm genAlgorithm, byte[] pbKey, ICan256Hash hasher)
         {
+            _hasher = hasher;
             m_crsAlgorithm = genAlgorithm;
 
 
@@ -92,7 +91,7 @@ namespace MetroPass.Core.Helpers.Cipher
             {
 
 
-                byte[] pbKey32 = SHA256Hasher.Hash(pbKey.AsBuffer()).AsBytes();
+                byte[] pbKey32 = _hasher.Hash(pbKey);
                 byte[] pbIV = new byte[]{ 0xE8, 0x30, 0x09, 0x4B,
 					0x97, 0x20, 0x5D, 0x2A }; // Unique constant
 

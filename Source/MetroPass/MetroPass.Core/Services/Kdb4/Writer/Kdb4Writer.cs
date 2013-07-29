@@ -8,6 +8,7 @@ using MetroPass.Core.Interfaces;
 using MetroPass.Core.Model;
 using MetroPass.Core.Model.Kdb4;
 using MetroPass.Core.Security;
+using MetroPass.WinRT.Infrastructure.Hashing;
 using Metropass.Core.PCL.Model;
 using Windows.Security.Cryptography;
 using Windows.Security.Cryptography.Core;
@@ -52,7 +53,7 @@ namespace MetroPass.Core.Services.Kdb4.Writer
             await outStream.WriteAsync(kdb4File.pbStreamStartBytes.AsBytes(), 0, (int)kdb4File.pbStreamStartBytes.Length);
             var configuredStream = ConfigureStream(outStream);
 
-            var data = new Kdb4Persister(new CryptoRandomStream(CrsAlgorithm.Salsa20, kdb4File.pbProtectedStreamKey.AsBytes())).Persist(databaseData.Tree, hashOfHeader).AsBytes();
+            var data = new Kdb4Persister(new CryptoRandomStream(CrsAlgorithm.Salsa20, kdb4File.pbProtectedStreamKey.AsBytes(), new SHA256HasherRT())).Persist(databaseData.Tree, hashOfHeader).AsBytes();
             await configuredStream.WriteAsync(data, 0, data.Length);
 
             configuredStream.Dispose();
@@ -65,7 +66,7 @@ namespace MetroPass.Core.Services.Kdb4.Writer
 
             await FileIO.WriteBufferAsync(databaseFile, written);
 
-            var cryptoStream = new CryptoRandomStream(CrsAlgorithm.Salsa20, kdb4File.pbProtectedStreamKey.AsBytes());
+            var cryptoStream = new CryptoRandomStream(CrsAlgorithm.Salsa20, kdb4File.pbProtectedStreamKey.AsBytes(),new SHA256HasherRT());
             var parser = new Kdb4Parser(cryptoStream);
             databaseData.Tree = parser.ParseAndDecode(databaseData.Tree.Document);
         }

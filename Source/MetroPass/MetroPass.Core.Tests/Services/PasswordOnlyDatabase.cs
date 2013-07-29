@@ -1,5 +1,6 @@
 ﻿using MetroPass.Core.Services.Kdb4.Writer;
 using MetroPass.Core.Tests.Helpers;
+using MetroPass.WinRT.Infrastructure.Hashing;
 using Metropass.Core.PCL.Model;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using Framework;
@@ -253,7 +254,7 @@ namespace MetroPass.Core.Tests.Services
             var protectedString = "QwzFTMLCpNY=";
             var protectedStringBytes = Convert.FromBase64String(protectedString);
 
-           var rando = new CryptoRandomStream(CrsAlgorithm.Salsa20, Convert.FromBase64String("6tDlwZfwES4jAQzLisWdpNdnuTYyDZfflEdbshzdgi8="));
+           var rando = new CryptoRandomStream(CrsAlgorithm.Salsa20, Convert.FromBase64String("6tDlwZfwES4jAQzLisWdpNdnuTYyDZfflEdbshzdgi8="), new SHA256HasherRT());
            var getByte = rando.GetRandomBytes((uint)protectedStringBytes.Length);
            byte[] pbPlain = new byte[protectedStringBytes.Length];
 
