@@ -113,7 +113,6 @@
     <Compile Include="Exceptions\GroupNotFoundException.cs" />
     <Compile Include="Helpers\Cipher\Salsa20Cipher.cs" />
     <Compile Include="Helpers\Cipher\CryptoRandomStream.cs" />
-    <Compile Include="Helpers\MemUtil.cs" />
     <Compile Include="Helpers\StrUtil.cs" />
     <Compile Include="Interfaces\IEncryptionEngine.cs" />
     <Compile Include="Interfaces\IKdbReader.cs" />

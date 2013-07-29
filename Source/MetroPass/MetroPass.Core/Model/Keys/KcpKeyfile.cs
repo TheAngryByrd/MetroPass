@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Metropass.Core.PCL.Helpers;
 using Windows.Data.Xml.Dom;
 using Windows.Storage;
 using Windows.Storage.Streams;
@@ -78,7 +79,7 @@ namespace MetroPass.Core.Model.Keys
                 string strHex = Encoding.Unicode.GetString(pbFileData.AsBytes(), 0, 64);
                 if (!StrUtil.IsHexString(strHex, true)) return null;
 
-                IBuffer pbKey = MemUtil.HexStringToByteArray(strHex);
+                IBuffer pbKey = MemUtil.HexStringToByteArray(strHex).AsBuffer();
                 if ((pbKey == null) || (pbKey.Length != 32))
                     return null;
 
