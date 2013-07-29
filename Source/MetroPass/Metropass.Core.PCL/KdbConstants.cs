@@ -16,7 +16,6 @@ namespace Metropass.Core.PCL
         // KeePass 1.x signatures
         public const uint FileSignatureOld1 = 0x9AA2D903;
         public const uint FileSignatureOld2 = 0xB54BFB65;
-
-
+       
     }
 }

@@ -36,22 +36,14 @@
     <!-- A reference to the entire .NET Framework is automatically included -->
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IGroup.cs" />
     <Compile Include="KdbConstants.cs" />
-    <Compile Include="Model\IGroup.cs" />
-    <Compile Include="Model\Kdb4\Kdb4File.cs" />
-    <Compile Include="Model\Kdb4\Kdb4Tree.cs" />
-    <Compile Include="Model\Kdb4\Kdb4TreeMetaData.cs" />
-    <Compile Include="Model\Keys\CompositeKey.cs" />
-    <Compile Include="Model\Keys\IUserKey.cs" />
-    <Compile Include="Model\Keys\KcpKeyfile.cs" />
-    <Compile Include="Model\Keys\KcpPassword.cs" />
-    <Compile Include="Model\PwCommon.cs" />
-    <Compile Include="Model\PwDatabase.cs" />
-    <Compile Include="Model\PwEntry.cs" />
-    <Compile Include="Model\PwEnums.cs" />
-    <Compile Include="Model\PwGroup.cs" />
-    <Compile Include="Model\PwUuid.cs" />
+    <Compile Include="MemUtil.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PwCommon.cs" />
+    <Compile Include="PwEntry.cs" />
+    <Compile Include="PwGroup.cs" />
+    <Compile Include="PwUuid.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
