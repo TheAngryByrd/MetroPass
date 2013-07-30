@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Metropass.Core.PCL.Helpers;
+using Metropass.Core.PCL.Model.Kdb4.Keys;
 using Windows.Data.Xml.Dom;
 using Windows.Storage;
 using Windows.Storage.Streams;
@@ -13,10 +14,11 @@ namespace MetroPass.Core.Model.Keys
 {
     public class KcpKeyFile : IUserKey
     {
-        private IBuffer _keyData;
-        public IBuffer KeyData
+        private IBuffer _keyData; 
+
+        public byte[] KeyData
         {
-            get { return _keyData; }
+            get { return _keyData.AsBytes(); }
         }
 
         private KcpKeyFile()

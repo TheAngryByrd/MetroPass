@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Metropass.Core.PCL.Model.Kdb4.Keys;
 using Windows.ApplicationModel;
 using Windows.Storage;
 using Windows.Storage.Streams;

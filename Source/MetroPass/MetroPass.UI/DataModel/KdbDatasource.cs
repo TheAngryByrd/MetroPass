@@ -1,11 +1,11 @@
 ﻿using MetroPass.Core.Model;
 using MetroPass.Core.Model.Kdb4;
-using MetroPass.Core.Model.Keys;
 using MetroPass.Core.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Metropass.Core.PCL.Model.Kdb4.Keys;
 using Windows.Storage;
 
 namespace MetroPass.UI.DataModel

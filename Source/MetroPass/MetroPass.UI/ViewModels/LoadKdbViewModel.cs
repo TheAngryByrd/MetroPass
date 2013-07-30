@@ -9,6 +9,7 @@ using MetroPass.Core.Model.Keys;
 using MetroPass.UI.DataModel;
 using MetroPass.UI.Services;
 using MetroPass.UI.Views;
+using Metropass.Core.PCL.Model.Kdb4.Keys;
 using Windows.Storage;
 using Windows.Storage.AccessCache;
 using Windows.Storage.Pickers;

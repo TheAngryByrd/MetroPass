@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MetroPass.Core.Interfaces;
 using MetroPass.WinRT.Infrastructure.Encryption;
+using Metropass.Core.PCL.Model.Kdb4.Keys;
 using Org.BouncyCastle.Crypto.Parameters;
 using Org.BouncyCastle.Security;
 using Windows.Security.Cryptography.Core;
@@ -128,10 +129,10 @@ namespace MetroPass.Core.Model.Keys
             // Concatenate user key data
             foreach (IUserKey pKey in UserKeys)
             {
-                IBuffer b = pKey.KeyData;
+                IBuffer b = pKey.KeyData.AsBuffer();
                 if (b != null)
                 {
-                    var pbKeyData = pKey.KeyData;
+                    var pbKeyData = pKey.KeyData.AsBuffer();
                     hash.Append(pbKeyData);
                     pbKeyData = null;
                 }

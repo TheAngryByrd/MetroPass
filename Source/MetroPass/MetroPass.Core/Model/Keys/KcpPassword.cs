@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Metropass.Core.PCL.Model.Kdb4.Keys;
 using Windows.Security.Cryptography.Core;
 using Windows.Storage.Streams;
 
@@ -13,16 +14,14 @@ namespace MetroPass.Core.Model.Keys
     public class KcpPassword : IUserKey
     {
         private IBuffer keyData = null;
-        public IBuffer KeyData
+        public byte[] KeyData
         {
-            get { return keyData; }
+            get
+            {
+                return keyData.AsBytes();
+            }
         }
-
-        private KcpPassword()
-        {
-
-
-        }
+        private KcpPassword(){ }
 
         public async static Task<KcpPassword> Create(string password)
         {

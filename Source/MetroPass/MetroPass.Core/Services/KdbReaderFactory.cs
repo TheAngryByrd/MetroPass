@@ -6,6 +6,7 @@ using MetroPass.Core.Model.Keys;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Metropass.Core.PCL.Model.Kdb4.Keys;
 using Windows.Storage;
 using Windows.Storage.Streams;
 using Metropass.Core.PCL;

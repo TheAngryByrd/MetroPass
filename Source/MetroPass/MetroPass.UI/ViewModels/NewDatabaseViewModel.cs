@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
 using Metropass.Core.PCL.Model;
+using Metropass.Core.PCL.Model.Kdb4.Keys;
 using Windows.Storage.Pickers;
 
 namespace MetroPass.UI.ViewModels

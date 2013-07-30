@@ -53,6 +53,7 @@
     <Compile Include="Helpers\MemUtil.cs" />
     <Compile Include="Model\Kdb4\IKdbTree.cs" />
     <Compile Include="Model\Kdb4\Kdb4TreeMetaData.cs" />
+    <Compile Include="Model\Kdb4\Keys\IUserKey.cs" />
     <Compile Include="Model\PwEnums.cs" />
     <Compile Include="Helpers\XmlEx.cs" />
     <Compile Include="PasswordGeneration\IPasswordGenerator.cs" />
