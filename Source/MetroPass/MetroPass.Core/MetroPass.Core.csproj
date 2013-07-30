@@ -116,7 +116,6 @@
     <Compile Include="Security\PasswordGeneratorCharacterSets.cs" />
     <Compile Include="Model\Kdb4\Kdb4File.cs" />
     <Compile Include="Model\Kdb4\Kdb4Tree.cs" />
-    <Compile Include="Model\Kdb4\Kdb4TreeMetaData.cs" />
     <Compile Include="Model\Keys\CompositeKey.cs" />
     <Compile Include="Model\Keys\IUserKey.cs" />
     <Compile Include="Model\Keys\KcpKeyfile.cs" />

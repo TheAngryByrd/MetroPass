@@ -1,6 +1,6 @@
 ﻿using System.Xml.Linq;
-using MetroPass.Core.Model.Kdb4;
 using Metropass.Core.PCL.Model;
+using Metropass.Core.PCL.Model.Kdb4;
 
 namespace MetroPass.Core.Interfaces
 {

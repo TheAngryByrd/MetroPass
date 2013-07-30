@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
 using System.Xml.Linq;
-using Framework;
 
-namespace MetroPass.Core.Model.Kdb4
+
+namespace Metropass.Core.PCL.Model.Kdb4
 {
     public class Kdb4TreeMetaData
     {
