@@ -1,6 +1,6 @@
 ﻿namespace Metropass.Core.PCL.Hashing
 {
-    public interface ICan256Hash
+    public interface ICanSHA256Hash
     {
         byte[] Hash(params byte[] bytesToHash);
     }

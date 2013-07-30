@@ -39,7 +39,7 @@ namespace MetroPass.Core.Helpers.Cipher
 
         private Salsa20Cipher m_salsa20 = null;
 
-        private readonly ICan256Hash _hasher;
+        private readonly ICanSHA256Hash _hasher;
 
         /// <summary>
         /// Construct a new cryptographically secure random stream object.
@@ -52,7 +52,7 @@ namespace MetroPass.Core.Helpers.Cipher
         /// <exception cref="System.ArgumentException">Thrown if the
         /// <paramref name="pbKey" /> parameter contains no bytes or the
         /// algorithm is unknown.</exception>
-        public CryptoRandomStream(CrsAlgorithm genAlgorithm, byte[] pbKey, ICan256Hash hasher)
+        public CryptoRandomStream(CrsAlgorithm genAlgorithm, byte[] pbKey, ICanSHA256Hash hasher)
         {
             _hasher = hasher;
             m_crsAlgorithm = genAlgorithm;
