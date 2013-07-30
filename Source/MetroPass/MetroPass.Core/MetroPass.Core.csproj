@@ -109,7 +109,6 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Constants.cs" />
     <Compile Include="Exceptions\GroupNotFoundException.cs" />
     <Compile Include="Interfaces\IEncryptionEngine.cs" />
     <Compile Include="Interfaces\IKdbReader.cs" />

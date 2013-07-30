@@ -5,10 +5,10 @@ using MetroPass.Core.Model.Kdb4;
 using MetroPass.Core.Model.Keys;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.Streams;
+using Metropass.Core.PCL;
 
 namespace MetroPass.Core.Services
 {

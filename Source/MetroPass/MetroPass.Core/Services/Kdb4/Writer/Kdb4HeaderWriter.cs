@@ -1,14 +1,10 @@
-﻿using MetroPass.Core.Model;
-using MetroPass.Core.Model.Kdb4;
+﻿using MetroPass.Core.Model.Kdb4;
 using Framework;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage.Streams;
 using MetroPass.Core.Helpers.Cipher;
+using Metropass.Core.PCL;
 
 namespace MetroPass.Core.Services.Kdb4.Writer
 {
