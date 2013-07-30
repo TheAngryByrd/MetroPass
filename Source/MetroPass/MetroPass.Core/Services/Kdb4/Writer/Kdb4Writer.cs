@@ -7,8 +7,8 @@ using MetroPass.Core.Helpers.Cipher;
 using MetroPass.Core.Interfaces;
 using MetroPass.Core.Model;
 using MetroPass.Core.Model.Kdb4;
-using MetroPass.Core.Security;
 using MetroPass.WinRT.Infrastructure.Hashing;
+using Metropass.Core.PCL.Hashing;
 using Metropass.Core.PCL.Model;
 using Windows.Security.Cryptography;
 using Windows.Security.Cryptography.Core;
@@ -74,7 +74,7 @@ namespace MetroPass.Core.Services.Kdb4.Writer
         public Stream ConfigureStream(Stream stream)
         {
             //Stream inputStream = stream;
-            Stream inputStream = new HashedBlockStream(stream,true);
+            Stream inputStream = new HashedBlockStream(stream,true, new SHA256HasherRT());
 
             if (kdb4File.pwDatabase.Compression == PwCompressionAlgorithm.GZip)
             {

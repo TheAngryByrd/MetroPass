@@ -1,6 +1,5 @@
 ﻿using MetroPass.Core.Helpers.Cipher;
 using MetroPass.Core.Model.Kdb4;
-using MetroPass.Core.Security;
 using Framework;
 using System;
 using System.IO;
@@ -8,6 +7,7 @@ using System.IO.Compression;
 using System.Security;
 using System.Threading.Tasks;
 using MetroPass.WinRT.Infrastructure.Hashing;
+using Metropass.Core.PCL.Hashing;
 using Metropass.Core.PCL.Model;
 using Windows.Storage.Streams;
 using Windows.Security.Cryptography.Core;
@@ -53,7 +53,7 @@ namespace MetroPass.Core.Services
         {
             var memStream = decryptedDatabase.AsStream();
 
-            Stream inputStream = new HashedBlockStream(memStream, false, 0, false);
+            Stream inputStream = new HashedBlockStream(memStream, false, 0, false, new SHA256HasherRT());
 
             if (file.pwDatabase.Compression == PwCompressionAlgorithm.GZip)
             {

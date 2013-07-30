@@ -1,13 +1,8 @@
-﻿using MetroPass.Core.Helpers;
-using Framework;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace MetroPass.Core.Security
+namespace Metropass.Core.PCL.Hashing
 {
     public sealed class HashedBlockStream : Stream
     {
@@ -25,6 +20,8 @@ namespace MetroPass.Core.Security
         private int m_nBufferPos = 0;
 
         private uint m_uBufferIndex = 0;
+
+        private readonly ICanSHA256Hash _sha256Hasher;
 
         public override bool CanRead
         {
@@ -52,27 +49,26 @@ namespace MetroPass.Core.Security
             set { throw new NotSupportedException(); }
         }
 
-        public HashedBlockStream(Stream sBaseStream, bool bWriting)
+        public HashedBlockStream(Stream sBaseStream, bool bWriting, ICanSHA256Hash SHA256Hasher)
+            : this(sBaseStream, bWriting, 0, true, SHA256Hasher)
         {
-            Initialize(sBaseStream, bWriting, 0, true);
+        
         }
 
-        public HashedBlockStream(Stream sBaseStream, bool bWriting, int nBufferSize)
+        public HashedBlockStream(Stream sBaseStream, bool bWriting, int nBufferSize,ICanSHA256Hash SHA256Hasher)
+            : this(sBaseStream, bWriting, nBufferSize, true, SHA256Hasher)
         {
-            Initialize(sBaseStream, bWriting, nBufferSize, true);
+        
         }
 
         public HashedBlockStream(Stream sBaseStream, bool bWriting, int nBufferSize,
-            bool bVerify)
+            bool bVerify, ICanSHA256Hash sha256Hasher)
         {
-            Initialize(sBaseStream, bWriting, nBufferSize, bVerify);
-        }
-
-        private void Initialize(Stream sBaseStream, bool bWriting, int nBufferSize,
-            bool bVerify)
-        {
-            if (sBaseStream == null) throw new ArgumentNullException("sBaseStream");
-            if (nBufferSize < 0) throw new ArgumentOutOfRangeException("nBufferSize");
+            _sha256Hasher = sha256Hasher;
+            if (sBaseStream == null)
+                throw new ArgumentNullException("sBaseStream");
+            if (nBufferSize < 0)
+                throw new ArgumentOutOfRangeException("nBufferSize");
 
             if (nBufferSize == 0) nBufferSize = m_nDefaultBufferSize;
 
@@ -244,7 +240,7 @@ namespace MetroPass.Core.Security
             if (m_bVerify)
             {
 
-                byte[] pbComputedHash = SHA256Hasher.Hash(m_pbBuffer.AsBuffer()).AsBytes();
+                byte[] pbComputedHash = _sha256Hasher.Hash(m_pbBuffer);
                 if ((pbComputedHash == null) || (pbComputedHash.Length != 32))
                     throw new InvalidOperationException();
 
@@ -285,18 +281,15 @@ namespace MetroPass.Core.Security
 
             if (m_nBufferPos > 0)
             {
-
-
-
                 byte[] pbHash;
                 if (m_nBufferPos == m_pbBuffer.Length)
 
-                    pbHash = SHA256Hasher.Hash(m_pbBuffer.AsBuffer()).AsBytes();
+                    pbHash = _sha256Hasher.Hash(m_pbBuffer);
                 else
                 {
                     byte[] pbData = new byte[m_nBufferPos];
                     Array.Copy(m_pbBuffer, 0, pbData, 0, m_nBufferPos);
-                    pbHash = SHA256Hasher.Hash(pbData.AsBuffer()).AsBytes();
+                    pbHash = _sha256Hasher.Hash(pbData);
                 }
 
 

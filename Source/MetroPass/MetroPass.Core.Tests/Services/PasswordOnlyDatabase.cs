@@ -1,6 +1,7 @@
 ﻿using MetroPass.Core.Services.Kdb4.Writer;
 using MetroPass.Core.Tests.Helpers;
 using MetroPass.WinRT.Infrastructure.Hashing;
+using Metropass.Core.PCL.Hashing;
 using Metropass.Core.PCL.Model;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using Framework;
@@ -15,7 +16,6 @@ using Windows.Storage.Streams;
 using System.IO;
 using System.IO.Compression;
 using Windows.Security.Cryptography.Core;
-using MetroPass.Core.Security;
 using MetroPass.Core.Helpers.Cipher;
 
 namespace MetroPass.Core.Tests.Services
@@ -117,7 +117,7 @@ namespace MetroPass.Core.Tests.Services
             
             var data = CryptographicBuffer.GenerateRandom(1024*1024).AsBytes();
             MemoryStream outStream = new System.IO.MemoryStream();
-            var hashedBlockStream = new HashedBlockStream(outStream, true);
+            var hashedBlockStream = new HashedBlockStream(outStream, true, new SHA256HasherRT());
             for (int i = 0; i < 1024 * 1024; i += 1024)
             {
                 hashedBlockStream.Write(data, i, 1024);
@@ -183,7 +183,7 @@ namespace MetroPass.Core.Tests.Services
 
             if (IsWritingStream)
             {
-                hashedBlockStream = new HashedBlockStream(source, true);
+                hashedBlockStream = new HashedBlockStream(source, true, new SHA256HasherRT());
 
                 if (compression == PwCompressionAlgorithm.GZip)
                 {
@@ -192,7 +192,7 @@ namespace MetroPass.Core.Tests.Services
             }
             else
             {
-                hashedBlockStream = new HashedBlockStream(source, false, 0, false);
+                hashedBlockStream = new HashedBlockStream(source, false, 0, false, new SHA256HasherRT());
 
                 if (compression == PwCompressionAlgorithm.GZip)
                 {

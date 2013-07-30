@@ -39,6 +39,7 @@
     <Compile Include="Cipher\CryptoRandomStream.cs" />
     <Compile Include="Cipher\Salsa20Cipher.cs" />
     <Compile Include="Exceptions\GroupNotFoundException.cs" />
+    <Compile Include="Hashing\HashedBlockStream.cs" />
     <Compile Include="Hashing\ICanSHA256Hash.cs" />
     <Compile Include="Helpers\DateTimeExtensions.cs" />
     <Compile Include="Helpers\Extend.cs" />
