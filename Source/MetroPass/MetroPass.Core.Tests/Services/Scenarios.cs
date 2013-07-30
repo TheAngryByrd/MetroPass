@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MetroPass.WinRT.Infrastructure.Hashing;
 using Metropass.Core.PCL.Model.Kdb4.Keys;
 using Windows.ApplicationModel;
 using Windows.Storage;
@@ -29,7 +30,7 @@ namespace MetroPass.Core.Tests.Services
             var userKeys = new List<IUserKey>();
             if (!string.IsNullOrEmpty(password))
             {
-                userKeys.Add(await KcpPassword.Create(password));
+                userKeys.Add(await KcpPassword.Create(password, new SHA256HasherRT()));
             }
 
             if (!string.IsNullOrEmpty(keyPath))

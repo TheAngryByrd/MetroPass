@@ -9,6 +9,7 @@ using MetroPass.Core.Model.Keys;
 using MetroPass.UI.DataModel;
 using MetroPass.UI.Services;
 using MetroPass.UI.Views;
+using MetroPass.WinRT.Infrastructure.Hashing;
 using Metropass.Core.PCL.Model.Kdb4.Keys;
 using Windows.Storage;
 using Windows.Storage.AccessCache;
@@ -360,7 +361,7 @@ namespace MetroPass.UI.ViewModels
 
             if (!string.IsNullOrEmpty(Password))
             {
-                userKeys.Add(await KcpPassword.Create(Password));
+                userKeys.Add(await KcpPassword.Create(Password, new SHA256HasherRT()));
             }
             if (KeyFile != null)
             {
