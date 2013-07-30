@@ -1,11 +1,11 @@
 ﻿using System.Linq;
 using Caliburn.Micro;
-using MetroPass.Core.Interfaces;
 using MetroPass.UI.DataModel;
 using MetroPass.UI.ViewModels.Messages;
 using MetroPass.UI.Views;
 using MetroPass.UI.Services;
 using Metropass.Core.PCL.Model;
+using Metropass.Core.PCL.Model.Kdb4;
 using Windows.UI.Xaml.Media;
 
 namespace MetroPass.UI.ViewModels

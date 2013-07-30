@@ -1,8 +1,6 @@
 ﻿using System.Xml.Linq;
-using Metropass.Core.PCL.Model;
-using Metropass.Core.PCL.Model.Kdb4;
 
-namespace MetroPass.Core.Interfaces
+namespace Metropass.Core.PCL.Model.Kdb4
 {
     public interface IKdbTree
     {

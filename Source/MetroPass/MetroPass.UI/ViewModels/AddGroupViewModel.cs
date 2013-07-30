@@ -2,10 +2,10 @@
 using System.Xml.Linq;
 using Caliburn.Micro;
 using Framework;
-using MetroPass.Core.Interfaces;
 using MetroPass.UI.DataModel;
 using MetroPass.UI.Services;
 using Metropass.Core.PCL.Model;
+using Metropass.Core.PCL.Model.Kdb4;
 
 namespace MetroPass.UI.ViewModels
 {

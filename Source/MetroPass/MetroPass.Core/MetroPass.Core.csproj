@@ -120,7 +120,6 @@
     <Compile Include="Model\PwDatabase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\ProtectedBuffer.cs" />
-    <Compile Include="Interfaces\IKdbTree.cs" />
     <Compile Include="Services\Kdb4\Kdb4Parser.cs" />
     <Compile Include="Services\Kdb4\Kdb4Reader.cs" />
     <Compile Include="Services\Kdb4\Writer\Kdb4HeaderWriter.cs" />

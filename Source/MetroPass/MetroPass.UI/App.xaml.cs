@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Caliburn.Micro;
-using MetroPass.Core.Interfaces;
 using MetroPass.Core.Security;
 using MetroPass.UI.Common;
 using MetroPass.UI.DataModel;
@@ -9,6 +8,7 @@ using MetroPass.UI.Services;
 using MetroPass.UI.ViewModels;
 using MetroPass.UI.Views;
 using MetroPass.WinRT.Infrastructure.PasswordGeneration;
+using Metropass.Core.PCL.Model.Kdb4;
 using Metropass.Core.PCL.PasswordGeneration;
 using Ninject;
 using Windows.ApplicationModel;

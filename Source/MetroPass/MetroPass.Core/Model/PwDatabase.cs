@@ -1,6 +1,6 @@
-﻿using MetroPass.Core.Interfaces;
-using MetroPass.Core.Model.Keys;
+﻿using MetroPass.Core.Model.Keys;
 using Metropass.Core.PCL.Model;
+using Metropass.Core.PCL.Model.Kdb4;
 
 namespace MetroPass.Core.Model
 {

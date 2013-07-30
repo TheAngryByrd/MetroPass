@@ -1,9 +1,9 @@
 ﻿using Caliburn.Micro;
 using System.Collections.Generic;
 using System.Linq;
-using MetroPass.Core.Interfaces;
 using MetroPass.UI.ViewModels.Messages;
 using Metropass.Core.PCL.Model;
+using Metropass.Core.PCL.Model.Kdb4;
 
 namespace MetroPass.UI.ViewModels
 {
