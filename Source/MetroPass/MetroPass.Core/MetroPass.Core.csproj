@@ -109,7 +109,6 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Interfaces\IEncryptionEngine.cs" />
     <Compile Include="Interfaces\IKdbReader.cs" />
     <Compile Include="Interfaces\IKdbWriter.cs" />
     <Compile Include="Model\Kdb4\Kdb4File.cs" />
@@ -123,9 +122,6 @@
     <Compile Include="Security\PasswordGeneratorBase.cs" />
     <Compile Include="Security\ProtectedBuffer.cs" />
     <Compile Include="Interfaces\IKdbTree.cs" />
-    <Compile Include="Services\Crypto\BouncyCastleCrypto.cs" />
-    <Compile Include="Services\Crypto\MultiThreadedBouncyCastleCrypto.cs" />
-    <Compile Include="Services\Crypto\WinRTCrypto.cs" />
     <Compile Include="Services\Kdb4\Kdb4Parser.cs" />
     <Compile Include="Services\Kdb4\Kdb4Reader.cs" />
     <Compile Include="Services\Kdb4\Writer\Kdb4HeaderWriter.cs" />
@@ -155,6 +151,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Services\Crypto\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">
     <VisualStudioVersion>11.0</VisualStudioVersion>

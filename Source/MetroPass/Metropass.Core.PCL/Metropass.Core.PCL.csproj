@@ -38,6 +38,7 @@
   <ItemGroup>
     <Compile Include="Cipher\CryptoRandomStream.cs" />
     <Compile Include="Cipher\Salsa20Cipher.cs" />
+    <Compile Include="Encryption\EncryptionEngineBase.cs" />
     <Compile Include="Exceptions\GroupNotFoundException.cs" />
     <Compile Include="Hashing\HashedBlockStream.cs" />
     <Compile Include="Hashing\ICanSHA256Hash.cs" />

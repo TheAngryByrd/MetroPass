@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MetroPass.Core.Interfaces;
-using MetroPass.Core.Services.Crypto;
+using MetroPass.WinRT.Infrastructure.Encryption;
 using Org.BouncyCastle.Crypto.Parameters;
 using Org.BouncyCastle.Security;
 using Windows.Security.Cryptography.Core;
@@ -48,9 +48,9 @@ namespace MetroPass.Core.Model.Keys
 
             var cryptoEngine = new MultiThreadedBouncyCastleCrypto(CryptoAlgoritmType.AES_ECB);
 
-            var data = await cryptoEngine.Encrypt(rawCompositeKey, transformSeed, null, (int)rounds, PercentComplete);
+            var data = await cryptoEngine.Encrypt(rawCompositeKey.AsBytes(), transformSeed.AsBytes(), null, (int)rounds, PercentComplete);
             
-            return SHA256Hasher.Hash(data);
+            return SHA256Hasher.Hash(data.AsBuffer());
         }
 
 

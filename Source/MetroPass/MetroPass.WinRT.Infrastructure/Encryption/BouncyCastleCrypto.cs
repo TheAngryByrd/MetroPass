@@ -1,45 +1,39 @@
 ﻿using System;
-using System.Linq;
-using System.Threading;
-using Framework;
 using MetroPass.Core.Interfaces;
 using Org.BouncyCastle.Crypto;
 using Org.BouncyCastle.Crypto.Parameters;
 using Org.BouncyCastle.Security;
-using Windows.Storage.Streams;
 using System.Threading.Tasks;
 
-namespace MetroPass.Core.Services.Crypto
+namespace MetroPass.WinRT.Infrastructure.Encryption
 {
-    public class BouncyCastleCrypto : EncryptionEngine
+    public class BouncyCastleCrypto : EncryptionEngineBase
     {
         public BouncyCastleCrypto(CryptoAlgoritmType algorithmType) : base(algorithmType)
         {
         }
 
-        public async override Task<IBuffer> Encrypt(IBuffer data, IBuffer key, IBuffer iv, double rounds, IProgress<double> percentComplete)
+        public async override Task<byte[]> Encrypt(byte[] data, byte[] key, byte[] iv, double rounds, IProgress<double> percentComplete)
         {
             IBufferedCipher cipher = GetCipher(true, key);
-            
+
             return await Process(data, rounds, percentComplete, cipher);
         }
 
-
-        public async override Task<IBuffer> Decrypt(IBuffer data, IBuffer key, IBuffer iv, double rounds, IProgress<double> percentComplete)
+        public async override Task<byte[]> Decrypt(byte[] data, byte[] key, byte[] iv, double rounds, IProgress<double> percentComplete)
         {
-            IBufferedCipher cipher = GetCipher(false, key);      
-          
+            IBufferedCipher cipher = GetCipher(false, key);
+
 
             return await Process(data, rounds, percentComplete, cipher);
         }
 
+        private Task<byte[]> Process(byte[] data, double rounds, IProgress<double> percentComplete, IBufferedCipher cipher)
+        {
 
-        private Task<IBuffer> Process(IBuffer data, double rounds, IProgress<double> percentComplete, IBufferedCipher cipher)
-        {             
-
-            return Task.Run<IBuffer>(() =>
+            return Task.Run<byte[]>(() =>
             {
-                var byteCompositeKey = data.AsBytes();
+                var byteCompositeKey = data;
 
                 for (var i = 0; i < rounds; ++i)
                 {
@@ -53,13 +47,13 @@ namespace MetroPass.Core.Services.Crypto
                 }
                 percentComplete.Report(100);
 
-                return byteCompositeKey.AsBuffer();
+                return byteCompositeKey;
 
             });
         
         }
 
-        private IBufferedCipher GetCipher(bool encrypt, IBuffer key)
+        private IBufferedCipher GetCipher(bool encrypt, byte[] key)
         {
             IBufferedCipher cipher = null;
             
@@ -71,7 +65,7 @@ namespace MetroPass.Core.Services.Crypto
                 case CryptoAlgoritmType.AES_CBC_PKCS7:
                     break;
             }
-            cipher.Init(encrypt, new KeyParameter(key.AsBytes()));
+            cipher.Init(encrypt, new KeyParameter(key));
 
             return cipher;
         }
