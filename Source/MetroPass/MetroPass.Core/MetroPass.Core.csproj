@@ -119,7 +119,6 @@
     <Compile Include="Model\Keys\KcpPassword.cs" />
     <Compile Include="Model\PwDatabase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Security\PasswordGeneratorBase.cs" />
     <Compile Include="Security\ProtectedBuffer.cs" />
     <Compile Include="Interfaces\IKdbTree.cs" />
     <Compile Include="Services\Kdb4\Kdb4Parser.cs" />
@@ -152,9 +151,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Services\Crypto\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">
     <VisualStudioVersion>11.0</VisualStudioVersion>
   </PropertyGroup>
