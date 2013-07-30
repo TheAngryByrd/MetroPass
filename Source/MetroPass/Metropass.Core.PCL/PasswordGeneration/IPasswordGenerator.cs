@@ -1,8 +1,6 @@
-using System;
 using System.Threading.Tasks;
-using Windows.Security.Cryptography;
 
-namespace MetroPass.Core.Interfaces
+namespace Metropass.Core.PCL.PasswordGeneration
 {
     public interface IPasswordGenerator
     {

@@ -125,6 +125,10 @@
       <Project>{c08eec72-cb2e-4cb9-b6ee-d2c5d070d95c}</Project>
       <Name>MetroPass.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MetroPass.WinRT.Infrastructure\MetroPass.WinRT.Infrastructure.csproj">
+      <Project>{49748D29-F9CE-45C6-B807-415BF7A8A3EF}</Project>
+      <Name>MetroPass.WinRT.Infrastructure</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">

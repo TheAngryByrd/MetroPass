@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace MetroPass.Core.Security
+namespace Metropass.Core.PCL.PasswordGeneration
 {
     public class PasswordGeneratorCharacterSets
     {

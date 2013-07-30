@@ -38,6 +38,7 @@
   <ItemGroup>
     <Compile Include="Cipher\CryptoRandomStream.cs" />
     <Compile Include="Cipher\Salsa20Cipher.cs" />
+    <Compile Include="Exceptions\GroupNotFoundException.cs" />
     <Compile Include="Hashing\ICan256Hash.cs" />
     <Compile Include="Helpers\DateTimeExtensions.cs" />
     <Compile Include="Helpers\Extend.cs" />
@@ -51,6 +52,9 @@
     <Compile Include="Model\Kdb4\Kdb4TreeMetaData.cs" />
     <Compile Include="Model\PwEnums.cs" />
     <Compile Include="Helpers\XmlEx.cs" />
+    <Compile Include="PasswordGeneration\IPasswordGenerator.cs" />
+    <Compile Include="PasswordGeneration\PasswordGeneratorBase.cs" />
+    <Compile Include="PasswordGeneration\PasswordGeneratorCharacterSets.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Model\PwCommon.cs" />
     <Compile Include="Model\PwEntry.cs" />

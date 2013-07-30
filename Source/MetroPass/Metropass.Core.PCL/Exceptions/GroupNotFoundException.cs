@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MetroPass.Core.Exceptions
+namespace Metropass.Core.PCL.Exceptions
 {
     public class GroupNotFoundException : ArgumentException
     {

@@ -1,14 +1,10 @@
 using System;
 using System.Threading.Tasks;
-using MetroPass.Core.Interfaces;
-using Windows.Security.Cryptography;
 
-namespace MetroPass.Core.Security
+namespace Metropass.Core.PCL.PasswordGeneration
 {
-    public class PasswordGenerator : IPasswordGenerator
-    {
-      
-
+    public abstract class PasswordGeneratorBase : IPasswordGenerator
+    {     
         public Task<string> GeneratePasswordAsync(int length, string[] characterSet, string charactersToExclude = null)
         {
             return Task.Run<string>(() =>
@@ -44,10 +40,7 @@ namespace MetroPass.Core.Security
             }
             return joinedCharacterSet;
         }
-    
-        public int GenerateRandomNumber(int max)
-        {
-            return Math.Abs((int)CryptographicBuffer.GenerateRandomNumber()) % (max);
-        }
+
+        public abstract int GenerateRandomNumber(int max);
     }
 }
