@@ -30,6 +30,7 @@ namespace MetroPass.Core.Tests.Services
         }
 
         [TestMethod]
+        [Ignore]
         public async Task HighEncryptionRoundDatabase()
         {
             var tree = await Scenarios.LoadDatabase(PasswordDatabasePath, DatabasePassword, KeyFileath);
