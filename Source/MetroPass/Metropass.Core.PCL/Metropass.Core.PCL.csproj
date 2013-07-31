@@ -14,6 +14,8 @@
     <TargetFrameworkProfile>Profile78</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -34,6 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .NET Framework is automatically included -->
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cipher\CryptoRandomStream.cs" />
@@ -44,6 +47,7 @@
     <Compile Include="Hashing\ICanSHA256Hash.cs" />
     <Compile Include="Helpers\DateTimeExtensions.cs" />
     <Compile Include="Helpers\Extend.cs" />
+    <Compile Include="Helpers\FileExtentions.cs" />
     <Compile Include="Helpers\NullableProgress.cs" />
     <Compile Include="Helpers\StringExtensions.cs" />
     <Compile Include="Helpers\StrUtil.cs" />
@@ -54,6 +58,7 @@
     <Compile Include="Model\Kdb4\IKdbTree.cs" />
     <Compile Include="Model\Kdb4\Kdb4TreeMetaData.cs" />
     <Compile Include="Model\Kdb4\Keys\IUserKey.cs" />
+    <Compile Include="Model\Kdb4\Keys\KcpKeyfile.cs" />
     <Compile Include="Model\Kdb4\Keys\KcpPassword.cs" />
     <Compile Include="Model\PwEnums.cs" />
     <Compile Include="Helpers\XmlEx.cs" />
@@ -66,7 +71,26 @@
     <Compile Include="Model\PwGroup.cs" />
     <Compile Include="Model\PwUuid.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Threading.Tasks">
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.16\lib\portable-net45+win8+wp8\Microsoft.Threading.Tasks.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions">
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.16\lib\portable-net45+win8+wp8\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="PCLStorage">
+      <HintPath>..\packages\PCLStorage.0.2.1-pre\lib\portable-net45+sl4+wp71+win8\PCLStorage.dll</HintPath>
+    </Reference>
+    <Reference Include="PCLStorage.Abstractions">
+      <HintPath>..\packages\PCLStorage.0.2.1-pre\lib\portable-net45+sl4+wp71+win8\PCLStorage.Abstractions.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.8\tools\Microsoft.Bcl.Build.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

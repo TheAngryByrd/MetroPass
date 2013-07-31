@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -55,5 +56,7 @@ namespace Metropass.Core.PCL.Helpers
 
             return sb.ToString();
         }
+
+  
     }
 }
