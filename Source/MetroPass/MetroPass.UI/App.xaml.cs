@@ -27,7 +27,7 @@ namespace MetroPass.UI
         private const string SupportUrl = "https://metropasswin8.uservoice.com";
 
         public static FontFamily NormalFont = new FontFamily("Segoe UI");
-        public static FontFamily PasswordFont = new FontFamily("Assets/Fonts/password.ttf#Password");
+        public static FontFamily PasswordFont = new FontFamily("/Assets/Fonts/password.ttf#Password");
 
         public App()
         {

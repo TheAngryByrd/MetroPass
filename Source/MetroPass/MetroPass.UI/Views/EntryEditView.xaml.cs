@@ -10,6 +10,10 @@ namespace MetroPass.UI.Views
         public EntryEditView()
         {
             this.InitializeComponent();
+            PasswordTextBox.FontFamily = App.PasswordFont;
+            ConfirmTextBox.FontFamily = App.PasswordFont;
+            PasswordSnapped.FontFamily = App.PasswordFont;
+            ConfirmSnapped.FontFamily = App.PasswordFont;
         }
 
         public void SetPasswordState(bool passwordsMatch)
@@ -30,24 +34,14 @@ namespace MetroPass.UI.Views
             get { return this.DataContext as EntryEditViewModel; }
         }
 
-        private void Password_GotFocus(object sender, RoutedEventArgs e)
+        private void PasswordBox_GotFocus(object sender, RoutedEventArgs e)
         {
-            PasswordTextBox.FontFamily = App.NormalFont;
+            ((TextBox)sender).FontFamily = App.NormalFont;
         }
 
-        private void Password_LostFocus(object sender, RoutedEventArgs e)
+        private void PasswordBox_LostFocus(object sender, RoutedEventArgs e)
         {
-            PasswordTextBox.FontFamily = App.PasswordFont;
-        }
-
-        private void ConfirmTextBox_GotFocus(object sender, RoutedEventArgs e)
-        {
-            ConfirmTextBox.FontFamily = App.NormalFont;
-        }
-
-        private void ConfirmTextBox_LostFocus(object sender, RoutedEventArgs e)
-        {
-            ConfirmTextBox.FontFamily = App.PasswordFont;
+            ((TextBox)sender).FontFamily = App.PasswordFont;
         }
     }
 }
