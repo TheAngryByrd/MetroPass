@@ -73,7 +73,7 @@ namespace MetroPass.Core.Services.Kdb4.Writer
                 databaseData.MasterKey.PercentComplete);
             var aesKey = await keyGenerator.GenerateHashedKeyAsync(kdb4File.pbMasterSeed, kdb4File.pbTransformSeed, (int)databaseData.KeyEncryptionRounds);
 
-            var encrypted = EncryptDatabase(compressed.AsBuffer(), aesKey.AsBuffer()).AsBytes();
+            var encrypted = EncryptDatabase(compressed, aesKey);
             datawriter.WriteBytes(encrypted);
 
             var written = datawriter.DetachBuffer();
@@ -97,11 +97,11 @@ namespace MetroPass.Core.Services.Kdb4.Writer
             return inputStream;
         }
 
-        public IBuffer EncryptDatabase(IBuffer source, IBuffer aesKey)
+        public byte[] EncryptDatabase(byte[] source, byte[] aesKey)
         {
             var symKeyProvider = SymmetricKeyAlgorithmProvider.OpenAlgorithm(SymmetricAlgorithmNames.AesCbcPkcs7);
-            var aesCryptoKey = symKeyProvider.CreateSymmetricKey(aesKey);
-            return CryptographicEngine.Encrypt(aesCryptoKey, source, kdb4File.pbEncryptionIV.AsBuffer());
+            var aesCryptoKey = symKeyProvider.CreateSymmetricKey(aesKey.AsBuffer());
+            return CryptographicEngine.Encrypt(aesCryptoKey, source.AsBuffer(), kdb4File.pbEncryptionIV.AsBuffer()).AsBytes();
         }
     }
 }
