@@ -56,7 +56,8 @@ namespace MetroPass.Core.Services.Kdb4.Writer
             await outStream.WriteAsync(kdb4File.pbStreamStartBytes, 0, (int)kdb4File.pbStreamStartBytes.Length);
             var configuredStream = ConfigureStream(outStream);
 
-            var data = new Kdb4Persister(new CryptoRandomStream(CrsAlgorithm.Salsa20, kdb4File.pbProtectedStreamKey, new SHA256HasherRT())).Persist(databaseData.Tree, hashOfHeader).AsBytes();
+            var persister = new Kdb4Persister(new CryptoRandomStream(CrsAlgorithm.Salsa20, kdb4File.pbProtectedStreamKey, new SHA256HasherRT()));
+            var data = persister.Persist(databaseData.Tree, hashOfHeader.AsBytes());
             await configuredStream.WriteAsync(data, 0, data.Length);
 
             configuredStream.Dispose();

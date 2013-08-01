@@ -1,12 +1,10 @@
-﻿using Framework;
-using System;
+﻿using System;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml;
 using Metropass.Core.PCL.Cipher;
 using Metropass.Core.PCL.Model.Kdb4;
-using Windows.Storage.Streams;
 using System.Xml.Linq;
 
 namespace MetroPass.Core.Services.Kdb4.Writer
@@ -20,7 +18,7 @@ namespace MetroPass.Core.Services.Kdb4.Writer
             this.cryptoRandomStream = stream;
         }
 
-        public IBuffer Persist(IKdbTree tree, IBuffer hashOfHeader)
+        public byte[] Persist(IKdbTree tree, byte[] hashOfHeader)
         {
             var metaElement = tree.Document.Descendants("Meta").FirstOrDefault();
             if (metaElement == null)
@@ -34,7 +32,7 @@ namespace MetroPass.Core.Services.Kdb4.Writer
                 headerHashElement = new XElement("HeaderHash");
                 metaElement.Add(headerHashElement);
             }
-            headerHashElement.Value = Convert.ToBase64String(hashOfHeader.AsBytes());
+            headerHashElement.Value = Convert.ToBase64String(hashOfHeader);
             var root = tree.Document.Descendants("Root").First();
 
             EncodeXml(root);
@@ -46,7 +44,7 @@ namespace MetroPass.Core.Services.Kdb4.Writer
                 tree.Document.WriteTo(xw);
             }
 
-            return ms.ToArray().AsBuffer() ;         
+            return ms.ToArray() ;         
         }
 
         public void EncodeXml(XElement root)

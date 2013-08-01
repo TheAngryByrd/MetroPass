@@ -5,6 +5,7 @@ using Metropass.Core.PCL.Cipher;
 using Metropass.Core.PCL.Model.Kdb4;
 using Windows.Storage.Streams;
 using Metropass.Core.PCL;
+using System.IO;
 
 namespace MetroPass.Core.Services.Kdb4.Writer
 {
@@ -13,6 +14,8 @@ namespace MetroPass.Core.Services.Kdb4.Writer
 
         public void WriteHeaderField(IDataWriter writer, Kdb4HeaderFieldID headerId, IBuffer data)
         {
+            var x = new BinaryWriter(new MemoryStream());
+            
             writer.WriteByte((byte)headerId);
             writer.WriteUInt16((ushort)data.Length);
             writer.WriteBuffer(data);

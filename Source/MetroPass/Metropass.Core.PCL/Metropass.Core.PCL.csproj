@@ -69,6 +69,7 @@
     <Compile Include="Model\Kdb4\Keys\KcpPassword.cs" />
     <Compile Include="Model\Kdb4\Keys\KeyGenerator.cs" />
     <Compile Include="Model\Kdb4\Reader\IKdbReader.cs" />
+    <Compile Include="Model\Kdb4\Writer\Kdb4Persister.cs" />
     <Compile Include="Model\PwDatabase.cs" />
     <Compile Include="Model\PwEnums.cs" />
     <Compile Include="Helpers\XmlEx.cs" />
