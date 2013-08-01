@@ -14,6 +14,8 @@ using Windows.Security.Cryptography;
 using Windows.Security.Cryptography.Core;
 using Windows.Storage;
 using Windows.Storage.Streams;
+using Metropass.Core.PCL.Model.Kdb4.Keys;
+using MetroPass.WinRT.Infrastructure.Encryption;
 
 namespace MetroPass.Core.Services.Kdb4.Writer
 {
@@ -58,8 +60,15 @@ namespace MetroPass.Core.Services.Kdb4.Writer
 
             configuredStream.Dispose();
             var compressed = outStream.ToArray();
-            var aesKey = await databaseData.MasterKey.GenerateHashedKeyAsync(kdb4File.pbMasterSeed, kdb4File.pbTransformSeed, databaseData.KeyEncryptionRounds);
-            var encrypted = EncryptDatabase(compressed.AsBuffer(), aesKey).AsBytes();
+
+            var keyGenerator = new KeyGenerator(
+                new SHA256HasherRT(), 
+                new MultiThreadedBouncyCastleCrypto(CryptoAlgoritmType.AES_ECB), 
+                databaseData.MasterKey, 
+                databaseData.MasterKey.PercentComplete);
+            var aesKey = await keyGenerator.GenerateHashedKeyAsync(kdb4File.pbMasterSeed.AsBytes(), kdb4File.pbTransformSeed.AsBytes(), (int)databaseData.KeyEncryptionRounds);
+
+            var encrypted = EncryptDatabase(compressed.AsBuffer(), aesKey.AsBuffer()).AsBytes();
             datawriter.WriteBytes(encrypted);
 
             var written = datawriter.DetachBuffer();

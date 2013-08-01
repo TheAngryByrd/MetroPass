@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace MetroPass.Core.Interfaces
 {
-    internal interface IEncryptionEngine
+    public interface IEncryptionEngine
     {
         CryptoAlgoritmType AlgorithmType { get; set; }
 

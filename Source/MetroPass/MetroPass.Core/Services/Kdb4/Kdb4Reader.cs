@@ -13,6 +13,8 @@ using Metropass.Core.PCL.Model.Kdb4;
 using Windows.Storage.Streams;
 using Windows.Security.Cryptography.Core;
 using MetroPass.Core.Interfaces;
+using Metropass.Core.PCL.Model.Kdb4.Keys;
+using MetroPass.WinRT.Infrastructure.Encryption;
 
 namespace MetroPass.Core.Services
 {
@@ -94,10 +96,15 @@ namespace MetroPass.Core.Services
 
         public async Task<IBuffer> GenerateAESKey()
         {
-           
-            var aesKey = await file.pwDatabase.MasterKey.GenerateHashedKeyAsync(file.pbMasterSeed, file.pbTransformSeed, file.pwDatabase.KeyEncryptionRounds);
-
-            return aesKey;
+            var pwDatabase = file.pwDatabase;
+            var keyGenerator = new KeyGenerator(
+               new SHA256HasherRT(),
+               new MultiThreadedBouncyCastleCrypto(CryptoAlgoritmType.AES_ECB),
+               pwDatabase.MasterKey,
+               pwDatabase.MasterKey.PercentComplete);
+            var aesKey = await keyGenerator.GenerateHashedKeyAsync(file.pbMasterSeed.AsBytes(), file.pbTransformSeed.AsBytes(), (int)pwDatabase.KeyEncryptionRounds);
+                     
+            return aesKey.AsBuffer();
         }
         public void ReadHeader(IDataReader reader)
         {
