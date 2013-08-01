@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Metropass.Core.PCL.Hashing;
 using MetroPass.Core.Interfaces;
-using MetroPass.Core.Model.Keys;
+using Metropass.Core.PCL.Model.Kdb4.Keys;
 
 namespace Metropass.Core.PCL.Model.Kdb4.Keys
 {

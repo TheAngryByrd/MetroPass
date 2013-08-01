@@ -10,10 +10,10 @@ using MetroPass.WinRT.Infrastructure.Hashing;
 using Metropass.Core.PCL.Hashing;
 using Metropass.Core.PCL.Model;
 using Metropass.Core.PCL.Model.Kdb4;
+using Metropass.Core.PCL.Model.Kdb4.Keys;
 using Windows.Storage.Streams;
 using Windows.Security.Cryptography.Core;
 using MetroPass.Core.Interfaces;
-using Metropass.Core.PCL.Model.Kdb4.Keys;
 using MetroPass.WinRT.Infrastructure.Encryption;
 
 namespace MetroPass.Core.Services

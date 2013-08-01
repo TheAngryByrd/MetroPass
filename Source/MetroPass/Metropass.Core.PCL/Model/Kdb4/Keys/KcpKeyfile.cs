@@ -3,14 +3,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Metropass.Core.PCL.Helpers;
-using Metropass.Core.PCL.Model.Kdb4.Keys;
 using System.Xml.Linq;
-using System.Xml;
 using PCLStorage;
 using System.IO;
 using Metropass.Core.PCL.Hashing;
 
-namespace MetroPass.Core.Model.Keys
+namespace Metropass.Core.PCL.Model.Kdb4.Keys
 {
     public class KcpKeyFile : IUserKey
     {

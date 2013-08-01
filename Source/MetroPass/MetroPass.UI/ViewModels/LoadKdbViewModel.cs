@@ -5,7 +5,6 @@ using System.Net;
 using System.Security;
 using System.Threading.Tasks;
 using Caliburn.Micro;
-using MetroPass.Core.Model.Keys;
 using MetroPass.UI.DataModel;
 using MetroPass.UI.Services;
 using MetroPass.UI.Views;

@@ -1,8 +1,6 @@
-﻿using Framework;
-using MetroPass.Core.Interfaces;
+﻿using MetroPass.Core.Interfaces;
 using MetroPass.Core.Model;
 using MetroPass.Core.Model.Kdb4;
-using MetroPass.Core.Model.Keys;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;

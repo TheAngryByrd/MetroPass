@@ -1,18 +1,12 @@
-﻿using MetroPass.Core.Interfaces;
-using MetroPass.Core.Model;
-using MetroPass.Core.Model.Kdb4;
-using MetroPass.Core.Model.Keys;
+﻿using MetroPass.Core.Model;
 using MetroPass.Core.Services;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using MetroPass.WinRT.Infrastructure.Hashing;
 using Metropass.Core.PCL.Model.Kdb4.Keys;
 using Windows.ApplicationModel;
 using Windows.Storage;
-using Windows.Storage.Streams;
 using PCLStorage;
 
 namespace MetroPass.Core.Tests.Services

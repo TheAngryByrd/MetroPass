@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using Metropass.Core.PCL.Model.Kdb4.Keys;
 
-namespace MetroPass.Core.Model.Keys
+namespace Metropass.Core.PCL.Model.Kdb4.Keys
 {
     public class CompositeKey
     {

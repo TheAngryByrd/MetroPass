@@ -1,9 +1,8 @@
 ﻿using System.Text;
 using System.Threading.Tasks;
-using Metropass.Core.PCL.Model.Kdb4.Keys;
 using Metropass.Core.PCL.Hashing;
 
-namespace MetroPass.Core.Model.Keys
+namespace Metropass.Core.PCL.Model.Kdb4.Keys
 {
     public class KcpPassword : IUserKey
     {
