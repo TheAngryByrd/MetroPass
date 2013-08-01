@@ -1,8 +1,7 @@
-﻿using Metropass.Core.PCL.Model;
-using Metropass.Core.PCL.Model.Kdb4;
+﻿using Metropass.Core.PCL.Model.Kdb4;
 using Metropass.Core.PCL.Model.Kdb4.Keys;
 
-namespace MetroPass.Core.Model
+namespace Metropass.Core.PCL.Model
 {
     public class PwDatabase
     {

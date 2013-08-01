@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Metropass.Core.PCL.Model;
 using Windows.Storage.Streams;
 
 namespace MetroPass.Core.Model.Kdb4

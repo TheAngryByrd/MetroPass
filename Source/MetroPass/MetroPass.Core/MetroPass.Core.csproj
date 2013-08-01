@@ -113,8 +113,6 @@
     <Compile Include="Interfaces\IKdbWriter.cs" />
     <Compile Include="Model\Kdb4\Kdb4File.cs" />
     <Compile Include="Model\Kdb4\Kdb4Tree.cs" />
-    <Compile Include="Model\Keys\CompositeKey.cs" />
-    <Compile Include="Model\PwDatabase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\ProtectedBuffer.cs" />
     <Compile Include="Services\Kdb4\Kdb4Parser.cs" />

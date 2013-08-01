@@ -1,5 +1,5 @@
-﻿using MetroPass.Core.Model;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using Metropass.Core.PCL.Model;
 using Windows.Storage;
 
 namespace MetroPass.Core.Interfaces

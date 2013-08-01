@@ -1,7 +1,6 @@
 ﻿using System.Net;
 using Caliburn.Micro;
 using Framework;
-using MetroPass.Core.Model;
 using MetroPass.Core.Services;
 using MetroPass.UI.DataModel;
 using MetroPass.UI.Services;
