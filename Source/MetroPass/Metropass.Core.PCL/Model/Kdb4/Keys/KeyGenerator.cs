@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Metropass.Core.PCL.Encryption;
 using Metropass.Core.PCL.Hashing;
-using MetroPass.Core.Interfaces;
 using Metropass.Core.PCL.Model.Kdb4.Keys;
 
 namespace Metropass.Core.PCL.Model.Kdb4.Keys

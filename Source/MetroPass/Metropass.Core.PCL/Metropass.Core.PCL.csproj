@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="Cipher\CryptoRandomStream.cs" />
     <Compile Include="Cipher\Salsa20Cipher.cs" />
+    <Compile Include="Compression\IGZipStreamFactory.cs" />
     <Compile Include="Encryption\EncryptionEngineBase.cs" />
     <Compile Include="Exceptions\GroupNotFoundException.cs" />
     <Compile Include="Hashing\HashedBlockStream.cs" />
@@ -57,6 +58,8 @@
     <Compile Include="Helpers\MemUtil.cs" />
     <Compile Include="Model\Kdb4\IKdbTree.cs" />
     <Compile Include="Model\Kdb4\Kdb4File.cs" />
+    <Compile Include="Model\Kdb4\Reader\Kdb4Parser.cs" />
+    <Compile Include="Model\Kdb4\Reader\Kdb4Reader.cs" />
     <Compile Include="Model\Kdb4\Kdb4Tree.cs" />
     <Compile Include="Model\Kdb4\Kdb4TreeMetaData.cs" />
     <Compile Include="Model\Kdb4\Keys\CompositeKey.cs" />

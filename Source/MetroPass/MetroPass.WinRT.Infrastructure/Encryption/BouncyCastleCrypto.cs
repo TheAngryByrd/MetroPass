@@ -1,5 +1,5 @@
 ﻿using System;
-using MetroPass.Core.Interfaces;
+using Metropass.Core.PCL.Encryption;
 using Org.BouncyCastle.Crypto;
 using Org.BouncyCastle.Crypto.Parameters;
 using Org.BouncyCastle.Security;
@@ -7,11 +7,13 @@ using System.Threading.Tasks;
 
 namespace MetroPass.WinRT.Infrastructure.Encryption
 {
-    public class BouncyCastleCrypto : EncryptionEngineBase
+    public class BouncyCastleCrypto : BouncyCastleCryptoBase
     {
         public BouncyCastleCrypto(CryptoAlgoritmType algorithmType) : base(algorithmType)
         {
         }
+
+        public CryptoAlgoritmType AlgorithmType { get; set; }
 
         public async override Task<byte[]> Encrypt(byte[] data, byte[] key, byte[] iv, double rounds, IProgress<double> percentComplete)
         {
@@ -53,21 +55,5 @@ namespace MetroPass.WinRT.Infrastructure.Encryption
         
         }
 
-        private IBufferedCipher GetCipher(bool encrypt, byte[] key)
-        {
-            IBufferedCipher cipher = null;
-            
-            switch (AlgorithmType)
-            {
-                case CryptoAlgoritmType.AES_ECB:
-                    cipher = CipherUtilities.GetCipher("AES/ECB/NOPADDING");
-                    break;
-                case CryptoAlgoritmType.AES_CBC_PKCS7:
-                    break;
-            }
-            cipher.Init(encrypt, new KeyParameter(key));
-
-            return cipher;
-        }
     }
 }

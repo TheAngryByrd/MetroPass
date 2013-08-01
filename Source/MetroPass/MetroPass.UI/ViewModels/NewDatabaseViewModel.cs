@@ -12,6 +12,7 @@ using MetroPass.WinRT.Infrastructure.Hashing;
 using Metropass.Core.PCL.Model;
 using Metropass.Core.PCL.Model.Kdb4.Keys;
 using Windows.Storage.Pickers;
+using Metropass.Core.PCL.Model.Kdb4.Reader;
 
 namespace MetroPass.UI.ViewModels
 {

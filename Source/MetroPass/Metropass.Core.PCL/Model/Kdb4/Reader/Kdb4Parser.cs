@@ -5,10 +5,8 @@ using System.Text;
 using System.Xml;
 using System.Xml.Linq;
 using Metropass.Core.PCL.Cipher;
-using Metropass.Core.PCL.Model;
-using Metropass.Core.PCL.Model.Kdb4;
 
-namespace MetroPass.Core.Services
+namespace Metropass.Core.PCL.Model.Kdb4.Reader
 {
     public class Kdb4Parser
     {

@@ -3,13 +3,17 @@ using MetroPass.Core.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Metropass.Core.PCL.Encryption;
 using Metropass.Core.PCL.Model;
 using Metropass.Core.PCL.Model.Kdb4;
 using Metropass.Core.PCL.Model.Kdb4.Keys;
 using Windows.Storage;
-using Windows.Storage.Streams;
 using Metropass.Core.PCL;
 using System.IO;
+using MetroPass.WinRT.Infrastructure.Encryption;
+using MetroPass.WinRT.Infrastructure.Hashing;
+using Metropass.Core.PCL.Model.Kdb4.Reader;
+using MetroPass.WinRT.Infrastructure.Compression;
 
 namespace MetroPass.Core.Services
 {
@@ -34,7 +38,11 @@ namespace MetroPass.Core.Services
             {
                   var kdb4File = new Kdb4File(pwDatabase);
 
-                reader = new Kdb4Reader(kdb4File);      
+                  reader = new Kdb4Reader(kdb4File, 
+                      new WinRTCrypto(CryptoAlgoritmType.AES_CBC_PKCS7), 
+                      new MultiThreadedBouncyCastleCrypto(CryptoAlgoritmType.AES_ECB), 
+                      new SHA256HasherRT(),
+                      new GZipFactoryRT());      
             }
             else
             {

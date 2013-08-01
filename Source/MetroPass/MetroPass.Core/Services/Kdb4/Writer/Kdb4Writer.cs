@@ -6,6 +6,7 @@ using Framework;
 using MetroPass.Core.Interfaces;
 using MetroPass.WinRT.Infrastructure.Hashing;
 using Metropass.Core.PCL.Cipher;
+using Metropass.Core.PCL.Encryption;
 using Metropass.Core.PCL.Hashing;
 using Metropass.Core.PCL.Model;
 using Metropass.Core.PCL.Model.Kdb4;
@@ -15,6 +16,7 @@ using Windows.Security.Cryptography.Core;
 using Windows.Storage;
 using Windows.Storage.Streams;
 using MetroPass.WinRT.Infrastructure.Encryption;
+using Metropass.Core.PCL.Model.Kdb4.Reader;
 
 namespace MetroPass.Core.Services.Kdb4.Writer
 {
