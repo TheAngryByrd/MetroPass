@@ -21,6 +21,11 @@ namespace MetroPass.Core.Services.Kdb4.Writer
             writer.WriteBuffer(data);
         }
 
+        private void Write(IDataWriter dataWriter, byte[] bytes)
+        {
+            dataWriter.WriteBytes(bytes);
+        }
+
         public void WriteHeaderField(IDataWriter writer, Kdb4HeaderFieldID headerId, byte[] data)
         {
             WriteHeaderField(writer, headerId, data.AsBuffer());
@@ -29,9 +34,9 @@ namespace MetroPass.Core.Services.Kdb4.Writer
         public async Task WriteHeaders(IDataWriter dataWriter, Kdb4File file)
         {
             //Write Signature and Version
-            dataWriter.WriteBytes(BitConverter.GetBytes(KdbConstants.FileSignature1));
-            dataWriter.WriteBytes(BitConverter.GetBytes(KdbConstants.FileSignature2));
-            dataWriter.WriteBytes(BitConverter.GetBytes(KdbConstants.Kdb4Version));
+            Write(dataWriter,BitConverter.GetBytes(KdbConstants.FileSignature1));
+            Write(dataWriter,BitConverter.GetBytes(KdbConstants.FileSignature2));
+            Write(dataWriter, BitConverter.GetBytes(KdbConstants.Kdb4Version));
 
             WriteHeaderField(dataWriter, Kdb4HeaderFieldID.CipherID, file.pwDatabase.DataCipherUuid.UuidBytes);
             var compressionId = (uint) file.pwDatabase.Compression;
@@ -45,10 +50,6 @@ namespace MetroPass.Core.Services.Kdb4.Writer
             var crsAlg = (uint)CrsAlgorithm.Salsa20;
             WriteHeaderField(dataWriter, Kdb4HeaderFieldID.InnerRandomStreamID, BitConverter.GetBytes(crsAlg));
             WriteHeaderField(dataWriter, Kdb4HeaderFieldID.EndOfHeader, new byte[] { (byte)'\r', (byte)'\n', (byte)'\r', (byte)'\n' });
-
-
-
- 
         }
 
     }
