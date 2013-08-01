@@ -25,7 +25,7 @@ namespace MetroPass.Core.Services
             file = kdb4File;
         }
 
-        public async Task<IKdbTree> Load(IDataReader source)
+        public async Task<IKdbTree> Load(Stream source)
         {
         
 
@@ -34,7 +34,7 @@ namespace MetroPass.Core.Services
        
             ReadHeader(source);
             var aesKey = await GenerateAESKey();
-            var decryptedDatabase = DecryptDatabase(source.DetachBuffer(), aesKey);
+            var decryptedDatabase = DecryptDatabase(source.ToArray().AsBuffer(), aesKey);
             var decompressEdDatabase = ConfigureStream(decryptedDatabase);
             var crypto = GenerateCryptoRandomStream();
             var parser = new Kdb4Parser(crypto);
@@ -77,8 +77,7 @@ namespace MetroPass.Core.Services
             }
             catch (Exception e)
             {
-                throw new SecurityException("There was a problem opening your database", e);
-               
+                throw new SecurityException("There was a problem opening your database", e);               
             }
            
             var databaseReader = DataReader.FromBuffer(decryptedDatabase);
@@ -105,7 +104,7 @@ namespace MetroPass.Core.Services
                      
             return aesKey.AsBuffer();
         }
-        public void ReadHeader(IDataReader reader)
+        public void ReadHeader(Stream reader)
         {
             while (true)
             {
@@ -114,9 +113,9 @@ namespace MetroPass.Core.Services
 
         }
 
-        public bool ReadHeaderField(IDataReader reader)
+        public bool ReadHeaderField(Stream reader)
         {
-            byte btFieldID = reader.ReadByte();
+            byte btFieldID = Convert.ToByte(reader.ReadByte());
             var btSize = new byte[2];
             reader.ReadBytes(btSize);
 

@@ -57,6 +57,7 @@
     <Compile Include="Helpers\MemUtil.cs" />
     <Compile Include="Model\Kdb4\IKdbTree.cs" />
     <Compile Include="Model\Kdb4\Kdb4File.cs" />
+    <Compile Include="Model\Kdb4\Kdb4Tree.cs" />
     <Compile Include="Model\Kdb4\Kdb4TreeMetaData.cs" />
     <Compile Include="Model\Kdb4\Keys\CompositeKey.cs" />
     <Compile Include="Model\Kdb4\Keys\IKeyGenerator.cs" />
@@ -64,6 +65,7 @@
     <Compile Include="Model\Kdb4\Keys\KcpKeyfile.cs" />
     <Compile Include="Model\Kdb4\Keys\KcpPassword.cs" />
     <Compile Include="Model\Kdb4\Keys\KeyGenerator.cs" />
+    <Compile Include="Model\Kdb4\Reader\IKdbReader.cs" />
     <Compile Include="Model\PwDatabase.cs" />
     <Compile Include="Model\PwEnums.cs" />
     <Compile Include="Helpers\XmlEx.cs" />

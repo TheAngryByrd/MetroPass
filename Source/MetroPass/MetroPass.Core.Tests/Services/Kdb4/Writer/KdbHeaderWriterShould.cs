@@ -70,7 +70,7 @@ namespace MetroPass.Core.Tests.Services.Kdb4.Writer
 
             await reader.LoadAsync((uint)randomStream.Size);
             var factory = new KdbReaderFactory();
-            var headerinfo = factory.ReadVersionInfo(reader);
+            var headerinfo = factory.ReadVersionInfo(reader.AsStream());
         }
 
 

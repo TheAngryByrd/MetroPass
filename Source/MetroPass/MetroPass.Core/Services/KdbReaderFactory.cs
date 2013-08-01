@@ -1,4 +1,5 @@
-﻿using MetroPass.Core.Interfaces;
+﻿using Framework;
+using MetroPass.Core.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -8,6 +9,7 @@ using Metropass.Core.PCL.Model.Kdb4.Keys;
 using Windows.Storage;
 using Windows.Storage.Streams;
 using Metropass.Core.PCL;
+using System.IO;
 
 namespace MetroPass.Core.Services
 {
@@ -20,8 +22,9 @@ namespace MetroPass.Core.Services
  
         public async Task<PwDatabase> LoadAsync(IStorageFile kdbDatabase, IList<IUserKey> userKeys, IProgress<double> percentComplete)
         {
-            
-            var kdbDataReader =  DataReader.FromBuffer(await FileIO.ReadBufferAsync(kdbDatabase));
+            var file = await FileIO.ReadBufferAsync(kdbDatabase);
+           // var kdbDataReader =  DataReader.FromBuffer();
+            MemoryStream kdbDataReader = new MemoryStream(file.AsBytes());
             var versionInfo = ReadVersionInfo(kdbDataReader);
             IKdbReader reader = null;
             var compositeKey = new CompositeKey(userKeys, percentComplete);
@@ -47,11 +50,13 @@ namespace MetroPass.Core.Services
             return versionInfo.FileSignature1 == KdbConstants.FileSignature1 && versionInfo.FileSignature2 == KdbConstants.FileSignature2;
         }
 
-        public VersionInfo ReadVersionInfo(IDataReader kdbReader)
+        public VersionInfo ReadVersionInfo(Stream kdbReader)
         {
             var versionInfo = new VersionInfo();
             var readerBytes = new byte[4];
             
+            
+
             kdbReader.ReadBytes(readerBytes);
             versionInfo.FileSignature1 = BitConverter.ToUInt32(readerBytes, 0);
             kdbReader.ReadBytes(readerBytes);

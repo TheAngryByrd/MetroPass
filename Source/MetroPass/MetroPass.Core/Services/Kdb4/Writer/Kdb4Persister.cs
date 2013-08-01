@@ -1,12 +1,8 @@
-﻿using MetroPass.Core.Model;
-using MetroPass.Core.Model.Kdb4;
-using Framework;
+﻿using Framework;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 using Metropass.Core.PCL.Cipher;
 using Metropass.Core.PCL.Model.Kdb4;

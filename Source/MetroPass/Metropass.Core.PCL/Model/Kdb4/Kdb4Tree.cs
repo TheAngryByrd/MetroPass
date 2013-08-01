@@ -2,10 +2,8 @@
 using System.Linq;
 using System.Xml.Linq;
 using Metropass.Core.PCL.Exceptions;
-using Metropass.Core.PCL.Model;
-using Metropass.Core.PCL.Model.Kdb4;
 
-namespace MetroPass.Core.Model.Kdb4
+namespace Metropass.Core.PCL.Model.Kdb4
 {
     public class Kdb4Tree : IKdbTree
     {

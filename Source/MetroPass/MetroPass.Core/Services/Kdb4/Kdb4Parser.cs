@@ -1,5 +1,4 @@
-﻿using MetroPass.Core.Model.Kdb4;
-using System;
+﻿using System;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -7,6 +6,7 @@ using System.Xml;
 using System.Xml.Linq;
 using Metropass.Core.PCL.Cipher;
 using Metropass.Core.PCL.Model;
+using Metropass.Core.PCL.Model.Kdb4;
 
 namespace MetroPass.Core.Services
 {
