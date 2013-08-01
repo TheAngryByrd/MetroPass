@@ -1,37 +1,27 @@
-﻿using Framework;
-using System;
-using System.Threading.Tasks;
+﻿using System;
 using Metropass.Core.PCL.Cipher;
-using Metropass.Core.PCL.Model.Kdb4;
-using Windows.Storage.Streams;
-using Metropass.Core.PCL;
 using System.IO;
 
-namespace MetroPass.Core.Services.Kdb4.Writer
+namespace Metropass.Core.PCL.Model.Kdb4.Writer
 {
     public class Kdb4HeaderWriter
     {
 
-        public void WriteHeaderField(IDataWriter writer, Kdb4HeaderFieldID headerId, IBuffer data)
+        public void WriteHeaderField(BinaryWriter writer, Kdb4HeaderFieldID headerId, byte[] data)
         {
             var x = new BinaryWriter(new MemoryStream());
             
-            writer.WriteByte((byte)headerId);
-            writer.WriteUInt16((ushort)data.Length);
-            writer.WriteBuffer(data);
+            writer.Write((byte)headerId);
+            writer.Write((ushort)data.Length);
+            Write(writer, data);
         }
 
-        private void Write(IDataWriter dataWriter, byte[] bytes)
+        private void Write(BinaryWriter dataWriter, byte[] bytes)
         {
-            dataWriter.WriteBytes(bytes);
+            dataWriter.Write(bytes);
         }
 
-        public void WriteHeaderField(IDataWriter writer, Kdb4HeaderFieldID headerId, byte[] data)
-        {
-            WriteHeaderField(writer, headerId, data.AsBuffer());
-        }
-
-        public async Task WriteHeaders(IDataWriter dataWriter, Kdb4File file)
+        public void WriteHeaders(BinaryWriter dataWriter, Kdb4File file)
         {
             //Write Signature and Version
             Write(dataWriter,BitConverter.GetBytes(KdbConstants.FileSignature1));

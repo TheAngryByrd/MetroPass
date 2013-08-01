@@ -113,7 +113,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\ProtectedBuffer.cs" />
     <Compile Include="Services\KdbReaderFactory.cs" />
-    <Compile Include="Services\Kdb4\Writer\Kdb4HeaderWriter.cs" />
     <Compile Include="Services\Kdb4\Writer\Kdb4Writer.cs" />
     <Compile Include="Services\KdbWriterFactory.cs" />
   </ItemGroup>

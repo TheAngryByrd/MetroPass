@@ -11,6 +11,7 @@ using Metropass.Core.PCL.Hashing;
 using Metropass.Core.PCL.Model;
 using Metropass.Core.PCL.Model.Kdb4;
 using Metropass.Core.PCL.Model.Kdb4.Keys;
+using Metropass.Core.PCL.Model.Kdb4.Writer;
 using Windows.Security.Cryptography;
 using Windows.Security.Cryptography.Core;
 using Windows.Storage;
@@ -36,20 +37,22 @@ namespace MetroPass.Core.Services.Kdb4.Writer
             kdb4File.pbEncryptionIV = CryptographicBuffer.GenerateRandom(16).AsBytes();
             kdb4File.pbProtectedStreamKey = CryptographicBuffer.GenerateRandom(32).AsBytes();
             kdb4File.pbStreamStartBytes = CryptographicBuffer.GenerateRandom(32).AsBytes();
+
+            MemoryStream memStream = new MemoryStream();
+            BinaryWriter writer = new BinaryWriter(memStream);
             
+            //InMemoryRandomAccessStream memoryStream = new InMemoryRandomAccessStream();
+           // var datawriter = new DataWriter(memoryStream);
+           // datawriter.ByteOrder = ByteOrder.LittleEndian;
+
+            _headerWriter.WriteHeaders(writer, kdb4File);
+
+
+
+           var header = memStream.ToArray().AsBuffer();
+           var hashOfHeader = SHA256Hasher.Hash(header);
             
-            InMemoryRandomAccessStream memoryStream = new InMemoryRandomAccessStream();
-            var datawriter = new DataWriter(memoryStream);
-            datawriter.ByteOrder = ByteOrder.LittleEndian;
-
-           await _headerWriter.WriteHeaders(datawriter, kdb4File);
-
-
-
-           var header = datawriter.DetachBuffer();
-           var hashOfHeader = SHA256Hasher.Hash( header);
-            
-           datawriter = new DataWriter();
+           var datawriter = new DataWriter();
            datawriter.WriteBuffer(header);
 
             var outStream = new MemoryStream();
