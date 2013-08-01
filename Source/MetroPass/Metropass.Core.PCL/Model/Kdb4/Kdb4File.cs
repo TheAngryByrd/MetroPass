@@ -1,8 +1,6 @@
 ﻿using Metropass.Core.PCL.Cipher;
-using Metropass.Core.PCL.Model;
-using Windows.Storage.Streams;
 
-namespace MetroPass.Core.Model.Kdb4
+namespace Metropass.Core.PCL.Model.Kdb4
 {
     public enum Kdb4Format
     {
@@ -23,22 +21,22 @@ namespace MetroPass.Core.Model.Kdb4
 
         public PwDatabase pwDatabase;
 
-        public IBuffer pbMasterSeed { get; set; }
+        public byte[] pbMasterSeed { get; set; }
 
         public Kdb4File(PwDatabase pwDatabase)
         {
             this.pwDatabase = pwDatabase;
         }
 
-        public IBuffer pbEncryptionIV { get; set; }
+        public byte[] pbEncryptionIV { get; set; }
 
-        public IBuffer pbProtectedStreamKey { get; set; }
+        public byte[] pbProtectedStreamKey { get; set; }
 
-        public IBuffer pbStreamStartBytes { get; set; }
+        public byte[] pbStreamStartBytes { get; set; }
 
         public CrsAlgorithm craInnerRandomStream { get; set; }
 
-        public IBuffer pbTransformSeed { get; set; }
+        public byte[] pbTransformSeed { get; set; }
 
 
     }

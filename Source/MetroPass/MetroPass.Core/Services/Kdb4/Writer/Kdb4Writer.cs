@@ -4,11 +4,11 @@ using System.IO.Compression;
 using System.Threading.Tasks;
 using Framework;
 using MetroPass.Core.Interfaces;
-using MetroPass.Core.Model.Kdb4;
 using MetroPass.WinRT.Infrastructure.Hashing;
 using Metropass.Core.PCL.Cipher;
 using Metropass.Core.PCL.Hashing;
 using Metropass.Core.PCL.Model;
+using Metropass.Core.PCL.Model.Kdb4;
 using Metropass.Core.PCL.Model.Kdb4.Keys;
 using Windows.Security.Cryptography;
 using Windows.Security.Cryptography.Core;
@@ -29,11 +29,11 @@ namespace MetroPass.Core.Services.Kdb4.Writer
         public async Task Write(PwDatabase databaseData, Windows.Storage.IStorageFile databaseFile)
         {
              kdb4File = new Kdb4File(databaseData);
-            kdb4File.pbMasterSeed = CryptographicBuffer.GenerateRandom(32);
-            kdb4File.pbTransformSeed = CryptographicBuffer.GenerateRandom(32);
-            kdb4File.pbEncryptionIV = CryptographicBuffer.GenerateRandom(16);
-            kdb4File.pbProtectedStreamKey = CryptographicBuffer.GenerateRandom(32);
-            kdb4File.pbStreamStartBytes = CryptographicBuffer.GenerateRandom(32);
+            kdb4File.pbMasterSeed = CryptographicBuffer.GenerateRandom(32).AsBytes();
+            kdb4File.pbTransformSeed = CryptographicBuffer.GenerateRandom(32).AsBytes();
+            kdb4File.pbEncryptionIV = CryptographicBuffer.GenerateRandom(16).AsBytes();
+            kdb4File.pbProtectedStreamKey = CryptographicBuffer.GenerateRandom(32).AsBytes();
+            kdb4File.pbStreamStartBytes = CryptographicBuffer.GenerateRandom(32).AsBytes();
             
             
             InMemoryRandomAccessStream memoryStream = new InMemoryRandomAccessStream();
@@ -51,10 +51,10 @@ namespace MetroPass.Core.Services.Kdb4.Writer
            datawriter.WriteBuffer(header);
 
             var outStream = new MemoryStream();
-            await outStream.WriteAsync(kdb4File.pbStreamStartBytes.AsBytes(), 0, (int)kdb4File.pbStreamStartBytes.Length);
+            await outStream.WriteAsync(kdb4File.pbStreamStartBytes, 0, (int)kdb4File.pbStreamStartBytes.Length);
             var configuredStream = ConfigureStream(outStream);
 
-            var data = new Kdb4Persister(new CryptoRandomStream(CrsAlgorithm.Salsa20, kdb4File.pbProtectedStreamKey.AsBytes(), new SHA256HasherRT())).Persist(databaseData.Tree, hashOfHeader).AsBytes();
+            var data = new Kdb4Persister(new CryptoRandomStream(CrsAlgorithm.Salsa20, kdb4File.pbProtectedStreamKey, new SHA256HasherRT())).Persist(databaseData.Tree, hashOfHeader).AsBytes();
             await configuredStream.WriteAsync(data, 0, data.Length);
 
             configuredStream.Dispose();
@@ -65,7 +65,7 @@ namespace MetroPass.Core.Services.Kdb4.Writer
                 new MultiThreadedBouncyCastleCrypto(CryptoAlgoritmType.AES_ECB), 
                 databaseData.MasterKey, 
                 databaseData.MasterKey.PercentComplete);
-            var aesKey = await keyGenerator.GenerateHashedKeyAsync(kdb4File.pbMasterSeed.AsBytes(), kdb4File.pbTransformSeed.AsBytes(), (int)databaseData.KeyEncryptionRounds);
+            var aesKey = await keyGenerator.GenerateHashedKeyAsync(kdb4File.pbMasterSeed, kdb4File.pbTransformSeed, (int)databaseData.KeyEncryptionRounds);
 
             var encrypted = EncryptDatabase(compressed.AsBuffer(), aesKey.AsBuffer()).AsBytes();
             datawriter.WriteBytes(encrypted);
@@ -74,7 +74,7 @@ namespace MetroPass.Core.Services.Kdb4.Writer
 
             await FileIO.WriteBufferAsync(databaseFile, written);
 
-            var cryptoStream = new CryptoRandomStream(CrsAlgorithm.Salsa20, kdb4File.pbProtectedStreamKey.AsBytes(),new SHA256HasherRT());
+            var cryptoStream = new CryptoRandomStream(CrsAlgorithm.Salsa20, kdb4File.pbProtectedStreamKey,new SHA256HasherRT());
             var parser = new Kdb4Parser(cryptoStream);
             databaseData.Tree = parser.ParseAndDecode(databaseData.Tree.Document);
         }
@@ -95,7 +95,7 @@ namespace MetroPass.Core.Services.Kdb4.Writer
         {
             var symKeyProvider = SymmetricKeyAlgorithmProvider.OpenAlgorithm(SymmetricAlgorithmNames.AesCbcPkcs7);
             var aesCryptoKey = symKeyProvider.CreateSymmetricKey(aesKey);
-            return CryptographicEngine.Encrypt(aesCryptoKey, source, kdb4File.pbEncryptionIV);
+            return CryptographicEngine.Encrypt(aesCryptoKey, source, kdb4File.pbEncryptionIV.AsBuffer());
         }
     }
 }

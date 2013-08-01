@@ -1,5 +1,4 @@
-﻿using MetroPass.Core.Model.Kdb4;
-using Framework;
+﻿using Framework;
 using System;
 using System.IO;
 using System.IO.Compression;
@@ -49,7 +48,7 @@ namespace MetroPass.Core.Services
             {
                 throw new SecurityException("Invalid protected stream key!");
             }
-            return new CryptoRandomStream(file.craInnerRandomStream, file.pbProtectedStreamKey.AsBytes(), new SHA256HasherRT());
+            return new CryptoRandomStream(file.craInnerRandomStream, file.pbProtectedStreamKey, new SHA256HasherRT());
         }
 
         public Stream ConfigureStream(IDataReader decryptedDatabase)
@@ -74,7 +73,7 @@ namespace MetroPass.Core.Services
             IBuffer decryptedDatabase = null;
             try
             {
-                 decryptedDatabase = CryptographicEngine.Decrypt(aesCryptoKey, unreadData, file.pbEncryptionIV);
+                 decryptedDatabase = CryptographicEngine.Decrypt(aesCryptoKey, unreadData, file.pbEncryptionIV.AsBuffer());
             }
             catch (Exception e)
             {
@@ -85,7 +84,7 @@ namespace MetroPass.Core.Services
             var databaseReader = DataReader.FromBuffer(decryptedDatabase);
 
             var startBytes = databaseReader.ReadBuffer(32).AsBytes();
-            var headerStartBytes = file.pbStreamStartBytes.AsBytes();
+            var headerStartBytes = file.pbStreamStartBytes;
             for (int iStart = 0; iStart < 32; ++iStart)
             {
                 if (startBytes[iStart] != headerStartBytes[iStart])
@@ -102,7 +101,7 @@ namespace MetroPass.Core.Services
                new MultiThreadedBouncyCastleCrypto(CryptoAlgoritmType.AES_ECB),
                pwDatabase.MasterKey,
                pwDatabase.MasterKey.PercentComplete);
-            var aesKey = await keyGenerator.GenerateHashedKeyAsync(file.pbMasterSeed.AsBytes(), file.pbTransformSeed.AsBytes(), (int)pwDatabase.KeyEncryptionRounds);
+            var aesKey = await keyGenerator.GenerateHashedKeyAsync(file.pbMasterSeed, file.pbTransformSeed, (int)pwDatabase.KeyEncryptionRounds);
                      
             return aesKey.AsBuffer();
         }
@@ -146,12 +145,12 @@ namespace MetroPass.Core.Services
                     break;
 
                 case Kdb4HeaderFieldID.MasterSeed:
-                    file.pbMasterSeed = pbData.AsBuffer();
+                    file.pbMasterSeed = pbData;
                     //CryptoRandom.Instance.AddEntropy(pbData);
                     break;
 
                 case Kdb4HeaderFieldID.TransformSeed:
-                    file.pbTransformSeed = pbData.AsBuffer();
+                    file.pbTransformSeed = pbData;
                     //CryptoRandom.Instance.AddEntropy(pbData);
                     break;
 
@@ -160,16 +159,16 @@ namespace MetroPass.Core.Services
                     break;
 
                 case Kdb4HeaderFieldID.EncryptionIV:
-                    file.pbEncryptionIV = pbData.AsBuffer();
+                    file.pbEncryptionIV = pbData;
                     break;
 
                 case Kdb4HeaderFieldID.ProtectedStreamKey:
-                    file.pbProtectedStreamKey = pbData.AsBuffer();
+                    file.pbProtectedStreamKey = pbData;
                     //CryptoRandom.Instance.AddEntropy(pbData);
                     break;
 
                 case Kdb4HeaderFieldID.StreamStartBytes:
-                    file.pbStreamStartBytes = pbData.AsBuffer();
+                    file.pbStreamStartBytes = pbData;
                     break;
 
                 case Kdb4HeaderFieldID.InnerRandomStreamID:

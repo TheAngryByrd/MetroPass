@@ -1,8 +1,8 @@
-﻿using MetroPass.Core.Model.Kdb4;
-using Framework;
+﻿using Framework;
 using System;
 using System.Threading.Tasks;
 using Metropass.Core.PCL.Cipher;
+using Metropass.Core.PCL.Model.Kdb4;
 using Windows.Storage.Streams;
 using Metropass.Core.PCL;
 

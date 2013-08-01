@@ -1,9 +1,9 @@
 ﻿using MetroPass.Core.Interfaces;
-using MetroPass.Core.Model.Kdb4;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Metropass.Core.PCL.Model;
+using Metropass.Core.PCL.Model.Kdb4;
 using Metropass.Core.PCL.Model.Kdb4.Keys;
 using Windows.Storage;
 using Windows.Storage.Streams;

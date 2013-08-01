@@ -1,4 +1,6 @@
-﻿using MetroPass.Core.Services.Kdb4.Writer;
+﻿using Framework;
+using MetroPass.Core.Services.Kdb4.Writer;
+using Metropass.Core.PCL.Model.Kdb4;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using System;
 using System.Collections.Generic;
@@ -9,8 +11,8 @@ using System.Threading.Tasks;
 using Windows.Storage.Streams;
 using Windows.Security.Cryptography;
 using MetroPass.Core.Model;
-using MetroPass.Core.Model.Kdb4;
 using MetroPass.Core.Services;
+
 namespace MetroPass.Core.Tests.Services.Kdb4.Writer
 {
     [TestClass]
@@ -38,7 +40,7 @@ namespace MetroPass.Core.Tests.Services.Kdb4.Writer
         {
             var data = CryptographicBuffer.GenerateRandom(32);
 
-            hw.WriteHeaderField(dataWriter, Model.Kdb4.Kdb4HeaderFieldID.MasterSeed, data);
+            hw.WriteHeaderField(dataWriter, Metropass.Core.PCL.Model.Kdb4.Kdb4HeaderFieldID.MasterSeed, data);
 
             Assert.AreEqual(dataWriter.UnstoredBufferLength, (uint)35);
         }
@@ -48,11 +50,11 @@ namespace MetroPass.Core.Tests.Services.Kdb4.Writer
         {
             var database = (await Scenarios.LoadDatabase(PasswordDatabasePath, PasswordDatabasePassword, null));
             var kdb4File = new Kdb4File(database);
-            kdb4File.pbMasterSeed = CryptographicBuffer.GenerateRandom(32);
-            kdb4File.pbTransformSeed = CryptographicBuffer.GenerateRandom(32);
-            kdb4File.pbEncryptionIV = CryptographicBuffer.GenerateRandom(16);
-            kdb4File.pbProtectedStreamKey = CryptographicBuffer.GenerateRandom(32);
-            kdb4File.pbStreamStartBytes = CryptographicBuffer.GenerateRandom(32);
+            kdb4File.pbMasterSeed = CryptographicBuffer.GenerateRandom(32).AsBytes();
+            kdb4File.pbTransformSeed = CryptographicBuffer.GenerateRandom(32).AsBytes();
+            kdb4File.pbEncryptionIV = CryptographicBuffer.GenerateRandom(16).AsBytes();
+            kdb4File.pbProtectedStreamKey = CryptographicBuffer.GenerateRandom(32).AsBytes();
+            kdb4File.pbStreamStartBytes = CryptographicBuffer.GenerateRandom(32).AsBytes();
      
 
             await hw.WriteHeaders(dataWriter, kdb4File);
