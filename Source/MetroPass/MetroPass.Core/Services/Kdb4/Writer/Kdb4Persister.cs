@@ -8,10 +8,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using Metropass.Core.PCL.Cipher;
 using Metropass.Core.PCL.Model.Kdb4;
 using Windows.Storage.Streams;
 using System.Xml.Linq;
-using MetroPass.Core.Helpers.Cipher;
 
 namespace MetroPass.Core.Services.Kdb4.Writer
 {

@@ -1,6 +1,7 @@
 ﻿using MetroPass.Core.Services.Kdb4.Writer;
 using MetroPass.Core.Tests.Helpers;
 using MetroPass.WinRT.Infrastructure.Hashing;
+using Metropass.Core.PCL.Cipher;
 using Metropass.Core.PCL.Hashing;
 using Metropass.Core.PCL.Model;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
@@ -16,7 +17,6 @@ using Windows.Storage.Streams;
 using System.IO;
 using System.IO.Compression;
 using Windows.Security.Cryptography.Core;
-using MetroPass.Core.Helpers.Cipher;
 
 namespace MetroPass.Core.Tests.Services
 {

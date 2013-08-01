@@ -2,8 +2,8 @@
 using Framework;
 using System;
 using System.Threading.Tasks;
+using Metropass.Core.PCL.Cipher;
 using Windows.Storage.Streams;
-using MetroPass.Core.Helpers.Cipher;
 using Metropass.Core.PCL;
 
 namespace MetroPass.Core.Services.Kdb4.Writer

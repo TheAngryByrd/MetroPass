@@ -1,7 +1,8 @@
 ﻿using System;
+using MetroPass.Core.Helpers.Cipher;
 using Metropass.Core.PCL.Hashing;
 
-namespace MetroPass.Core.Helpers.Cipher
+namespace Metropass.Core.PCL.Cipher
 {
     public enum CrsAlgorithm
     {

@@ -1,9 +1,4 @@
-﻿using MetroPass.Core.Helpers.Cipher;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Metropass.Core.PCL.Cipher;
 using Metropass.Core.PCL.Model;
 using Windows.Storage.Streams;
 
@@ -44,10 +39,6 @@ namespace MetroPass.Core.Model.Kdb4
         public CrsAlgorithm craInnerRandomStream { get; set; }
 
         public IBuffer pbTransformSeed { get; set; }
-
-
-
-
 
 
     }

@@ -1,5 +1,4 @@
-﻿using MetroPass.Core.Helpers.Cipher;
-using MetroPass.Core.Model.Kdb4;
+﻿using MetroPass.Core.Model.Kdb4;
 using Framework;
 using System;
 using System.IO;
@@ -7,6 +6,7 @@ using System.IO.Compression;
 using System.Security;
 using System.Threading.Tasks;
 using MetroPass.WinRT.Infrastructure.Hashing;
+using Metropass.Core.PCL.Cipher;
 using Metropass.Core.PCL.Hashing;
 using Metropass.Core.PCL.Model;
 using Metropass.Core.PCL.Model.Kdb4;
