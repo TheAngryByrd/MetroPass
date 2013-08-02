@@ -8,7 +8,7 @@ namespace MetroPass.WinRT.Infrastructure.PasswordGeneration
     {
         public override int GenerateRandomNumber(int max)
         {
-            return Math.Abs((int)CryptographicBuffer.GenerateRandomNumber()) % (max);
+            return Math.Abs((int)CryptographicBuffer.GenerateRandomNumber()) % (max);            
         }
     }
 }

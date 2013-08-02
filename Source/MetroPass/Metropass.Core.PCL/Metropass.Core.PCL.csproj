@@ -69,8 +69,11 @@
     <Compile Include="Model\Kdb4\Keys\KcpPassword.cs" />
     <Compile Include="Model\Kdb4\Keys\KeyGenerator.cs" />
     <Compile Include="Model\Kdb4\Reader\IKdbReader.cs" />
+    <Compile Include="Model\Kdb4\Writer\IFileWriterFactory.cs" />
+    <Compile Include="Model\Kdb4\Writer\IKdbWriter.cs" />
     <Compile Include="Model\Kdb4\Writer\Kdb4HeaderWriter.cs" />
     <Compile Include="Model\Kdb4\Writer\Kdb4Persister.cs" />
+    <Compile Include="Model\Kdb4\Writer\Kdb4Writer.cs" />
     <Compile Include="Model\PwDatabase.cs" />
     <Compile Include="Model\PwEnums.cs" />
     <Compile Include="Helpers\XmlEx.cs" />
@@ -87,17 +90,22 @@
     <Reference Include="Microsoft.Threading.Tasks">
       <HintPath>..\packages\Microsoft.Bcl.Async.1.0.16\lib\portable-net45+win8+wp8\Microsoft.Threading.Tasks.dll</HintPath>
       <Private>False</Private>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
     <Reference Include="Microsoft.Threading.Tasks.Extensions">
       <HintPath>..\packages\Microsoft.Bcl.Async.1.0.16\lib\portable-net45+win8+wp8\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
       <Private>False</Private>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
     <Reference Include="PCLStorage">
       <HintPath>..\packages\PCLStorage.0.2.1-pre\lib\portable-net45+sl4+wp71+win8\PCLStorage.dll</HintPath>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+      <Private>True</Private>
     </Reference>
     <Reference Include="PCLStorage.Abstractions">
       <HintPath>..\packages\PCLStorage.0.2.1-pre\lib\portable-net45+sl4+wp71+win8\PCLStorage.Abstractions.dll</HintPath>
       <Private>False</Private>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />

@@ -42,7 +42,8 @@ namespace MetroPass.Core.Services
                       new WinRTCrypto(CryptoAlgoritmType.AES_CBC_PKCS7), 
                       new MultiThreadedBouncyCastleCrypto(CryptoAlgoritmType.AES_ECB), 
                       new SHA256HasherRT(),
-                      new GZipFactoryRT());      
+                      new GZipFactoryRT());   
+               
             }
             else
             {

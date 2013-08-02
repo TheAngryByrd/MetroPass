@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Metropass.Core.PCL.Model;
 using Metropass.Core.PCL.Model.Kdb4.Keys;
 using Windows.Storage;
+using PCLStorage;
 
 namespace MetroPass.UI.DataModel
 {
@@ -63,7 +64,7 @@ namespace MetroPass.UI.DataModel
 
             var writer = factory.CreateWriter(PwDatabase.Tree);
 
-            await writer.Write(PwDatabase, StorageFile);
+            await writer.Write(PwDatabase, new WinRTFile(StorageFile));
 
         }
     } 

@@ -368,7 +368,7 @@ namespace MetroPass.UI.ViewModels
             {
                 userKeys.Add(await KcpKeyFile.Create(new WinRTFile(KeyFile), sHA256HasherRT));
             }
-
+           
             var progress = new Progress<double>(percent =>
             {
                 percent = Math.Round(percent, 2);

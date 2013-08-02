@@ -18,6 +18,10 @@ using Windows.Storage.Streams;
 using System.IO;
 using System.IO.Compression;
 using Windows.Security.Cryptography.Core;
+using MetroPass.WinRT.Infrastructure.Encryption;
+using Metropass.Core.PCL.Encryption;
+using MetroPass.WinRT.Infrastructure.Compression;
+using PCLStorage;
 
 namespace MetroPass.Core.Tests.Services
 {
@@ -58,7 +62,11 @@ namespace MetroPass.Core.Tests.Services
         public async Task CanWrite()
         {
             var database = await Scenarios.LoadDatabase(PasswordDatabasePath, PasswordDatabasePassword, null);
-            var writer = new Kdb4Writer(new Kdb4HeaderWriter());
+            var writer = new Kdb4Writer(new Kdb4HeaderWriter(),
+                      new WinRTCrypto(CryptoAlgoritmType.AES_CBC_PKCS7),
+                      new MultiThreadedBouncyCastleCrypto(CryptoAlgoritmType.AES_ECB),
+                      new SHA256HasherRT(),
+                      new GZipFactoryRT());
          //   .database.var file = await Package.Current.InstalledLocation.GetFileAsync(PasswordDatabasePath);
 
             try
@@ -75,7 +83,7 @@ namespace MetroPass.Core.Tests.Services
 
 
 
-            await writer.Write(database, file);
+            await writer.Write(database, new WinRTFile(file));
 
             await Scenarios.LoadDatabase(file, PasswordDatabasePassword, null);
         }
