@@ -1,5 +1,5 @@
 using System.Collections.ObjectModel;
-using MetroPass.Core.Model;
+using Metropass.Core.PCL.Model;
 
 namespace MetroPass.UI.ViewModels
 {

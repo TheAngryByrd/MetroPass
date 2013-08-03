@@ -5,10 +5,12 @@ using System.Net;
 using System.Security;
 using System.Threading.Tasks;
 using Caliburn.Micro;
-using MetroPass.Core.Model.Keys;
 using MetroPass.UI.DataModel;
 using MetroPass.UI.Services;
 using MetroPass.UI.Views;
+using MetroPass.WinRT.Infrastructure.Hashing;
+using Metropass.Core.PCL.Model.Kdb4.Keys;
+using PCLStorage;
 using Windows.Storage;
 using Windows.Storage.AccessCache;
 using Windows.Storage.Pickers;
@@ -355,15 +357,17 @@ namespace MetroPass.UI.ViewModels
         public async void OpenDatabase()
         {
             OpeningDatabase = true;
-            var userKeys = new List<IUserKey>();
 
+            var userKeys = new List<IUserKey>();
+            var sHA256HasherRT = new SHA256HasherRT();
             if (!string.IsNullOrEmpty(Password))
             {
-                userKeys.Add(await KcpPassword.Create(Password));
+
+                userKeys.Add(await KcpPassword.Create(Password, sHA256HasherRT));
             }
             if (KeyFile != null)
             {
-                userKeys.Add(await KcpKeyFile.Create(KeyFile));
+                userKeys.Add(await KcpKeyFile.Create(new WinRTFile(KeyFile), sHA256HasherRT));
             }
 
             var progress = new Progress<double>(percent =>

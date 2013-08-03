@@ -1,15 +1,4 @@
-﻿using MetroPass.Core.Model;
-using MetroPass.Core.Model.Kdb4;
-using MetroPass.Core.Model.Keys;
-using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.Storage.Streams;
-
-namespace MetroPass.Core.Tests.ComparedToMainKeepass
+﻿namespace MetroPass.Core.Tests.ComparedToMainKeepass
 {
     //[TestClass]
     //public class PassingTests

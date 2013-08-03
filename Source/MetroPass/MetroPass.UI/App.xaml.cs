@@ -8,6 +8,9 @@ using MetroPass.UI.DataModel;
 using MetroPass.UI.Services;
 using MetroPass.UI.ViewModels;
 using MetroPass.UI.Views;
+using MetroPass.WinRT.Infrastructure.PasswordGeneration;
+using Metropass.Core.PCL.Model.Kdb4;
+using Metropass.Core.PCL.PasswordGeneration;
 using Ninject;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
@@ -98,7 +101,7 @@ namespace MetroPass.UI
             _ninjectContainer.RegisterWinRTServices();
 
             _ninjectContainer.Kernel.Bind<IPageServices>().To<PageServices>();
-            _ninjectContainer.Kernel.Bind<IPasswordGenerator>().To<PasswordGenerator>();
+            _ninjectContainer.Kernel.Bind<IPasswordGenerator>().To<PasswordGeneratorRT>();
   
             _ninjectContainer.Kernel.Bind<ILockingService>().To<LockingService>();
             _ninjectContainer.Kernel.Bind<IClipboard>().To<MetroClipboard>();

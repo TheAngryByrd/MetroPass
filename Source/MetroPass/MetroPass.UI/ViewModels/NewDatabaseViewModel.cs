@@ -1,15 +1,15 @@
 ﻿using System.Net;
 using Caliburn.Micro;
-using Framework;
-using MetroPass.Core.Model;
-using MetroPass.Core.Model.Keys;
-using MetroPass.Core.Services;
 using MetroPass.UI.DataModel;
 using MetroPass.UI.Services;
 using MetroPass.UI.Views;
 using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
+using MetroPass.WinRT.Infrastructure.Hashing;
+using Metropass.Core.PCL.Model;
+using Metropass.Core.PCL.Model.Kdb4.Keys;
+using Metropass.Core.PCL.Model.Kdb4.Reader;
 using Windows.Storage.Pickers;
 
 namespace MetroPass.UI.ViewModels
@@ -94,7 +94,7 @@ namespace MetroPass.UI.ViewModels
             CanSave = false;
             var databaseXDocument = NewDatabase();
             var parser = new Kdb4Parser(null);
-            var passwordKey = await KcpPassword.Create(Password);
+            var passwordKey = await KcpPassword.Create(Password, new SHA256HasherRT());
 
             var compositeKey = new CompositeKey(new List<IUserKey> { passwordKey }, new NullableProgress<double>());
             var pwDatabase = new PwDatabase(compositeKey);

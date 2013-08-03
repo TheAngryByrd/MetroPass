@@ -1,24 +1,27 @@
 ﻿using MetroPass.Core.Services.Kdb4.Writer;
 using MetroPass.Core.Tests.Helpers;
+using MetroPass.WinRT.Infrastructure.Hashing;
+using Metropass.Core.PCL.Cipher;
+using Metropass.Core.PCL.Hashing;
+using Metropass.Core.PCL.Model;
+using Metropass.Core.PCL.Model.Kdb4.Writer;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using Framework;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Security;
 using System.Text;
 using System.Threading.Tasks;
-using Windows.ApplicationModel;
 using Windows.Security.Cryptography;
 using Windows.Storage;
 using Windows.Storage.Streams;
 using System.IO;
 using System.IO.Compression;
 using Windows.Security.Cryptography.Core;
-using MetroPass.Core.Model;
-using MetroPass.Core.Security;
-using MetroPass.Core.Helpers.Cipher;
-using MetroPass.Core.Helpers;
+using MetroPass.WinRT.Infrastructure.Encryption;
+using Metropass.Core.PCL.Encryption;
+using MetroPass.WinRT.Infrastructure.Compression;
+using PCLStorage;
 
 namespace MetroPass.Core.Tests.Services
 {
@@ -40,34 +43,39 @@ namespace MetroPass.Core.Tests.Services
         {
             var kdb4Tree = (await Scenarios.LoadDatabase(PasswordDatabasePath, PasswordDatabasePassword, null)).Tree;
             var firstGroup = kdb4Tree.Group.SubGroups.FirstOrDefault(a => a.Name == "General");
-           // Assert.AreEqual("General", firstGroup.Name);
+            // Assert.AreEqual("General", firstGroup.Name);
             Assert.AreEqual(new DateTime(2012, 08, 25), firstGroup.LastAccessTime.Date);
-           var firstEntry = kdb4Tree.Group.Entries.First();
-           Assert.AreEqual("Notes", firstEntry.Notes);
-           Assert.AreEqual("User Name", firstEntry.Username);
-           Assert.AreEqual("Sample Entry", firstEntry.Title);
+            var firstEntry = kdb4Tree.Group.Entries.First();
+            Assert.AreEqual("Notes", firstEntry.Notes);
+            Assert.AreEqual("User Name", firstEntry.Username);
+            Assert.AreEqual("Sample Entry", firstEntry.Title);
         }
 
         [TestMethod]
         public async Task CantOpenWithBadPassword()
         {
             AssertEx.ThrowsException<SecurityException>(() => Scenarios.LoadDatabase(PasswordDatabasePath, "NotPassword", null));
-     
+
         }
 
         [TestMethod]
         public async Task CanWrite()
         {
             var database = await Scenarios.LoadDatabase(PasswordDatabasePath, PasswordDatabasePassword, null);
-            var writer = new Kdb4Writer(new Kdb4HeaderWriter());
-         //   .database.var file = await Package.Current.InstalledLocation.GetFileAsync(PasswordDatabasePath);
+            var writer = new Kdb4Writer(new Kdb4HeaderWriter(),
+                      new WinRTCrypto(CryptoAlgoritmType.AES_CBC_PKCS7),
+                      new MultiThreadedBouncyCastleCrypto(CryptoAlgoritmType.AES_ECB),
+                      new SHA256HasherRT(),
+                      new GZipFactoryRT());
+            //   .database.var file = await Package.Current.InstalledLocation.GetFileAsync(PasswordDatabasePath);
 
             try
             {
 
                 var temp = await KnownFolders.DocumentsLibrary.GetFileAsync("file.kdbx");
                 await temp.DeleteAsync();
-            }catch(Exception e)
+            }
+            catch (Exception e)
             {
 
             }
@@ -76,7 +84,7 @@ namespace MetroPass.Core.Tests.Services
 
 
 
-            await writer.Write(database, file);
+            await writer.Write(database, new WinRTFile(file));
 
             await Scenarios.LoadDatabase(file, PasswordDatabasePassword, null);
         }
@@ -97,7 +105,7 @@ namespace MetroPass.Core.Tests.Services
 
         }
 
-   
+
         public IBuffer EncryptDatabase(IBuffer source, IBuffer aesKey, IBuffer iv)
         {
             var symKeyProvider = SymmetricKeyAlgorithmProvider.OpenAlgorithm(SymmetricAlgorithmNames.AesCbcPkcs7);
@@ -116,10 +124,10 @@ namespace MetroPass.Core.Tests.Services
         [TestMethod]
         public async Task HashedBlockStream()
         {
-            
-            var data = CryptographicBuffer.GenerateRandom(1024*1024).AsBytes();
+
+            var data = CryptographicBuffer.GenerateRandom(1024 * 1024).AsBytes();
             MemoryStream outStream = new System.IO.MemoryStream();
-            var hashedBlockStream = new HashedBlockStream(outStream, true);
+            var hashedBlockStream = new HashedBlockStream(outStream, true, new SHA256HasherRT());
             for (int i = 0; i < 1024 * 1024; i += 1024)
             {
                 hashedBlockStream.Write(data, i, 1024);
@@ -132,8 +140,8 @@ namespace MetroPass.Core.Tests.Services
         [TestMethod]
         public async Task CompressEncryptDecrypDeCompress()
         {
-            var mStream = CryptographicBuffer.GenerateRandom(1024*1024).AsBytes();
-       
+            var mStream = CryptographicBuffer.GenerateRandom(1024 * 1024).AsBytes();
+
             MemoryStream outStream = new System.IO.MemoryStream();
             var tinyStream = ConfigureStream(outStream, PwCompressionAlgorithm.GZip, true);
             await tinyStream.WriteAsync(mStream, 0, mStream.Length);
@@ -155,23 +163,23 @@ namespace MetroPass.Core.Tests.Services
             CollectionAssert.AreEqual(mStream, bigStreamOut.ToArray());
 
         }
-        
+
 
         [TestMethod]
         public async Task CompressUncompress()
         {
             var mStream = CryptographicBuffer.GenerateRandom(1024).AsBytes();
             MemoryStream outStream = new System.IO.MemoryStream();
-            var tinyStream =ConfigureStream(outStream,PwCompressionAlgorithm.GZip,true);
-            
+            var tinyStream = ConfigureStream(outStream, PwCompressionAlgorithm.GZip, true);
+
             await tinyStream.WriteAsync(mStream, 0, mStream.Length);
-               
+
             tinyStream.Dispose();
 
             byte[] bb = outStream.ToArray();
 
             //Decompress                
-            Stream bigStream = ConfigureStream (new MemoryStream(bb), PwCompressionAlgorithm.GZip, false);
+            Stream bigStream = ConfigureStream(new MemoryStream(bb), PwCompressionAlgorithm.GZip, false);
             System.IO.MemoryStream bigStreamOut = new System.IO.MemoryStream();
             bigStream.CopyTo(bigStreamOut);
 
@@ -185,7 +193,7 @@ namespace MetroPass.Core.Tests.Services
 
             if (IsWritingStream)
             {
-                hashedBlockStream = new HashedBlockStream(source, true);
+                hashedBlockStream = new HashedBlockStream(source, true, new SHA256HasherRT());
 
                 if (compression == PwCompressionAlgorithm.GZip)
                 {
@@ -194,7 +202,7 @@ namespace MetroPass.Core.Tests.Services
             }
             else
             {
-                hashedBlockStream = new HashedBlockStream(source, false, 0, false);
+                hashedBlockStream = new HashedBlockStream(source, false, 0, false, new SHA256HasherRT());
 
                 if (compression == PwCompressionAlgorithm.GZip)
                 {
@@ -227,22 +235,22 @@ namespace MetroPass.Core.Tests.Services
 
             CollectionAssert.AreNotEqual(mStream, encrypted.AsBytes());
 
-             datawriter.WriteBuffer(encrypted);
-             await datawriter.StoreAsync();
+            datawriter.WriteBuffer(encrypted);
+            await datawriter.StoreAsync();
 
             datawriter.DetachStream();
             datawriter.Dispose();
-             var i = inMem.GetInputStreamAt(0);
-             var datareader = new DataReader(i);
-             datareader.ByteOrder = ByteOrder.LittleEndian;
+            var i = inMem.GetInputStreamAt(0);
+            var datareader = new DataReader(i);
+            datareader.ByteOrder = ByteOrder.LittleEndian;
             await datareader.LoadAsync((uint)inMem.Size);
-             var fromStrea = datareader.ReadBuffer(datareader.UnconsumedBufferLength);
+            var fromStrea = datareader.ReadBuffer(datareader.UnconsumedBufferLength);
 
-             var decryped = DecryptDatabase(fromStrea, aesKey, iv);
+            var decryped = DecryptDatabase(fromStrea, aesKey, iv);
 
-             Stream bigStream = ConfigureStream(new MemoryStream(decryped.AsBytes()), PwCompressionAlgorithm.GZip, false);
-             System.IO.MemoryStream bigStreamOut = new System.IO.MemoryStream();
-             bigStream.CopyTo(bigStreamOut);
+            Stream bigStream = ConfigureStream(new MemoryStream(decryped.AsBytes()), PwCompressionAlgorithm.GZip, false);
+            System.IO.MemoryStream bigStreamOut = new System.IO.MemoryStream();
+            bigStream.CopyTo(bigStreamOut);
 
             var buffer1 = CryptographicBuffer.CreateFromByteArray(bigStreamOut.ToArray());
             var reader = DataReader.FromBuffer(buffer1);
@@ -256,17 +264,17 @@ namespace MetroPass.Core.Tests.Services
             var protectedString = "QwzFTMLCpNY=";
             var protectedStringBytes = Convert.FromBase64String(protectedString);
 
-           var rando = new CryptoRandomStream(CrsAlgorithm.Salsa20, Convert.FromBase64String("6tDlwZfwES4jAQzLisWdpNdnuTYyDZfflEdbshzdgi8="));
-           var getByte = rando.GetRandomBytes((uint)protectedStringBytes.Length);
-           byte[] pbPlain = new byte[protectedStringBytes.Length];
+            var rando = new CryptoRandomStream(CrsAlgorithm.Salsa20, Convert.FromBase64String("6tDlwZfwES4jAQzLisWdpNdnuTYyDZfflEdbshzdgi8="), new SHA256HasherRT());
+            var getByte = rando.GetRandomBytes((uint)protectedStringBytes.Length);
+            byte[] pbPlain = new byte[protectedStringBytes.Length];
 
 
-           for (int i = 0; i < pbPlain.Length; ++i)
-               pbPlain[i] = (byte)(protectedStringBytes[i] ^ getByte[i]);
+            for (int i = 0; i < pbPlain.Length; ++i)
+                pbPlain[i] = (byte)(protectedStringBytes[i] ^ getByte[i]);
 
-           string mypass = UTF8Encoding.UTF8.GetString(pbPlain, 0, pbPlain.Length);
+            string mypass = UTF8Encoding.UTF8.GetString(pbPlain, 0, pbPlain.Length);
 
-           Assert.AreEqual("Password", mypass);
+            Assert.AreEqual("Password", mypass);
         }
 
 

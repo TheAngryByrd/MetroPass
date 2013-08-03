@@ -119,9 +119,17 @@
       <Project>{7f4c7dcb-9379-459b-9d8b-191804a5d3d6}</Project>
       <Name>Framework</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Metropass.Core.PCL\Metropass.Core.PCL.csproj">
+      <Project>{40AC1A3B-9796-4F90-8903-108C86CFBD15}</Project>
+      <Name>Metropass.Core.PCL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MetroPass.Core\MetroPass.Core.csproj">
       <Project>{c08eec72-cb2e-4cb9-b6ee-d2c5d070d95c}</Project>
       <Name>MetroPass.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MetroPass.WinRT.Infrastructure\MetroPass.WinRT.Infrastructure.csproj">
+      <Project>{49748D29-F9CE-45C6-B807-415BF7A8A3EF}</Project>
+      <Name>MetroPass.WinRT.Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -326,6 +334,12 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Caliburn.Micro.1.4\lib\win8\Caliburn.Micro.Extensions.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Threading.Tasks">
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.16\lib\win8\Microsoft.Threading.Tasks.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions">
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.16\lib\win8\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
     <Reference Include="Ninject.Common">
       <HintPath>..\packages\Portable.Ninject.Common.3.0.1.11\lib\Ninject.Common.dll</HintPath>
     </Reference>
@@ -335,6 +349,12 @@
     <Reference Include="NotificationsExtensions, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Libs\NotificationsExtensions.winmd</HintPath>
+    </Reference>
+    <Reference Include="PCLStorage">
+      <HintPath>..\packages\PCLStorage.0.2.1-pre\lib\win8\PCLStorage.dll</HintPath>
+    </Reference>
+    <Reference Include="PCLStorage.Abstractions">
+      <HintPath>..\packages\PCLStorage.0.2.1-pre\lib\win8\PCLStorage.Abstractions.dll</HintPath>
     </Reference>
     <Reference Include="Windows.UI.Interactivity, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -354,6 +374,7 @@
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
+  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.8\tools\Microsoft.Bcl.Build.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

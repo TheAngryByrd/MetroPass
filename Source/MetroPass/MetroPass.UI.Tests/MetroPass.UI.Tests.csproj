@@ -145,6 +145,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Metropass.Core.PCL\Metropass.Core.PCL.csproj">
+      <Project>{40AC1A3B-9796-4F90-8903-108C86CFBD15}</Project>
+      <Name>Metropass.Core.PCL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MetroPass.Core\MetroPass.Core.csproj">
       <Project>{c08eec72-cb2e-4cb9-b6ee-d2c5d070d95c}</Project>
       <Name>MetroPass.Core</Name>

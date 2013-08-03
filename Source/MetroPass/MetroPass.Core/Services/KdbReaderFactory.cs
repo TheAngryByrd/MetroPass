@@ -1,14 +1,19 @@
 ﻿using Framework;
 using MetroPass.Core.Interfaces;
-using MetroPass.Core.Model;
-using MetroPass.Core.Model.Kdb4;
-using MetroPass.Core.Model.Keys;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using Metropass.Core.PCL.Encryption;
+using Metropass.Core.PCL.Model;
+using Metropass.Core.PCL.Model.Kdb4;
+using Metropass.Core.PCL.Model.Kdb4.Keys;
 using Windows.Storage;
-using Windows.Storage.Streams;
+using Metropass.Core.PCL;
+using System.IO;
+using MetroPass.WinRT.Infrastructure.Encryption;
+using MetroPass.WinRT.Infrastructure.Hashing;
+using Metropass.Core.PCL.Model.Kdb4.Reader;
+using MetroPass.WinRT.Infrastructure.Compression;
 
 namespace MetroPass.Core.Services
 {
@@ -18,21 +23,27 @@ namespace MetroPass.Core.Services
         {
             return LoadAsync(database, userKeys, new NullableProgress<double>());
         }
- 
+
         public async Task<PwDatabase> LoadAsync(IStorageFile kdbDatabase, IList<IUserKey> userKeys, IProgress<double> percentComplete)
         {
-            
-            var kdbDataReader =  DataReader.FromBuffer(await FileIO.ReadBufferAsync(kdbDatabase));
+            var file = await FileIO.ReadBufferAsync(kdbDatabase);
+            // var kdbDataReader =  DataReader.FromBuffer();
+            MemoryStream kdbDataReader = new MemoryStream(file.AsBytes());
             var versionInfo = ReadVersionInfo(kdbDataReader);
             IKdbReader reader = null;
             var compositeKey = new CompositeKey(userKeys, percentComplete);
             var pwDatabase = new PwDatabase(compositeKey);
-          
+
             if (IsKdb4(versionInfo))
             {
-                  var kdb4File = new Kdb4File(pwDatabase);
+                var kdb4File = new Kdb4File(pwDatabase);
 
-                reader = new Kdb4Reader(kdb4File);      
+                reader = new Kdb4Reader(kdb4File,
+                    new WinRTCrypto(CryptoAlgoritmType.AES_CBC_PKCS7),
+                    new MultiThreadedBouncyCastleCrypto(CryptoAlgoritmType.AES_ECB),
+                    new SHA256HasherRT(),
+                    new GZipFactoryRT());
+
             }
             else
             {
@@ -48,11 +59,13 @@ namespace MetroPass.Core.Services
             return versionInfo.FileSignature1 == KdbConstants.FileSignature1 && versionInfo.FileSignature2 == KdbConstants.FileSignature2;
         }
 
-        public VersionInfo ReadVersionInfo(IDataReader kdbReader)
+        public VersionInfo ReadVersionInfo(Stream kdbReader)
         {
             var versionInfo = new VersionInfo();
             var readerBytes = new byte[4];
-            
+
+
+
             kdbReader.ReadBytes(readerBytes);
             versionInfo.FileSignature1 = BitConverter.ToUInt32(readerBytes, 0);
             kdbReader.ReadBytes(readerBytes);
@@ -71,9 +84,9 @@ namespace MetroPass.Core.Services
 
     public class VersionInfo
     {
-        public UInt32 FileSignature1 {get;set;}
-        public UInt32 FileSignature2 {get;set;}
-        public UInt32 Version {get;set;}
+        public UInt32 FileSignature1 { get; set; }
+        public UInt32 FileSignature2 { get; set; }
+        public UInt32 Version { get; set; }
 
     }
 }
