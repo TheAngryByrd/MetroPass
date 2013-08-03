@@ -131,45 +131,6 @@ namespace MetroPass.UI.ViewModels
 
         public XDocument NewDatabase()
         {
-//            var databaseXML = @"<KeePassFile>
-//                                  <Meta>
-//                                    <Generator>{0}</Generator>
-//                                    <HeaderHash>0GuRCYFy2gzb1mm508FVJ1I0wDkJFHN3g0oN0GvSZ04=</HeaderHash>
-//                                    <DatabaseName>{1}</DatabaseName>
-//                                    <DatabaseNameChanged>{2}</DatabaseNameChanged>
-//                                    <DatabaseDescription />
-//                                    <DatabaseDescriptionChanged>{2}</DatabaseDescriptionChanged>
-//                                    <DefaultUserName />
-//                                    <DefaultUserNameChanged>{2}</DefaultUserNameChanged>
-//                                    <MaintenanceHistoryDays>365</MaintenanceHistoryDays>
-//                                    <Color />
-//                                    <MasterKeyChanged>{2}</MasterKeyChanged>
-//                                    <MasterKeyChangeRec>-1</MasterKeyChangeRec>
-//                                    <MasterKeyChangeForce>-1</MasterKeyChangeForce>
-//                                    <MemoryProtection>
-//                                      <ProtectTitle>False</ProtectTitle>
-//                                      <ProtectUserName>False</ProtectUserName>
-//                                      <ProtectPassword>True</ProtectPassword>
-//                                      <ProtectURL>False</ProtectURL>
-//                                      <ProtectNotes>False</ProtectNotes>
-//                                    </MemoryProtection>
-//                                    <RecycleBinEnabled>True</RecycleBinEnabled>
-//                                    <RecycleBinUUID>AAAAAAAAAAAAAAAAAAAAAA==</RecycleBinUUID>
-//                                    <RecycleBinChanged>{2}</RecycleBinChanged>
-//                                    <EntryTemplatesGroup>AAAAAAAAAAAAAAAAAAAAAA==</EntryTemplatesGroup>
-//                                    <EntryTemplatesGroupChanged>{2}</EntryTemplatesGroupChanged>
-//                                    <HistoryMaxItems>10</HistoryMaxItems>
-//                                    <HistoryMaxSize>6291456</HistoryMaxSize>
-//                                    <LastSelectedGroup></LastSelectedGroup>
-//                                    <LastTopVisibleGroup></LastTopVisibleGroup>
-//                                    <Binaries />
-//                                    <CustomData />
-//                                  </Meta>
-//                                  <Root>
-//  
-//                                    <DeletedObjects />
-//                                  </Root>
-//                                </KeePassFile>";
 
             var databaseXML = @"<KeePassFile>
   <Meta>
