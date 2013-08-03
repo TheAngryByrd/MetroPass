@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MetroPass.Core.Security;
+﻿using System.Threading.Tasks;
+using MetroPass.WinRT.Infrastructure.PasswordGeneration;
+using Metropass.Core.PCL.PasswordGeneration;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-using Windows.Security.Cryptography;
 
 namespace MetroPass.Core.Tests
 {
@@ -36,8 +32,8 @@ namespace MetroPass.Core.Tests
         public void GeneratePasswordFromLengthAndStringTest()
         {
             var length = 5;
-         
-            PasswordGenerator generator = new PasswordGenerator();
+
+            PasswordGeneratorBase generator = new PasswordGeneratorRT();
             var characterSet = PasswordGeneratorCharacterSets.Uppercase;
             string password = generator.GeneratePassword(length, new string[]{characterSet});
 
@@ -50,7 +46,7 @@ namespace MetroPass.Core.Tests
         {
             var length = 5;
 
-            PasswordGenerator generator = new PasswordGenerator();
+            PasswordGeneratorBase generator = new PasswordGeneratorRT();
             var characterSet = PasswordGeneratorCharacterSets.Uppercase;
             string password = await generator.GeneratePasswordAsync(length, new string[] { characterSet });
 
@@ -63,7 +59,7 @@ namespace MetroPass.Core.Tests
         {
             var length = 5;
 
-            PasswordGenerator generator = new PasswordGenerator();
+            PasswordGeneratorBase generator = new PasswordGeneratorRT();
             string[] characterSet = new string[] { PasswordGeneratorCharacterSets.Uppercase, PasswordGeneratorCharacterSets.Lowercase, PasswordGeneratorCharacterSets.Digit };
             string password = await generator.GeneratePasswordAsync(length, characterSet);
 
@@ -77,7 +73,7 @@ namespace MetroPass.Core.Tests
             var length = 500;
             string[] characterSet = new string[] { "AB" };
             var excludeCharacters = "B";
-            PasswordGenerator generator = new PasswordGenerator();
+            PasswordGeneratorBase generator = new PasswordGeneratorRT();
             string password = await generator.GeneratePasswordAsync(length, characterSet, excludeCharacters);
 
             Assert.AreEqual(length, password.Length);

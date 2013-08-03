@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Caliburn.Micro;
-using MetroPass.Core.Model;
 using MetroPass.UI.DataModel;
 using MetroPass.UI.Services;
+using Metropass.Core.PCL.Model;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;

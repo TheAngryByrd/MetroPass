@@ -1,5 +1,4 @@
 ﻿using MetroPass.Core.Interfaces;
-using MetroPass.Core.Model.Kdb4;
 using MetroPass.Core.Services.Kdb4;
 using MetroPass.Core.Services.Kdb4.Writer;
 using System;
@@ -7,6 +6,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MetroPass.WinRT.Infrastructure.Compression;
+using Metropass.Core.PCL.Encryption;
+using Metropass.Core.PCL.Model.Kdb4;
+using Metropass.Core.PCL.Model.Kdb4.Writer;
+using MetroPass.WinRT.Infrastructure.Encryption;
+using MetroPass.WinRT.Infrastructure.Hashing;
 
 namespace MetroPass.Core.Services
 {
@@ -16,7 +21,11 @@ namespace MetroPass.Core.Services
         {
             if (tree is Kdb4Tree)
             {
-                return new Kdb4Writer(new Kdb4HeaderWriter());
+                return new Kdb4Writer(new Kdb4HeaderWriter(),
+                      new WinRTCrypto(CryptoAlgoritmType.AES_CBC_PKCS7),
+                      new MultiThreadedBouncyCastleCrypto(CryptoAlgoritmType.AES_ECB),
+                      new SHA256HasherRT(),
+                      new GZipFactoryRT());
             }
             else
             {

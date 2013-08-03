@@ -8,6 +8,7 @@ using MetroPass.Core.Security;
 using MetroPass.UI.Tests.Mocks;
 using MetroPass.UI.ViewModels;
 using MetroPass.UI.ViewModels.Messages;
+using Metropass.Core.PCL.PasswordGeneration;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 
 namespace MetroPass.UI.Tests.ViewModels

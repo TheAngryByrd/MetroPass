@@ -5,9 +5,8 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Caliburn.Micro;
-using MetroPass.Core.Interfaces;
-using MetroPass.Core.Security;
 using MetroPass.UI.ViewModels.Messages;
+using Metropass.Core.PCL.PasswordGeneration;
 
 namespace MetroPass.UI.ViewModels
 {

@@ -1,15 +1,11 @@
-﻿using MetroPass.Core.Model.Keys;
+﻿using Metropass.Core.PCL.Model.Kdb4.Keys;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using MetroPass.Core.Tests.Helpers;
 using Windows.Storage;
-using MetroPass.Core.Services;
 using Windows.ApplicationModel;
-using MetroPass.Core.Interfaces;
 using Windows.Storage.Search;
 
 namespace MetroPass.Core.Tests.Services
@@ -30,6 +26,7 @@ namespace MetroPass.Core.Tests.Services
         }
 
         [TestMethod]
+        [Ignore]
         public async Task HighEncryptionRoundDatabase()
         {
             var tree = await Scenarios.LoadDatabase(PasswordDatabasePath, DatabasePassword, KeyFileath);

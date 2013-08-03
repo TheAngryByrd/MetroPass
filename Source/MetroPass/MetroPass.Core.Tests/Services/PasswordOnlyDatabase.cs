@@ -1,24 +1,27 @@
 ﻿using MetroPass.Core.Services.Kdb4.Writer;
 using MetroPass.Core.Tests.Helpers;
+using MetroPass.WinRT.Infrastructure.Hashing;
+using Metropass.Core.PCL.Cipher;
+using Metropass.Core.PCL.Hashing;
+using Metropass.Core.PCL.Model;
+using Metropass.Core.PCL.Model.Kdb4.Writer;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using Framework;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Security;
 using System.Text;
 using System.Threading.Tasks;
-using Windows.ApplicationModel;
 using Windows.Security.Cryptography;
 using Windows.Storage;
 using Windows.Storage.Streams;
 using System.IO;
 using System.IO.Compression;
 using Windows.Security.Cryptography.Core;
-using MetroPass.Core.Model;
-using MetroPass.Core.Security;
-using MetroPass.Core.Helpers.Cipher;
-using MetroPass.Core.Helpers;
+using MetroPass.WinRT.Infrastructure.Encryption;
+using Metropass.Core.PCL.Encryption;
+using MetroPass.WinRT.Infrastructure.Compression;
+using PCLStorage;
 
 namespace MetroPass.Core.Tests.Services
 {
@@ -59,7 +62,11 @@ namespace MetroPass.Core.Tests.Services
         public async Task CanWrite()
         {
             var database = await Scenarios.LoadDatabase(PasswordDatabasePath, PasswordDatabasePassword, null);
-            var writer = new Kdb4Writer(new Kdb4HeaderWriter());
+            var writer = new Kdb4Writer(new Kdb4HeaderWriter(),
+                      new WinRTCrypto(CryptoAlgoritmType.AES_CBC_PKCS7),
+                      new MultiThreadedBouncyCastleCrypto(CryptoAlgoritmType.AES_ECB),
+                      new SHA256HasherRT(),
+                      new GZipFactoryRT());
          //   .database.var file = await Package.Current.InstalledLocation.GetFileAsync(PasswordDatabasePath);
 
             try
@@ -76,7 +83,7 @@ namespace MetroPass.Core.Tests.Services
 
 
 
-            await writer.Write(database, file);
+            await writer.Write(database, new WinRTFile(file));
 
             await Scenarios.LoadDatabase(file, PasswordDatabasePassword, null);
         }
@@ -119,7 +126,7 @@ namespace MetroPass.Core.Tests.Services
             
             var data = CryptographicBuffer.GenerateRandom(1024*1024).AsBytes();
             MemoryStream outStream = new System.IO.MemoryStream();
-            var hashedBlockStream = new HashedBlockStream(outStream, true);
+            var hashedBlockStream = new HashedBlockStream(outStream, true, new SHA256HasherRT());
             for (int i = 0; i < 1024 * 1024; i += 1024)
             {
                 hashedBlockStream.Write(data, i, 1024);
@@ -185,7 +192,7 @@ namespace MetroPass.Core.Tests.Services
 
             if (IsWritingStream)
             {
-                hashedBlockStream = new HashedBlockStream(source, true);
+                hashedBlockStream = new HashedBlockStream(source, true, new SHA256HasherRT());
 
                 if (compression == PwCompressionAlgorithm.GZip)
                 {
@@ -194,7 +201,7 @@ namespace MetroPass.Core.Tests.Services
             }
             else
             {
-                hashedBlockStream = new HashedBlockStream(source, false, 0, false);
+                hashedBlockStream = new HashedBlockStream(source, false, 0, false, new SHA256HasherRT());
 
                 if (compression == PwCompressionAlgorithm.GZip)
                 {
@@ -256,7 +263,7 @@ namespace MetroPass.Core.Tests.Services
             var protectedString = "QwzFTMLCpNY=";
             var protectedStringBytes = Convert.FromBase64String(protectedString);
 
-           var rando = new CryptoRandomStream(CrsAlgorithm.Salsa20, Convert.FromBase64String("6tDlwZfwES4jAQzLisWdpNdnuTYyDZfflEdbshzdgi8="));
+           var rando = new CryptoRandomStream(CrsAlgorithm.Salsa20, Convert.FromBase64String("6tDlwZfwES4jAQzLisWdpNdnuTYyDZfflEdbshzdgi8="), new SHA256HasherRT());
            var getByte = rando.GetRandomBytes((uint)protectedStringBytes.Length);
            byte[] pbPlain = new byte[protectedStringBytes.Length];
 
