@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Framework;
 using MetroPass.UI.ViewModels;
 using Windows.System;
+using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Automation.Peers;
@@ -22,12 +23,11 @@ namespace MetroPass.UI.Views
             Window.Current.CoreWindow.KeyDown += CoreWindow_KeyDown;
         }
 
-        async void CoreWindow_KeyDown(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.KeyEventArgs e)
+        private void CoreWindow_KeyDown(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.KeyEventArgs e)
         {
             if (e.VirtualKey == VirtualKey.Control) isCtrlKeyPressed = true;
             else if (isCtrlKeyPressed)
             {
-
                 switch (e.VirtualKey)
                 {
                     case VirtualKey.B: InvokeCommand(CopyUsername); break;
@@ -35,11 +35,9 @@ namespace MetroPass.UI.Views
                     case VirtualKey.U: InvokeCommand(OpenURL); break;
                 }
             }
-            else
+            else if (IsNormalKey(e.VirtualKey))
             {
-          
-
-                Windows.ApplicationModel.Search.SearchPane.GetForCurrentView().TrySetQueryText(e.VirtualKey.ToString());
+                Windows.ApplicationModel.Search.SearchPane.GetForCurrentView().TrySetQueryText(GetKeyValue(e.VirtualKey));
                 Windows.ApplicationModel.Search.SearchPane.GetForCurrentView().Show();
             }
         }
@@ -142,8 +140,18 @@ namespace MetroPass.UI.Views
             }
         }
 
+        private bool IsNormalKey(VirtualKey key)
+        {
+            return (key >= VirtualKey.Number0 && key <= VirtualKey.Z);
+        }
 
-  
-
+        private string GetKeyValue(VirtualKey key)
+        {
+            if (key >= VirtualKey.Number0 & key <= VirtualKey.Number9)
+            {
+                return key.ToString().Replace("Number", "");
+            }
+            return key.ToString();
+        }
     }
 }
