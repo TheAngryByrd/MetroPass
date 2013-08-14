@@ -86,15 +86,14 @@ namespace MetroPass.Core.Services.Kdb4.Writer
 
             var streamToWriteToFile = writer.BaseStream;
             streamToWriteToFile.Position = 0;
-            
-            var databaseStream = await databaseFile.OpenAsync(FileAccess.ReadAndWrite);
+            var bytesToWrite = streamToWriteToFile.ToArray();
 
-            using (var iowriter = new BinaryWriter(databaseStream))
-            {
-                iowriter.Write(streamToWriteToFile.ToArray());
-                iowriter.Flush();
-            }
-            writer.Dispose();
+            var databaseStream = await databaseFile.OpenAsync(FileAccess.ReadAndWrite);
+            databaseStream.SetLength(0);
+            await databaseStream.FlushAsync();
+            await databaseStream.WriteAsync(bytesToWrite, 0, bytesToWrite.Length);
+            await databaseStream.FlushAsync();
+            databaseStream.Dispose();
 
             var cryptoStream = new CryptoRandomStream(CrsAlgorithm.Salsa20, kdb4File.pbProtectedStreamKey,_hasher);
             var parser = new Kdb4Parser(cryptoStream);
