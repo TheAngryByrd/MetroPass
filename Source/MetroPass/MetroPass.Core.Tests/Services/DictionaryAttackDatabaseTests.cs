@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using MetroPass.Core.Services;
 using MetroPass.Core.Services.Kdb4.Writer;
 using MetroPass.WinRT.Infrastructure.Compression;
 using MetroPass.WinRT.Infrastructure.Encryption;
@@ -16,6 +17,7 @@ using PCLStorage;
 using Windows.Storage;
 using Windows.ApplicationModel;
 using Windows.Storage.Search;
+using Metropass.Core.PCL.Model.Kdb4;
 
 namespace MetroPass.Core.Tests.Services
 {
@@ -82,8 +84,9 @@ namespace MetroPass.Core.Tests.Services
             var query = samples.CreateFileQueryWithOptions(queryOptions);
             IReadOnlyList<StorageFile> fileList = await query.GetFilesAsync();
 
-            var writer = new Kdb4Writer(new Kdb4HeaderWriter(),
+            
 
+            var writer = new Kdb4Writer(new Kdb4HeaderWriter(),
                       new WinRTCrypto(CryptoAlgoritmType.AES_CBC_PKCS7),
                       new MultiThreadedBouncyCastleCrypto(CryptoAlgoritmType.AES_ECB),
                       new SHA256HasherRT(),
@@ -112,15 +115,15 @@ namespace MetroPass.Core.Tests.Services
                 }
                 catch (Exception e)
                 {
-                    if(System.Diagnostics.Debugger.IsAttached)
+                    if(Debugger.IsAttached)
                     {
                         Debugger.Break();
                     }
+                    Assert.Fail();
                 }
                 finally
                 {
-                    TryCleanup(lastFileToTry);
-
+                    //TryCleanup(lastFileToTry);
                 }
             }
 
