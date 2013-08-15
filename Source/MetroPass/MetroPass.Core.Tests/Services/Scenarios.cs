@@ -1,13 +1,18 @@
-﻿using MetroPass.Core.Services;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Framework;
+using MetroPass.WinRT.Infrastructure.Compression;
+using MetroPass.WinRT.Infrastructure.Encryption;
 using MetroPass.WinRT.Infrastructure.Hashing;
+using Metropass.Core.PCL.Encryption;
 using Metropass.Core.PCL.Model;
 using Metropass.Core.PCL.Model.Kdb4.Keys;
+using Metropass.Core.PCL.Model.Kdb4.Reader;
 using Windows.ApplicationModel;
 using Windows.Storage;
 using PCLStorage;
+using System.IO;
 
 namespace MetroPass.Core.Tests.Services
 {
@@ -31,14 +36,20 @@ namespace MetroPass.Core.Tests.Services
 
             if (!string.IsNullOrEmpty(keyPath))
             {
-                var file = await Helpers.Helpers.GetKeyFile(keyPath);
-                userKeys.Add(await KcpKeyFile.Create(new WinRTFile(file), hasher));
+                var keyfile = await Helpers.Helpers.GetKeyFile(keyPath);
+                userKeys.Add(await KcpKeyFile.Create(new WinRTFile(keyfile), hasher));
             }
 
+            var readerFactory = new KdbReaderFactory(
+                new WinRTCrypto(CryptoAlgoritmType.AES_CBC_PKCS7),
+                new MultiThreadedBouncyCastleCrypto(CryptoAlgoritmType.AES_ECB),
+                new SHA256HasherRT(),
+                new GZipFactoryRT());
 
-            var readerFactory = new KdbReaderFactory();
+            var file = await FileIO.ReadBufferAsync(database);
+            MemoryStream kdbDataReader = new MemoryStream(file.AsBytes());
 
-            return await readerFactory.LoadAsync(database, userKeys);
+            return await readerFactory.LoadAsync(kdbDataReader, userKeys);
         }
     }
 }

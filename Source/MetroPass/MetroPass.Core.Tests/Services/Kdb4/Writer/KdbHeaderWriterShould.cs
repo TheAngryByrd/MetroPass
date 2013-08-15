@@ -1,5 +1,10 @@
 ﻿using Framework;
+using MetroPass.WinRT.Infrastructure.Compression;
+using MetroPass.WinRT.Infrastructure.Encryption;
+using MetroPass.WinRT.Infrastructure.Hashing;
+using Metropass.Core.PCL.Encryption;
 using Metropass.Core.PCL.Model.Kdb4;
+using Metropass.Core.PCL.Model.Kdb4.Reader;
 using Metropass.Core.PCL.Model.Kdb4.Writer;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using System;
@@ -11,7 +16,6 @@ using System.Threading.Tasks;
 using Windows.Storage.Streams;
 using Windows.Security.Cryptography;
 using MetroPass.Core.Model;
-using MetroPass.Core.Services;
 
 namespace MetroPass.Core.Tests.Services.Kdb4.Writer
 {
@@ -60,8 +64,13 @@ namespace MetroPass.Core.Tests.Services.Kdb4.Writer
             hw.WriteHeaders(dataWriter, kdb4File);
             var stream = dataWriter.BaseStream;
             stream.Position = 0;
- 
-            var factory = new KdbReaderFactory();
+            var factory = new KdbReaderFactory(
+                          new WinRTCrypto(CryptoAlgoritmType.AES_CBC_PKCS7),
+                          new MultiThreadedBouncyCastleCrypto(CryptoAlgoritmType.AES_ECB),
+                          new SHA256HasherRT(),
+                          new GZipFactoryRT());
+
+      
             var headerinfo = factory.ReadVersionInfo(stream);
         }
 

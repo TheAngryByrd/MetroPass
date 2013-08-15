@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using System.Threading.Tasks;
-using MetroPass.Core.Interfaces;
-using MetroPass.Core.Security;
 using MetroPass.UI.Tests.Mocks;
 using MetroPass.UI.ViewModels;
 using MetroPass.UI.ViewModels.Messages;
