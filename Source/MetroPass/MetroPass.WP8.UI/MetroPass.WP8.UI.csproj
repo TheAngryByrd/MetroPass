@@ -169,6 +169,12 @@
     <Reference Include="ReactiveUI.Blend">
       <HintPath>..\packages\reactiveui-platforms.5.1.2\lib\WP8\ReactiveUI.Blend.dll</HintPath>
     </Reference>
+    <Reference Include="ReactiveUI.Events">
+      <HintPath>..\packages\reactiveui-events.5.1.2\lib\wp8\ReactiveUI.Events.dll</HintPath>
+    </Reference>
+    <Reference Include="ReactiveUI.Mobile">
+      <HintPath>..\packages\reactiveui-mobile.5.1.2\lib\WP8\ReactiveUI.Mobile.dll</HintPath>
+    </Reference>
     <Reference Include="ReactiveUI.Xaml">
       <HintPath>..\packages\reactiveui-platforms.5.1.2\lib\WP8\ReactiveUI.Xaml.dll</HintPath>
     </Reference>
@@ -185,7 +191,10 @@
       <HintPath>..\packages\Rx-PlatformServices.2.1.30214.0\lib\WP8\System.Reactive.PlatformServices.dll</HintPath>
     </Reference>
     <Reference Include="System.Reactive.Windows.Threading">
-      <HintPath>..\packages\Rx-XAML.2.1.30214.0\lib\WP8\System.Reactive.Windows.Threading.dll</HintPath>
+      <HintPath>..\packages\Rx-Xaml.2.1.30214.0\lib\WP8\System.Reactive.Windows.Threading.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Mobile">
+      <HintPath>..\packages\reactiveui-mobile.5.1.2\lib\WP8\Xamarin.Mobile.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />
