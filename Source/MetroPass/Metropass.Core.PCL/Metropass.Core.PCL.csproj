@@ -75,6 +75,7 @@
     <Compile Include="Model\Kdb4\Writer\Kdb4HeaderWriter.cs" />
     <Compile Include="Model\Kdb4\Writer\Kdb4Persister.cs" />
     <Compile Include="Model\Kdb4\Writer\Kdb4Writer.cs" />
+    <Compile Include="Model\Kdb4\Writer\KdbWriterFactory.cs" />
     <Compile Include="Model\PwDatabase.cs" />
     <Compile Include="Model\PwEnums.cs" />
     <Compile Include="Helpers\XmlEx.cs" />
