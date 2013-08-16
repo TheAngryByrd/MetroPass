@@ -1,6 +1,5 @@
 using System;
 using System.Threading.Tasks;
-using MetroPass.Core.Interfaces;
 using Metropass.Core.PCL.PasswordGeneration;
 
 namespace MetroPass.UI.Tests.Mocks

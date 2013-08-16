@@ -113,7 +113,6 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\ProtectedBuffer.cs" />
-    <Compile Include="Services\KdbWriterFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Framework\Framework.csproj">
@@ -136,6 +135,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Services\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
     <VisualStudioVersion>12.0</VisualStudioVersion>

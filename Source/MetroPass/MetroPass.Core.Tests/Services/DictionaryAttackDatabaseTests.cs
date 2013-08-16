@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics;
-using MetroPass.Core.Services.Kdb4.Writer;
 using MetroPass.WinRT.Infrastructure.Compression;
 using MetroPass.WinRT.Infrastructure.Encryption;
 using MetroPass.WinRT.Infrastructure.Hashing;

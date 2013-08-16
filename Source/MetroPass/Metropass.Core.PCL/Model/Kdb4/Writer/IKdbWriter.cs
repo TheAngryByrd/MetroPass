@@ -1,8 +1,7 @@
 ﻿using System.Threading.Tasks;
-using Metropass.Core.PCL.Model;
 using PCLStorage;
 
-namespace MetroPass.Core.Interfaces
+namespace Metropass.Core.PCL.Model.Kdb4.Writer
 {
     public interface IKdbWriter
     {

@@ -1,19 +1,16 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
-using MetroPass.Core.Interfaces;
+using MetroPass.Core.Services.Kdb4.Writer;
 using Metropass.Core.PCL.Cipher;
 using Metropass.Core.PCL.Encryption;
 using Metropass.Core.PCL.Hashing;
-using Metropass.Core.PCL.Model;
-using Metropass.Core.PCL.Model.Kdb4;
 using Metropass.Core.PCL.Model.Kdb4.Keys;
-using Metropass.Core.PCL.Model.Kdb4.Writer;
 using Metropass.Core.PCL.Model.Kdb4.Reader;
 using Metropass.Core.PCL.Compression;
 using PCLStorage;
 
-namespace MetroPass.Core.Services.Kdb4.Writer
+namespace Metropass.Core.PCL.Model.Kdb4.Writer
 {
     public class Kdb4Writer : IKdbWriter
     {

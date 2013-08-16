@@ -1,5 +1,4 @@
-﻿using MetroPass.Core.Services.Kdb4.Writer;
-using MetroPass.Core.Tests.Helpers;
+﻿using MetroPass.Core.Tests.Helpers;
 using MetroPass.WinRT.Infrastructure.Hashing;
 using Metropass.Core.PCL.Cipher;
 using Metropass.Core.PCL.Hashing;

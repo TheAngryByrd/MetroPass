@@ -11,6 +11,7 @@ using Metropass.Core.PCL.Encryption;
 using Metropass.Core.PCL.Model;
 using Metropass.Core.PCL.Model.Kdb4.Keys;
 using Metropass.Core.PCL.Model.Kdb4.Reader;
+using Metropass.Core.PCL.Model.Kdb4.Writer;
 using PCLStorage;
 using Windows.Storage;
 
@@ -74,7 +75,10 @@ namespace MetroPass.UI.DataModel
 
         public async Task SavePwDatabase()
         {
-            var factory = new KdbWriterFactory();
+            var factory = new KdbWriterFactory(new WinRTCrypto(CryptoAlgoritmType.AES_CBC_PKCS7),
+                    new MultiThreadedBouncyCastleCrypto(CryptoAlgoritmType.AES_ECB),
+                    new SHA256HasherRT(),
+                    new GZipFactoryRT());
 
             var writer = factory.CreateWriter(PwDatabase.Tree);
 
