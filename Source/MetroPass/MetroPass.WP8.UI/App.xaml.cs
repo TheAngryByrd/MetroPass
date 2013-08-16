@@ -8,6 +8,7 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using MetroPass.WP8.UI.Resources;
 using MetroPass.WP8.UI.ViewModels;
+using Ninject;
 using ReactiveUI;
 using ReactiveUI.Mobile;
 
@@ -45,8 +46,11 @@ namespace MetroPass.WP8.UI
 
             var ninjectDependencyResolver = new NinjectDependencyResolver(RxApp.DependencyResolver);
             RxApp.DependencyResolver = ninjectDependencyResolver;
-            ninjectDependencyResolver.Kernel.Bind<IApplicationRootState, AppBootstrapper>();
-        
+            var bootstrapper = new AppBootstrapper(ninjectDependencyResolver);
+
+            ninjectDependencyResolver.Kernel.Bind<IApplicationRootState>().ToMethod(_ => bootstrapper); ;
+
+
 
             var host = RxApp.DependencyResolver.GetService<ISuspensionHost>();
             host.SetupDefaultSuspendResume();

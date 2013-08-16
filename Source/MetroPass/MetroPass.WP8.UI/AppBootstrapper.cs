@@ -2,9 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
+using MetroPass.WP8.UI.ViewModels;
+using MetroPass.WP8.UI.Views;
 using Ninject;
 using ReactiveUI;
 using ReactiveUI.Mobile;
+
+public static class ReactiveUINavigateExtentions
+{
+    public static void Navigate<T>(this INavigateCommand command)
+    {
+        var VM = RxApp.DependencyResolver.GetService<T>();
+        command.Execute(VM);
+    }
+}
 
 namespace MetroPass.WP8.UI
 {
@@ -24,18 +35,19 @@ namespace MetroPass.WP8.UI
             [IgnoreDataMember]
             private readonly NinjectDependencyResolver _ninjectResolver;
 
-            public AppBootstrapper()
+            public AppBootstrapper(NinjectDependencyResolver resolver)
             {
+                _ninjectResolver = resolver;
                 Router = new RoutingState();
 
-                //_ninjectResolver.Kernel.Bind<IViewFor<TestPage1ViewModel>>().To<TestPage1View>();
+                _ninjectResolver.Kernel.Bind<IViewFor<SkydriveAccessViewModel>>().To<SkydriveAccessView>();
 
                 _ninjectResolver.Kernel.Bind<IApplicationRootState>().ToConstant(this);
 
                 _ninjectResolver.Kernel.Bind<IScreen>().ToConstant(this);
-    
 
-                //Router.Navigate.Execute(new TestPage1ViewModel(this));
+
+                Router.Navigate.Navigate<SkydriveAccessViewModel>();
             }
         }
 

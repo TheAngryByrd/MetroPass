@@ -11,7 +11,7 @@ namespace MetroPass.WP8.UI
         {
             InitializeComponent();
 
-          //  this.OneWayBind(ViewModel, x => x.Router, x => x.Router.Router);
+            this.OneWayBind(ViewModel, x => x.Router, x => x.Router.Router);
         }
 
         public AppBootstrapper ViewModel
