@@ -7,7 +7,7 @@ using Metropass.Core.PCL.Cipher;
 using Metropass.Core.PCL.Model.Kdb4;
 using System.Xml.Linq;
 
-namespace MetroPass.Core.Services.Kdb4.Writer
+namespace Metropass.Core.PCL.Model.Kdb4.Writer
 {
     public class Kdb4Persister
     {

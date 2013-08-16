@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Metropass.Core.PCL.Encryption;
 
 namespace Metropass.Core.PCL.Encryption
 {

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
-using MetroPass.Core.Services.Kdb4.Writer;
 using Metropass.Core.PCL.Cipher;
 using Metropass.Core.PCL.Encryption;
 using Metropass.Core.PCL.Hashing;

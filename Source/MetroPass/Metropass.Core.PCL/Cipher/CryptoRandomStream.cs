@@ -1,5 +1,4 @@
 ﻿using System;
-using MetroPass.Core.Helpers.Cipher;
 using Metropass.Core.PCL.Hashing;
 
 namespace Metropass.Core.PCL.Cipher

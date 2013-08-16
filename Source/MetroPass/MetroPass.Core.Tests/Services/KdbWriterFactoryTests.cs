@@ -1,5 +1,4 @@
 ﻿using System.Xml.Linq;
-using MetroPass.Core.Services;
 using MetroPass.WinRT.Infrastructure.Compression;
 using MetroPass.WinRT.Infrastructure.Encryption;
 using MetroPass.WinRT.Infrastructure.Hashing;
