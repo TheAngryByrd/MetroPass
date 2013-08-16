@@ -1,5 +1,4 @@
 ﻿using Caliburn.Micro;
-using MetroPass.Core.Model;
 using MetroPass.UI.DataModel;
 using MetroPass.UI.Services;
 using System.ComponentModel.DataAnnotations;

@@ -1,8 +1,7 @@
 ﻿using System.IO;
 using System.Threading.Tasks;
-using Metropass.Core.PCL.Model.Kdb4;
 
-namespace MetroPass.Core.Interfaces
+namespace Metropass.Core.PCL.Model.Kdb4.Reader
 {
     public interface IKdbReader
     {

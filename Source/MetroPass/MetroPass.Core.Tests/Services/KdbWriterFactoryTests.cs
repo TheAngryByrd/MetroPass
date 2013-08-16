@@ -1,6 +1,4 @@
 ﻿using System.Xml.Linq;
-using MetroPass.Core.Services.Kdb4;
-using MetroPass.Core.Services.Kdb4.Writer;
 using MetroPass.WinRT.Infrastructure.Compression;
 using MetroPass.WinRT.Infrastructure.Encryption;
 using MetroPass.WinRT.Infrastructure.Hashing;
@@ -9,10 +7,6 @@ using Metropass.Core.PCL.Model.Kdb4;
 using Metropass.Core.PCL.Model.Kdb4.Writer;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MetroPass.Core.Tests.Services
 {

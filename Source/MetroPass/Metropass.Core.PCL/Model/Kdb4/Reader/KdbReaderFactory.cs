@@ -1,5 +1,4 @@
-﻿using MetroPass.Core.Interfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Metropass.Core.PCL.Encryption;

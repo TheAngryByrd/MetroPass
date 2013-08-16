@@ -7,15 +7,9 @@ using Metropass.Core.PCL.Model.Kdb4;
 using Metropass.Core.PCL.Model.Kdb4.Reader;
 using Metropass.Core.PCL.Model.Kdb4.Writer;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Windows.Storage.Streams;
 using Windows.Security.Cryptography;
-using MetroPass.Core.Model;
 
 namespace MetroPass.Core.Tests.Services.Kdb4.Writer
 {

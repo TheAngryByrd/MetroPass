@@ -1,6 +1,4 @@
-﻿using MetroPass.Core.Interfaces;
-using MetroPass.Core.Services.Kdb4.Writer;
-using System;
+﻿using System;
 using Metropass.Core.PCL.Compression;
 using Metropass.Core.PCL.Encryption;
 using Metropass.Core.PCL.Hashing;

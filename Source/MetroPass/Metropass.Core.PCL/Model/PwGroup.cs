@@ -5,7 +5,7 @@ using System.Xml.Linq;
 
 namespace Metropass.Core.PCL.Model
 {
-    public class PwGroup : Metropass.Core.PCL.Model.PwCommon, MetroPass.Core.Model.IGroup
+    public class PwGroup : Metropass.Core.PCL.Model.PwCommon, Metropass.Core.PCL.Model.IGroup
     { 
         private readonly IEnumerable<XElement> _entries;
         private readonly IEnumerable<XElement> _subGroups;

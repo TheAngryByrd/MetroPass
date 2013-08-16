@@ -1,7 +1,7 @@
 ﻿using System;
 using Metropass.Core.PCL.Helpers;
 
-namespace MetroPass.Core.Helpers.Cipher
+namespace Metropass.Core.PCL.Cipher
 {
     public sealed class Salsa20Cipher
     {

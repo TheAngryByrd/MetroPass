@@ -8,7 +8,6 @@ using System.Xml.Linq;
 using Caliburn.Micro;
 using Callisto.Controls;
 using Framework;
-using MetroPass.Core.Model;
 using MetroPass.UI.DataModel;
 using MetroPass.UI.Services;
 using MetroPass.UI.ViewModels.Messages;

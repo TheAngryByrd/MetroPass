@@ -7,7 +7,6 @@ using Metropass.Core.PCL.Compression;
 using Metropass.Core.PCL.Encryption;
 using Metropass.Core.PCL.Hashing;
 using Metropass.Core.PCL.Model.Kdb4.Keys;
-using MetroPass.Core.Interfaces;
 
 namespace Metropass.Core.PCL.Model.Kdb4.Reader
 {
