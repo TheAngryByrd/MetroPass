@@ -10,7 +10,7 @@ namespace MetroPass.WP8.UI
         public MainPage()
         {
             InitializeComponent();
-
+            ViewModel = RxApp.DependencyResolver.GetService<AppBootstrapper>();
             this.OneWayBind(ViewModel, x => x.Router, x => x.Router.Router);
         }
 

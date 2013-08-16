@@ -46,11 +46,7 @@ namespace MetroPass.WP8.UI
 
             var ninjectDependencyResolver = new NinjectDependencyResolver(RxApp.DependencyResolver);
             RxApp.DependencyResolver = ninjectDependencyResolver;
-            var bootstrapper = new AppBootstrapper(ninjectDependencyResolver);
-
-            ninjectDependencyResolver.Kernel.Bind<IApplicationRootState>().ToMethod(_ => bootstrapper); ;
-
-
+            ninjectDependencyResolver.Kernel.Bind<NinjectDependencyResolver>().ToConstant(ninjectDependencyResolver);
 
             var host = RxApp.DependencyResolver.GetService<ISuspensionHost>();
             host.SetupDefaultSuspendResume();
