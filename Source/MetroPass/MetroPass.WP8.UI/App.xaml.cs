@@ -43,8 +43,10 @@ namespace MetroPass.WP8.UI
                 PhoneApplicationService.Current.UserIdleDetectionMode = IdleDetectionMode.Disabled;
             }
 
-            //TODo get rid of ugly casting
-            ((ModernDependencyResolver)RxApp.DependencyResolver).Register(() => new AppBootstrapper(), typeof(IApplicationRootState));
+            var ninjectDependencyResolver = new NinjectDependencyResolver(RxApp.DependencyResolver);
+            RxApp.DependencyResolver = ninjectDependencyResolver;
+            ninjectDependencyResolver.Kernel.Bind<IApplicationRootState, AppBootstrapper>();
+        
 
             var host = RxApp.DependencyResolver.GetService<ISuspensionHost>();
             host.SetupDefaultSuspendResume();

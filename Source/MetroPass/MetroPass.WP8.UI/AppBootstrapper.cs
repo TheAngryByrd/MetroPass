@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.Serialization;
 using Ninject;
 using ReactiveUI;
@@ -26,8 +27,6 @@ namespace MetroPass.WP8.UI
             public AppBootstrapper()
             {
                 Router = new RoutingState();
-                _ninjectResolver = new NinjectDependencyResolver(RxApp.DependencyResolver);
-                RxApp.DependencyResolver = _ninjectResolver;
 
                 //_ninjectResolver.Kernel.Bind<IViewFor<TestPage1ViewModel>>().To<TestPage1View>();
 
@@ -73,23 +72,38 @@ namespace MetroPass.WP8.UI
             }
 
             public IEnumerable<object> GetServices(Type serviceType, string contract = null) {
+
+                IEnumerable<object> retVal = null;
+
+
                 try
                 {
-                    return Kernel.GetAll(serviceType, contract);
+                    retVal = Kernel.GetAll(serviceType, contract);
                 }
                 catch (Exception)
                 {
 
                 }
+                if (retVal != null && retVal.Any())
+                {
+                    return retVal;
+                }
 
                 try
                 {
-                    return _defaultResolver.GetServices(serviceType, contract);
+                    retVal = _defaultResolver.GetServices(serviceType, contract);
                 }
                 catch (Exception)
                 {
                     throw;
                 }
+
+                if (retVal != null && retVal.Any())
+                {
+                    return retVal;
+                }
+
+                throw new ArgumentException();
             }
 
             public void Dispose() {
