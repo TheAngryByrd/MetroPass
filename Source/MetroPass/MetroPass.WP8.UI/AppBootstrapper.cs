@@ -64,6 +64,12 @@ namespace MetroPass.WP8.UI
             }
 
             public object GetService(Type serviceType, string contract = null) {
+
+                var retval = _defaultResolver.GetService(serviceType, contract);
+
+                if (retval != null)
+                    return retval;
+
                 try
                 {
                     return Kernel.Get(serviceType, contract);
@@ -73,49 +79,25 @@ namespace MetroPass.WP8.UI
                     
                 }
 
-                try
-                {
-                   return _defaultResolver.GetService(serviceType, contract);
-                }
-                catch (Exception)
-                {                    
-                    throw;
-                }
+                return null;
+
+              
+            
             }
 
             public IEnumerable<object> GetServices(Type serviceType, string contract = null) {
 
                 IEnumerable<object> retVal = null;
 
-
-                try
-                {
-                    retVal = Kernel.GetAll(serviceType, contract);
-                }
-                catch (Exception)
-                {
-
-                }
+                retVal = Kernel.GetAll(serviceType, contract);
+            
                 if (retVal != null && retVal.Any())
                 {
                     return retVal;
                 }
 
-                try
-                {
-                    retVal = _defaultResolver.GetServices(serviceType, contract);
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
-
-                if (retVal != null && retVal.Any())
-                {
-                    return retVal;
-                }
-
-                throw new ArgumentException();
+                return _defaultResolver.GetServices(serviceType, contract);
+         
             }
 
             public void Dispose() {
