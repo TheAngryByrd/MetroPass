@@ -1,9 +1,16 @@
-﻿using MetroPass.Core.Services;
+﻿using System.IO;
+using Framework;
+using MetroPass.Core.Services;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using MetroPass.WinRT.Infrastructure.Compression;
+using MetroPass.WinRT.Infrastructure.Encryption;
+using MetroPass.WinRT.Infrastructure.Hashing;
+using Metropass.Core.PCL.Encryption;
 using Metropass.Core.PCL.Model;
 using Metropass.Core.PCL.Model.Kdb4.Keys;
+using Metropass.Core.PCL.Model.Kdb4.Reader;
 using PCLStorage;
 using Windows.Storage;
 
@@ -49,8 +56,15 @@ namespace MetroPass.UI.DataModel
         public async Task LoadPwDatabase(IStorageFile pwDatabaseFile, IList<IUserKey> userKeys, IProgress<double> percentComplete)
         {
             StorageFile = pwDatabaseFile;
-            var factory = new KdbReaderFactory();
-            this.PwDatabase = await factory.LoadAsync(pwDatabaseFile, userKeys, percentComplete);
+            var factory = new KdbReaderFactory(new WinRTCrypto(CryptoAlgoritmType.AES_CBC_PKCS7),
+                    new MultiThreadedBouncyCastleCrypto(CryptoAlgoritmType.AES_ECB),
+                    new SHA256HasherRT(),
+                    new GZipFactoryRT());
+           
+            var file = await FileIO.ReadBufferAsync(pwDatabaseFile);           
+            MemoryStream kdbDataReader = new MemoryStream(file.AsBytes());
+
+            this.PwDatabase = await factory.LoadAsync(kdbDataReader, userKeys, percentComplete);
         }
 
         public async Task CreatePwDatabase(IStorageFile pwDatabaseFil )
