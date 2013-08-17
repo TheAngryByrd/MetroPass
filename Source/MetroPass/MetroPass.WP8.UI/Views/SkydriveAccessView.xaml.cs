@@ -4,11 +4,8 @@
     using System.Net;
     using System.Runtime.Serialization.Json;
     using System.Windows;
-    using Microsoft.Phone.Controls;
-    using System.Windows.Controls;
-    using System.Windows.Navigation;
-    using System.Windows.Media;
-    using System.Windows.Media.Imaging;
+using Microsoft.Phone.Controls;
+using System.Windows.Navigation;
 using ReactiveUI;
 using MetroPass.WP8.UI.ViewModels;
 

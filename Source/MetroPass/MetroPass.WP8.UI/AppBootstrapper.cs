@@ -40,14 +40,16 @@ namespace MetroPass.WP8.UI
                 _ninjectResolver = resolver;
                 Router = new RoutingState();
 
+                _ninjectResolver.Kernel.Bind<IViewFor<DatabaseListViewModel>>().To<DatabaseListView>();
                 _ninjectResolver.Kernel.Bind<IViewFor<SkydriveAccessViewModel>>().To<SkydriveAccessView>();
+         
 
                 _ninjectResolver.Kernel.Bind<IApplicationRootState>().ToConstant(this);
 
                 _ninjectResolver.Kernel.Bind<IScreen>().ToConstant(this);
 
 
-                Router.Navigate.Navigate<SkydriveAccessViewModel>();
+                Router.Navigate.Navigate<DatabaseListViewModel>();
             }
         }
 
