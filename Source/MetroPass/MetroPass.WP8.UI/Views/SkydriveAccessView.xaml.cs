@@ -23,25 +23,9 @@ namespace MetroPass.WP8.UI.Views
             InitializeComponent();
         }
 
-                 /// <summary>
-        /// The URI for the OAuth service's Authorize endpoint.
-        /// </summary>
-        private static readonly string OAuthAuthorizeUri = "https://oauth.live.com/authorize";
+   
 
-        /// <summary>
-        /// The URI for the API service endpoint.
-        /// </summary>
-        private static readonly string ApiServiceUri = "https://apis.live.net/v5.0/";
 
-        /// <summary>
-        /// The applications client ID.
-        /// </summary>
-        private static readonly string ClientId = ""/* insert client ID here - go to http://manage.dev.live.com to get one */ ;
-
-        /// <summary>
-        /// The applications redirect URI (does not need to exist).
-        /// </summary>
-        private static readonly string RedirectUri = "https://oauth.live.com/desktop";
 
         /// <summary>
         /// Holds the retrieved access token.
@@ -181,7 +165,7 @@ namespace MetroPass.WP8.UI.Views
         /// <returns>The request URI.</returns>
         private Uri BuildApiUri(string path)
         {
-            UriBuilder builder = new UriBuilder(SkydriveAccessView.ApiServiceUri);
+            UriBuilder builder = new UriBuilder(SkydriveResources.ApiServiceUri);
             builder.Path += path;
             builder.Query = "access_token=" + HttpUtility.UrlEncode(this.accessToken);
             return builder.Uri;
@@ -195,13 +179,13 @@ namespace MetroPass.WP8.UI.Views
         private Uri BuildOAuthUri(string[] scopes)
         {
             List<string> paramList = new List<string>();
-            paramList.Add("client_id=" + HttpUtility.UrlEncode(SkydriveAccessView.ClientId));
+            paramList.Add("client_id=" + HttpUtility.UrlEncode(SkydriveResources.ClientId));
             paramList.Add("scope=" + HttpUtility.UrlEncode(String.Join(" ", scopes)));
             paramList.Add("response_type=" + HttpUtility.UrlEncode("token"));
             paramList.Add("display=" + HttpUtility.UrlEncode("touch"));
-            paramList.Add("redirect_uri=" + HttpUtility.UrlEncode(SkydriveAccessView.RedirectUri));
+            paramList.Add("redirect_uri=" + HttpUtility.UrlEncode(SkydriveResources.RedirectUri));
 
-            UriBuilder authorizeUri = new UriBuilder(SkydriveAccessView.OAuthAuthorizeUri);
+            UriBuilder authorizeUri = new UriBuilder(SkydriveResources.OAuthAuthorizeUri);
             authorizeUri.Query = String.Join("&", paramList.ToArray());
             return authorizeUri.Uri;
         }
@@ -266,7 +250,7 @@ namespace MetroPass.WP8.UI.Views
         {
             Uri uri = e.Uri;
 
-            if (uri != null && uri.AbsoluteUri.StartsWith(SkydriveAccessView.RedirectUri))
+            if (uri != null && uri.AbsoluteUri.StartsWith(SkydriveResources.RedirectUri))
             {
                 Dictionary<string, string> fragments = this.ProcessFragments(uri.Fragment);
 
