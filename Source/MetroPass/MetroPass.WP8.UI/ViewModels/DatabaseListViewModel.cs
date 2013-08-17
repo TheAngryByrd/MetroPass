@@ -14,7 +14,13 @@ namespace MetroPass.WP8.UI.ViewModels
         public DatabaseListViewModel(IScreen screen)
         {
             HostScreen = screen;
-            DatabaseNames = new ObservableCollection<string> { "Personal", "Work" }; 
+            DatabaseNames = new ObservableCollection<string> { "Personal", "Work" };
+            this.WhenNavigatedTo(OnNavigatedTo);
+        }
+
+        private IDisposable OnNavigatedTo()
+        {
+            return null;
         }
 
         public IScreen HostScreen
