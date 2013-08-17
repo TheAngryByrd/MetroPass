@@ -35,7 +35,7 @@ namespace MetroPass.WP8.UI.Views
         /// <summary>
         /// The list of scopes.
         /// </summary>
-        private string[] scopes = new string[] { "wl.basic", "wl.photos" };
+        private string[] scopes = new string[] { "wl.skydrive_update", "wl.offline_access" };
 
         /// <summary>
         /// The resource to request.
@@ -179,7 +179,7 @@ namespace MetroPass.WP8.UI.Views
         private Uri BuildOAuthUri(string[] scopes)
         {
             List<string> paramList = new List<string>();
-            paramList.Add("client_id=" + HttpUtility.UrlEncode(SkydriveResources.ClientId));
+            paramList.Add("client_id=" + HttpUtility.UrlEncode(ApiKeys.SkyDriveClientId));
             paramList.Add("scope=" + HttpUtility.UrlEncode(String.Join(" ", scopes)));
             paramList.Add("response_type=" + HttpUtility.UrlEncode("token"));
             paramList.Add("display=" + HttpUtility.UrlEncode("touch"));

@@ -19,11 +19,6 @@ namespace MetroPass.WP8.UI
         public const string ApiServiceUri = "https://apis.live.net/v5.0/";
 
         /// <summary>
-        /// The applications client ID.
-        /// </summary>
-        public const string ClientId = ""/* insert client ID here - go to http://manage.dev.live.com to get one */ ;
-
-        /// <summary>
         /// The applications redirect URI (does not need to exist).
         /// </summary>
         public const string RedirectUri = "https://oauth.live.com/desktop";
