@@ -39,83 +39,7 @@
     </toolkit:TransitionService.NavigationOutTransition>
 
     <phone:PhoneApplicationPage.Resources>
-		<Style x:Key="BaseHubTileStyle" TargetType="telerikPrimitives:HubTileBase">
-			<Setter Property="Background" Value="{StaticResource PhoneAccentBrush}"/>
-			<Setter Property="telerik:InteractionEffectManager.IsInteractionEnabled" Value="True"/>
-			<Setter Property="Width" Value="171"/>
-			<Setter Property="Height" Value="171"/>
-			<Setter Property="Margin" Value="5"/>
-			<Setter Property="Foreground" Value="White"/>
-		</Style>
-		<Style x:Key="RadHubTileStyle1" BasedOn="{StaticResource BaseHubTileStyle}" TargetType="telerikPrimitives:RadHubTile">
-			<Setter Property="Padding" Value="12"/>
-			<Setter Property="FontSize" Value="50"/>
-			<Setter Property="Template">
-				<Setter.Value>
-					<ControlTemplate TargetType="telerikPrimitives:RadHubTile">
-						<Grid x:Name="PART_LayoutRoot">
-							<VisualStateManager.VisualStateGroups>
-								<VisualStateGroup>
-									<VisualStateGroup.Transitions>
-										<VisualTransition From="NotFlipped" To="Flipped">
-											<Storyboard>
-												<DoubleAnimation Duration="0:0:0.4" From="0" To="90" Storyboard.TargetProperty="RotationX" Storyboard.TargetName="FrontProjection"/>
-												<DoubleAnimation BeginTime="0:0:0.4" Duration="0:0:0.4" From="-90" To="0" Storyboard.TargetProperty="RotationX" Storyboard.TargetName="BackProjection"/>
-											</Storyboard>
-										</VisualTransition>
-										<VisualTransition From="Flipped" To="NotFlipped">
-											<Storyboard>
-												<DoubleAnimation BeginTime="0:0:0.4" Duration="0:0:0.4" From="-90" To="0" Storyboard.TargetProperty="RotationX" Storyboard.TargetName="FrontProjection"/>
-												<DoubleAnimation Duration="0:0:0.4" From="0" To="90" Storyboard.TargetProperty="RotationX" Storyboard.TargetName="BackProjection"/>
-											</Storyboard>
-										</VisualTransition>
-									</VisualStateGroup.Transitions>
-									<VisualState x:Name="Flipped">
-										<Storyboard>
-											<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="RotationX" Storyboard.TargetName="FrontProjection">
-												<DiscreteDoubleKeyFrame KeyTime="0" Value="90"/>
-											</DoubleAnimationUsingKeyFrames>
-											<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="RotationX" Storyboard.TargetName="BackProjection">
-												<DiscreteDoubleKeyFrame KeyTime="0" Value="0"/>
-											</DoubleAnimationUsingKeyFrames>
-										</Storyboard>
-									</VisualState>
-									<VisualState x:Name="NotFlipped">
-										<Storyboard>
-											<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="RotationX" Storyboard.TargetName="FrontProjection">
-												<DiscreteDoubleKeyFrame KeyTime="0" Value="0"/>
-											</DoubleAnimationUsingKeyFrames>
-											<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="RotationX" Storyboard.TargetName="BackProjection">
-												<DiscreteDoubleKeyFrame KeyTime="0" Value="-90"/>
-											</DoubleAnimationUsingKeyFrames>
-										</Storyboard>
-									</VisualState>
-								</VisualStateGroup>
-							</VisualStateManager.VisualStateGroups>
-							<Grid>
-								<Grid.Projection>
-									<PlaneProjection x:Name="FrontProjection"/>
-								</Grid.Projection>									
-									<Border x:Name="PART_Background" BorderThickness="0" Background="{TemplateBinding Background}">
-									<StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-										<Viewbox Opacity="0.4"><TextBlock  FontFamily="Segoe UI Symbol" Foreground="White" Text="{TemplateBinding Message}"/></Viewbox>	
-									</StackPanel>
-								</Border>
-								<ContentControl x:Name="PART_Notification" Content="{TemplateBinding Count}" FontWeight="{TemplateBinding FontWeight}" FontStyle="{TemplateBinding FontStyle}" FontStretch="{TemplateBinding FontStretch}" FontSize="{TemplateBinding FontSize}" FontFamily="{TemplateBinding FontFamily}" HorizontalAlignment="Right" Margin="0,0,8,0" VerticalAlignment="top"/>
-								<ContentControl x:Name="PART_Title" Content="{TemplateBinding Title}" FontSize="{StaticResource PhoneFontSizeNormal}" HorizontalAlignment="Left" Margin="{TemplateBinding Padding}" VerticalAlignment="Bottom"/>
-							</Grid>
-							<ContentControl FontSize="{StaticResource PhoneFontSizeNormal}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
-								<ContentPresenter x:Name="PART_BackContent" ContentTemplate="{TemplateBinding BackContentTemplate}" Content="{TemplateBinding BackContent}">
-									<ContentPresenter.Projection>
-										<PlaneProjection x:Name="BackProjection"/>
-									</ContentPresenter.Projection>
-								</ContentPresenter>
-							</ContentControl>
-						</Grid>
-					</ControlTemplate>
-				</Setter.Value>
-			</Setter>
-		</Style>		
+	
 		<ItemsPanelTemplate x:Key="ItemsPanelTemplate1">
 			<telerikPrimitives:RadWrapPanel/>
 		</ItemsPanelTemplate>
@@ -165,7 +89,7 @@
 		</Grid.RowDefinitions>
 
 		<StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
-			<TextBlock x:Name="ApplicationTitle" Text="APP TITLE" Style="{StaticResource PhoneTextNormalStyle}"/>
+            <TextBlock x:Name="ApplicationTitle" Text="MetroPass" Style="{StaticResource PhoneTextNormalStyle}"/>
 			<TextBlock x:Name="PageTitle" Text="page title" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
 		</StackPanel>
 

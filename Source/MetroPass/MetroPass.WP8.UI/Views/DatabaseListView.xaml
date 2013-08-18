@@ -8,8 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:DT="clr-namespace:MetroPass.WP8.UI.ViewModels.DesignTime"
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
-    xmlns:mytoolkit="clr-namespace:MyToolkit.Controls;assembly=MyToolkit.Extended"
-    xmlns:mytoolkitpaging="clr-namespace:MyToolkit.Paging;assembly=MyToolkit.Extended"
+    
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
@@ -83,7 +82,13 @@
                     <DataTemplate>
                         <Button x:Name="DatabaseButton" Template="{StaticResource ButtonControlTemplate1}" 
                                 Command="{Binding ElementName=LayoutRoot, 
-                                                  Path=DataContext.NavigateToLoginCommand}" >                           
+                                                  Path=DataContext.NavigateToLoginCommand}"                                                  
+                                >
+                            <toolkit:ContextMenuService.ContextMenu>
+                                <toolkit:ContextMenu>
+                                    <toolkit:MenuItem Header="Delete"></toolkit:MenuItem>
+                                </toolkit:ContextMenu>
+                            </toolkit:ContextMenuService.ContextMenu>
                         </Button>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>

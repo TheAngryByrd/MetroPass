@@ -15,9 +15,10 @@
                 <ResourceDictionary Source="Resources/Styles.xaml" />               
             </ResourceDictionary.MergedDictionaries>
             <local:LocalizedStrings xmlns:local="clr-namespace:MetroPass.WP8.UI" x:Key="LocalizedStrings"/>
-            
+
         </ResourceDictionary>
         <local:Bootstrapper x:Key="bootstrapper" />
+
     </Application.Resources>
 
 </Application>
