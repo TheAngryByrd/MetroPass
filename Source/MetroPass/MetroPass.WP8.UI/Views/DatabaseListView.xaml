@@ -16,7 +16,7 @@
     SupportedOrientations="Portrait" Orientation="Portrait"
     mc:Ignorable="d"
     shell:SystemTray.IsVisible="True"    
-    d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True, Type=Type=DT:DatabaseListDesignTimeViewModel}">
+    d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True, Type=DT:DatabaseListDesignTimeViewModel}">
 
     <toolkit:TransitionService.NavigationInTransition>
         <toolkit:NavigationInTransition>
@@ -47,7 +47,7 @@
                                     <RowDefinition Height="*"></RowDefinition>
                                     <RowDefinition Height="auto"></RowDefinition>
                                 </Grid.RowDefinitions>
-                                <Border HorizontalAlignment="Stretch" Grid.Row="0" Grid.RowSpan="2" Background="#006A87" Height="175">
+                <Border HorizontalAlignment="Stretch" Grid.Row="0" Grid.RowSpan="2" Background="{StaticResource MainAppColor}" Height="175">
                                     <Viewbox >
                                         <TextBlock  FontFamily="Segoe UI Symbol" Foreground="White" Text="&#xE192;"/>
                                     </Viewbox>

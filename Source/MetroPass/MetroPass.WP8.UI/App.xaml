@@ -7,9 +7,20 @@
     xmlns:mobile="clr-namespace:ReactiveUI.Mobile;assembly=ReactiveUI.Mobile">
 
     <!--Application Resources-->
+
     <Application.Resources>
-        <local:LocalizedStrings xmlns:local="clr-namespace:MetroPass.WP8.UI" x:Key="LocalizedStrings"/>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Resources/Styles.xaml" />
+               
+            </ResourceDictionary.MergedDictionaries>
+            <local:LocalizedStrings xmlns:local="clr-namespace:MetroPass.WP8.UI" x:Key="LocalizedStrings"/>
+        </ResourceDictionary>
+
     </Application.Resources>
+
+    
+    
 
     <Application.ApplicationLifetimeObjects>
         <!--Required object that handles lifetime events for the application-->
