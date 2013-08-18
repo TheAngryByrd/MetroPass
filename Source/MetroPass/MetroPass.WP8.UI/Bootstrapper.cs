@@ -10,16 +10,13 @@ namespace MetroPass.WP8.UI
 {
     public class Bootstrapper : PhoneBootstrapper
     {
-        PhoneContainer container;
-        IKernel kernel;
+        PhoneContainer _container;
 
         protected override void Configure()
         {
-            container = new PhoneContainer();
-            kernel = new StandardKernel();
-           
+            _container = new PhoneContainer();           
 
-            container.RegisterPhoneServices(RootFrame);
+            _container.RegisterPhoneServices(RootFrame);
             
             AddCustomConventions();
         }
@@ -32,42 +29,29 @@ namespace MetroPass.WP8.UI
                     where t.IsClass && t.Namespace == @namespace
                     select t).ToList();
 
-            q.ForEach(t =>container.RegisterPerRequest(t,null,t));
+            q.ForEach(t =>_container.RegisterPerRequest(t,null,t));
         }
 
         protected override object GetInstance(Type service, string key)
         {
-            var result = container.GetInstance(service, key);
-            if (result == null)
-            {
-                result =kernel.Get(service, key);
-            }
-
-            return result;
+            return _container.GetInstance(service, key);
         }
 
         protected override IEnumerable<object> GetAllInstances(Type service)
         {
-            var result =  container.GetAllInstances(service);
-
-            if (result == null || !result.Any())
-            {
-                result = kernel.GetAll(service);
-            }
-
-            return result;
+            return _container.GetAllInstances(service);
         }
 
         protected override void BuildUp(object instance)
         {
-            container.BuildUp(instance);
-            kernel.Inject(instance);
+            _container.BuildUp(instance);
         }
 
-        protected override Microsoft.Phone.Controls.PhoneApplicationFrame CreatePhoneApplicationFrame()
+        protected override PhoneApplicationFrame CreatePhoneApplicationFrame()
         {
             return new TransitionFrame();
         }
+        
     }
 
 }

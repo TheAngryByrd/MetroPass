@@ -97,7 +97,6 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="AppBootstrapper.cs" />
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="LocalizedStrings.cs" />
     <Compile Include="Utils\NinjectDependencyResolver.cs" />
