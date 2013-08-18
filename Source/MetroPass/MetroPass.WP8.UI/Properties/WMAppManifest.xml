@@ -2,7 +2,7 @@
 <Deployment xmlns="http://schemas.microsoft.com/windowsphone/2012/deployment" AppPlatformVersion="8.0">
   <DefaultLanguage xmlns="" code="en-US" />
   <App xmlns="" ProductID="{3337ca6f-1dad-43ab-98d1-6062bca19680}" Title="MetroPass" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="MetroPass.WP8.UI author" Description="Sample description" Publisher="MetroPass.WP8.UI" PublisherID="{c4bd2262-e762-4b04-85ac-415a26221204}">
-    <IconPath IsRelative="true" IsResource="false">Logo.png</IconPath>
+    <IconPath IsRelative="true" IsResource="false">Assets\Logo.png</IconPath>
     <Capabilities>
       <Capability Name="ID_CAP_NETWORKING" />
       <Capability Name="ID_CAP_MEDIALIB_AUDIO" />
