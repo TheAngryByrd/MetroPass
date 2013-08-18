@@ -69,11 +69,11 @@
 					<ControlTemplate TargetType="ListBoxItem">
 						<Border x:Name="LayoutRoot" 
 						BorderBrush="{TemplateBinding BorderBrush}" 
-						BorderThickness="2" 
+						BorderThickness="4" 
 						Background="{TemplateBinding Background}" 
 						HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
 						 VerticalAlignment="{TemplateBinding VerticalAlignment}" 
-						 Margin="4"
+						 Margin="2"
 						>
 							<VisualStateManager.VisualStateGroups>
 								<VisualStateGroup x:Name="CommonStates">
@@ -96,7 +96,7 @@
 												<DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource MainHighlightColor}"/>
 											</ObjectAnimationUsingKeyFrames>
 											<ObjectAnimationUsingKeyFrames Storyboard.TargetName="LayoutRoot" Storyboard.TargetProperty="BorderThickness">
-												<DiscreteObjectKeyFrame KeyTime="0" Value="2"/>
+												<DiscreteObjectKeyFrame KeyTime="0" Value="4"/>
 											</ObjectAnimationUsingKeyFrames>
 										</Storyboard>
 									</VisualState>

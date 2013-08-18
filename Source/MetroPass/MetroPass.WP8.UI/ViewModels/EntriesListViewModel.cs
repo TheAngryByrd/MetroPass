@@ -18,6 +18,10 @@ namespace MetroPass.WP8.UI.ViewModels
         {
             InitializeItems();
         }
+
+        const string Key = "\uE192";
+        const string Folder = "\uE1C1";
+
         /// <summary>
         /// Initializes the items.
         /// </summary>
@@ -29,8 +33,18 @@ namespace MetroPass.WP8.UI.ViewModels
                 this.Items.Add(new Items()
                 {
                     Count = i,
-                    Title = "Title " + i,
-                    Icon = "\uE192"
+                    Title = "Folder " + i,
+                    Icon = Folder
+                });
+            }
+
+            for (int i = 1; i <= 7; i++)
+            {
+                this.Items.Add(new Items()
+                {
+                    Count = i,
+                    Title = "Entry " + i,
+                    Icon = Key
                 });
             }
         }
