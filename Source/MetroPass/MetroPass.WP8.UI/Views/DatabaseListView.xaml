@@ -78,7 +78,7 @@
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" >
 
-            <ItemsControl x:Name="DatabaseList"  ItemsSource="{Binding DatabaseNames}" Margin="24,0,24,0">
+            <ItemsControl x:Name="DatabaseNames"  ItemsSource="{Binding DatabaseNames}" Margin="24,0,24,0">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Button x:Name="DatabaseButton" Template="{StaticResource ButtonControlTemplate1}" 

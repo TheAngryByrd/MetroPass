@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Caliburn.Micro;
-using MetroPass.WP8.UI.ViewModels;
+using Microsoft.Phone.Controls;
 using Ninject;
 
 namespace MetroPass.WP8.UI
@@ -62,6 +62,11 @@ namespace MetroPass.WP8.UI
         {
             container.BuildUp(instance);
             kernel.Inject(instance);
+        }
+
+        protected override Microsoft.Phone.Controls.PhoneApplicationFrame CreatePhoneApplicationFrame()
+        {
+            return new TransitionFrame();
         }
     }
 

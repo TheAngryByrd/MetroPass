@@ -18,7 +18,7 @@ namespace MetroPass.WP8.UI
         /// </summary>
         public App()
         {
-
+           
             // Standard XAML initialization
             InitializeComponent();
 

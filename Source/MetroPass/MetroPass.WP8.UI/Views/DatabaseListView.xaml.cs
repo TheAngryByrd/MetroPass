@@ -11,6 +11,11 @@ namespace MetroPass.WP8.UI.Views
         public DatabaseListView()
         {
             InitializeComponent();
-        } 
+        }
+
+        protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+        }
     }
 }
