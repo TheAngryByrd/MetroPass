@@ -15,7 +15,8 @@
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait" Orientation="Portrait"
     mc:Ignorable="d"
-    shell:SystemTray.IsVisible="True"    
+    shell:SystemTray.IsVisible="True"   
+    DataContext="{Binding ViewModel}"
     d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True, Type=DT:DatabaseListDesignTimeViewModel}">
 
     <toolkit:TransitionService.NavigationInTransition>
@@ -79,8 +80,10 @@
 
             <ItemsControl x:Name="DatabaseList"  ItemsSource="{Binding DatabaseNames}" Margin="24,0,24,0">
                 <ItemsControl.ItemTemplate>
-                    <DataTemplate>                
-                        <Button Template="{StaticResource ButtonControlTemplate1}" Margin="0,0,0,24" >                           
+                    <DataTemplate>
+                        <Button x:Name="DatabaseButton" Template="{StaticResource ButtonControlTemplate1}" 
+                                Command="{Binding ElementName=LayoutRoot, 
+                                                  Path=DataContext.NavigateToLogin}" >                           
                         </Button>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>

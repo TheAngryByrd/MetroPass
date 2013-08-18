@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using MetroPass.WP8.UI.Utils;
 using MetroPass.WP8.UI.ViewModels.Interfaces;
 using ReactiveUI;
 
@@ -15,13 +12,19 @@ namespace MetroPass.WP8.UI.ViewModels
         {
             HostScreen = screen;
             DatabaseNames = new ObservableCollection<string> { "Personal", "Work" };
-            this.WhenNavigatedTo(OnNavigatedTo);
+         
+
+            NavigateToLogin = new ReactiveCommand();
+            NavigateToLogin.Subscribe(x =>
+                {
+                    screen.Router.Navigate.Navigate<SkydriveAccessViewModel>();
+                });
+
         }
 
-        private IDisposable OnNavigatedTo()
-        {
-            return null;
-        }
+        public ReactiveCommand NavigateToLogin { 
+            get; 
+            private set; }
 
         public IScreen HostScreen
         {

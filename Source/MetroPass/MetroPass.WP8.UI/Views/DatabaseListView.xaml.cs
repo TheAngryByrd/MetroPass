@@ -10,6 +10,7 @@ namespace MetroPass.WP8.UI.Views
     {
         public DatabaseListView()
         {
+           
             InitializeComponent();
             this.OneWayBind(ViewModel, vm => vm.DatabaseNames, v => v.DatabaseList.ItemsSource);
         }   
@@ -26,7 +27,9 @@ namespace MetroPass.WP8.UI.Views
         object IViewFor.ViewModel
         {
             get { return ViewModel; }
-            set { ViewModel = (DatabaseListViewModel)value; }
+            set { ViewModel = (DatabaseListViewModel)value;
+            this.DataContext = value;
+            }
         }
 
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
