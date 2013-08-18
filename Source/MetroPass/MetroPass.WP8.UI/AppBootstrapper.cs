@@ -28,18 +28,10 @@ namespace MetroPass.WP8.UI
                 _ninjectResolver = resolver;
                 Router = new RoutingState();
 
-            SetupBindings();
 
-            Router.Navigate.Navigate<DatabaseListViewModel, Guid>(b => b.RandomGuid, Guid.NewGuid());
+           
         }
   
-        private void SetupBindings() {
-            _ninjectResolver.Kernel.Bind<IViewFor<DatabaseListViewModel>>().To<DatabaseListView>();
-            _ninjectResolver.Kernel.Bind<IViewFor<SkydriveAccessViewModel>>().To<SkydriveAccessView>();         
-
-            _ninjectResolver.Kernel.Bind<IApplicationRootState>().ToConstant(this);
-
-            _ninjectResolver.Kernel.Bind<IScreen>().ToConstant(this);
-        }
+    
     }
 }

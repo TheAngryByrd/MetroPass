@@ -1,29 +1,26 @@
-﻿using System;
-using System.Diagnostics;
-using System.Resources;
+﻿using System.Diagnostics;
 using System.Windows;
-using System.Windows.Markup;
-using System.Windows.Navigation;
-using MetroPass.WP8.UI.Utils;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
-using MetroPass.WP8.UI.Resources;
-using MetroPass.WP8.UI.ViewModels;
-using Ninject;
-using ReactiveUI;
-using ReactiveUI.Mobile;
 
 namespace MetroPass.WP8.UI
 {
-    public partial class App : AutoSuspendApplication
+    public partial class App : Application
     {
+        /// <summary>
+        /// Provides easy access to the root frame of the Phone Application.
+        /// </summary>
+        /// <returns>The root frame of the Phone Application.</returns>
+        public static PhoneApplicationFrame RootFrame { get; private set; }
+
+        /// <summary>
+        /// Constructor for the Application object.
+        /// </summary>
         public App()
         {
+
             // Standard XAML initialization
             InitializeComponent();
-
-            // Language display initialization
-            InitializeLanguage();
 
             // Show graphics profiling information while debugging.
             if (Debugger.IsAttached)
@@ -45,68 +42,7 @@ namespace MetroPass.WP8.UI
                 PhoneApplicationService.Current.UserIdleDetectionMode = IdleDetectionMode.Disabled;
             }
 
-            var ninjectDependencyResolver = new NinjectDependencyResolver(RxApp.DependencyResolver);
-            RxApp.DependencyResolver = ninjectDependencyResolver;
-            ninjectDependencyResolver.Kernel.Bind<NinjectDependencyResolver>().ToConstant(ninjectDependencyResolver);
-
-            var host = RxApp.DependencyResolver.GetService<ISuspensionHost>();
-            host.SetupDefaultSuspendResume();
         }
 
-        // Initialize the app's font and flow direction as defined in its localized resource strings.
-        //
-        // To ensure that the font of your application is aligned with its supported languages and that the
-        // FlowDirection for each of those languages follows its traditional direction, ResourceLanguage
-        // and ResourceFlowDirection should be initialized in each resx file to match these values with that
-        // file's culture. For example:
-        //
-        // AppResources.es-ES.resx
-        //    ResourceLanguage's value should be "es-ES"
-        //    ResourceFlowDirection's value should be "LeftToRight"
-        //
-        // AppResources.ar-SA.resx
-        //     ResourceLanguage's value should be "ar-SA"
-        //     ResourceFlowDirection's value should be "RightToLeft"
-        //
-        // For more info on localizing Windows Phone apps see http://go.microsoft.com/fwlink/?LinkId=262072.
-        //
-        private void InitializeLanguage()
-        {
-            try
-            {
-                // Set the font to match the display language defined by the
-                // ResourceLanguage resource string for each supported language.
-                //
-                // Fall back to the font of the neutral language if the Display
-                // language of the phone is not supported.
-                //
-                // If a compiler error is hit then ResourceLanguage is missing from
-                // the resource file.
-                RootFrame.Language = XmlLanguage.GetLanguage(AppResources.ResourceLanguage);
-
-                // Set the FlowDirection of all elements under the root frame based
-                // on the ResourceFlowDirection resource string for each
-                // supported language.
-                //
-                // If a compiler error is hit then ResourceFlowDirection is missing from
-                // the resource file.
-                FlowDirection flow = (FlowDirection)Enum.Parse(typeof(FlowDirection), AppResources.ResourceFlowDirection);
-                RootFrame.FlowDirection = flow;
-            }
-            catch
-            {
-                // If an exception is caught here it is most likely due to either
-                // ResourceLangauge not being correctly set to a supported language
-                // code or ResourceFlowDirection is set to a value other than LeftToRight
-                // or RightToLeft.
-
-                if (Debugger.IsAttached)
-                {
-                    Debugger.Break();
-                }
-
-                throw;
-            }
-        }
     }
 }

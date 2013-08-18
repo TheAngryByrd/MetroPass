@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using MetroPass.WP8.UI.ViewModels.Interfaces;
 
 namespace MetroPass.WP8.UI.ViewModels.DesignTime

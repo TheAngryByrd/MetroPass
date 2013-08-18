@@ -1,37 +1,25 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
+using Caliburn.Micro;
 using MetroPass.WP8.UI.Utils;
 using MetroPass.WP8.UI.ViewModels.Interfaces;
 using ReactiveUI;
 
 namespace MetroPass.WP8.UI.ViewModels
 {
-    public class DatabaseListViewModel : ReactiveObject, IRoutableViewModel, IDatabaseListViewModel
+    public class DatabaseListViewModel : IDatabaseListViewModel
     {
-        public DatabaseListViewModel(IScreen screen)
-        {
-            HostScreen = screen;
+        private readonly INavigationService _navService;
+
+        public DatabaseListViewModel(INavigationService navService)
+        { 
+            _navService = navService;
             DatabaseNames = new ObservableCollection<string> { "Personal", "Work" };
-         
-
-            NavigateToLogin = new ReactiveCommand();
-            NavigateToLogin.Subscribe(x =>
-                {
-                    screen.Router.Navigate.Navigate<SkydriveAccessViewModel>();
-                });
-
+            NavigateToLoginCommand = new ReactiveCommand();
+            NavigateToLoginCommand.Subscribe(NavigateToLogin);
         }
-
-        public ReactiveCommand NavigateToLogin { 
-            get; 
-            private set; }
-
-        public IScreen HostScreen
-        {
-            get; private set;
-        }
-
-        public Guid RandomGuid { get; set; }
+     
 
         public ObservableCollection<string> DatabaseNames
         {
@@ -39,10 +27,11 @@ namespace MetroPass.WP8.UI.ViewModels
             set;
         }
 
-        public string UrlPathSegment {
-            get {
-                return typeof(DatabaseListViewModel).Name;
-            }
+        public IReactiveCommand NavigateToLoginCommand { get; private set; }
+
+        public void NavigateToLogin(object obj)
+        {
+            _navService.UriFor<SkydriveAccessViewModel>().Navigate();
         }
     }
 }
