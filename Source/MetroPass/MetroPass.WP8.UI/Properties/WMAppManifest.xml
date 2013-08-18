@@ -16,10 +16,10 @@
     <Tokens>
       <PrimaryToken TokenID="MetroPass.WP8.UIToken" TaskName="_default">
         <TemplateFlip>
-          <SmallImageURI IsRelative="true" IsResource="false">Assets\Tiles\FlipCycleTileSmall.png</SmallImageURI>
+          <SmallImageURI IsRelative="true" IsResource="false">Assets\Logo.png</SmallImageURI>
           <Count>0</Count>
-          <BackgroundImageURI IsRelative="true" IsResource="false">Assets\Tiles\FlipCycleTileMedium.png</BackgroundImageURI>
-          <Title>MetroPass.WP8.UI</Title>
+          <BackgroundImageURI IsRelative="true" IsResource="false">Assets\Logo.png</BackgroundImageURI>
+          <Title>MetroPass</Title>
           <BackContent>
           </BackContent>
           <BackBackgroundImageURI>
