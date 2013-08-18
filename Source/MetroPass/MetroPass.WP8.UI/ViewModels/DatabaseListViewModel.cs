@@ -28,6 +28,8 @@ namespace MetroPass.WP8.UI.ViewModels
             get; private set;
         }
 
+        public Guid RandomGuid { get; set; }
+
         public ObservableCollection<string> DatabaseNames
         {
             get;
