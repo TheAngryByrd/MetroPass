@@ -1,7 +1,7 @@
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace MetroPass.WP8.UI
+namespace MetroPass.WP8.UI.Utils
 {
     public static class PropertySupport
     {

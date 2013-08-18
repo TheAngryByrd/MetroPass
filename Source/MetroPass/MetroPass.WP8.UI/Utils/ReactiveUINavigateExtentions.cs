@@ -2,7 +2,7 @@ using System;
 using System.Linq.Expressions;
 using ReactiveUI;
 
-namespace MetroPass.WP8.UI
+namespace MetroPass.WP8.UI.Utils
 {
     public static class ReactiveUINavigateExtentions
     {

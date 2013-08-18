@@ -4,6 +4,7 @@ using System.Resources;
 using System.Windows;
 using System.Windows.Markup;
 using System.Windows.Navigation;
+using MetroPass.WP8.UI.Utils;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using MetroPass.WP8.UI.Resources;

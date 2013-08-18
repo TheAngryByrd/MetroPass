@@ -1,99 +1,45 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
+using MetroPass.WP8.UI.Utils;
 using MetroPass.WP8.UI.ViewModels;
 using MetroPass.WP8.UI.Views;
-using Ninject;
 using ReactiveUI;
 using ReactiveUI.Mobile;
 
 namespace MetroPass.WP8.UI
 {
-        [DataContract]
+    [DataContract]
         public class AppBootstrapper : ReactiveObject, IApplicationRootState
-        {
+    {
             [DataMember]
-            RoutingState _Router;
+            IRoutingState _Router;
 
             public IRoutingState Router
             {
                 get { return _Router; }
-                set { _Router = (RoutingState)value; } // XXX: This is dumb.
+                set { _Router = value; } // XXX: This is dumb.
             }
 
             [IgnoreDataMember]
             private readonly NinjectDependencyResolver _ninjectResolver;
 
-            public AppBootstrapper(NinjectDependencyResolver resolver)
-            {
+        public AppBootstrapper(NinjectDependencyResolver resolver)
+        {
                 _ninjectResolver = resolver;
                 Router = new RoutingState();
 
-                _ninjectResolver.Kernel.Bind<IViewFor<DatabaseListViewModel>>().To<DatabaseListView>();
-                _ninjectResolver.Kernel.Bind<IViewFor<SkydriveAccessViewModel>>().To<SkydriveAccessView>();         
+            SetupBindings();
 
-                _ninjectResolver.Kernel.Bind<IApplicationRootState>().ToConstant(this);
-
-                _ninjectResolver.Kernel.Bind<IScreen>().ToConstant(this);
-
-                Router.Navigate.Navigate<DatabaseListViewModel, Guid>(b => b.RandomGuid, Guid.NewGuid());
-            }
+            Router.Navigate.Navigate<DatabaseListViewModel, Guid>(b => b.RandomGuid, Guid.NewGuid());
         }
+  
+        private void SetupBindings() {
+            _ninjectResolver.Kernel.Bind<IViewFor<DatabaseListViewModel>>().To<DatabaseListView>();
+            _ninjectResolver.Kernel.Bind<IViewFor<SkydriveAccessViewModel>>().To<SkydriveAccessView>();         
 
-        public class NinjectDependencyResolver : IDependencyResolver
-        {
-            private readonly IDependencyResolver _defaultResolver;
-            public IKernel Kernel { get; protected set; }
+            _ninjectResolver.Kernel.Bind<IApplicationRootState>().ToConstant(this);
 
-            public NinjectDependencyResolver(IDependencyResolver defaultResolver)
-            {
-                _defaultResolver = defaultResolver;
-                Kernel = new StandardKernel();
-             
-            }
-
-            public object GetService(Type serviceType, string contract = null) {
-
-                var retval = _defaultResolver.GetService(serviceType, contract);
-
-                if (retval != null)
-                    return retval;
-
-                try
-                {
-                    return Kernel.Get(serviceType, contract);
-                }
-                catch (Exception)
-                {
-                    
-                }
-
-                return null;
-
-              
-            
-            }
-
-            public IEnumerable<object> GetServices(Type serviceType, string contract = null) {
-
-                IEnumerable<object> retVal = null;
-
-                retVal = Kernel.GetAll(serviceType, contract);
-            
-                if (retVal != null && retVal.Any())
-                {
-                    return retVal;
-                }
-
-                return _defaultResolver.GetServices(serviceType, contract);
-         
-            }
-
-            public void Dispose() {
-                Kernel.Dispose();
-                _defaultResolver.Dispose();
-            }
+            _ninjectResolver.Kernel.Bind<IScreen>().ToConstant(this);
         }
-    
+    }
 }
