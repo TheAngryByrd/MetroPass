@@ -44,7 +44,7 @@
 			<telerikPrimitives:RadWrapPanel/>
 		</ItemsPanelTemplate>
 		<DataTemplate x:Key="DataTemplate1">
-			<Grid Width="130" Height="130" >
+            <Grid Width="130" Height="130" >
 				<Grid.Projection>
 					<PlaneProjection x:Name="FrontProjection"/>
 				</Grid.Projection>									
@@ -74,6 +74,7 @@
 						HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
 						 VerticalAlignment="{TemplateBinding VerticalAlignment}" 
 						 Margin="2"
+                        toolkit:TiltEffect.IsTiltEnabled="True" 
 						>
 							<VisualStateManager.VisualStateGroups>
 								<VisualStateGroup x:Name="CommonStates">
