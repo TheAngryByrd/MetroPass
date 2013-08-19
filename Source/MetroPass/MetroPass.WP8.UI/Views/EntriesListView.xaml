@@ -47,8 +47,8 @@
             <Grid Width="130" Height="130" >
 				<Grid.Projection>
 					<PlaneProjection x:Name="FrontProjection"/>
-				</Grid.Projection>									
-					<Border x:Name="PART_Background" BorderThickness="0" Background="{StaticResource MainAppColor}">
+				</Grid.Projection>
+                <Border x:Name="PART_Background" BorderThickness="0" Background="{Binding Color}">
 					<StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
 						<Viewbox Opacity="0.4"><TextBlock  FontFamily="Segoe UI Symbol" Foreground="White" Text="{Binding Icon}"/></Viewbox>	
 					</StackPanel>

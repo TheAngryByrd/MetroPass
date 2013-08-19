@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Windows.Media;
 using MetroPass.WP8.UI.ViewModels.DesignTime;
 
 namespace MetroPass.WP8.UI.ViewModels
@@ -9,6 +10,8 @@ namespace MetroPass.WP8.UI.ViewModels
         public string Icon { get; set; }
         public String Title { get; set; }
         public int Count { get; set; }
+
+        public SolidColorBrush Color { get; set; }
     }
 
     public class EntriesListViewModel
@@ -34,7 +37,8 @@ namespace MetroPass.WP8.UI.ViewModels
                 {
                     Count = i,
                     Title = "Folder " + i,
-                    Icon = Folder
+                    Icon = Folder,
+                    Color = App.Current.Resources["MainFolderColor"] as SolidColorBrush
                 });
             }
 
@@ -45,6 +49,8 @@ namespace MetroPass.WP8.UI.ViewModels
                     Count = i,
                     Title = "Entry " + i,
                     Icon = Key
+                    ,
+                    Color = App.Current.Resources["MainAppColor"] as SolidColorBrush
                 });
             }
         }
