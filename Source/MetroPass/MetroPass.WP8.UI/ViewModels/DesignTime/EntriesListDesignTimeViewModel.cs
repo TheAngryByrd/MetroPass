@@ -1,27 +1,19 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Media;
-using MetroPass.WP8.UI.ViewModels.DesignTime;
 
-namespace MetroPass.WP8.UI.ViewModels
+namespace MetroPass.WP8.UI.ViewModels.DesignTime
 {
-    public struct Items
+    public class EntriesListDesignTimeViewModel
     {
-        public string Icon { get; set; }
-        public String Title { get; set; }
-        public int Count { get; set; }
-
-        public SolidColorBrush Color { get; set; }
-    }
-
-    public class EntriesListViewModel
-    {
-
-        public EntriesListViewModel()
+        public EntriesListDesignTimeViewModel()
         {
             InitializeItems();
         }
-
         const string Key = "\uE192";
         const string Folder = "\uE1C1";
 
@@ -47,7 +39,7 @@ namespace MetroPass.WP8.UI.ViewModels
                 this.Items.Add(new Items()
                 {
                     Count = i,
-                    Title = "Entry " + i +" With " + i + " To   be " + i,
+                    Title = "Entry " + i,
                     Icon = Key
                     ,
                     Color = App.Current.Resources["MainAppColor"] as SolidColorBrush

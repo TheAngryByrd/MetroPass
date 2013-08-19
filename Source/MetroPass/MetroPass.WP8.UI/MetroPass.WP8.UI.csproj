@@ -111,7 +111,7 @@
     <Compile Include="SkydriveResources.cs" />
     <Compile Include="ViewModels\DatabaseListViewModel.cs" />
     <Compile Include="ViewModels\DesignTime\DatabaseListDesignTimeViewModel.cs" />
-    <Compile Include="ViewModels\DesignTime\EntriesListViewModel.cs" />
+    <Compile Include="ViewModels\DesignTime\EntriesListDesignTimeViewModel.cs" />
     <Compile Include="ViewModels\EntriesListViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IDatabaseListViewModel.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
@@ -128,7 +128,6 @@
     <Compile Include="Views\SkydriveAccessView.xaml.cs">
       <DependentUpon>SkydriveAccessView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\DesignTime\DataItemViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">

@@ -16,7 +16,7 @@
     SupportedOrientations="Portrait" Orientation="Portrait"
     mc:Ignorable="d" d:DesignHeight="800" d:DesignWidth="480"
     shell:SystemTray.IsVisible="False"
-    d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True, Type=DT:EntriesListViewModel}">
+    d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True, Type=DT:EntriesListDesignTimeViewModel}">
     <toolkit:TransitionService.NavigationInTransition>
         <toolkit:NavigationInTransition>
             <toolkit:NavigationInTransition.Backward>
@@ -50,11 +50,10 @@
 				</Grid.Projection>
                 <Border x:Name="PART_Background" BorderThickness="0" Background="{Binding Color}">
 					<StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-						<Viewbox Opacity="0.4"><TextBlock  FontFamily="Segoe UI Symbol" Foreground="White" Text="{Binding Icon}"/></Viewbox>	
+						<Viewbox Opacity="0.2"><TextBlock  FontFamily="Segoe UI Symbol" Foreground="White" Text="{Binding Icon}"/></Viewbox>	
 					</StackPanel>
-				</Border>			
-				<TextBlock x:Name="PART_Notification" Text="{Binding Count}" FontFamily="Segoe UI" HorizontalAlignment="Right" Margin="0,0,8,0" VerticalAlignment="top"/>
-				<TextBlock x:Name="PART_Title" Padding="4" Text="{Binding Title}" FontFamily="Segoe UI" FontSize="{StaticResource PhoneFontSizeNormal}" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+				</Border>							
+				<TextBlock x:Name="PART_Title" Padding="4" Text="{Binding Title}" FontFamily="Segoe UI" FontSize="{StaticResource PhoneFontSizeNormal}" HorizontalAlignment="Left" VerticalAlignment="Bottom" TextWrapping="Wrap"/>
 			</Grid>
 		</DataTemplate>
 		<Style x:Key="ListBoxItemStyle1" TargetType="ListBoxItem">
@@ -153,7 +152,11 @@
 		</StackPanel>
 
 		<Grid x:Name="ContentPanel" Grid.Row="1" Margin="24,0">
-			<ListBox ItemsSource="{Binding Items}" ItemsPanel="{StaticResource ItemsPanelTemplate1}" ItemTemplate="{StaticResource DataTemplate1}" ItemContainerStyle="{StaticResource ListBoxItemStyle1}">
+			<ListBox ItemsSource="{Binding Items}" 
+			ItemsPanel="{StaticResource ItemsPanelTemplate1}"
+			 ItemTemplate="{StaticResource DataTemplate1}" 
+			 ItemContainerStyle="{StaticResource ListBoxItemStyle1}"
+			 FontSize="30">
 				
 			</ListBox>
 	
