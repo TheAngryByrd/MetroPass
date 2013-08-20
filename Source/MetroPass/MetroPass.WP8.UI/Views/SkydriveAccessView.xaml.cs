@@ -17,7 +17,7 @@ namespace MetroPass.WP8.UI.Views
     {
         public SkydriveAccessView()
         {
-            InitializeComponent();
+            InitializeComponent();           
         }
 
    

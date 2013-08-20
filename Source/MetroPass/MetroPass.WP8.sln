@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetroPass.WP8.UI", "MetroPa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Metropass.Core.PCL", "Metropass.Core.PCL\Metropass.Core.PCL.csproj", "{40AC1A3B-9796-4F90-8903-108C86CFBD15}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetroPass.WP8.Infrastructure", "MetroPass.WP8.Infrastructure\MetroPass.WP8.Infrastructure.csproj", "{C049B810-F050-4939-ADED-F2BB7711C25F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,18 @@ Global
 		{40AC1A3B-9796-4F90-8903-108C86CFBD15}.Release|Any CPU.Build.0 = Release|Any CPU
 		{40AC1A3B-9796-4F90-8903-108C86CFBD15}.Release|ARM.ActiveCfg = Release|Any CPU
 		{40AC1A3B-9796-4F90-8903-108C86CFBD15}.Release|x86.ActiveCfg = Release|Any CPU
+		{C049B810-F050-4939-ADED-F2BB7711C25F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C049B810-F050-4939-ADED-F2BB7711C25F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C049B810-F050-4939-ADED-F2BB7711C25F}.Debug|ARM.ActiveCfg = Debug|ARM
+		{C049B810-F050-4939-ADED-F2BB7711C25F}.Debug|ARM.Build.0 = Debug|ARM
+		{C049B810-F050-4939-ADED-F2BB7711C25F}.Debug|x86.ActiveCfg = Debug|x86
+		{C049B810-F050-4939-ADED-F2BB7711C25F}.Debug|x86.Build.0 = Debug|x86
+		{C049B810-F050-4939-ADED-F2BB7711C25F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C049B810-F050-4939-ADED-F2BB7711C25F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C049B810-F050-4939-ADED-F2BB7711C25F}.Release|ARM.ActiveCfg = Release|ARM
+		{C049B810-F050-4939-ADED-F2BB7711C25F}.Release|ARM.Build.0 = Release|ARM
+		{C049B810-F050-4939-ADED-F2BB7711C25F}.Release|x86.ActiveCfg = Release|x86
+		{C049B810-F050-4939-ADED-F2BB7711C25F}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

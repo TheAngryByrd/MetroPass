@@ -1,0 +1,21 @@
+﻿using System;
+using System.IO;
+using System.Security.Cryptography;
+using Metropass.Core.PCL.Hashing;
+
+namespace MetroPass.WP8.Infrastructure.Hashing
+{
+    public class SHA256HahserWP8 : ICanSHA256Hash
+    {
+        public byte[] Hash(params byte[][] bytesToHash) {
+            var hash = new SHA256Managed();
+            var stream = new MemoryStream();
+
+            foreach (var item in bytesToHash)
+            {
+                stream.Write(item,(int)stream.Length,item.Length);
+            }
+            return hash.ComputeHash(stream);
+        }
+    }
+}
