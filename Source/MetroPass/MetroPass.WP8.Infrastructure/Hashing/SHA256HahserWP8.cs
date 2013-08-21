@@ -13,7 +13,7 @@ namespace MetroPass.WP8.Infrastructure.Hashing
 
             foreach (var item in bytesToHash)
             {
-                stream.Write(item,(int)stream.Length,item.Length);
+                stream.Write(item,0,item.Length);
             }
             return hash.ComputeHash(stream);
         }
