@@ -67,10 +67,18 @@ namespace Metropass.Core.PCL.Model.Kdb4.Reader
 
         public static XDocument CreateXmlReader(Stream readerStream)
         {
+            try
+            {
+                XmlReaderSettings xrs = CreateStdXmlReaderSettings();
 
-            XmlReaderSettings xrs = CreateStdXmlReaderSettings();
-
-            return XDocument.Load(XmlReader.Create(readerStream, xrs));
+                var xmlReader = XmlReader.Create(readerStream, xrs);
+                return XDocument.Load(xmlReader);
+            }
+            catch (Exception ex)
+            {
+            }
+           return null;
+            
         }
 
         public void DecodeXml(XElement root)

@@ -8,14 +8,15 @@ namespace MetroPass.WP8.Infrastructure.Hashing
     public class SHA256HahserWP8 : ICanSHA256Hash
     {
         public byte[] Hash(params byte[][] bytesToHash) {
-            var hash = new SHA256Managed();
-            var stream = new MemoryStream();
-
-            foreach (var item in bytesToHash)
+            using(var hash = new SHA256Managed())
+            using (var stream = new MemoryStream())
             {
-                stream.Write(item,0,item.Length);
-            }
-            return hash.ComputeHash(stream);
+                foreach (var item in bytesToHash)
+                {
+                    stream.Write(item, 0, item.Length);
+                }
+                return hash.ComputeHash(stream.ToArray());
+            }    
         }
     }
 }

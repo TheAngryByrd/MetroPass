@@ -23,7 +23,7 @@ namespace MetroPass.WP8.Infrastructure.Cryptography
         }
 
 
-        protected IBufferedCipher GetCipher(bool encrypt, byte[] key)
+        protected IBufferedCipher GetCipher(bool encrypt, byte[] key, byte[] iv = null)
         {
             IBufferedCipher cipher = null;
 
@@ -36,8 +36,14 @@ namespace MetroPass.WP8.Infrastructure.Cryptography
                     cipher = CipherUtilities.GetCipher("AES/CBC/PKCS7");
                     break;
             }
-            cipher.Init(encrypt, new KeyParameter(key));
-
+            ICipherParameters param = new KeyParameter(key);
+            if(iv != null)
+            {
+                param = new ParametersWithIV(param, iv);
+            }
+          
+            cipher.Init(encrypt,param);
+            
             return cipher;
         }
 
