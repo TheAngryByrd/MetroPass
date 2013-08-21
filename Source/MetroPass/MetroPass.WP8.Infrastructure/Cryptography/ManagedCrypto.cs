@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -24,52 +25,56 @@ namespace MetroPass.WP8.Infrastructure.Cryptography
         public Task<byte[]> Encrypt(byte[] data, byte[] key, byte[] iv, double rounds, IProgress<double> percentComplete) {
            return Task.Run(() =>
                {
-                   var aes = new AesManaged
-                    {
-                        KeySize = 256,
-                        IV = new byte[16],
-                        Key = key,
-                    };
+                   byte[] encrypted;
+                   using (AesManaged aesAlg = new AesManaged())
+                   {
+                       aesAlg.Key = key;
+                       aesAlg.IV = iv;
 
-                   var block = new byte[data.Length];
+                       // Create a decrytor to perform the stream transform.
+                       ICryptoTransform encryptor = aesAlg.CreateEncryptor(aesAlg.Key, aesAlg.IV);
 
-                    Buffer.BlockCopy(data,0,block,0,data.Length);
+                       using (MemoryStream msEncrypt = new MemoryStream())
+                       {
+                           using (CryptoStream csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write))
+                           {
+                               using (StreamWriter swEncrypt = new StreamWriter(csEncrypt))
+                               {
+                                   //Write all data to the stream.
+                                   swEncrypt.Write(data);
+                               }
+                               encrypted = msEncrypt.ToArray();
+                           }
+                       }
+                   }
+                   return encrypted;
 
-                    for (var i = 1; i <= rounds; i++)
-                    {
-                        aes.CreateEncryptor().TransformBlock(
-                            block, 0, 16, block, 0);
-                        aes.CreateEncryptor().TransformBlock(
-                            block, 16, 16, block, 16);
-                    }
-
-                    return block;
                });            
         }
 
         public Task<byte[]> Decrypt(byte[] data, byte[] key, byte[] iv, double rounds, IProgress<double> percentComplete) {
              return Task.Run(() =>
                {
-                   var aes = new AesManaged
-                    {
-                        KeySize = 256,
-                        IV = new byte[16],
-                        Key = key,
-                    };
+                   byte[] decrypted =  null;
+                   using (AesManaged aesAlg = new AesManaged())
+                   {
+                       aesAlg.Key = key;
+                       aesAlg.IV = iv;
 
-                   var block = new byte[data.Length];
+                       // Create a decrytor to perform the stream transform.
+                       ICryptoTransform decryptor = aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV);
 
-                    Buffer.BlockCopy(data,0,block,0,data.Length);
+                       using (MemoryStream msDecrypt = new MemoryStream(data))
+                       {
+                           using (CryptoStream csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
+                           {
+                               decrypted = csDecrypt.ToArray();
+                           }
+                       }
 
-                    for (var i = 1; i <= rounds; i++)
-                    {
-                        aes.CreateEncryptor().TransformBlock(
-                            block, 0, 16, block, 0);
-                        aes.CreateEncryptor().TransformBlock(
-                            block, 16, 16, block, 16);
-                    }
+                   }
 
-                    return block;
+                   return decrypted;
                });         
         }
     }
