@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using MetroPass.WP8.Infrastructure.Compression;
 using MetroPass.WP8.Infrastructure.Cryptography;
@@ -14,7 +12,6 @@ using Metropass.Core.PCL.Model.Kdb4.Reader;
 using Metropass.Core.PCL.Model.Kdb4.Writer;
 using Windows.Storage;
 using PCLStorage;
-using System.IO.IsolatedStorage;
 
 namespace MetroPass.WP8.UI.DataModel
 {
@@ -58,9 +55,9 @@ namespace MetroPass.WP8.UI.DataModel
                       new SHA256HahserWP8(),
                       new GZipFactoryWP8());
 
-            var writer = factory.CreateWriter(PwDatabase.Tree);
-            new IsoStoreFile(StorageFile.Name, new IsoStoreFolder(new IsoStoreFileSystem()));
-            //await writer.Write(PwDatabase, new IsoStoreFile(StorageFile));
+            var writer = factory.CreateWriter(PwDatabase.Tree);            
+            
+            await writer.Write(PwDatabase, new WP8File(StorageFile));
 
         }
     } 
