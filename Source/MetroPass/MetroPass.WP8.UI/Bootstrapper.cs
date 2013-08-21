@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Caliburn.Micro;
+using Metropass.Core.PCL.Hashing;
+using MetroPass.WP8.Infrastructure.Hashing;
 using Microsoft.Phone.Controls;
 using Ninject;
 
@@ -23,13 +25,17 @@ namespace MetroPass.WP8.UI
 
         void AddCustomConventions()
         {
+            AddViewModels();
+
+            _container.PerRequest<ICanSHA256Hash, SHA256HahserWP8>();
+        }
+  
+        private void AddViewModels() {
             string @namespace = "MetroPass.WP8.UI.ViewModels";
 
-            var q = (from t in Assembly.GetExecutingAssembly().GetTypes()
-                    where t.IsClass && t.Namespace == @namespace
-                    select t).ToList();
+            var q = (from t in Assembly.GetExecutingAssembly().GetTypes() where t.IsClass && t.Namespace == @namespace select t).ToList();
 
-            q.ForEach(t =>_container.RegisterPerRequest(t,null,t));
+            q.ForEach(t => _container.RegisterPerRequest(t, null, t));
         }
 
         protected override object GetInstance(Type service, string key)
