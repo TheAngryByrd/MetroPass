@@ -27,10 +27,15 @@ namespace MetroPass.WP8.Infrastructure.Cryptography
         public override Task<byte[]> Encrypt(byte[] data, byte[] key, byte[] iv, double rounds, IProgress<double> percentComplete) {
            return Task.Run(() =>
                {
-                   var cipher = GetCipher(true, key, iv);
+                   var eas = new AesManaged
+                   {
+                       KeySize = 256,
+                       Key = key,
+                       IV = iv
 
+                   };
 
-                   return cipher.ProcessBytes(data);
+                   return eas.CreateEncryptor().TransformFinalBlock(data, 0, data.Length);
 
                });            
         }
@@ -39,10 +44,15 @@ namespace MetroPass.WP8.Infrastructure.Cryptography
         {
              return Task.Run(() =>
                {
-                   var cipher = GetCipher(false, key, iv);
-                   var retval = cipher.ProcessBytes(data);
+                   var eas = new AesManaged
+                   {
+                       KeySize = 256,
+                       Key = key,
+                       IV = iv                     
+                       
+                   };
 
-                   return retval;
+                  return eas.CreateDecryptor().TransformFinalBlock(data, 0, data.Length);
                });         
         }
     }
