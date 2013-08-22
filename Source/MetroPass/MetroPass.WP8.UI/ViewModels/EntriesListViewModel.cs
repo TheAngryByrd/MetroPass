@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Windows.Media;
-using MetroPass.WP8.UI.ViewModels.DesignTime;
+using MetroPass.WP8.UI.ViewModels.ReactiveCaliburn;
 
 namespace MetroPass.WP8.UI.ViewModels
 {
@@ -14,7 +14,7 @@ namespace MetroPass.WP8.UI.ViewModels
         public SolidColorBrush Color { get; set; }
     }
 
-    public class EntriesListViewModel
+    public class EntriesListViewModel : ReactiveScreen
     {
 
         public EntriesListViewModel()
