@@ -29,7 +29,7 @@ namespace Metropass.Core.PCL.Model
                     _subGroups = new ObservableCollection<PwGroup>();
                 }
                 
-                _subGroupsAndEntries = new Lazy<ObservableCollection<PwCommon>>(() => new ObservableCollection<Metropass.Core.PCL.Model.PwCommon>(this.SubGroups.Union(this.Entries.Cast<PwCommon>())));
+                _subGroupsAndEntries = new Lazy<ObservableCollection<PwCommon>>(() => new ObservableCollection<PwCommon>(this.SubGroups.Union(this.Entries.Cast<PwCommon>())));
             }
     
         }
