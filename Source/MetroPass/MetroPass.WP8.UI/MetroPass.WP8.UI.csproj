@@ -114,6 +114,7 @@
     <Compile Include="ViewModels\DesignTime\EntriesListDesignTimeViewModel.cs" />
     <Compile Include="ViewModels\EntriesListViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IDatabaseListViewModel.cs" />
+    <Compile Include="ViewModels\ReactiveViewModel.cs" />
     <Compile Include="ViewModels\SkydriveAccessViewModel.cs" />
     <Compile Include="Views\DatabaseListView.xaml.cs">
       <DependentUpon>DatabaseListView.xaml</DependentUpon>

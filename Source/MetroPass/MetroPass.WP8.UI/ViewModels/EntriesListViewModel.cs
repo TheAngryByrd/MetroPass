@@ -25,6 +25,8 @@ namespace MetroPass.WP8.UI.ViewModels
         const string Key = "\uE192";
         const string Folder = "\uE1C1";
 
+        public string GroupId { get; set; }
+
         /// <summary>
         /// Initializes the items.
         /// </summary>

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq.Expressions;
+using System.Net;
 using System.Windows.Input;
 using Caliburn.Micro;
 using Metropass.Core.PCL.Hashing;
@@ -48,7 +50,18 @@ namespace MetroPass.WP8.UI.ViewModels
 
             await PWDatabaseDataSource.Instance.LoadPwDatabase(file, listOfKeys, new NullableProgress<double>());
 
-            _navService.UriFor<EntriesListViewModel>().Navigate();
+            var rootUUID = PWDatabaseDataSource.Instance.PwDatabase.Tree.Group.UUID;
+
+            _navService.UriFor<EntriesListViewModel>().
+                WithEncodedParam<EntriesListViewModel,string>(p => p.GroupId, rootUUID).Navigate();
+        }
+    }
+    public static class CaliburnExtensions
+    {
+        public static UriBuilder<TViewModel> WithEncodedParam<TViewModel,TValue>(this UriBuilder<TViewModel> uri,Expression<Func<TViewModel, TValue>> property, TValue value)
+        {
+            TValue val = (TValue)Convert.ChangeType(WebUtility.UrlEncode(value.ToString()),typeof(TValue));
+            return uri.WithParam(property, val);
         }
     }
 }
