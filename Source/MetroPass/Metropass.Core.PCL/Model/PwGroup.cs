@@ -8,8 +8,22 @@ namespace Metropass.Core.PCL.Model
 {
     public class PwGroup : PwCommon, IGroup
     {
-        private readonly ObservableCollection<PwEntry> _entries;
-        private readonly ObservableCollection<PwGroup> _subGroups;
+        private ObservableCollection<PwEntry> _entries
+        {
+            get
+            {
+                return _entriesLazy.Value;
+            }
+        }
+        private ObservableCollection<PwGroup> _subGroups
+        {
+            get
+            {
+                return _subGroupsLazy.Value;
+            }
+        }
+        private readonly Lazy<ObservableCollection<PwEntry>> _entriesLazy;
+        private readonly Lazy<ObservableCollection<PwGroup>> _subGroupsLazy;
 
         public PwGroup(XElement element) : this(element, true) { }
 
@@ -18,21 +32,23 @@ namespace Metropass.Core.PCL.Model
             Element = element;
             if (element != null)
             {
-                _entries = new ObservableCollection<PwEntry>(element.Elements("Entry").Select(entry => new PwEntry(entry, this)));
+                _entriesLazy = new Lazy<ObservableCollection<PwEntry>>(() => new ObservableCollection<PwEntry>(element.Elements("Entry").Select(entry => new PwEntry(entry, this))));
 
                 if (includeSubGroups)
                 {
-                    _subGroups = new ObservableCollection<PwGroup>(element.Elements("Group").Select(@group => new PwGroup(@group)));
+                    _subGroupsLazy = new Lazy<ObservableCollection<PwGroup>>(() =>new ObservableCollection<PwGroup>(element.Elements("Group").Select(@group => new PwGroup(@group))));
                 }
                 else
                 {
-                    _subGroups = new ObservableCollection<PwGroup>();
+                    _subGroupsLazy = new Lazy<ObservableCollection<PwGroup>>(() => new ObservableCollection<PwGroup>());
                 }
                 
                 _subGroupsAndEntries = new Lazy<ObservableCollection<PwCommon>>(() => new ObservableCollection<PwCommon>(this.SubGroups.Union(this.Entries.Cast<PwCommon>())));
             }
     
         }
+
+        
 
         public string Name 
         { 
