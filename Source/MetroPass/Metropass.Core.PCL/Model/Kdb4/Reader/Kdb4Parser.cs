@@ -30,9 +30,9 @@ namespace Metropass.Core.PCL.Model.Kdb4.Reader
 
             DecodeXml(root);
 
-            return ParseXmlDocument(xml);
+            Kdb4Tree document = ParseXmlDocument(xml);
+            return document;
         }
-        
 
         public Kdb4Tree ParseXmlDocument(XDocument xml)
         {

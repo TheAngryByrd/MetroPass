@@ -46,7 +46,8 @@ namespace Metropass.Core.PCL.Model.Kdb4.Reader
             var crypto = GenerateCryptoRandomStream();
             var parser = new Kdb4Parser(crypto);
 
-            return parser.ParseStream(decompressEdDatabase);
+            Kdb4Tree tree = parser.ParseStream(decompressEdDatabase);
+            return tree;
         }
 
         public CryptoRandomStream GenerateCryptoRandomStream()
