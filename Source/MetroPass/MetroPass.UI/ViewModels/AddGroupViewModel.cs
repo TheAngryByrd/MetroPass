@@ -31,8 +31,7 @@ namespace MetroPass.UI.ViewModels
             set
             {
                 _parentGroupID = value;
-                var groupElement = _dbTree.FindGroupByUuid(value);
-                ParentGroup = new PwGroup(groupElement);
+                ParentGroup = _dbTree.FindGroupByUuid(value);                
             }
         }
 

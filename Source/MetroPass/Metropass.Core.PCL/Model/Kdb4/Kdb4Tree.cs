@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using Metropass.Core.PCL.Exceptions;
@@ -35,14 +36,60 @@ namespace Metropass.Core.PCL.Model.Kdb4
             throw new ArgumentException(string.Format("Could not find Entry with ID {0} in the database.", entryId), entryId);
         }
 
-        public XElement FindGroupByUuid(string groupId)
+        public PwGroup FindGroupByUuid(string groupId)
         {
-            var groupElements = Document.Descendants("Group").Where(g => g.Element("UUID").Value == groupId);
-            if (groupElements.Count() == 1)
+            var result = new List<PwGroup>() { Group };
+            result = result.All(g => g.SubGroups).Where(g => g.UUID == groupId).ToList();
+
+            if (result.Any())
             {
-                return groupElements.Single();
+                return result.Single();
             }
             throw new GroupNotFoundException(string.Format("Cound not find Group with ID {0} in the database.", groupId), groupId);
+        }
+    }
+
+    public static class Exte
+    {
+        public static IEnumerable<T> All<T>(this IEnumerable<T> source, Func<T, IEnumerable<T>> getChildren)
+        {
+            if (null == source) throw new ArgumentNullException("source");
+            if (null == getChildren) return source;
+            return AllIterator(source, getChildren);
+        }
+
+        private static IEnumerable<T> AllIterator<T>(IEnumerable<T> source, Func<T, IEnumerable<T>> getChildren)
+        {
+            var stack = new Stack<IEnumerator<T>>();
+
+            try
+            {
+                stack.Push(source.GetEnumerator());
+                while (0 != stack.Count)
+                {
+                    var iter = stack.Peek();
+                    if (iter.MoveNext())
+                    {
+                        T current = iter.Current;
+                        yield return current;
+
+                        var children = getChildren(current);
+                        if (null != children) stack.Push(children.GetEnumerator());
+                    }
+                    else
+                    {
+                        iter.Dispose();
+                        stack.Pop();
+                    }
+                }
+            }
+            finally
+            {
+                while (0 != stack.Count)
+                {
+                    stack.Pop().Dispose();
+                }
+            }
         }
     }
 }
