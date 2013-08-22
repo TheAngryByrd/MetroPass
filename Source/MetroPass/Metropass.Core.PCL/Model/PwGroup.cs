@@ -18,11 +18,11 @@ namespace Metropass.Core.PCL.Model
             Element = element;
             if (element != null)
             {
-                _entries = new ObservableCollection<PwEntry>(from entry in element.Elements("Entry") select new PwEntry(entry, this));
+                _entries = new ObservableCollection<PwEntry>(element.Elements("Entry").Select(entry => new PwEntry(entry, this)));
 
                 if (includeSubGroups)
                 {
-                    _subGroups = new ObservableCollection<PwGroup>(from @group in element.Elements("Group") select new PwGroup(@group));
+                    _subGroups = new ObservableCollection<PwGroup>(element.Elements("Group").Select(@group => new PwGroup(@group)));
                 }
                 else
                 {
