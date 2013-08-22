@@ -53,7 +53,7 @@ namespace MetroPass.WP8.UI.ViewModels
             var rootUUID = PWDatabaseDataSource.Instance.PwDatabase.Tree.Group.UUID;
 
             _navService.UriFor<EntriesListViewModel>().
-                WithEncodedParam<EntriesListViewModel,string>(p => p.GroupId, rootUUID).Navigate();
+                WithParam(p => p.GroupId, rootUUID).Navigate();
         }
     }
     public static class CaliburnExtensions

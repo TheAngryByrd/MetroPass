@@ -11,7 +11,7 @@
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     xmlns:mytoolkit="clr-namespace:MyToolkit.Controls;assembly=MyToolkit.Extended"
     xmlns:mytoolkitpaging="clr-namespace:MyToolkit.Paging;assembly=MyToolkit.Extended"
-
+    xmlns:common="clr-namespace:MetroPass.WP8.UI.Common"
     x:Class="MetroPass.WP8.UI.Views.EntriesListView"
     SupportedOrientations="Portrait" Orientation="Portrait"
     mc:Ignorable="d" d:DesignHeight="800" d:DesignWidth="480"
@@ -39,23 +39,11 @@
     </toolkit:TransitionService.NavigationOutTransition>
 
     <phone:PhoneApplicationPage.Resources>
-	
+ 
 		<ItemsPanelTemplate x:Key="ItemsPanelTemplate1">
 			<telerikPrimitives:RadWrapPanel/>
 		</ItemsPanelTemplate>
-		<DataTemplate x:Key="DataTemplate1">
-            <Grid Width="130" Height="130" >
-				<Grid.Projection>
-					<PlaneProjection x:Name="FrontProjection"/>
-				</Grid.Projection>
-                <Border x:Name="PART_Background" BorderThickness="0" Background="{Binding Color}">
-					<StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-						<Viewbox Opacity="0.2"><TextBlock  FontFamily="Segoe UI Symbol" Foreground="White" Text="{Binding Icon}"/></Viewbox>	
-					</StackPanel>
-				</Border>							
-				<TextBlock x:Name="PART_Title" Padding="4" Text="{Binding Title}" FontFamily="Segoe UI" FontSize="{StaticResource PhoneFontSizeNormal}" HorizontalAlignment="Left" VerticalAlignment="Bottom" TextWrapping="Wrap"/>
-			</Grid>
-		</DataTemplate>
+		
 		<Style x:Key="ListBoxItemStyle1" TargetType="ListBoxItem">
 			<Setter Property="Background" Value="Transparent"/>
 			<Setter Property="BorderThickness" Value="0"/>
@@ -152,13 +140,29 @@
 		</StackPanel>
 
 		<Grid x:Name="ContentPanel" Grid.Row="1" Margin="24,0">
-			<ListBox ItemsSource="{Binding Items}" 
+			<ListBox x:Name="Items"
+                ItemsSource="{Binding Items}" 
 			ItemsPanel="{StaticResource ItemsPanelTemplate1}"
-			 ItemTemplate="{StaticResource DataTemplate1}" 
 			 ItemContainerStyle="{StaticResource ListBoxItemStyle1}"
+             
 			 FontSize="30">
-				
-			</ListBox>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <common:PwCommonTemplateSelector Content="{Binding}">
+                            <common:PwCommonTemplateSelector.Group>
+                                <DataTemplate>
+                                    <TextBlock Foreground="Wheat">PwGroup</TextBlock>
+                                </DataTemplate>
+                            </common:PwCommonTemplateSelector.Group>
+                            <common:PwCommonTemplateSelector.Entry>
+                                <DataTemplate >
+                                    <TextBlock Foreground="Wheat">PwEntry</TextBlock>
+                                </DataTemplate>
+                            </common:PwCommonTemplateSelector.Entry>
+                        </common:PwCommonTemplateSelector>
+                  </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
 	
 		</Grid>
 	</Grid>
