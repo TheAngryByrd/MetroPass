@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Xml.Linq;
 
 namespace Metropass.Core.PCL.Model
@@ -23,7 +24,10 @@ namespace Metropass.Core.PCL.Model
             }
         }
         private readonly Lazy<ObservableCollection<PwEntry>> _entriesLazy;
-        private readonly Lazy<ObservableCollection<PwGroup>> _subGroupsLazy;
+        private readonly Lazy<ObservableCollection<PwGroup>> _subGroupsLazy;        
+        
+        //private readonly ObservableCollection<PwEntry> _entries;
+        //private readonly ObservableCollection<PwGroup> _subGroups;
 
         public PwGroup(XElement element) : this(element, true) { }
 
@@ -32,22 +36,43 @@ namespace Metropass.Core.PCL.Model
             Element = element;
             if (element != null)
             {
-                _entriesLazy = new Lazy<ObservableCollection<PwEntry>>(() => new ObservableCollection<PwEntry>(element.Elements("Entry").Select(entry => new PwEntry(entry, this))));
-
+                _entriesLazy = new Lazy<ObservableCollection<PwEntry>>(() => IndexEntries(element));
+               
                 if (includeSubGroups)
                 {
-                    _subGroupsLazy = new Lazy<ObservableCollection<PwGroup>>(() =>new ObservableCollection<PwGroup>(element.Elements("Group").Select(@group => new PwGroup(@group))));
+                    _subGroupsLazy = new Lazy<ObservableCollection<PwGroup>>(() =>IndexGroups(element));
                 }
                 else
                 {
                     _subGroupsLazy = new Lazy<ObservableCollection<PwGroup>>(() => new ObservableCollection<PwGroup>());
                 }
-                
-                _subGroupsAndEntries = new Lazy<ObservableCollection<PwCommon>>(() => new ObservableCollection<PwCommon>(this.SubGroups.Union(this.Entries.Cast<PwCommon>())));
+
+                _subGroupsAndEntries = new AsyncLazy<ObservableCollection<PwCommon>>(() => GetSubGroupsAndEntries());
             }
     
         }
 
+        private ObservableCollection<PwEntry> IndexEntries(XElement element)
+        {
+            return new ObservableCollection<PwEntry>(element.Elements("Entry").Select(entry => new PwEntry(entry, this)));
+        }
+
+        private ObservableCollection<PwGroup> IndexGroups(XElement element)
+        {
+            return new ObservableCollection<PwGroup>(element.Elements("Group").Select(@group => new PwGroup(@group)));
+        }
+
+        private async Task<ObservableCollection<PwCommon>> GetSubGroupsAndEntries()
+        {
+            var x = new List<PwCommon>();
+
+             
+            var t1 = Task.Run(() => x.AddRange(this.SubGroups));
+            var t2 = Task.Run(() => x.AddRange(Entries));
+            await Task.WhenAll(t1, t2);
+            //x.AddRange(Entries);
+            return new ObservableCollection<PwCommon>(x);          
+        }
         
 
         public string Name 
@@ -88,13 +113,13 @@ namespace Metropass.Core.PCL.Model
             get { return _subGroups.Count(); }
         }
 
-        private readonly Lazy<ObservableCollection<PwCommon>> _subGroupsAndEntries;
+        private readonly AsyncLazy<ObservableCollection<PwCommon>> _subGroupsAndEntries;
 
         public ObservableCollection<PwCommon> SubGroupsAndEntries
         {
             get
             {
-                return _subGroupsAndEntries.Value;
+                return _subGroupsAndEntries.Value.Result;
             }
         }
 

@@ -6,6 +6,9 @@ using MetroPass.WP8.UI.DataModel;
 using MetroPass.WP8.UI.ViewModels.ReactiveCaliburn;
 using Metropass.Core.PCL.Model;
 using ReactiveUI;
+using System.Threading.Tasks;
+using System.Windows.Threading;
+using System.Windows;
 
 namespace MetroPass.WP8.UI.ViewModels
 {
@@ -14,7 +17,7 @@ namespace MetroPass.WP8.UI.ViewModels
     public class EntriesListViewModel : ReactiveScreen
     {      
 
-        private IReactiveDerivedList<PwCommon> _items;
+        private ObservableCollection<PwCommon> _items;
 
         public EntriesListViewModel()
         {
@@ -22,7 +25,8 @@ namespace MetroPass.WP8.UI.ViewModels
             this.ObservableForProperty(vm => vm.Group).Subscribe(GetSubgroupsAndEntries);
         }
 
-        public IReactiveDerivedList<PwCommon> Items {
+        public ObservableCollection<PwCommon> Items
+        {
             get {
                 return _items;
             }
@@ -31,9 +35,24 @@ namespace MetroPass.WP8.UI.ViewModels
             }
         }
 
-        private void GetSubgroupsAndEntries(IObservedChange<EntriesListViewModel, PwGroup> obj)
+        private async void GetSubgroupsAndEntries(IObservedChange<EntriesListViewModel, PwGroup> obj)
         {
-            Items = obj.Value.SubGroupsAndEntries.CreateDerivedCollection(c => c);
+                              
+        }
+
+        protected async override void OnViewReady(object view)
+        {
+            await Task.Delay(10);
+            await RunAsync(() => Group.SubGroupsAndEntries, val => { Items = val; }); 
+        }
+
+        private static Task RunAsync<T>(Func<T> asyncFunc, Action<T> dispatcher)
+        {
+            return Task.Run(async () =>
+            {
+                var val = asyncFunc();
+                Deployment.Current.Dispatcher.BeginInvoke(() => dispatcher(val));
+            });     
         }
 
         private void GetGroup(IObservedChange<EntriesListViewModel, string> obj)
