@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.ObjectModel;
+using System.Reactive.Linq;
 using System.Windows.Media;
 using MetroPass.WP8.UI.DataModel;
 using MetroPass.WP8.UI.ViewModels.ReactiveCaliburn;
@@ -9,6 +10,7 @@ using ReactiveUI;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 using System.Windows;
+using Caliburn.Micro;
 
 namespace MetroPass.WP8.UI.ViewModels
 {
@@ -17,33 +19,58 @@ namespace MetroPass.WP8.UI.ViewModels
     public class EntriesListViewModel : ReactiveScreen
     {      
 
-        private ObservableCollection<PwCommon> _items;
+        private readonly INavigationService _navigationService;
 
-        public EntriesListViewModel()
+        public EntriesListViewModel(INavigationService navigationService)
         {
+            _navigationService = navigationService;
             this.ObservableForProperty(vm => vm.GroupId).Subscribe(GetGroup);
-            this.ObservableForProperty(vm => vm.Group).Subscribe(GetSubgroupsAndEntries);
+            this.ObservableForProperty(vm => vm.Group).Subscribe(GetGroupsAndEntries);
+            this.ObservableForProperty(vm => vm.SelectedItem)
+                .Where(v => v.Value is PwGroup)
+                .Subscribe(NavigateToEntriesListView);
+            Items = new ObservableCollection<PwCommon>();
+        }
+
+      
+
+        private async void GetGroupsAndEntries(IObservedChange<EntriesListViewModel, PwGroup> obj)
+        {
+            //await RunAsync(() => obj.Value.SubGroupsAndEntries, val => { Items = val; });     
+        }
+
+        private void NavigateToEntriesListView(IObservedChange<EntriesListViewModel, PwCommon> obj)
+        {
+            _navigationService.UriFor<EntriesListViewModel>().WithParam(vm => vm.GroupId, obj.Value.UUID).Navigate();
         }
 
         public ObservableCollection<PwCommon> Items
         {
+            get;
+            set;
+        }
+
+        private PwCommon _selectedItem;
+        public PwCommon SelectedItem {
             get {
-                return _items;
+                return _selectedItem;
             }
             set {
-                this.RaiseAndSetIfChanged(ref _items, value);
+                this.RaisePropertyChanging();
+                _selectedItem = value;
+                this.RaisePropertyChanged();
             }
         }
 
-        private async void GetSubgroupsAndEntries(IObservedChange<EntriesListViewModel, PwGroup> obj)
+        protected override void OnActivate()
         {
-                              
+            SelectedItem = null;
+            Items.AddRange(Group.SubGroupsAndEntries);
+            //await RunAsync(() => Group.SubGroupsAndEntries, val => { Items.AddRange(val); });     
         }
-
-        protected async override void OnViewReady(object view)
-        {
-            await Task.Delay(10);
-            await RunAsync(() => Group.SubGroupsAndEntries, val => { Items = val; }); 
+        protected override void OnDeactivate(bool close)
+        {            
+            Items = new ObservableCollection<PwCommon>();
         }
 
         private static Task RunAsync<T>(Func<T> asyncFunc, Action<T> dispatcher)
@@ -81,41 +108,6 @@ namespace MetroPass.WP8.UI.ViewModels
             set {
                 this.RaiseAndSetIfChanged(ref _group, value);
             }
-        }
-
-        ///// <summary>
-        ///// Initializes the items.
-        ///// </summary>
-        //private void InitializeItems()
-        //{
-        //    Items = new ObservableCollection<Items>();
-        //    for (int i = 1; i <= 7; i++)
-        //    {
-        //        this.Items.Add(new Items()
-        //        {
-        //            Count = i,
-        //            Title = "Folder " + i + " With " + i + " To   be " + i,
-        //            Icon = Folder,
-        //            Color = App.Current.Resources["MainFolderColor"] as SolidColorBrush
-        //        });
-        //    }
-
-        //    for (int i = 1; i <= 7; i++)
-        //    {
-        //        this.Items.Add(new Items()
-        //        {
-        //            Count = i,
-        //            Title = "Entry " + i +" With " + i + " To   be " + i,
-        //            Icon = Key
-        //            ,
-        //            Color = App.Current.Resources["MainAppColor"] as SolidColorBrush
-        //        });
-        //    }
-        //}
-
-        /// <summary>
-        /// A collection for <see cref="DataItemViewModel"/> objects.
-        /// </summary>
-    
+        }    
     }
 }

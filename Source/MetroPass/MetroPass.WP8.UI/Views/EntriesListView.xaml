@@ -60,9 +60,7 @@
 						Background="{TemplateBinding Background}" 
 						HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
 						 VerticalAlignment="{TemplateBinding VerticalAlignment}" 
-						 Margin="2"
-                        toolkit:TiltEffect.IsTiltEnabled="True" 
-						>
+						 Margin="2"      >
 							<VisualStateManager.VisualStateGroups>
 								<VisualStateGroup x:Name="CommonStates">
 									<VisualState x:Name="Normal"/>
@@ -136,27 +134,52 @@
 
 		<StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
             <TextBlock x:Name="ApplicationTitle" Text="MetroPass" Style="{StaticResource PhoneTextNormalStyle}"/>
-			<TextBlock x:Name="PageTitle" Text="Entries" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+            <TextBlock x:Name="PageTitle" Text="Entries" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
 		</StackPanel>
 
 		<Grid x:Name="ContentPanel" Grid.Row="1" Margin="24,0">
 			<ListBox x:Name="Items"
-                ItemsSource="{Binding Items}" 
+               
 			ItemsPanel="{StaticResource ItemsPanelTemplate1}"
 			 ItemContainerStyle="{StaticResource ListBoxItemStyle1}"
-             
-			 FontSize="30">
+             toolkit:TiltEffect.IsTiltEnabled="True" 
+			 FontSize="30">     
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <common:PwCommonTemplateSelector Content="{Binding}">
                             <common:PwCommonTemplateSelector.Group>
                                 <DataTemplate>
-                                    <TextBlock Foreground="Wheat">PwGroup</TextBlock>
+                                    <Grid Width="130" Height="130">                                        
+                                        <Grid.Projection>                                            
+                                            <PlaneProjection x:Name="FrontProjection"/>                                            
+                                        </Grid.Projection>
+                                        <Border x:Name="PART_Background" BorderThickness="0" Background="{StaticResource MainFolderColor}">                                            
+                                            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">                                                
+                                                <Viewbox Opacity="0.2">
+                                                    <TextBlock  FontFamily="Segoe UI Symbol" Foreground="White" Text="&#xE1C1;"/>
+                                                </Viewbox>                                                
+                                            </StackPanel>                                            
+                                        </Border>                                        
+                                        <TextBlock x:Name="PART_Title" Padding="4" Text="{Binding Name}" FontFamily="Segoe UI" FontSize="{StaticResource PhoneFontSizeNormal}" HorizontalAlignment="Left" VerticalAlignment="Bottom" TextWrapping="Wrap"/>                                        
+                                    </Grid>
+
                                 </DataTemplate>
                             </common:PwCommonTemplateSelector.Group>
                             <common:PwCommonTemplateSelector.Entry>
                                 <DataTemplate >
-                                    <TextBlock Foreground="Wheat">PwEntry</TextBlock>
+                                    <Grid Width="130" Height="130">
+                                        <Grid.Projection>
+                                            <PlaneProjection x:Name="FrontProjection"/>
+                                        </Grid.Projection>
+                                        <Border x:Name="PART_Background" BorderThickness="0" Background="{StaticResource MainAppColor}">
+                                            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                                                <Viewbox Opacity="0.2">
+                                                    <TextBlock  FontFamily="Segoe UI Symbol" Foreground="White" Text="&#xE192;"/>
+                                                </Viewbox>
+                                            </StackPanel>
+                                        </Border>
+                                        <TextBlock x:Name="PART_Title" Padding="4" Text="{Binding Title}" FontFamily="Segoe UI" FontSize="{StaticResource PhoneFontSizeNormal}" HorizontalAlignment="Left" VerticalAlignment="Bottom" TextWrapping="Wrap"/>
+                                    </Grid>
                                 </DataTemplate>
                             </common:PwCommonTemplateSelector.Entry>
                         </common:PwCommonTemplateSelector>

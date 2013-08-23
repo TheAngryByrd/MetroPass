@@ -3,20 +3,20 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq.Expressions;
 using System.Net;
-using System.Windows.Input;
+using System.Reactive.Linq;
 using Caliburn.Micro;
 using Metropass.Core.PCL.Hashing;
 using Metropass.Core.PCL.Model.Kdb4.Keys;
 using MetroPass.WP8.UI.DataModel;
-using MetroPass.WP8.UI.Utils;
-using MetroPass.WP8.UI.ViewModels.DesignTime;
 using MetroPass.WP8.UI.ViewModels.Interfaces;
+using MetroPass.WP8.UI.ViewModels.ReactiveCaliburn;
 using ReactiveUI;
+using ReactiveUI.Legacy;
 using Windows.ApplicationModel;
 
 namespace MetroPass.WP8.UI.ViewModels
 {
-    public class DatabaseListViewModel : IDatabaseListViewModel
+    public class DatabaseListViewModel : ReactiveScreen,IDatabaseListViewModel
     {
         private readonly INavigationService _navService;
 
@@ -27,8 +27,11 @@ namespace MetroPass.WP8.UI.ViewModels
             _hasher = hasher;
             _navService = navService;
             DatabaseNames = new ObservableCollection<string> { "Personal", "Work" };
-            NavigateToLoginCommand = new ReactiveCommand();
+            NavigateToLoginCommand = new ReactiveAsyncCommand();
+            NavigateToLoginCommand.ItemsInflight.Select(x => x > 0).Subscribe(val => ProgressIsVisible = val);
+            NavigateToLoginCommand.Subscribe(a => ProgressIsVisible = true);
             NavigateToLoginCommand.Subscribe(NavigateToLogin);
+            ProgressIsVisible = false;
         }
 
         public ObservableCollection<string> DatabaseNames
@@ -37,10 +40,26 @@ namespace MetroPass.WP8.UI.ViewModels
             set;
         }
 
-        public IReactiveCommand NavigateToLoginCommand { get; private set; }
+
+        private bool _progressIsVisible;
+        public bool ProgressIsVisible {
+            get {
+                return _progressIsVisible;
+            }
+            set {
+                this.RaiseAndSetIfChanged(ref _progressIsVisible, value);
+            }
+        }
+
+        protected override void OnActivate()
+        {
+            ProgressIsVisible = false;
+        }
+
+        public ReactiveAsyncCommand NavigateToLoginCommand { get; private set; }
 
         public async void NavigateToLogin(object obj)
-        {
+        {           
             var installedFOlder = Package.Current.InstalledLocation;
 
             var folder = await installedFOlder.GetFolderAsync("SampleData");

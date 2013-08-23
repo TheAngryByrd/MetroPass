@@ -9,25 +9,25 @@ namespace Metropass.Core.PCL.Model
 {
     public class PwGroup : PwCommon, IGroup
     {
-        private ObservableCollection<PwEntry> _entries
-        {
-            get
-            {
-                return _entriesLazy.Value;
-            }
-        }
-        private ObservableCollection<PwGroup> _subGroups
-        {
-            get
-            {
-                return _subGroupsLazy.Value;
-            }
-        }
+        //private ObservableCollection<PwEntry> _entries
+        //{
+        //    get
+        //    {
+        //        return _entriesLazy.Value;
+        //    }
+        //}
+        //private ObservableCollection<PwGroup> _subGroups
+        //{
+        //    get
+        //    {
+        //        return _subGroupsLazy.Value;
+        //    }
+        //}
         private readonly Lazy<ObservableCollection<PwEntry>> _entriesLazy;
         private readonly Lazy<ObservableCollection<PwGroup>> _subGroupsLazy;        
         
-        //private readonly ObservableCollection<PwEntry> _entries;
-        //private readonly ObservableCollection<PwGroup> _subGroups;
+        private readonly ObservableCollection<PwEntry> _entries;
+        private readonly ObservableCollection<PwGroup> _subGroups;
 
         public PwGroup(XElement element) : this(element, true) { }
 
@@ -36,18 +36,21 @@ namespace Metropass.Core.PCL.Model
             Element = element;
             if (element != null)
             {
-                _entriesLazy = new Lazy<ObservableCollection<PwEntry>>(() => IndexEntries(element));
+                //_entriesLazy = new Lazy<ObservableCollection<PwEntry>>(() => IndexEntries(element));
+                _entries = IndexEntries(element);
                
                 if (includeSubGroups)
                 {
-                    _subGroupsLazy = new Lazy<ObservableCollection<PwGroup>>(() =>IndexGroups(element));
+                    _subGroups = IndexGroups(element);
+                    //_subGroupsLazy = new Lazy<ObservableCollection<PwGroup>>(() =>IndexGroups(element));
                 }
                 else
                 {
-                    _subGroupsLazy = new Lazy<ObservableCollection<PwGroup>>(() => new ObservableCollection<PwGroup>());
+                    _subGroups = new ObservableCollection<PwGroup>();
+                    //_subGroupsLazy = new Lazy<ObservableCollection<PwGroup>>(() => new ObservableCollection<PwGroup>());
                 }
 
-                _subGroupsAndEntries = new AsyncLazy<ObservableCollection<PwCommon>>(() => GetSubGroupsAndEntries());
+                _subGroupsAndEntries = GetSubGroupsAndEntries();
             }
     
         }
@@ -62,15 +65,11 @@ namespace Metropass.Core.PCL.Model
             return new ObservableCollection<PwGroup>(element.Elements("Group").Select(@group => new PwGroup(@group)));
         }
 
-        private async Task<ObservableCollection<PwCommon>> GetSubGroupsAndEntries()
+        private  ObservableCollection<PwCommon> GetSubGroupsAndEntries()
         {
             var x = new List<PwCommon>();
-
-             
-            var t1 = Task.Run(() => x.AddRange(this.SubGroups));
-            var t2 = Task.Run(() => x.AddRange(Entries));
-            await Task.WhenAll(t1, t2);
-            //x.AddRange(Entries);
+            x.AddRange(SubGroups);
+            x.AddRange(Entries);
             return new ObservableCollection<PwCommon>(x);          
         }
         
@@ -113,13 +112,13 @@ namespace Metropass.Core.PCL.Model
             get { return _subGroups.Count(); }
         }
 
-        private readonly AsyncLazy<ObservableCollection<PwCommon>> _subGroupsAndEntries;
+        private readonly ObservableCollection<PwCommon> _subGroupsAndEntries;
 
         public ObservableCollection<PwCommon> SubGroupsAndEntries
         {
             get
             {
-                return _subGroupsAndEntries.Value.Result;
+                return _subGroupsAndEntries;
             }
         }
 

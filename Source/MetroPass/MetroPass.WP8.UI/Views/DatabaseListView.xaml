@@ -13,8 +13,7 @@
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait" Orientation="Portrait"
-    mc:Ignorable="d"
-    shell:SystemTray.IsVisible="True"   
+    mc:Ignorable="d" 
     DataContext="{Binding ViewModel}"
     d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True, Type=DT:DatabaseListDesignTimeViewModel}">
 
@@ -43,20 +42,20 @@
     	
     	<ControlTemplate x:Key="ButtonControlTemplate1" TargetType="Button">
     		 <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" toolkit:TiltEffect.IsTiltEnabled="True">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="*"></RowDefinition>
-                                    <RowDefinition Height="auto"></RowDefinition>
-                                </Grid.RowDefinitions>
-                <Border HorizontalAlignment="Stretch" Grid.Row="0" Grid.RowSpan="2" Background="{StaticResource MainAppColor}" Height="175">
-                                    <Viewbox >
-                                        <TextBlock  FontFamily="Segoe UI Symbol" Foreground="White" Text="&#xE192;"/>
-                                    </Viewbox>
-                                </Border>
-                                <Border Grid.Row="1" VerticalAlignment="Stretch" Background="Black" Opacity="0.7"/>
-                                <StackPanel Grid.Row="1" Margin="10,5" VerticalAlignment="Bottom">
-                                    <TextBlock FontSize="30" Foreground="White" Text="{Binding}"/>
-                                </StackPanel>
-                            </Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid HorizontalAlignment="Stretch" Grid.Row="0" Grid.RowSpan="2" Background="{StaticResource MainAppColor}" Height="175">
+                    <Viewbox Grid.Row="0" >
+                        <TextBlock  FontFamily="Segoe UI Symbol" Foreground="White" Text="&#xE192;"/>
+                    </Viewbox>
+                 </Grid>
+                <Border Grid.Row="1" VerticalAlignment="Stretch" Background="Black" Opacity="0.7"/>
+                <StackPanel Grid.Row="1" Margin="10,5" VerticalAlignment="Bottom">
+                    <TextBlock FontSize="30" Foreground="White" Text="{Binding}"/>
+                </StackPanel>
+            </Grid>
     	</ControlTemplate>
 
     </phone:PhoneApplicationPage.Resources>
@@ -70,8 +69,9 @@
 
         <!--TitlePanel contains the name of the application and page title-->
         <StackPanel Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock Text="MetroPass" Style="{StaticResource PhoneTextNormalStyle}"/>
-            <TextBlock Text="Databases" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+            <ProgressBar x:Name="Progress" IsIndeterminate="True"></ProgressBar>
+            <TextBlock Grid.Row="0" Text="MetroPass" Style="{StaticResource PhoneTextNormalStyle}"/>
+            <TextBlock Grid.Row="1" Text="Databases" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
         </StackPanel>
 
         <!--ContentPanel - place additional content here-->
