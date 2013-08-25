@@ -26,14 +26,21 @@ namespace MetroPass.WP8.UI.ViewModels
             _navigationService = navigationService;
             this.ObservableForProperty(vm => vm.GroupId).Subscribe(GetGroup);
             this.ObservableForProperty(vm => vm.SelectedItem)
-                .Where(v => v.Value is PwGroup)
+                //.Where(v => v.Value is PwGroup)
                 .Subscribe(NavigateToEntriesListView);
             Items = new ObservableCollection<PwCommon>();
         }     
 
         private void NavigateToEntriesListView(IObservedChange<EntriesListViewModel, PwCommon> obj)
         {
-            _navigationService.UriFor<EntriesListViewModel>().WithParam(vm => vm.GroupId, obj.Value.UUID).Navigate();
+            if (obj.Value is PwGroup)
+            {
+                _navigationService.UriFor<EntriesListViewModel>().WithParam(vm => vm.GroupId, obj.Value.UUID).Navigate();
+            }
+            else if(obj.Value is PwEntry)
+            {
+                _navigationService.UriFor<AddOrEditEntryViewModel>().WithParam(vm => vm.EntryUuid, obj.Value.UUID).Navigate();
+            }
         }
 
         public ObservableCollection<PwCommon> Items
@@ -90,6 +97,14 @@ namespace MetroPass.WP8.UI.ViewModels
             set {
                 this.RaiseAndSetIfChanged(ref _group, value);
             }
-        }    
+        }
+
+        public string PageTitle
+        {
+            get
+            {
+                return Group.Name;
+            }
+        }
     }
 }

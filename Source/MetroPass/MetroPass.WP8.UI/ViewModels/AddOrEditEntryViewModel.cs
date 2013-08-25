@@ -45,6 +45,10 @@ namespace MetroPass.WP8.UI.ViewModels
             PwEntry = PWDatabaseDataSource.Instance.PwDatabase.Tree.FindEntryByUuid(EntryUuid);
         }
 
+        public string PageTitle
+        {
+            get{ return PwEntry.Title; }
+        }
 
     }
 }

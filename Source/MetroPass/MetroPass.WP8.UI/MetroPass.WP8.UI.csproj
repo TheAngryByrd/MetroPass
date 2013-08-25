@@ -120,8 +120,8 @@
     <Compile Include="ViewModels\ReactiveCaliburn\ReactiveScreen.cs" />
     <Compile Include="ViewModels\ReactiveCaliburn\ReactiveViewAware.cs" />
     <Compile Include="ViewModels\SkydriveAccessViewModel.cs" />
-    <Compile Include="Views\AddOrEditEntry.xaml.cs">
-      <DependentUpon>AddOrEditEntry.xaml</DependentUpon>
+    <Compile Include="Views\AddOrEditEntryView.xaml.cs">
+      <DependentUpon>AddOrEditEntryView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\DatabaseListView.xaml.cs">
       <DependentUpon>DatabaseListView.xaml</DependentUpon>
@@ -147,7 +147,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\AddOrEditEntry.xaml">
+    <Page Include="Views\AddOrEditEntryView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
