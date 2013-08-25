@@ -7,6 +7,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    xmlns:c4f="clr-namespace:Coding4Fun.Toolkit.Controls.Binding;assembly=Coding4Fun.Toolkit.Controls"
+    xmlns:uc="clr-namespace:MetroPass.WP8.UI.Controls"
     mc:Ignorable="d"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -51,7 +53,60 @@
         <phone:Pivot Grid.Row="1" >
             <!--Pivot item one-->
             <phone:PivotItem x:Name="PageTitle" Header="{Binding PageTitle}">
-                <Grid/>
+                <Grid>
+                    <ScrollViewer>
+                        <StackPanel>
+                            <!-- Entry details -->
+                            <TextBlock Text="Title"
+                               Style="{StaticResource PhoneTextNormalStyle}" />
+                            <TextBox x:Name="Title" 
+                                         c4f:TextBinding.UpdateSourceOnChange="True" />
+
+                            <TextBlock Text="Username"
+                               Style="{StaticResource PhoneTextNormalStyle}" />
+                            <TextBox x:Name="Username" 
+                                        
+                                         c4f:TextBinding.UpdateSourceOnChange="True" />
+
+                            <TextBlock Text="Password"
+                               Style="{StaticResource PhoneTextNormalStyle}" />
+                            <uc:ProtectedTextBox x:Name="Password"
+                                         MonoSpaced="True"
+                                         Text="{Binding Password}"
+                                         c4f:TextBinding.UpdateSourceOnChange="True" />
+
+                            
+
+                            <!-- URL -->
+                            <TextBlock Text=" " />
+
+                            <TextBlock Text="Url"
+                               Style="{StaticResource PhoneTextNormalStyle}" />
+                            <TextBox x:Name="Url"
+                             c4f:TextBinding.UpdateSourceOnChange="True"
+                             InputScope="Url" 
+                              />
+                            <HyperlinkButton Name="lnkUrl" 
+                                     HorizontalContentAlignment="Left">
+                                <toolkit:ContextMenuService.ContextMenu>
+                                    <toolkit:ContextMenu>
+ 
+                                    </toolkit:ContextMenu>
+                                </toolkit:ContextMenuService.ContextMenu>
+                            </HyperlinkButton>
+
+                            <!-- Notes -->
+                            <TextBlock Text=" " />
+
+                            <TextBlock Text="Notes"
+                               Style="{StaticResource PhoneTextNormalStyle}" />
+                            <TextBox x:Name="Notes" 
+                                     TextWrapping="Wrap" 
+                                     AcceptsReturn="True" 
+                                     Height="250" />
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
             </phone:PivotItem>
             
             <phone:PivotItem Header="custom fields">

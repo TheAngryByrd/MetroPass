@@ -24,9 +24,9 @@ namespace MetroPass.WP8.UI.ViewModels
         public EntriesListViewModel(INavigationService navigationService)
         {
             _navigationService = navigationService;
-            this.ObservableForProperty(vm => vm.GroupId).Subscribe(GetGroup);
-            this.ObservableForProperty(vm => vm.SelectedItem)
-                //.Where(v => v.Value is PwGroup)
+            this.ObservableForProperty(vm => vm.GroupId)
+                .Subscribe(GetGroup);
+            this.ObservableForProperty(vm => vm.SelectedItem)                
                 .Subscribe(NavigateToEntriesListView);
             Items = new ObservableCollection<PwCommon>();
         }     

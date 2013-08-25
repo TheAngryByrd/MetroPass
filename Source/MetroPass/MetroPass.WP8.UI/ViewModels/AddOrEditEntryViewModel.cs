@@ -50,5 +50,55 @@ namespace MetroPass.WP8.UI.ViewModels
             get{ return PwEntry.Title; }
         }
 
+        public string Title
+        {
+            get { return PwEntry.Title; }
+            set 
+            {
+                PwEntry.Title = value;
+                this.RaisePropertyChanged();
+            }
+        }
+
+        public string Username
+        {
+            get { return PwEntry.Username; }
+            set
+            {
+                PwEntry.Username = value;
+                this.RaisePropertyChanged();
+            }
+        }
+
+        public string Password
+        {
+            get { return PwEntry.Password; }
+            set
+            {
+                PwEntry.Password = value;
+                this.RaisePropertyChanged();
+            }
+        }
+        
+        public string Url
+        {
+            get { return PwEntry.Url; }
+            set
+            {
+                PwEntry.Url = value;
+                this.RaisePropertyChanged();
+            }
+        }
+        
+        public string Notes
+        {
+            get { return PwEntry.Notes; }
+            set
+            {
+                PwEntry.Notes = value;
+                this.RaisePropertyChanged();
+            }
+        }
+
     }
 }
