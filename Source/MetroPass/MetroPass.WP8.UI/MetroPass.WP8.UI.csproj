@@ -110,6 +110,7 @@
       <DependentUpon>AppResources.resx</DependentUpon>
     </Compile>
     <Compile Include="SkydriveResources.cs" />
+    <Compile Include="ViewModels\AddOrEditEntryViewModel.cs" />
     <Compile Include="ViewModels\DatabaseListViewModel.cs" />
     <Compile Include="ViewModels\DesignTime\DatabaseListDesignTimeViewModel.cs" />
     <Compile Include="ViewModels\DesignTime\EntriesListDesignTimeViewModel.cs" />
@@ -119,6 +120,9 @@
     <Compile Include="ViewModels\ReactiveCaliburn\ReactiveScreen.cs" />
     <Compile Include="ViewModels\ReactiveCaliburn\ReactiveViewAware.cs" />
     <Compile Include="ViewModels\SkydriveAccessViewModel.cs" />
+    <Compile Include="Views\AddOrEditEntry.xaml.cs">
+      <DependentUpon>AddOrEditEntry.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\DatabaseListView.xaml.cs">
       <DependentUpon>DatabaseListView.xaml</DependentUpon>
     </Compile>
@@ -140,6 +144,10 @@
       <ContainsDesignTimeResources>true</ContainsDesignTimeResources>
     </Page>
     <Page Include="Resources\Styles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AddOrEditEntry.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -221,6 +229,7 @@
     <Reference Include="Caliburn.Micro.Extensions">
       <HintPath>..\packages\Caliburn.Micro.1.5.2\lib\wp8\Caliburn.Micro.Extensions.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Phone.Controls, Version=8.0.0.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Phone.Controls.Toolkit">
       <HintPath>..\packages\WPtoolkit.4.2013.08.16\lib\wp8\Microsoft.Phone.Controls.Toolkit.dll</HintPath>
     </Reference>

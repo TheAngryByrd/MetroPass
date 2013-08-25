@@ -7,7 +7,7 @@ namespace Metropass.Core.PCL.Model.Kdb4
          XDocument Document { get;  set; }
          Kdb4TreeMetaData MetaData { get; set;}
          PwGroup Group { get; set; }
-         XElement FindEntryByUuid(string entryId);
+         PwEntry FindEntryByUuid(string entryId);
          PwGroup FindGroupByUuid(string groupId);
     }
 }

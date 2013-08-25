@@ -18,21 +18,18 @@ namespace Metropass.Core.PCL.Model.Kdb4
 
         public Kdb4TreeMetaData MetaData { get; set; }
 
-        public XElement FindEntryByUuid(string entryId)
+        public PwEntry FindEntryByUuid(string entryId)
         {
-            var entryElements = Document.Descendants("Entry").Where(e => e.Element("UUID") != null && e.Element("UUID").Value == entryId);
-            if (entryElements.Count() == 1)
+            var source = new List<PwGroup>() { Group };
+            var result = source.All(g => g.SubGroups).
+                SelectMany(g => g.Entries).
+                SingleOrDefault(e => e.UUID == entryId);
+
+            if (result != null)
             {
-                return entryElements.Single();
-            }
-            if (entryElements.Count() > 0)
-            {
-                entryElements = entryElements.Where(e => e.Parent.Name != "History");
-                if (entryElements.Count() == 1)
-                {
-                    return entryElements.Single();
-                }
-            }
+                return result;
+            }           
+          
             throw new ArgumentException(string.Format("Could not find Entry with ID {0} in the database.", entryId), entryId);
         }
 
@@ -49,7 +46,7 @@ namespace Metropass.Core.PCL.Model.Kdb4
         }
     }
 
-    public static class Exte
+    public static class ColletionExtensions
     {
         public static T FindAll<T>(this IEnumerable<T> source, Func<T, IEnumerable<T>> getChildren, Func<T, bool> predicate)
         {

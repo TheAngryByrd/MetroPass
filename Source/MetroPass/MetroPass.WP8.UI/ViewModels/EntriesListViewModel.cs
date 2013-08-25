@@ -25,19 +25,11 @@ namespace MetroPass.WP8.UI.ViewModels
         {
             _navigationService = navigationService;
             this.ObservableForProperty(vm => vm.GroupId).Subscribe(GetGroup);
-            this.ObservableForProperty(vm => vm.Group).Subscribe(GetGroupsAndEntries);
             this.ObservableForProperty(vm => vm.SelectedItem)
                 .Where(v => v.Value is PwGroup)
                 .Subscribe(NavigateToEntriesListView);
             Items = new ObservableCollection<PwCommon>();
-        }
-
-      
-
-        private async void GetGroupsAndEntries(IObservedChange<EntriesListViewModel, PwGroup> obj)
-        {
-            //await RunAsync(() => obj.Value.SubGroupsAndEntries, val => { Items = val; });     
-        }
+        }     
 
         private void NavigateToEntriesListView(IObservedChange<EntriesListViewModel, PwCommon> obj)
         {
@@ -65,21 +57,11 @@ namespace MetroPass.WP8.UI.ViewModels
         protected override void OnActivate()
         {
             SelectedItem = null;
-            Items.AddRange(Group.SubGroupsAndEntries);
-            //await RunAsync(() => Group.SubGroupsAndEntries, val => { Items.AddRange(val); });     
+            Items.AddRange(Group.SubGroupsAndEntries);        
         }
         protected override void OnDeactivate(bool close)
         {            
             Items = new ObservableCollection<PwCommon>();
-        }
-
-        private static Task RunAsync<T>(Func<T> asyncFunc, Action<T> dispatcher)
-        {
-            return Task.Run(async () =>
-            {
-                var val = asyncFunc();
-                Deployment.Current.Dispatcher.BeginInvoke(() => dispatcher(val));
-            });     
         }
 
         private void GetGroup(IObservedChange<EntriesListViewModel, string> obj)

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Threading.Tasks;
+using System.Windows;
 using Caliburn.Micro;
 using ReactiveUI;
 
@@ -250,6 +252,14 @@ namespace MetroPass.WP8.UI.ViewModels.ReactiveCaliburn
             GetViewCloseAction(null).OnUIThread();
         }
 
+        protected static Task RunAsync<T>(Func<T> asyncFunc, Action<T> dispatcher)
+        {
+            return Task.Run(async () =>
+            {
+                var val = asyncFunc();
+                Deployment.Current.Dispatcher.BeginInvoke(() => dispatcher(val));
+            });
+        }
 
 #if !SILVERLIGHT
         /// <summary>
