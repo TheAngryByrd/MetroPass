@@ -32,6 +32,11 @@ namespace MetroPass.WP8.UI.DataModel
             set { _pwDatabase = value; }
         }
 
+        public Task LoadPwDatabase(IStorageFile pwDatabaseFile, IList<IUserKey> userKeys)
+        {
+            return LoadPwDatabase(pwDatabaseFile, userKeys, new NullableProgress<double>());
+        }
+
         public async Task LoadPwDatabase(IStorageFile pwDatabaseFile, IList<IUserKey> userKeys, IProgress<double> percentComplete)
         {
             StorageFile = pwDatabaseFile;

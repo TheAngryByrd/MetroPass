@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq.Expressions;
-using System.Net;
-using System.Reactive.Linq;
 using Caliburn.Micro;
 using Metropass.Core.PCL.Hashing;
 using Metropass.Core.PCL.Model.Kdb4.Keys;
@@ -11,7 +8,6 @@ using MetroPass.WP8.UI.DataModel;
 using MetroPass.WP8.UI.ViewModels.Interfaces;
 using MetroPass.WP8.UI.ViewModels.ReactiveCaliburn;
 using ReactiveUI;
-using ReactiveUI.Legacy;
 using Windows.ApplicationModel;
 
 namespace MetroPass.WP8.UI.ViewModels
@@ -27,8 +23,7 @@ namespace MetroPass.WP8.UI.ViewModels
             _hasher = hasher;
             _navService = navService;
             DatabaseNames = new ObservableCollection<string> { "Personal", "Work" };
-            NavigateToLoginCommand = new ReactiveAsyncCommand();
-            NavigateToLoginCommand.ItemsInflight.Select(x => x > 0).Subscribe(val => ProgressIsVisible = val);
+            NavigateToLoginCommand = new ReactiveCommand();
             NavigateToLoginCommand.Subscribe(a => ProgressIsVisible = true);
             NavigateToLoginCommand.Subscribe(NavigateToLogin);
             ProgressIsVisible = false;
@@ -56,7 +51,7 @@ namespace MetroPass.WP8.UI.ViewModels
             ProgressIsVisible = false;
         }
 
-        public ReactiveAsyncCommand NavigateToLoginCommand { get; private set; }
+        public ReactiveCommand NavigateToLoginCommand { get; private set; }
 
         public async void NavigateToLogin(object obj)
         {           
@@ -67,7 +62,7 @@ namespace MetroPass.WP8.UI.ViewModels
             var listOfKeys = new List<IUserKey>();
             listOfKeys.Add(await KcpPassword.Create("metropass",_hasher));
 
-            await PWDatabaseDataSource.Instance.LoadPwDatabase(file, listOfKeys, new NullableProgress<double>());
+            await PWDatabaseDataSource.Instance.LoadPwDatabase(file, listOfKeys);
 
             var rootUUID = PWDatabaseDataSource.Instance.PwDatabase.Tree.Group.UUID;
 
@@ -75,12 +70,5 @@ namespace MetroPass.WP8.UI.ViewModels
                 WithParam(p => p.GroupId, rootUUID).Navigate();
         }
     }
-    public static class CaliburnExtensions
-    {
-        public static UriBuilder<TViewModel> WithEncodedParam<TViewModel,TValue>(this UriBuilder<TViewModel> uri,Expression<Func<TViewModel, TValue>> property, TValue value)
-        {
-            TValue val = (TValue)Convert.ChangeType(WebUtility.UrlEncode(value.ToString()),typeof(TValue));
-            return uri.WithParam(property, val);
-        }
-    }
+
 }
