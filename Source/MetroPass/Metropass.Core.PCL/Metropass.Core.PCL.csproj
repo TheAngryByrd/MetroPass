@@ -54,6 +54,7 @@
     <Compile Include="Helpers\StrUtil.cs" />
     <Compile Include="Helpers\TaskHelper.cs" />
     <Compile Include="LazyAsync.cs" />
+    <Compile Include="Model\Field.cs" />
     <Compile Include="Model\IGroup.cs" />
     <Compile Include="KdbConstants.cs" />
     <Compile Include="Helpers\MemUtil.cs" />

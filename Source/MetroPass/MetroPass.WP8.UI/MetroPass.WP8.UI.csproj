@@ -177,6 +177,8 @@
     <None Include="Properties\WMAppManifest.xml">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="Images\add.png" />
+    <Content Include="Images\save.png" />
     <Content Include="SampleData\Large.kdbx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -232,6 +234,9 @@
   <ItemGroup>
     <Reference Include="Caliburn.Micro">
       <HintPath>..\packages\Caliburn.Micro.1.5.2\lib\wp8\Caliburn.Micro.dll</HintPath>
+    </Reference>
+    <Reference Include="Caliburn.Micro.BindableAppBar">
+      <HintPath>..\packages\Caliburn.Micro.BindableAppBar.1.0.4.0\lib\wp80\Caliburn.Micro.BindableAppBar.dll</HintPath>
     </Reference>
     <Reference Include="Caliburn.Micro.Extensions">
       <HintPath>..\packages\Caliburn.Micro.1.5.2\lib\wp8\Caliburn.Micro.Extensions.dll</HintPath>
@@ -311,7 +316,6 @@
       <HintPath>..\packages\reactiveui-mobile.5.1.2\lib\WP8\Xamarin.Mobile.dll</HintPath>
     </Reference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

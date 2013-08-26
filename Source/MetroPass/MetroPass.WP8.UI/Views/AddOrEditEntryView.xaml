@@ -9,12 +9,17 @@
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     xmlns:c4f="clr-namespace:Coding4Fun.Toolkit.Controls.Binding;assembly=Coding4Fun.Toolkit.Controls"
     xmlns:uc="clr-namespace:MetroPass.WP8.UI.Controls"
+    xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro"
+    xmlns:bindableAppBar="clr-namespace:Caliburn.Micro.BindableAppBar;assembly=Caliburn.Micro.BindableAppBar"
     mc:Ignorable="d"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait"  Orientation="Portrait"
     >
+	<phone:PhoneApplicationPage.Resources>
+
+	</phone:PhoneApplicationPage.Resources>
 
     <toolkit:TransitionService.NavigationInTransition>
         <toolkit:NavigationInTransition>
@@ -37,7 +42,6 @@
         </toolkit:NavigationOutTransition>
     </toolkit:TransitionService.NavigationOutTransition>
 
-    
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
 
@@ -50,7 +54,7 @@
             <TextBlock Grid.Row="0" Text="MetroPass" Style="{StaticResource PhoneTextNormalStyle}"/>
         </StackPanel>
         <!--Pivot Control-->
-        <phone:Pivot Grid.Row="1" >
+        <phone:Pivot Grid.Row="1" SelectionChanged="Pivot_SelectionChanged" >
             <!--Pivot item one-->
             <phone:PivotItem x:Name="PageTitle" Header="{Binding PageTitle}">
                 <Grid>
@@ -104,13 +108,48 @@
                                      TextWrapping="Wrap" 
                                      AcceptsReturn="True" 
                                      Height="250" />
+                        
                         </StackPanel>
                     </ScrollViewer>
+                    <bindableAppBar:BindableAppBar x:Name="ItemView1_AppBar1" >
+                        <bindableAppBar:BindableAppBarButton 
+                           cal:Message.Attach="[Event Click] = [Action Save()]"
+                            
+                            Text="Save" IconUri="/Images/save.png" />
+                    </bindableAppBar:BindableAppBar>
                 </Grid>
+
             </phone:PivotItem>
             
             <phone:PivotItem Header="custom fields">
-                <Grid/>
+                <Grid>
+                    <ScrollViewer>
+                        <ItemsControl ItemsSource="{Binding CustomFields}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBox Text="{Binding Name}" Height="80"
+                                                 c4f:TextBinding.UpdateSourceOnChange="True"/>
+
+                                        <TextBox Text="{Binding Value}"  Height="80"
+                                        c4f:TextBinding.UpdateSourceOnChange="True"
+                                        />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                    <bindableAppBar:BindableAppBar x:Name="ItemView1_AppBar2" >
+                        <bindableAppBar:BindableAppBarButton 
+                            
+                            cal:Message.Attach="[Event Click] = [Action Save()]"
+                            Text="Save" IconUri="/Images/save.png" />
+                        <bindableAppBar:BindableAppBarButton 
+                            x:Name="AddField" 
+                            Text="Add Field" IconUri="/Images/add.png" />
+                        
+                    </bindableAppBar:BindableAppBar>
+                </Grid>
             </phone:PivotItem>
 
 
@@ -118,6 +157,8 @@
                 <Grid/>
             </phone:PivotItem>
         </phone:Pivot>
+
+
     </Grid>
     
 </phone:PhoneApplicationPage>

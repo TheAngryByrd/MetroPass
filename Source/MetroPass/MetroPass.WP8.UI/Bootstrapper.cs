@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
+using System.Windows.Controls;
 using Caliburn.Micro;
+using Caliburn.Micro.BindableAppBar;
 using Metropass.Core.PCL.Hashing;
 using MetroPass.WP8.Infrastructure.Hashing;
 using Microsoft.Phone.Controls;
@@ -62,6 +64,11 @@ namespace MetroPass.WP8.UI
         protected void ConfigureConvetions()
         {         
             ConventionManager.AddElementConvention<UIElement>(UIElement.VisibilityProperty, "Visibility", "VisibilityChanged");
+
+            ConventionManager.AddElementConvention<BindableAppBarButton>(
+            Control.IsEnabledProperty, "DataContext", "Click");
+            ConventionManager.AddElementConvention<BindableAppBarMenuItem>(
+                Control.IsEnabledProperty, "DataContext", "Click");
 
             var baseBindProperties = ViewModelBinder.BindProperties;
             ViewModelBinder.BindProperties =

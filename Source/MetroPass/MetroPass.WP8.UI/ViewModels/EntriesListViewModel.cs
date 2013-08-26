@@ -39,7 +39,12 @@ namespace MetroPass.WP8.UI.ViewModels
             }
             else if(obj.Value is PwEntry)
             {
-                _navigationService.UriFor<AddOrEditEntryViewModel>().WithParam(vm => vm.EntryUuid, obj.Value.UUID).Navigate();
+                var entry = obj.Value as PwEntry;
+                _navigationService
+                    .UriFor<AddOrEditEntryViewModel>()
+                    .WithParam(vm => vm.EntryUuid, entry.UUID)
+                    .WithParam(vm => vm.ParentGroupUuid, entry.ParentGroup.UUID)
+                    .Navigate();
             }
         }
 
