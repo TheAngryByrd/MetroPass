@@ -76,7 +76,7 @@ namespace MetroPass.WP8.UI.ViewModels
             PwGroup = PWDatabaseDataSource.Instance.PwDatabase.Tree.FindGroupByUuid(ParentGroupUuid);
             if (EntryUuid != null)
             {
-                PwEntry = PWDatabaseDataSource.Instance.PwDatabase.Tree.FindEntryByUuid(EntryUuid);
+                PwEntry = PwGroup.Entries.SingleOrDefault(e => e.UUID == EntryUuid);// PWDatabaseDataSource.Instance.PwDatabase.Tree.FindEntryByUuid(EntryUuid);
                 Title = PwEntry.Title;
                 Username = PwEntry.Username;
                 Password = PwEntry.Password;

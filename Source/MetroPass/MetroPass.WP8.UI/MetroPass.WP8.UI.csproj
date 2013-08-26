@@ -261,6 +261,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\MyToolkit.1.23.0\lib\wp8\MyToolkit.dll</HintPath>
     </Reference>
+    <Reference Include="MyToolkit.Extended, Version=1.23.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\MyToolkit.Extended.1.23.0\lib\wp8\MyToolkit.Extended.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.5.0.6\lib\portable-net45+wp80+win8\Newtonsoft.Json.dll</HintPath>
     </Reference>
