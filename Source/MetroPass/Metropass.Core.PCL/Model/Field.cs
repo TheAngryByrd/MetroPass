@@ -11,7 +11,7 @@ namespace Metropass.Core.PCL.Model
             Element = element;
         }
 
-        private const string xml = "<String><Key></Key><Value></Value></String>";
+        private const string xml = "<String><Key>Name</Key><Value>Value</Value></String>";
         public static Field New()
         {
             return new Field(XElement.Parse(xml));

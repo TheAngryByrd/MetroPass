@@ -76,7 +76,7 @@
                                Style="{StaticResource PhoneTextNormalStyle}" />
                             <uc:ProtectedTextBox x:Name="Password"
                                          MonoSpaced="True"
-                                         Text="{Binding Password}"
+                                         Text="{Binding Password, Mode=TwoWay}"
                                          c4f:TextBinding.UpdateSourceOnChange="True" />
 
                             
@@ -127,14 +127,28 @@
                         <ItemsControl ItemsSource="{Binding CustomFields}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <StackPanel>
-                                        <TextBox Text="{Binding Name}" Height="80"
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                            <ColumnDefinition Width="*"></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"></RowDefinition>
+                                            <RowDefinition Height="auto"></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Border Grid.RowSpan="2" 
+                                                Grid.Column="0" 
+                                                Background="{StaticResource MainAppColor}"
+                                                Width="8" 
+                                                Margin="0,8,0,8"
+                                                VerticalAlignment="Stretch"></Border>
+                                        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Name, Mode=TwoWay}" Height="80"
                                                  c4f:TextBinding.UpdateSourceOnChange="True"/>
 
-                                        <TextBox Text="{Binding Value}"  Height="80"
+                                        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Value, Mode=TwoWay}"  Height="80"
                                         c4f:TextBinding.UpdateSourceOnChange="True"
                                         />
-                                    </StackPanel>
+                                    </Grid>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>

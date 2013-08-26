@@ -8,6 +8,7 @@ using MetroPass.WP8.UI.DataModel;
 using MetroPass.WP8.UI.ViewModels.ReactiveCaliburn;
 using Metropass.Core.PCL.Model;
 using ReactiveUI;
+using System.Threading;
 
 namespace MetroPass.WP8.UI.ViewModels
 {
@@ -17,8 +18,6 @@ namespace MetroPass.WP8.UI.ViewModels
 
         public AddOrEditEntryViewModel()
         {
-            AddCustomFieldCommand = new ReactiveCommand();
-            //AddCustomFieldCommand.Subscribe(AddCustomField);
         }
 
         protected override void OnActivate()
@@ -71,21 +70,23 @@ namespace MetroPass.WP8.UI.ViewModels
             set { this.RaiseAndSetIfChanged(ref _pwEntry, value); }
         }
 
-        public void GetEntry()
+        public async Task GetEntry()
         {
-            PwGroup = PWDatabaseDataSource.Instance.PwDatabase.Tree.FindGroupByUuid(ParentGroupUuid);
-            if (EntryUuid != null)
-            {
-                PwEntry = PwGroup.Entries.SingleOrDefault(e => e.UUID == EntryUuid);// PWDatabaseDataSource.Instance.PwDatabase.Tree.FindEntryByUuid(EntryUuid);
-                Title = PwEntry.Title;
-                Username = PwEntry.Username;
-                Password = PwEntry.Password;
-                Url = PwEntry.Url;
-                Notes = PwEntry.Notes;
-                CustomFields = new ObservableCollection<FieldViewModel>(
-                    PwEntry.CustomFields.
-                    Select(cf => new FieldViewModel(cf)));
-            }
+            
+                PwGroup = PWDatabaseDataSource.Instance.PwDatabase.Tree.FindGroupByUuid(ParentGroupUuid);
+                if (EntryUuid != null)
+                {
+                    PwEntry = PwGroup.Entries.SingleOrDefault(e => e.UUID == EntryUuid);
+                    Title = PwEntry.Title;
+                    Username = PwEntry.Username;
+                    Password = PwEntry.Password;
+                    Url = PwEntry.Url;
+                    Notes = PwEntry.Notes;
+                    CustomFields = new ObservableCollection<FieldViewModel>(
+                        PwEntry.CustomFields.
+                        Select(cf => new FieldViewModel(cf)));
+                }
+         
             
         }
 
@@ -131,8 +132,6 @@ namespace MetroPass.WP8.UI.ViewModels
 
         public ObservableCollection<FieldViewModel> CustomFields { get; set; }
 
-        public ReactiveCommand AddCustomFieldCommand { get; set; }
-
         public void AddField()
         {
             CustomFields.Add(new FieldViewModel(Field.New()));
@@ -153,6 +152,8 @@ namespace MetroPass.WP8.UI.ViewModels
             PwEntry.Url = Url;
             PwEntry.Notes = Notes;
             PwEntry.AddCustomFields(fields);
+
+            PWDatabaseDataSource.Instance.SavePwDatabase();
         }
     }
 

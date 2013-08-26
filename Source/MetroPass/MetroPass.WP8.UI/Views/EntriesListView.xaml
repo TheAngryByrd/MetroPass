@@ -12,6 +12,7 @@
     xmlns:mytoolkit="clr-namespace:MyToolkit.Controls;assembly=MyToolkit.Extended"
     xmlns:mytoolkitpaging="clr-namespace:MyToolkit.Paging;assembly=MyToolkit.Extended"
     xmlns:common="clr-namespace:MetroPass.WP8.UI.Common"
+    xmlns:telerikCore="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Core"
     x:Class="MetroPass.WP8.UI.Views.EntriesListView"
     SupportedOrientations="Portrait" Orientation="Portrait"
     mc:Ignorable="d" d:DesignHeight="800" d:DesignWidth="480"
@@ -39,8 +40,10 @@
     </toolkit:TransitionService.NavigationOutTransition>
 
     <phone:PhoneApplicationPage.Resources>
- 
-		<ItemsPanelTemplate x:Key="ItemsPanelTemplate1">
+
+        <telerikCore:RadFadeAnimation x:Key="rectangleFadeAnimation" />
+        
+        <ItemsPanelTemplate x:Key="ItemsPanelTemplate1">
 			<telerikPrimitives:RadWrapPanel/>
 		</ItemsPanelTemplate>
 		
