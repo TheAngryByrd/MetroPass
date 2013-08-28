@@ -9,6 +9,7 @@ using Caliburn.Micro.BindableAppBar;
 using Metropass.Core.PCL.Hashing;
 using MetroPass.WP8.Infrastructure.Hashing;
 using Microsoft.Phone.Controls;
+using MetroPass.WP8.UI.DataModel;
 
 namespace MetroPass.WP8.UI
 {
@@ -30,6 +31,7 @@ namespace MetroPass.WP8.UI
             AddViewModels();
             ConfigureConvetions();
             _container.PerRequest<ICanSHA256Hash, SHA256HahserWP8>();
+            _container.PerRequest<IDatabaseInfoRepository, DatabaseInfoRepository>();
         }
   
         private void AddViewModels() {

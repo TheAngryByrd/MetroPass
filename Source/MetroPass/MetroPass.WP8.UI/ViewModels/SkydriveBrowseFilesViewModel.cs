@@ -13,6 +13,7 @@ using Caliburn.Micro;
 using System.Linq.Expressions;
 using Windows.ApplicationModel;
 using Windows.Storage;
+using MetroPass.WP8.UI.DataModel;
 
 namespace MetroPass.WP8.UI.ViewModels
 {
@@ -33,6 +34,8 @@ namespace MetroPass.WP8.UI.ViewModels
     {
         private readonly INavigationService _navigationService;
         private string _navigationUrl = "/me/skydrive/files";   
+        private readonly IDatabaseInfoRepository _databaseInfoRepository;
+
         public string NavigationUrl
         {
             get { return _navigationUrl; }
@@ -57,8 +60,9 @@ namespace MetroPass.WP8.UI.ViewModels
             set { this.RaiseAndSetIfChanged(ref _progressIsVisible, value); }
         }
 
-        public SkydriveBrowseFilesViewModel(INavigationService navigationService)
+        public SkydriveBrowseFilesViewModel(INavigationService navigationService, IDatabaseInfoRepository databaseInfoRepository)
         {
+            _databaseInfoRepository = databaseInfoRepository;
             ProgressIsVisible = true;
             _navigationService = navigationService;
 
@@ -89,9 +93,7 @@ namespace MetroPass.WP8.UI.ViewModels
             { 
                 if (downloadStream != null)
                 {
-                    var installedFolder = Package.Current.InstalledLocation;
-                    var databaseFolder = await installedFolder.CreateFolderAsync("Databases", CreationCollisionOption.OpenIfExists);
-                    await databaseFolder.CreateFileAsync(skyDriveItem.Name, CreationCollisionOption.ReplaceExisting);
+                    await _databaseInfoRepository.SaveDatabaseFromDatasouce(skyDriveItem.Name, downloadStream);
                 }
             }
             ProgressIsVisible = false;

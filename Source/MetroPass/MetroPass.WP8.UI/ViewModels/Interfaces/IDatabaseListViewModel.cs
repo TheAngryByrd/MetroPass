@@ -4,7 +4,7 @@ namespace MetroPass.WP8.UI.ViewModels.Interfaces
 {
     public interface IDatabaseListViewModel
     {
-        ObservableCollection<string> DatabaseNames {
+        ObservableCollection<DatabaseItemViewModel> DatabaseItems {
         get;
         set;
         }

@@ -13,24 +13,27 @@ using Windows.Storage;
 
 namespace MetroPass.WP8.UI.ViewModels
 {
-    public class DatabaseListViewModel : ReactiveScreen,IDatabaseListViewModel
+    public class DatabaseListViewModel : ReactiveScreen, IDatabaseListViewModel
     {
         private readonly INavigationService _navService;
 
         private readonly ICanSHA256Hash _hasher;
 
-        public DatabaseListViewModel(INavigationService navService, ICanSHA256Hash hasher)
+        private readonly IDatabaseInfoRepository _databaseInfoRepository;
+
+        public DatabaseListViewModel(INavigationService navService, ICanSHA256Hash hasher, IDatabaseInfoRepository databaseInfoRepository)
         { 
+            _databaseInfoRepository = databaseInfoRepository;
             _hasher = hasher;
             _navService = navService;
-            DatabaseNames = new ObservableCollection<string>();
+            DatabaseItems = new ObservableCollection<DatabaseItemViewModel>();
             NavigateToLoginCommand = new ReactiveCommand();
             NavigateToLoginCommand.Subscribe(a => ProgressIsVisible = true);
             NavigateToLoginCommand.Subscribe(NavigateToLogin);
             ProgressIsVisible = false;
         }
 
-        public ObservableCollection<string> DatabaseNames
+        public ObservableCollection<DatabaseItemViewModel> DatabaseItems
         {
             get;
             set;
@@ -54,15 +57,13 @@ namespace MetroPass.WP8.UI.ViewModels
         protected async override void OnActivate()
         {
             ProgressIsVisible = false;
+            var info = await _databaseInfoRepository.GetDatabaseInfo();
 
-            var installedFolder = Package.Current.InstalledLocation;
-            var databaseFolder = await installedFolder.CreateFolderAsync("Databases", CreationCollisionOption.OpenIfExists);
-            var files = await databaseFolder.GetFilesAsync();
+        }
 
-            foreach(var file in files)
-            { 
-                DatabaseNames.Add(file.Name);
-            }
+        protected override void OnDeactivate(bool close)
+        {
+            DatabaseItems = new ObservableCollection<DatabaseItemViewModel>();
         }
 
         public ReactiveCommand NavigateToLoginCommand { get; private set; }
@@ -87,4 +88,16 @@ namespace MetroPass.WP8.UI.ViewModels
         }
     }
 
+
+
+    public class DatabaseItemViewModel
+    {
+        private readonly IStorageFile _file;
+
+        private readonly IStorageFolder _folder;
+
+     
+
+        public string Name { get; set; }
+    }
 }
