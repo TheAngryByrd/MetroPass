@@ -83,6 +83,7 @@ namespace MetroPass.WP8.UI.ViewModels
   
         private async Task AttemptDownload(SkyDriveItem skyDriveItem)
         {
+            ProgressIsVisible = true;
             var operationResult = await _liveClient.DownloadAsync(skyDriveItem.ID);
             using (var downloadStream = operationResult.Stream)
             { 
@@ -93,6 +94,10 @@ namespace MetroPass.WP8.UI.ViewModels
                     await databaseFolder.CreateFileAsync(skyDriveItem.Name, CreationCollisionOption.ReplaceExisting);
                 }
             }
+            ProgressIsVisible = false;
+
+            _navigationService.UriFor<DatabaseListViewModel>()                             
+                              .Navigate();
         }
   
         private void NavigateToBrowseFolders(SkyDriveItem value)
