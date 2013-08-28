@@ -16,5 +16,6 @@ namespace MetroPass.WP8.UI.Views
         {
             InitializeComponent();
         }
+
     }
 }

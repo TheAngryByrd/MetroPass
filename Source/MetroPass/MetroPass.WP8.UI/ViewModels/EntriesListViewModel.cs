@@ -56,14 +56,8 @@ namespace MetroPass.WP8.UI.ViewModels
 
         private PwCommon _selectedItem;
         public PwCommon SelectedItem {
-            get {
-                return _selectedItem;
-            }
-            set {
-                this.RaisePropertyChanging();
-                _selectedItem = value;
-                this.RaisePropertyChanged();
-            }
+            get { return _selectedItem; }
+            set { this.RaiseAndSetIfChanged(ref _selectedItem, value); }
         }
 
         protected override void OnActivate()
