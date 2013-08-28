@@ -9,7 +9,6 @@ using Caliburn.Micro.BindableAppBar;
 using Metropass.Core.PCL.Hashing;
 using MetroPass.WP8.Infrastructure.Hashing;
 using Microsoft.Phone.Controls;
-using Ninject;
 
 namespace MetroPass.WP8.UI
 {

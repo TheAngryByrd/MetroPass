@@ -8,7 +8,9 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:DT="clr-namespace:MetroPass.WP8.UI.ViewModels.DesignTime"
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
-    
+    xmlns:bindableAppBar="clr-namespace:Caliburn.Micro.BindableAppBar;assembly=Caliburn.Micro.BindableAppBar"
+ 
+    xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
@@ -94,6 +96,12 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </Grid>
+        <bindableAppBar:BindableAppBar x:Name="ItemView1_AppBar1" >
+            <bindableAppBar:BindableAppBarButton 
+                           cal:Message.Attach="[Event Click] = [Action AddDatabase()]"
+                            
+                            Text="Save" IconUri="/Images/save.png" />
+        </bindableAppBar:BindableAppBar>
     </Grid>
 
 </phone:PhoneApplicationPage>

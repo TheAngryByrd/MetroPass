@@ -35,6 +35,10 @@ namespace MetroPass.WP8.UI.ViewModels
             set;
         }
 
+        public void AddDatabase()
+        {
+            _navService.UriFor<SkydriveAccessViewModel>().Navigate();
+        }
 
         private bool _progressIsVisible;
         public bool ProgressIsVisible {

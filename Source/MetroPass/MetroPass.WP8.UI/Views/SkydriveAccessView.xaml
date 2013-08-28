@@ -52,7 +52,7 @@
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
             <TextBlock Height="595" HorizontalAlignment="Left" Margin="6,6,0,0" Name="outputText" Text="" VerticalAlignment="Top" Width="444" Visibility="Collapsed" FontSize="28" />
-            <Button Content="Sign In" Height="72" HorizontalAlignment="Left" Margin="12,6,0,0" Name="signInButton" VerticalAlignment="Top" Width="160" Click="OnSignInButtonClicked" />
+            <Button Content="Sign In" Height="72" HorizontalAlignment="Left" Margin="12,6,0,0" Name="signInButton" VerticalAlignment="Top" Width="160" Command="{Binding LoginCommand}" />
             <TextBlock Height="112" HorizontalAlignment="Stretch" Margin="9,84,9,0" Name="errorMessage" VerticalAlignment="Top" />
         </Grid>
 
