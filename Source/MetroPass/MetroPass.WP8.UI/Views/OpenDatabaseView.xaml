@@ -36,7 +36,9 @@
             <StackPanel>
                 <TextBlock Text="Password"
                                Style="{StaticResource PhoneTextNormalStyle}" />
-                <TextBox x:Name="Password" />                
+                <PasswordBox x:Name="Password"
+                             xmlns:c4f="clr-namespace:Coding4Fun.Toolkit.Controls.Binding;assembly=Coding4Fun.Toolkit.Controls"
+                             />                
             </StackPanel>
             <StackPanel Grid.Row="1">
                 <TextBlock Text=""
@@ -45,7 +47,7 @@
                 <Button Content="Clear Key File" Visibility="Collapsed"></Button>
             </StackPanel>
             <StackPanel Grid.Row="2" Margin="0,50,0,0">
-                <Button Content="Open"></Button>
+                <Button Content="Open" Command="{Binding OpenCommand}"></Button>
             </StackPanel>
         </Grid>
     </Grid>

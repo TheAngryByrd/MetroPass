@@ -88,7 +88,7 @@ namespace MetroPass.WP8.UI.ViewModels
         private async Task AttemptDownload(SkyDriveItem skyDriveItem)
         {
             ProgressIsVisible = true;
-            var operationResult = await _liveClient.DownloadAsync(skyDriveItem.ID);
+            var operationResult = await _liveClient.DownloadAsync(skyDriveItem.ID + "/content");
             using (var downloadStream = operationResult.Stream)
             { 
                 if (downloadStream != null)

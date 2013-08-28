@@ -42,24 +42,6 @@
 
     <phone:PhoneApplicationPage.Resources>
     	
-    	<ControlTemplate x:Key="ButtonControlTemplate1" TargetType="Button">
-    		 <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" toolkit:TiltEffect.IsTiltEnabled="True">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"></RowDefinition>
-                    <RowDefinition Height="auto"></RowDefinition>
-                </Grid.RowDefinitions>
-                <Grid HorizontalAlignment="Stretch" Grid.Row="0" Grid.RowSpan="2" Background="{StaticResource MainAppColor}" Height="175">
-                    <Viewbox Grid.Row="0" >
-                        <TextBlock  FontFamily="Segoe UI Symbol" Foreground="White" Text="&#xE192;"/>
-                    </Viewbox>
-                 </Grid>
-                <Border Grid.Row="1" VerticalAlignment="Stretch" Background="Black" Opacity="0.7"/>
-                <StackPanel Grid.Row="1" Margin="10,5" VerticalAlignment="Bottom">
-                    <TextBlock FontSize="30" Foreground="White" Text="{Binding Name}"/>
-                </StackPanel>
-            </Grid>
-    	</ControlTemplate>
-
     </phone:PhoneApplicationPage.Resources>
 
     <!--LayoutRoot is the root grid where all page content is placed-->
@@ -78,8 +60,40 @@
 
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" >
-
-            <ItemsControl x:Name="DatabaseNames"  ItemsSource="{Binding DatabaseItems}" Margin="24,0,24,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <ListBox  x:Name="DatabaseItems" 
+                      Margin="24,0,24,0">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid toolkit:TiltEffect.IsTiltEnabled="True" >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"></RowDefinition>
+                                <RowDefinition Height="auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid HorizontalAlignment="Stretch" Grid.Row="0" Grid.RowSpan="2" Background="{StaticResource MainAppColor}" Height="175">
+                                <Viewbox Grid.Row="0" >
+                                    <TextBlock  FontFamily="Segoe UI Symbol" Foreground="White" Text="&#xE192;"/>
+                                </Viewbox>
+                            </Grid>
+                            <Border Grid.Row="1" VerticalAlignment="Stretch" Background="Black" Opacity="0.7"/>
+                            <StackPanel Grid.Row="1" Margin="10,5" VerticalAlignment="Bottom">
+                                <TextBlock FontSize="30" Foreground="White" Text="{Binding Name}"/>
+                            </StackPanel>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                    </Style>
+                </ListBox.ItemContainerStyle>
+            </ListBox>
+            <!--<ItemsControl   ItemsSource="{Binding DatabaseItems}" Margin="24,0,24,0">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Button x:Name="DatabaseButton" Template="{StaticResource ButtonControlTemplate1}" 
@@ -94,7 +108,7 @@
                         </Button>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
-            </ItemsControl>
+            </ItemsControl>-->
         </Grid>
         <bindableAppBar:BindableAppBar x:Name="ItemView1_AppBar1" >
             <bindableAppBar:BindableAppBarButton 

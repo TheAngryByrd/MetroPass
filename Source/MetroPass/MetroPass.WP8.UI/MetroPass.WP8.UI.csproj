@@ -122,6 +122,7 @@
     <Compile Include="ViewModels\DesignTime\EntriesListDesignTimeViewModel.cs" />
     <Compile Include="ViewModels\EntriesListViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IDatabaseListViewModel.cs" />
+    <Compile Include="ViewModels\OpenDatabaseViewModel.cs" />
     <Compile Include="ViewModels\ReactiveCaliburn\ReactivePropertyChangedBase.cs" />
     <Compile Include="ViewModels\ReactiveCaliburn\ReactiveScreen.cs" />
     <Compile Include="ViewModels\ReactiveCaliburn\ReactiveViewAware.cs" />
@@ -135,6 +136,9 @@
     </Compile>
     <Compile Include="Views\EntriesListView.xaml.cs">
       <DependentUpon>EntriesListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\OpenDatabaseView.xaml.cs">
+      <DependentUpon>OpenDatabaseView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SkydriveAccessView.xaml.cs">
       <DependentUpon>SkydriveAccessView.xaml</DependentUpon>
@@ -170,6 +174,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\EntriesListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\OpenDatabaseView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

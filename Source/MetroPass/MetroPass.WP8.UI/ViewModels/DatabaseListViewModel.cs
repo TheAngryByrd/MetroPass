@@ -11,27 +11,39 @@ using MetroPass.WP8.UI.ViewModels.ReactiveCaliburn;
 using ReactiveUI;
 using Windows.ApplicationModel;
 using Windows.Storage;
+using MetroPass.WP8.UI.Utils;
 
 namespace MetroPass.WP8.UI.ViewModels
 {
     public class DatabaseListViewModel : ReactiveScreen, IDatabaseListViewModel
     {
         private readonly INavigationService _navService;
-
-        private readonly ICanSHA256Hash _hasher;
-
         private readonly IDatabaseInfoRepository _databaseInfoRepository;
 
-        public DatabaseListViewModel(INavigationService navService, ICanSHA256Hash hasher, IDatabaseInfoRepository databaseInfoRepository)
+        public DatabaseListViewModel(INavigationService navService, 
+            IDatabaseInfoRepository databaseInfoRepository)
         { 
             _databaseInfoRepository = databaseInfoRepository;
-            _hasher = hasher;
+
             _navService = navService;
-            DatabaseItems = new ObservableCollection<DatabaseItemViewModel>();
-            NavigateToLoginCommand = new ReactiveCommand();
-            NavigateToLoginCommand.Subscribe(a => ProgressIsVisible = true);
-            NavigateToLoginCommand.Subscribe(NavigateToLogin);
+            DatabaseItems = new ObservableCollection<DatabaseItemViewModel>();      
             ProgressIsVisible = false;
+
+
+            this.ObservableForPropertyNotNull(vm => vm.SelectedDatabaseItem).Subscribe(NavigateToOpenDatabase);
+        }
+
+        private void NavigateToOpenDatabase(IObservedChange<DatabaseListViewModel, DatabaseItemViewModel> obj)
+        {
+            Cache.Instance.DatabaseInfo = obj.Value.DatabaseInfo;
+            _navService.UriFor<OpenDatabaseViewModel>().Navigate();            
+        }
+
+        private DatabaseItemViewModel _selectedDatabaseItem;
+        public DatabaseItemViewModel SelectedDatabaseItem
+        {
+            get { return _selectedDatabaseItem; }
+            set { this.RaiseAndSetIfChanged(ref _selectedDatabaseItem, value); }
         }
 
         public ObservableCollection<DatabaseItemViewModel> DatabaseItems
@@ -58,6 +70,8 @@ namespace MetroPass.WP8.UI.ViewModels
         protected async override void OnActivate()
         {
             ProgressIsVisible = false;
+            SelectedDatabaseItem = null;
+
             var info = await _databaseInfoRepository.GetDatabaseInfo();
 
             DatabaseItems.AddRange(info.Select(i => new DatabaseItemViewModel(i)));
@@ -68,26 +82,7 @@ namespace MetroPass.WP8.UI.ViewModels
             DatabaseItems = new ObservableCollection<DatabaseItemViewModel>();
         }
 
-        public ReactiveCommand NavigateToLoginCommand { get; private set; }
 
-        public async void NavigateToLogin(object obj)
-        {
-
-            var installedFolder = Package.Current.InstalledLocation;
-
-
-            var folder = await installedFolder.GetFolderAsync("SampleData");
-            var file = await folder.GetFileAsync("Large.kdbx");
-            var listOfKeys = new List<IUserKey>();
-            listOfKeys.Add(await KcpPassword.Create("metropass",_hasher));
-
-            await PWDatabaseDataSource.Instance.LoadPwDatabase(file, listOfKeys);
-
-            var rootUUID = PWDatabaseDataSource.Instance.PwDatabase.Tree.Group.UUID;
-
-            _navService.UriFor<EntriesListViewModel>().
-                WithParam(p => p.GroupId, rootUUID).Navigate();
-        }
     }
 
 

@@ -53,9 +53,6 @@ namespace Metropass.Core.PCL.Model.Kdb4.Reader
                       _keyDecryptor,
                       _hasher,
                       _gzipFactory);     
-                
-       
-               
             }
             else
             {
