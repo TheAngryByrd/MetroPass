@@ -9,6 +9,7 @@ using MetroPass.WP8.UI.ViewModels.Interfaces;
 using MetroPass.WP8.UI.ViewModels.ReactiveCaliburn;
 using ReactiveUI;
 using Windows.ApplicationModel;
+using Windows.Storage;
 
 namespace MetroPass.WP8.UI.ViewModels
 {
@@ -22,7 +23,7 @@ namespace MetroPass.WP8.UI.ViewModels
         { 
             _hasher = hasher;
             _navService = navService;
-            DatabaseNames = new ObservableCollection<string> { "Personal", "Work" };
+            DatabaseNames = new ObservableCollection<string>();
             NavigateToLoginCommand = new ReactiveCommand();
             NavigateToLoginCommand.Subscribe(a => ProgressIsVisible = true);
             NavigateToLoginCommand.Subscribe(NavigateToLogin);
@@ -50,18 +51,29 @@ namespace MetroPass.WP8.UI.ViewModels
             }
         }
 
-        protected override void OnActivate()
+        protected async override void OnActivate()
         {
             ProgressIsVisible = false;
+
+            var installedFolder = Package.Current.InstalledLocation;
+            var databaseFolder = await installedFolder.CreateFolderAsync("Databases", CreationCollisionOption.OpenIfExists);
+            var files = await databaseFolder.GetFilesAsync();
+
+            foreach(var file in files)
+            { 
+                DatabaseNames.Add(file.Name);
+            }
         }
 
         public ReactiveCommand NavigateToLoginCommand { get; private set; }
 
         public async void NavigateToLogin(object obj)
-        {           
-            var installedFOlder = Package.Current.InstalledLocation;
+        {
 
-            var folder = await installedFOlder.GetFolderAsync("SampleData");
+            var installedFolder = Package.Current.InstalledLocation;
+
+
+            var folder = await installedFolder.GetFolderAsync("SampleData");
             var file = await folder.GetFileAsync("Large.kdbx");
             var listOfKeys = new List<IUserKey>();
             listOfKeys.Add(await KcpPassword.Create("metropass",_hasher));

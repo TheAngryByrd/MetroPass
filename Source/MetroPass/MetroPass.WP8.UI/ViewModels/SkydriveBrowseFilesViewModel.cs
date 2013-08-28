@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 using ReactiveUI;
 using Caliburn.Micro;
 using System.Linq.Expressions;
+using Windows.ApplicationModel;
+using Windows.Storage;
 
 namespace MetroPass.WP8.UI.ViewModels
 {
@@ -37,7 +39,7 @@ namespace MetroPass.WP8.UI.ViewModels
             set { _navigationUrl = value; }
         }
 
-        private LiveConnectClient liveClient;
+        private LiveConnectClient _liveClient;
 
         public ObservableCollection<SkyDriveItem> SkyDriveItems { get; set; }
 
@@ -65,29 +67,48 @@ namespace MetroPass.WP8.UI.ViewModels
             this.ObservableForPropertyNotNull(vm => vm.SelectedSkyDriveItem).Subscribe(SkydriveItemSelected);
         }
 
-        private void SkydriveItemSelected(IObservedChange<SkydriveBrowseFilesViewModel, SkyDriveItem> obj)
+        private async void SkydriveItemSelected(IObservedChange<SkydriveBrowseFilesViewModel, SkyDriveItem> obj)
         {
             var value = obj.Value;
 
             if (value.IsFolder) 
             { 
-                _navigationService.UriFor<SkydriveBrowseFilesViewModel>()
-                                  .WithParam(vm => vm.NavigationUrl, value.ID + "/files")
-                                  .Navigate();
+                NavigateToBrowseFolders(value);
             }
             else
             { 
-
+                await AttemptDownload(value);
             }
+        }
+  
+        private async Task AttemptDownload(SkyDriveItem skyDriveItem)
+        {
+            var operationResult = await _liveClient.DownloadAsync(skyDriveItem.ID);
+            using (var downloadStream = operationResult.Stream)
+            { 
+                if (downloadStream != null)
+                {
+                    var installedFolder = Package.Current.InstalledLocation;
+                    var databaseFolder = await installedFolder.CreateFolderAsync("Databases", CreationCollisionOption.OpenIfExists);
+                    await databaseFolder.CreateFileAsync(skyDriveItem.Name, CreationCollisionOption.ReplaceExisting);
+                }
+            }
+        }
+  
+        private void NavigateToBrowseFolders(SkyDriveItem value)
+        {
+            _navigationService.UriFor<SkydriveBrowseFilesViewModel>()
+                              .WithParam(vm => vm.NavigationUrl, value.ID + "/files")
+                              .Navigate();
         }
 
         protected async override void OnActivate()
         {
             SelectedSkyDriveItem = null;
-            this.liveClient = new LiveConnectClient(Cache.Instance.SkydriveSession);
-            LiveOperationResult operationResult = await this.liveClient.GetAsync(NavigationUrl);
+            _liveClient = new LiveConnectClient(Cache.Instance.SkydriveSession);
+            
+            LiveOperationResult operationResult = await _liveClient.GetAsync(NavigationUrl);
             TryLoadItems(operationResult);
-
             ProgressIsVisible = false;
         }
 
@@ -110,14 +131,13 @@ namespace MetroPass.WP8.UI.ViewModels
         }
 
         private void LoadItems(dynamic items)
-        {
-            //SkyDriveItems = new ObservableCollection<SkyDriveItem>();
-            var resultList = new List<SkyDriveItem>();
-            
+        {           
+            var resultList = new List<SkyDriveItem>();            
             foreach (dynamic item in items)
             {
                resultList.Add(new SkyDriveItem(item));    
             }
+
             SkyDriveItems.AddRange(resultList);
         }    
     }
