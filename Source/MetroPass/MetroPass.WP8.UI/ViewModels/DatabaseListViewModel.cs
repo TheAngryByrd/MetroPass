@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using Caliburn.Micro;
 using Metropass.Core.PCL.Hashing;
 using Metropass.Core.PCL.Model.Kdb4.Keys;
@@ -59,6 +60,7 @@ namespace MetroPass.WP8.UI.ViewModels
             ProgressIsVisible = false;
             var info = await _databaseInfoRepository.GetDatabaseInfo();
 
+            DatabaseItems.AddRange(info.Select(i => new DatabaseItemViewModel(i)));
         }
 
         protected override void OnDeactivate(bool close)
@@ -92,12 +94,16 @@ namespace MetroPass.WP8.UI.ViewModels
 
     public class DatabaseItemViewModel
     {
-        private readonly IStorageFile _file;
+        public readonly DatabaseInfo DatabaseInfo;
 
-        private readonly IStorageFolder _folder;
+        public DatabaseItemViewModel(DatabaseInfo databaseInfo)
+        {
+            DatabaseInfo = databaseInfo;
+        }
 
-     
-
-        public string Name { get; set; }
+        public string Name
+        {
+            get { return DatabaseInfo.Info.DatabasePath;}
+        }
     }
 }

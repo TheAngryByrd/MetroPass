@@ -15,7 +15,7 @@ namespace MetroPass.WP8.UI.DataModel
 
         public DatabaseInfoRepository ()
 	    {
-             _installedFolder = Package.Current.InstalledLocation;
+            _installedFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
 	    }
         
 
@@ -73,7 +73,6 @@ namespace MetroPass.WP8.UI.DataModel
             {
                 var databaseInfo = new DatabaseInfo(folder, await GetInfo(folder));
                 DatabaseItems.Add(databaseInfo);
-                await databaseInfo.Init();
             }
 
             return DatabaseItems;

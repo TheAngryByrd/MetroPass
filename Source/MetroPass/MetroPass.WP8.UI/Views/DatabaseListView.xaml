@@ -55,7 +55,7 @@
                  </Grid>
                 <Border Grid.Row="1" VerticalAlignment="Stretch" Background="Black" Opacity="0.7"/>
                 <StackPanel Grid.Row="1" Margin="10,5" VerticalAlignment="Bottom">
-                    <TextBlock FontSize="30" Foreground="White" Text="{Binding}"/>
+                    <TextBlock FontSize="30" Foreground="White" Text="{Binding Name}"/>
                 </StackPanel>
             </Grid>
     	</ControlTemplate>

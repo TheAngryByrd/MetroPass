@@ -13,37 +13,27 @@ namespace MetroPass.WP8.UI.DataModel
         public DatabaseInfo(IStorageFolder folder, Info info)
         {
             _folder = folder;
-            _info = info;
+            Info = info;
         }
 
-        private Info _info;
+        public Info Info;
 
-        public async Task Init()
+        public async Task<IStorageFile> GetKeyfile()
         {
-            
+            if (string.IsNullOrWhiteSpace(Info.KeyFilePath))
+                return null;
 
-            await GetDatabase();
-            await GetKeyfile();
+            return await _folder.GetFileAsync(Info.KeyFilePath);
         }
 
-        private async Task GetKeyfile()
+        public async Task<IStorageFile> GetDatabase()
         {
-            if (string.IsNullOrWhiteSpace(_info.KeyFilePath))
-                return;
+            if (string.IsNullOrWhiteSpace(Info.DatabasePath))
+                return null;
 
-            KeyFile = await _folder.GetFileAsync(_info.KeyFilePath);
+            return await _folder.GetFileAsync(Info.DatabasePath);
         }
 
-        private async Task GetDatabase()
-        {
-            if (string.IsNullOrWhiteSpace(_info.DatabasePath))
-                return;
-
-            Database = await _folder.GetFileAsync(_info.DatabasePath);
-        }
-
-        public IStorageFile Database { get; set; }
-        public IStorageFile KeyFile { get; set; }
     }
 
     public class Info
