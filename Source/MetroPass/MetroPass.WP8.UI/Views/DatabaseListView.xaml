@@ -72,7 +72,7 @@
         <!--TitlePanel contains the name of the application and page title-->
         <StackPanel Grid.Row="0" Margin="12,17,0,28">
             <ProgressBar x:Name="Progress" IsIndeterminate="True"></ProgressBar>
-            <TextBlock Grid.Row="0" Text="MetroPass" Style="{StaticResource PhoneTextNormalStyle}"/>
+            <TextBlock Grid.Row="0" Text="{StaticResource AppName}" Style="{StaticResource PhoneTextNormalStyle}"/>
             <TextBlock Grid.Row="1" Text="Databases" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
         </StackPanel>
 

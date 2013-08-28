@@ -4,7 +4,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
-    xmlns:local="clr-namespace:MetroPass.WP8.UI">
+    xmlns:local="clr-namespace:MetroPass.WP8.UI"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <!--Application Resources-->
 
     <Application.Resources>
@@ -15,7 +16,7 @@
                 <ResourceDictionary Source="Resources/Styles.xaml" />               
             </ResourceDictionary.MergedDictionaries>
             <local:LocalizedStrings xmlns:local="clr-namespace:MetroPass.WP8.UI" x:Key="LocalizedStrings"/>
-
+            <sys:String x:Key="AppName">MetroPass</sys:String>
         </ResourceDictionary>
         <local:Bootstrapper x:Key="bootstrapper" />
 

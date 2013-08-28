@@ -51,7 +51,7 @@
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock Grid.Row="0" Text="MetroPass" Style="{StaticResource PhoneTextNormalStyle}"/>
+            <TextBlock Grid.Row="0" Text="{StaticResource AppName}" Style="{StaticResource PhoneTextNormalStyle}"/>
         </StackPanel>
         <!--Pivot Control-->
         <phone:Pivot Grid.Row="1" SelectionChanged="Pivot_SelectionChanged" >
