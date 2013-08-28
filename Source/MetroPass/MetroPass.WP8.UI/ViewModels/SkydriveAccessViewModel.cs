@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Live.Controls;
 using ReactiveUI;
+using MetroPass.WP8.UI.Utils;
+using Caliburn.Micro;
 
 namespace MetroPass.WP8.UI.ViewModels
 {
@@ -13,19 +15,19 @@ namespace MetroPass.WP8.UI.ViewModels
         private LiveAuthClient authClient;
         private string Scopes = "wl.signin wl.basic wl.skydrive_update wl.offline_access";
         private LiveLoginResult _liveLoginResult;
+        private readonly INavigationService _navigationService;
 
         public LiveConnectSession Session { get; internal set; }
-
         public ReactiveCommand LoginCommand { get; set; }
-
         private LiveLoginResult LiveLoginResult
         {
             get { return _liveLoginResult; }
             set { this.RaiseAndSetIfChanged(ref _liveLoginResult, value); }
         }
 
-        public SkydriveAccessViewModel()
+        public SkydriveAccessViewModel(INavigationService navigationService)
         {
+            _navigationService = navigationService;
             this.ObservableForProperty(vm => vm.LiveLoginResult).Subscribe(LiveLoginResultChanged); 
 
 
@@ -60,9 +62,7 @@ namespace MetroPass.WP8.UI.ViewModels
                 catch (Exception exception)
                 {
                     //this.RaiseSessionChangedEvent(new LiveConnectSessionChangedEventArgs(exception));
-                }
-
-                this.IsEnabled = true;
+                }               
             }
         }
 
@@ -70,24 +70,18 @@ namespace MetroPass.WP8.UI.ViewModels
         {
             Session = loginResult.Session;
 
-            var sessionChangedArgs =
-                new LiveConnectSessionChangedEventArgs(loginResult.Status, loginResult.Session);
 
-            this.RaiseSessionChangedEvent(sessionChangedArgs);           
-        }
-
-        private void RaiseSessionChangedEvent(LiveConnectSessionChangedEventArgs sessionChangedArgs)
-        {
-            if (sessionChangedArgs.Status == LiveConnectSessionStatus.Connected)
+            if (loginResult.Status == LiveConnectSessionStatus.Connected)
             {
-                //MainPage.session = e.Session;
-                //this.NavigationService.Navigate(new Uri("/Index.xaml", UriKind.Relative));
+                Cache.Instance.SkydriveSession = loginResult.Session;
+                _navigationService.UriFor<SkydriveBrowseFilesViewModel>().Navigate();
             }
             else
             {
-                
-            }
+                Cache.Instance.SkydriveSession = null;
+            }        
         }
+
 
        
 
