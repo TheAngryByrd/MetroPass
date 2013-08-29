@@ -1,9 +1,12 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using Metropass.Core.PCL.Model;
 using MyToolkit.UI;
+using MetroPass.WP8.UI.ViewModels;
 
 namespace MetroPass.WP8.UI.Common
 {
+
     public class PwCommonTemplateSelector : DataTemplateSelector
     {
         public DataTemplate Group

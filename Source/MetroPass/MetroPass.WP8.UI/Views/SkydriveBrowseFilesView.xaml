@@ -9,6 +9,8 @@
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro"
     xmlns:vm="clr-namespace:MetroPass.WP8.UI.ViewModels"
+    xmlns:common="clr-namespace:MetroPass.WP8.UI.Common"
+
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
@@ -58,7 +60,23 @@
             <ListBox x:Name="SkyDriveItems">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding Name}"></TextBlock>
+                        <common:SkydriveItemTemplateSelector Content="{Binding}">
+                            <common:SkydriveItemTemplateSelector.Folder>
+                                <DataTemplate>
+                                    <TextBlock>Folder</TextBlock>
+                                </DataTemplate>
+                            </common:SkydriveItemTemplateSelector.Folder>
+                            <common:SkydriveItemTemplateSelector.File>
+                                <DataTemplate>
+                                    <TextBlock>File</TextBlock>
+                                </DataTemplate>
+                            </common:SkydriveItemTemplateSelector.File>
+                            <common:SkydriveItemTemplateSelector.KeepassFile>
+                                <DataTemplate>
+                                    <TextBlock>Keefile</TextBlock>
+                                </DataTemplate>
+                            </common:SkydriveItemTemplateSelector.KeepassFile>
+                        </common:SkydriveItemTemplateSelector>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>

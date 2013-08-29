@@ -99,6 +99,7 @@
     </Compile>
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Common\PwCommonTemplateSelector.cs" />
+    <Compile Include="Common\SkydriveItemTemplateSelector.cs" />
     <Compile Include="Controls\ProtectedTextBox.xaml.cs">
       <DependentUpon>ProtectedTextBox.xaml</DependentUpon>
     </Compile>
