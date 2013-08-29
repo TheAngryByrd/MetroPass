@@ -122,6 +122,7 @@
     <Compile Include="ViewModels\DesignTime\EntriesListDesignTimeViewModel.cs" />
     <Compile Include="ViewModels\EntriesListViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IDatabaseListViewModel.cs" />
+    <Compile Include="Utils\ObservableEx.cs" />
     <Compile Include="ViewModels\OpenDatabaseViewModel.cs" />
     <Compile Include="ViewModels\ReactiveCaliburn\ReactivePropertyChangedBase.cs" />
     <Compile Include="ViewModels\ReactiveCaliburn\ReactiveScreen.cs" />

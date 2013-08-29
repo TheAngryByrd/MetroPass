@@ -1,41 +1,50 @@
-﻿using System.Reactive.Linq;
+﻿using System.Linq;
 using MetroPass.WP8.UI.Utils;
 using MetroPass.WP8.UI.ViewModels.ReactiveCaliburn;
 using Microsoft.Live;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using ReactiveUI;
 using Caliburn.Micro;
-using System.Linq.Expressions;
-using Windows.ApplicationModel;
-using Windows.Storage;
 using MetroPass.WP8.UI.DataModel;
 
 namespace MetroPass.WP8.UI.ViewModels
 {
-
-    public static class ObservableEx
-    {
-        public static IObservable<IObservedChange<TSender, TValue>> ObservableForPropertyNotNull<TSender, TValue>(this TSender This, Expression<Func<TSender, TValue>> property, Boolean beforeChange = false, Boolean skipInitial = true)
-        {
-            if (This == null)
-            {
-                throw new ArgumentNullException("Sender");
-            }
-            String[] propertyNames = Reflection.ExpressionToPropertyNames<TSender, TValue>(property);
-            return This.SubscribeToExpressionChain<TSender, TValue>(propertyNames, beforeChange, skipInitial).Where(o => o.Value != null);
-        }
-    }
     public class SkydriveBrowseFilesViewModel : ReactiveScreen
     {
-        private readonly INavigationService _navigationService;
-        private string _navigationUrl = "/me/skydrive/files";   
+        private readonly INavigationService _navigationService;        
         private readonly IDatabaseInfoRepository _databaseInfoRepository;
 
+        public SkydriveBrowseFilesViewModel()
+        {
+            if (Execute.InDesignMode)
+            {
+                SkyDriveItems = new ObservableCollection<SkyDriveItem>();
+                SkyDriveItems.Add(new SkyDriveItem("Id","Documents", "folder"));
+                SkyDriveItems.Add(new SkyDriveItem("Id","Pictures", "folder"));
+                SkyDriveItems.Add(new SkyDriveItem("Id","Downloads", "folder"));
+                SkyDriveItems.Add(new SkyDriveItem("Id","Music", "folder"));
+                SkyDriveItems.Add(new SkyDriveItem("Id","Word doc 1.doc", "file"));
+                SkyDriveItems.Add(new SkyDriveItem("Id","Word doc 1.doc", "file"));
+                SkyDriveItems.Add(new SkyDriveItem("Id","database.kdbx", "file"));
+                SkyDriveItems.Add(new SkyDriveItem("Id","Word doc 1.doc", "file"));
+            }
+        }
+
+        public SkydriveBrowseFilesViewModel(INavigationService navigationService, IDatabaseInfoRepository databaseInfoRepository)
+        {            
+            _databaseInfoRepository = databaseInfoRepository;
+            ProgressIsVisible = true;
+            _navigationService = navigationService;
+
+            SkyDriveItems = new ObservableCollection<SkyDriveItem>();
+
+            this.ObservableForPropertyNotNull(vm => vm.SelectedSkyDriveItem).Subscribe(SkydriveItemSelected);            
+        }
+
+        private string _navigationUrl = "/me/skydrive/files";
         public string NavigationUrl
         {
             get { return _navigationUrl; }
@@ -60,16 +69,7 @@ namespace MetroPass.WP8.UI.ViewModels
             set { this.RaiseAndSetIfChanged(ref _progressIsVisible, value); }
         }
 
-        public SkydriveBrowseFilesViewModel(INavigationService navigationService, IDatabaseInfoRepository databaseInfoRepository)
-        {
-            _databaseInfoRepository = databaseInfoRepository;
-            ProgressIsVisible = true;
-            _navigationService = navigationService;
-
-            SkyDriveItems = new ObservableCollection<SkyDriveItem>();
-
-            this.ObservableForPropertyNotNull(vm => vm.SelectedSkyDriveItem).Subscribe(SkydriveItemSelected);
-        }
+       
 
         private async void SkydriveItemSelected(IObservedChange<SkydriveBrowseFilesViewModel, SkyDriveItem> obj)
         {
@@ -169,6 +169,13 @@ namespace MetroPass.WP8.UI.ViewModels
             }
         }
 
+        public SkyDriveItem(string Id, string name, string itemType)
+        {
+            ID = Id;
+            Name = name;
+            ItemType = itemType;
+        }
+
         public string ID { get; private set; }
 
         public string Name { get; private set; }
@@ -181,6 +188,17 @@ namespace MetroPass.WP8.UI.ViewModels
             {
                 return !string.IsNullOrEmpty(this.ItemType) &&
                        (this.ItemType.Equals("folder") || this.ItemType.Equals("album"));
+            }
+        }
+
+        private string[] knownFileTypes = new[] { "kdbx", "key" };
+
+        public bool IsKeePassItem
+        {
+            get
+            {
+                var filetype = Name.Split('.').Last();
+                return knownFileTypes.Contains(filetype);
             }
         }
 
