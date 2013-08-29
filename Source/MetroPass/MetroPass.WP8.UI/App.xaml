@@ -8,17 +8,16 @@
     xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <!--Application Resources-->
 
-    <Application.Resources>
-     
-        <ResourceDictionary>
-           
+    <Application.Resources>     
+        <ResourceDictionary>           
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resources/Styles.xaml" />               
             </ResourceDictionary.MergedDictionaries>
             <local:LocalizedStrings xmlns:local="clr-namespace:MetroPass.WP8.UI" x:Key="LocalizedStrings"/>
             <sys:String x:Key="AppName">MetroPass</sys:String>
+			<local:Bootstrapper x:Key="bootstrapper"/>
         </ResourceDictionary>
-        <local:Bootstrapper x:Key="bootstrapper" />
+     
 
     </Application.Resources>
 
