@@ -1,16 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Caliburn.Micro;
-using Metropass.Core.PCL.Hashing;
-using Metropass.Core.PCL.Model.Kdb4.Keys;
 using MetroPass.WP8.UI.DataModel;
 using MetroPass.WP8.UI.ViewModels.Interfaces;
 using MetroPass.WP8.UI.ViewModels.ReactiveCaliburn;
 using ReactiveUI;
-using Windows.ApplicationModel;
-using Windows.Storage;
 using MetroPass.WP8.UI.Utils;
 
 namespace MetroPass.WP8.UI.ViewModels

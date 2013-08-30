@@ -6,11 +6,9 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
-using Microsoft.Phone.Controls;
 using ReactiveUI;
 using Caliburn.Micro;
 using MetroPass.WP8.UI.DataModel;
-using System.Windows;
 using MetroPass.WP8.UI.Services;
 
 namespace MetroPass.WP8.UI.ViewModels

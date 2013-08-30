@@ -1,15 +1,9 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.ObjectModel;
-using System.Reactive.Linq;
-using System.Windows.Media;
 using MetroPass.WP8.UI.DataModel;
 using MetroPass.WP8.UI.ViewModels.ReactiveCaliburn;
 using Metropass.Core.PCL.Model;
 using ReactiveUI;
-using System.Threading.Tasks;
-using System.Windows.Threading;
-using System.Windows;
 using Caliburn.Micro;
 
 namespace MetroPass.WP8.UI.ViewModels

@@ -3,7 +3,6 @@ using MetroPass.WP8.UI.ViewModels.ReactiveCaliburn;
 using Microsoft.Live;
 using System;
 using System.Collections.Generic;
-using Microsoft.Live.Controls;
 using ReactiveUI;
 using MetroPass.WP8.UI.Utils;
 using Caliburn.Micro;
@@ -33,7 +32,7 @@ namespace MetroPass.WP8.UI.ViewModels
             _navigationService = navigationService;
             this.ObservableForProperty(vm => vm.LiveLoginResult).Subscribe(LiveLoginResultChanged); 
 
-
+            
             LoginCommand = new ReactiveCommand();
             LoginCommand.Subscribe(Login);
 

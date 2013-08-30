@@ -5,13 +5,8 @@ using Metropass.Core.PCL.Model.Kdb4.Keys;
 using ReactiveUI;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.ApplicationModel;
 using Metropass.Core.PCL.Hashing;
 using MetroPass.WP8.UI.Utils;
-using Windows.Storage;
 using PCLStorage;
 
 namespace MetroPass.WP8.UI.ViewModels

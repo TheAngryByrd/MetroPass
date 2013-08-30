@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using MetroPass.WP8.UI.DataModel;
 using MetroPass.WP8.UI.ViewModels.ReactiveCaliburn;
 using Metropass.Core.PCL.Model;
 using ReactiveUI;
-using System.Threading;
 
 namespace MetroPass.WP8.UI.ViewModels
 {
