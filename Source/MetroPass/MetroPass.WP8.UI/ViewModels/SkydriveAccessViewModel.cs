@@ -17,8 +17,11 @@ namespace MetroPass.WP8.UI.ViewModels
         private LiveLoginResult _liveLoginResult;
         private readonly INavigationService _navigationService;
 
+
         public LiveConnectSession Session { get; internal set; }
+
         public ReactiveCommand LoginCommand { get; set; }
+
         private LiveLoginResult LiveLoginResult
         {
             get { return _liveLoginResult; }
@@ -33,6 +36,8 @@ namespace MetroPass.WP8.UI.ViewModels
 
             LoginCommand = new ReactiveCommand();
             LoginCommand.Subscribe(Login);
+
+            SignInIsEnabled = false;
         }
 
         private void LiveLoginResultChanged(IObservedChange<SkydriveAccessViewModel, LiveLoginResult> obj)
@@ -79,18 +84,21 @@ namespace MetroPass.WP8.UI.ViewModels
             else
             {
                 Cache.Instance.SkydriveSession = null;
+                SignInIsEnabled = true;
             }        
         }
-
-
-       
 
         private IEnumerable<string> ParseScopeString(string scopesString)
         {
             return new List<string>(scopesString.Split(new [] {" "},StringSplitOptions.RemoveEmptyEntries));
         }
 
-        public bool IsEnabled { get; set; }
+        private bool _signInIsEnabled;
+        public bool SignInIsEnabled
+        {
+            get { return _signInIsEnabled; }
+            set { this.RaiseAndSetIfChanged(ref _signInIsEnabled, value); }
+        }
 
 
     }

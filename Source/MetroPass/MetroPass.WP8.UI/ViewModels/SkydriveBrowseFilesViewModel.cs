@@ -161,8 +161,6 @@ namespace MetroPass.WP8.UI.ViewModels
                resultList.Add(new SkyDriveItem(item));    
             }
 
-            
-
             SkyDriveItems.AddRange(resultList);
         }    
     }
