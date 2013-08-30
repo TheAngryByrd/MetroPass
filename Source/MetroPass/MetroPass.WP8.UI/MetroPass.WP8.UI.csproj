@@ -120,6 +120,7 @@
       <DependentUpon>AppResources.resx</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\AddOrEditEntryViewModel.cs" />
+    <Compile Include="ViewModels\ChooseCloudViewModel.cs" />
     <Compile Include="ViewModels\DatabaseListViewModel.cs" />
     <Compile Include="ViewModels\DesignTime\DatabaseListDesignTimeViewModel.cs" />
     <Compile Include="ViewModels\DesignTime\EntriesListDesignTimeViewModel.cs" />
@@ -134,6 +135,9 @@
     <Compile Include="ViewModels\SkydriveBrowseFilesViewModel.cs" />
     <Compile Include="Views\AddOrEditEntryView.xaml.cs">
       <DependentUpon>AddOrEditEntryView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ChooseCloudView.xaml.cs">
+      <DependentUpon>ChooseCloudView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\DatabaseListView.xaml.cs">
       <DependentUpon>DatabaseListView.xaml</DependentUpon>
@@ -173,6 +177,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\ChooseCloudView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\DatabaseListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -202,6 +210,8 @@
       <SubType>Designer</SubType>
     </None>
     <Content Include="Images\add.png" />
+    <Content Include="Images\Logos\dropbox.png" />
+    <Content Include="Images\Logos\skydrive.png" />
     <Content Include="Images\save.png" />
     <Content Include="SampleData\Large.kdbx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
