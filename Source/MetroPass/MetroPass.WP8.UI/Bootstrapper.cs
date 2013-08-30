@@ -10,6 +10,7 @@ using Metropass.Core.PCL.Hashing;
 using MetroPass.WP8.Infrastructure.Hashing;
 using Microsoft.Phone.Controls;
 using MetroPass.WP8.UI.DataModel;
+using MetroPass.WP8.UI.Services;
 
 namespace MetroPass.WP8.UI
 {
@@ -32,6 +33,7 @@ namespace MetroPass.WP8.UI
             ConfigureConvetions();
             _container.PerRequest<ICanSHA256Hash, SHA256HahserWP8>();
             _container.PerRequest<IDatabaseInfoRepository, DatabaseInfoRepository>();
+            _container.PerRequest<IDialogService, DialogService>();
         }
   
         private void AddViewModels() {

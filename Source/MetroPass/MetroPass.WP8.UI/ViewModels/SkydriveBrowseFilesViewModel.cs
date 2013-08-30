@@ -6,16 +6,20 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using Microsoft.Phone.Controls;
 using ReactiveUI;
 using Caliburn.Micro;
 using MetroPass.WP8.UI.DataModel;
+using System.Windows;
+using MetroPass.WP8.UI.Services;
 
 namespace MetroPass.WP8.UI.ViewModels
 {
     public class SkydriveBrowseFilesViewModel : ReactiveScreen
     {
-        private readonly INavigationService _navigationService;        
-        private readonly IDatabaseInfoRepository _databaseInfoRepository;
+        private readonly INavigationService _navigationService;
+        private readonly IDialogService _dialogService;
+        private readonly IDatabaseInfoRepository _databaseInfoRepository;       
 
         public SkydriveBrowseFilesViewModel()
         {
@@ -33,12 +37,16 @@ namespace MetroPass.WP8.UI.ViewModels
             }
         }
 
-        public SkydriveBrowseFilesViewModel(INavigationService navigationService, IDatabaseInfoRepository databaseInfoRepository)
-        {            
+        public SkydriveBrowseFilesViewModel(
+            INavigationService navigationService, 
+            IDialogService dialogService,
+            IDatabaseInfoRepository databaseInfoRepository)
+        {
+            _navigationService = navigationService;
+            _dialogService = dialogService;
             _databaseInfoRepository = databaseInfoRepository;
             ProgressIsVisible = true;
-            _navigationService = navigationService;
-
+            
             SkyDriveItems = new ObservableCollection<SkyDriveItem>();
 
             this.ObservableForPropertyNotNull(vm => vm.SelectedSkyDriveItem).Subscribe(SkydriveItemSelected);            
@@ -71,7 +79,7 @@ namespace MetroPass.WP8.UI.ViewModels
 
        
 
-        private async void SkydriveItemSelected(IObservedChange<SkydriveBrowseFilesViewModel, SkyDriveItem> obj)
+        private void SkydriveItemSelected(IObservedChange<SkydriveBrowseFilesViewModel, SkyDriveItem> obj)
         {
             var value = obj.Value;
 
@@ -81,9 +89,17 @@ namespace MetroPass.WP8.UI.ViewModels
             }
             else
             { 
-                await AttemptDownload(value);
+                _dialogService.ShowDialogBox(
+                    "Download Confirmation",
+                    string.Format("Are you sure you want to download {0}?", value.Name),
+                    "yes",
+                    "no",
+                    async () => { await AttemptDownload(value); },
+                    () => { SelectedSkyDriveItem = null; }
+                );
             }
         }
+
   
         private async Task AttemptDownload(SkyDriveItem skyDriveItem)
         {
@@ -144,6 +160,8 @@ namespace MetroPass.WP8.UI.ViewModels
             {
                resultList.Add(new SkyDriveItem(item));    
             }
+
+            
 
             SkyDriveItems.AddRange(resultList);
         }    
