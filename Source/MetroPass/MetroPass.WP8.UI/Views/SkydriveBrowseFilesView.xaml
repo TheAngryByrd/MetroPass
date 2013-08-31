@@ -144,7 +144,7 @@
 		<StackPanel Grid.Row="0" Margin="12,17,0,28">
 			<ProgressBar x:Name="Progress" IsIndeterminate="True"/>
 			<TextBlock Text="{StaticResource AppName}" Style="{StaticResource PhoneTextNormalStyle}"/>
-			<TextBlock Text="SkyDrive" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+			<TextBlock Text="{Binding CloudProvider}" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
 		</StackPanel>
 
         <!--ContentPanel - place additional content here-->

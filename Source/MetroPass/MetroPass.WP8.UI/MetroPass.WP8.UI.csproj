@@ -111,6 +111,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Cloud\CloudProvider.cs" />
     <Compile Include="Services\Cloud\CloudProviderFactory.cs" />
+    <Compile Include="Services\Cloud\Dropbox\DropboxClient.cs" />
+    <Compile Include="Services\Cloud\Dropbox\DropboxItem.cs" />
     <Compile Include="Services\Cloud\ICloudItem.cs" />
     <Compile Include="Services\Cloud\ICloudProviderAdapter.cs" />
     <Compile Include="Services\Cloud\ICloudProviderFactory.cs" />

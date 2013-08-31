@@ -31,6 +31,7 @@ namespace MetroPass.WP8.UI
         void AddCustomConventions()
         {
             AddViewModels();
+            AddView();
             ConfigureConvetions();
             _container.PerRequest<ICanSHA256Hash, SHA256HahserWP8>();
             _container.PerRequest<IDatabaseInfoRepository, DatabaseInfoRepository>();
@@ -40,6 +41,13 @@ namespace MetroPass.WP8.UI
   
         private void AddViewModels() {
             string @namespace = "MetroPass.WP8.UI.ViewModels";
+
+            var q = (from t in Assembly.GetExecutingAssembly().GetTypes() where t.IsClass && t.Namespace == @namespace select t).ToList();
+
+            q.ForEach(t => _container.RegisterPerRequest(t, null, t));
+        } 
+        private void AddView() {
+            string @namespace = "MetroPass.WP8.UI.Views";
 
             var q = (from t in Assembly.GetExecutingAssembly().GetTypes() where t.IsClass && t.Namespace == @namespace select t).ToList();
 
@@ -70,7 +78,7 @@ namespace MetroPass.WP8.UI
         {         
             ConventionManager.AddElementConvention<UIElement>(UIElement.VisibilityProperty, "Visibility", "VisibilityChanged");
 
-            ConventionManager.AddElementConvention<FrameworkElement>(
+            ConventionManager.AddElementConvention<Control>(
                 Control.IsEnabledProperty,
                 "IsEnabled",
                 "IsEnabledChanged");
@@ -95,8 +103,9 @@ namespace MetroPass.WP8.UI
             ViewModelBinder.BindActions =
                 (frameWorkElements, viewModel) =>
                 {
-                    BindVisiblityProperties(frameWorkElements, viewModel);
+                  
                     BindEnabledProperties(frameWorkElements, viewModel);
+                    BindVisiblityProperties(frameWorkElements, viewModel);
                     return baseBindActions(frameWorkElements, viewModel);
                 };
 

@@ -1,5 +1,6 @@
 using System;
 using MetroPass.WP8.UI.Services.Cloud.Skydrive;
+using MetroPass.WP8.UI.Services.Cloud.Dropbox;
 
 namespace MetroPass.WP8.UI.Services.Cloud
 {
@@ -10,7 +11,7 @@ namespace MetroPass.WP8.UI.Services.Cloud
             if (cloudProvider == CloudProvider.SkyDrive)
                 return new SkyDriveClient();
             else if (cloudProvider == CloudProvider.Dropbox)
-                return null;
+                return new DropboxClient();
 
             throw new ArgumentException("Invalid cloud provider");
         }

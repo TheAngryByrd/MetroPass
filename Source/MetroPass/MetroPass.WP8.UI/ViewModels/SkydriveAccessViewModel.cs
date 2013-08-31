@@ -79,7 +79,10 @@ namespace MetroPass.WP8.UI.ViewModels
             if (loginResult.Status == LiveConnectSessionStatus.Connected)
             {
                 Cache.Instance.SkydriveSession = loginResult.Session;
-                _navigationService.UriFor<SkydriveBrowseFilesViewModel>().WithParam(vm => vm.CloudProvider, CloudProvider.SkyDrive).Navigate();
+                _navigationService.UriFor<SkydriveBrowseFilesViewModel>()
+                    .WithParam(vm => vm.CloudProvider, CloudProvider.SkyDrive)
+                    .WithParam(vm => vm.NavigationUrl, "/me/skydrive")
+                    .Navigate();
             }
             else
             {

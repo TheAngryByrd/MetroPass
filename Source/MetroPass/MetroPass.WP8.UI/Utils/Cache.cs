@@ -15,5 +15,9 @@ namespace MetroPass.WP8.UI.Utils
         public static Cache Instance { get { return instance; } }
 
         public LiveConnectSession SkydriveSession { get; set; }
+
+        public string DropboxUserToken { get; set; }
+
+        public string DropboxUserSecret { get; set; }
     }
 }

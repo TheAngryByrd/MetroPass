@@ -58,7 +58,7 @@ namespace MetroPass.WP8.UI.ViewModels
             this.ObservableForPropertyNotNull(vm => vm.SelectedSkyDriveItem).Subscribe(SkydriveItemSelected);            
         }
 
-        private string _navigationUrl = "/me/skydrive";
+        private string _navigationUrl;
         public string NavigationUrl
         {
             get { return _navigationUrl; }
@@ -67,8 +67,8 @@ namespace MetroPass.WP8.UI.ViewModels
 
         public ObservableCollection<ICloudItem> SkyDriveItems { get; set; }
 
-        private SkyDriveItem _selectedSkyDriveItem;
-        public SkyDriveItem SelectedSkyDriveItem
+        private ICloudItem _selectedSkyDriveItem;
+        public ICloudItem SelectedSkyDriveItem
         {
             get { return _selectedSkyDriveItem; }
             set { this.RaiseAndSetIfChanged(ref _selectedSkyDriveItem, value); }
@@ -85,7 +85,7 @@ namespace MetroPass.WP8.UI.ViewModels
 
        
 
-        private void SkydriveItemSelected(IObservedChange<SkydriveBrowseFilesViewModel, SkyDriveItem> obj)
+        private void SkydriveItemSelected(IObservedChange<SkydriveBrowseFilesViewModel, ICloudItem> obj)
         {
             var value = obj.Value;
 
@@ -141,6 +141,7 @@ namespace MetroPass.WP8.UI.ViewModels
             var items = await _cloudProvider.GetItems(NavigationUrl);
 
             SkyDriveItems.AddRange(items);
+
             ProgressIsVisible = false;
         }
 
