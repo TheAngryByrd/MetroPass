@@ -142,7 +142,7 @@
     <Compile Include="ViewModels\ReactiveCaliburn\ReactiveScreen.cs" />
     <Compile Include="ViewModels\ReactiveCaliburn\ReactiveViewAware.cs" />
     <Compile Include="ViewModels\SkydriveAccessViewModel.cs" />
-    <Compile Include="ViewModels\SkydriveBrowseFilesViewModel.cs" />
+    <Compile Include="ViewModels\BrowseCloudFilesViewModel.cs" />
     <Compile Include="Views\AddOrEditEntryView.xaml.cs">
       <DependentUpon>AddOrEditEntryView.xaml</DependentUpon>
     </Compile>
@@ -164,8 +164,8 @@
     <Compile Include="Views\SkydriveAccessView.xaml.cs">
       <DependentUpon>SkydriveAccessView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SkydriveBrowseFilesView.xaml.cs">
-      <DependentUpon>SkydriveBrowseFilesView.xaml</DependentUpon>
+    <Compile Include="Views\BrowseCloudFilesView.xaml.cs">
+      <DependentUpon>BrowseCloudFilesView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -214,7 +214,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\SkydriveBrowseFilesView.xaml">
+    <Page Include="Views\BrowseCloudFilesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

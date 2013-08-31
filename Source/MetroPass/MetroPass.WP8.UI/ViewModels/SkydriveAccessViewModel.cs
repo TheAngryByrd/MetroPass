@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using ReactiveUI;
 using MetroPass.WP8.UI.Utils;
 using Caliburn.Micro;
+using MetroPass.WP8.UI.Views;
 
 namespace MetroPass.WP8.UI.ViewModels
 {
@@ -32,12 +33,13 @@ namespace MetroPass.WP8.UI.ViewModels
         {
             _navigationService = navigationService;
             this.ObservableForProperty(vm => vm.LiveLoginResult).Subscribe(LiveLoginResultChanged); 
-
             
             LoginCommand = new ReactiveCommand();
             LoginCommand.Subscribe(Login);
 
             SignInIsEnabled = false;
+
+            _navigationService.Navigated += _navigationService_Navigated;
         }
 
         private void LiveLoginResultChanged(IObservedChange<SkydriveAccessViewModel, LiveLoginResult> obj)
@@ -45,6 +47,16 @@ namespace MetroPass.WP8.UI.ViewModels
             OnLogin(obj.Value);
         }
 
+        void _navigationService_Navigated(object sender, System.Windows.Navigation.NavigationEventArgs e)
+        {
+            if (e.NavigationMode == System.Windows.Navigation.NavigationMode.Back
+                && e.Content is SkydriveAccessView)
+            {
+                _navigationService.StopLoading();
+                _navigationService.GoBack();
+                _navigationService.Navigated -= _navigationService_Navigated;
+            }
+        }
     
         private async void Login(object arg)
         {
@@ -79,7 +91,7 @@ namespace MetroPass.WP8.UI.ViewModels
             if (loginResult.Status == LiveConnectSessionStatus.Connected)
             {
                 Cache.Instance.SkydriveSession = loginResult.Session;
-                _navigationService.UriFor<SkydriveBrowseFilesViewModel>()
+                _navigationService.UriFor<BrowseCloudFilesViewModel>()
                     .WithParam(vm => vm.CloudProvider, CloudProvider.SkyDrive)
                     .WithParam(vm => vm.NavigationUrl, "/me/skydrive")
                     .Navigate();

@@ -11,10 +11,10 @@
     xmlns:common="clr-namespace:MetroPass.WP8.UI.Common"
 
     xmlns:System="clr-namespace:System;assembly=mscorlib"
-    x:Class="MetroPass.WP8.UI.Views.SkydriveBrowseFilesView"
+    x:Class="MetroPass.WP8.UI.Views.BrowseCloudFilesView"
     SupportedOrientations="Portrait" Orientation="Portrait"
     mc:Ignorable="d"
-    d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True, Type=vm:SkydriveBrowseFilesViewModel}"
+    d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True, Type=vm:BrowseCloudFilesViewModel}"
     cal:Bind.AtDesignTime="True"
     >
     

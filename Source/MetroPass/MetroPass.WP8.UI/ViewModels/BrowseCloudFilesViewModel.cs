@@ -16,7 +16,7 @@ using MetroPass.WP8.UI.DataModel;
 namespace MetroPass.WP8.UI.ViewModels
 {
 
-    public class SkydriveBrowseFilesViewModel : ReactiveScreen
+    public class BrowseCloudFilesViewModel : ReactiveScreen
     {
         private readonly INavigationService _navigationService;
         private readonly IDialogService _dialogService;
@@ -25,7 +25,7 @@ namespace MetroPass.WP8.UI.ViewModels
         private readonly ICloudProviderFactory _cloudFactory;
         private ICloudProviderAdapter _cloudProvider;
 
-        public SkydriveBrowseFilesViewModel()
+        public BrowseCloudFilesViewModel()
         {
             if (Execute.InDesignMode)
             {
@@ -41,7 +41,7 @@ namespace MetroPass.WP8.UI.ViewModels
             }
         }
 
-        public SkydriveBrowseFilesViewModel(
+        public BrowseCloudFilesViewModel(
             INavigationService navigationService, 
             IDialogService dialogService,
             IDatabaseInfoRepository databaseInfoRepository,
@@ -85,7 +85,7 @@ namespace MetroPass.WP8.UI.ViewModels
 
        
 
-        private void SkydriveItemSelected(IObservedChange<SkydriveBrowseFilesViewModel, ICloudItem> obj)
+        private void SkydriveItemSelected(IObservedChange<BrowseCloudFilesViewModel, ICloudItem> obj)
         {
             var value = obj.Value;
 
@@ -126,7 +126,7 @@ namespace MetroPass.WP8.UI.ViewModels
   
         private void NavigateToBrowseFolders(ICloudItem cloudItem)
         {
-            _navigationService.UriFor<SkydriveBrowseFilesViewModel>()
+            _navigationService.UriFor<BrowseCloudFilesViewModel>()
                               .WithParam(vm => vm.CloudProvider, CloudProvider)
                               .WithParam(vm => vm.NavigationUrl, cloudItem.ID)
                               .Navigate();

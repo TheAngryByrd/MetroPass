@@ -6,12 +6,8 @@ using MetroPass.WP8.UI.ViewModels.ReactiveCaliburn;
 using MetroPass.WP8.UI.Views;
 using Microsoft.Phone.Controls;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Threading;
 
 namespace MetroPass.WP8.UI.ViewModels
 {
@@ -28,17 +24,41 @@ namespace MetroPass.WP8.UI.ViewModels
             _navigationService = navigationService;
             _client = new DropNetClient(
                 ApiKeys.DropBoxKey, ApiKeys.DropBoxSecret);
+            _navigationService.Navigated += _navigationService_Navigated;
         }
 
-        public async void Loaded(RoutedEventArgs e)
+        void _navigationService_Navigated(object sender, System.Windows.Navigation.NavigationEventArgs e)
         {
+              if(e.NavigationMode == System.Windows.Navigation.NavigationMode.Back
+                  && e.Content is DropboxAccessView)
+                {
+                    _navigationService.StopLoading();
+                    _navigationService.GoBack();
+                    _navigationService.Navigated -= _navigationService_Navigated;
+              }
+        }
+
+        protected async override void OnActivate()
+        {            
             var view = GetView() as DropboxAccessView;
-            
+            view.browser.Visibility = Visibility.Collapsed;
+
             var requestToken = await _client.GetRequestToken();
             var url = _client.BuildAuthorizeUrl(requestToken, CallBack);
-            
+
             Deployment.Current.Dispatcher.BeginInvoke(() =>
                 view.browser.Navigate(new Uri(url)));
+        }
+
+        protected override void OnDeactivate(bool close)
+        {
+           
+        }
+
+        public void LoadCompleted()
+        {
+            var view = GetView() as DropboxAccessView;
+            view.browser.Visibility = Visibility.Visible;
         }
 
         public async void Navigating(NavigatingEventArgs e)
@@ -54,12 +74,13 @@ namespace MetroPass.WP8.UI.ViewModels
             Cache.Instance.DropboxUserToken = accessToken.Token;
             Cache.Instance.DropboxUserSecret = accessToken.Secret;
 
-            _navigationService.UriFor<SkydriveBrowseFilesViewModel>()
+            _navigationService.UriFor<BrowseCloudFilesViewModel>()
                     .WithParam(vm => vm.CloudProvider, CloudProvider.Dropbox)
                     .WithParam(vm => vm.NavigationUrl, "/")
                     .Navigate();
 
-
         }
+
+       
     }
 }
