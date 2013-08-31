@@ -1,4 +1,4 @@
-namespace MetroPass.WP8.UI.Services
+namespace MetroPass.WP8.UI.Services.Cloud
 {
     public interface ICloudItem    
     {

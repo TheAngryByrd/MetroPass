@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace MetroPass.WP8.UI.Services
+namespace MetroPass.WP8.UI.Services.Cloud.Skydrive
 {
     public class SkyDriveItem : ICloudItem
     {

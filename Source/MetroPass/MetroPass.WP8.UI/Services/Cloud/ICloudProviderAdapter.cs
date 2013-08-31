@@ -1,9 +1,8 @@
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace MetroPass.WP8.UI.Services
+namespace MetroPass.WP8.UI.Services.Cloud
 {
     public interface ICloudProviderAdapter
     {

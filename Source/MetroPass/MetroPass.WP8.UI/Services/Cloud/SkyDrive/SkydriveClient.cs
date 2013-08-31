@@ -1,17 +1,16 @@
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using MetroPass.WP8.UI.Utils;
 using Microsoft.Live;
 
-namespace MetroPass.WP8.UI.Services
+namespace MetroPass.WP8.UI.Services.Cloud.Skydrive
 {
-    public class SkydriveClient : ICloudProviderAdapter
+    public class SkyDriveClient : ICloudProviderAdapter
     {
         private LiveConnectClient _liveClient;
 
-        public SkydriveClient()
+        public SkyDriveClient()
         {
             _liveClient = new LiveConnectClient(Cache.Instance.SkydriveSession);
         }

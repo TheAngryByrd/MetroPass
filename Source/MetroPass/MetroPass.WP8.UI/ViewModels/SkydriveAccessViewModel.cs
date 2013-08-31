@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using MetroPass.WP8.UI.Services;
+using MetroPass.WP8.UI.Services.Cloud;
 using MetroPass.WP8.UI.ViewModels.ReactiveCaliburn;
 using Microsoft.Live;
 using System;

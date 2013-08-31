@@ -6,7 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using Caliburn.Micro;
 using Caliburn.Micro.BindableAppBar;
-using MetroPass.WP8.UI.Services;
+using MetroPass.WP8.UI.Services.Cloud;
 using MetroPass.WP8.UI.Services.UI;
 using Metropass.Core.PCL.Hashing;
 using MetroPass.WP8.Infrastructure.Hashing;

@@ -1,4 +1,6 @@
 ﻿using System.Linq;
+using MetroPass.WP8.UI.Services.Cloud;
+using MetroPass.WP8.UI.Services.Cloud.Skydrive;
 using MetroPass.WP8.UI.Services.UI;
 using MetroPass.WP8.UI.Utils;
 using MetroPass.WP8.UI.ViewModels.ReactiveCaliburn;
@@ -10,7 +12,6 @@ using System.Threading.Tasks;
 using ReactiveUI;
 using Caliburn.Micro;
 using MetroPass.WP8.UI.DataModel;
-using MetroPass.WP8.UI.Services;
 
 namespace MetroPass.WP8.UI.ViewModels
 {

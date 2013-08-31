@@ -1,6 +1,6 @@
 using System.Windows;
+using MetroPass.WP8.UI.Services.Cloud;
 using MyToolkit.UI;
-using MetroPass.WP8.UI.Services;
 
 namespace MetroPass.WP8.UI.Common
 {
