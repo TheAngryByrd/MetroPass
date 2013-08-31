@@ -21,8 +21,7 @@ namespace MetroPass.WP8.UI.ViewModels
             _databaseInfoRepository = databaseInfoRepository;
 
             _navService = navService;
-            DatabaseItems = new ObservableCollection<DatabaseItemViewModel>();      
-            ProgressIsVisible = false;
+            DatabaseItems = new ObservableCollection<DatabaseItemViewModel>();   
 
 
             this.ObservableForPropertyNotNull(vm => vm.SelectedDatabaseItem).Subscribe(NavigateToOpenDatabase);
@@ -51,20 +50,11 @@ namespace MetroPass.WP8.UI.ViewModels
         {
             _navService.UriFor<ChooseCloudViewModel>().Navigate();
         }
-
-        private bool _progressIsVisible;
-        public bool ProgressIsVisible {
-            get {
-                return _progressIsVisible;
-            }
-            set {
-                this.RaiseAndSetIfChanged(ref _progressIsVisible, value);
-            }
-        }
+        
+  
 
         protected async override void OnActivate()
-        {
-            ProgressIsVisible = false;
+        {          
             SelectedDatabaseItem = null;
 
             var info = await _databaseInfoRepository.GetDatabaseInfo();

@@ -123,10 +123,11 @@ namespace MetroPass.WP8.UI.ViewModels
                               .Navigate();
         }
   
-        private void NavigateToBrowseFolders(ICloudItem value)
+        private void NavigateToBrowseFolders(ICloudItem cloudItem)
         {
             _navigationService.UriFor<SkydriveBrowseFilesViewModel>()
-                              .WithParam(vm => vm.NavigationUrl, value.ID + "/files")
+                              .WithParam(vm => vm.CloudProvider, CloudProvider)
+                              .WithParam(vm => vm.NavigationUrl, cloudItem.ID)
                               .Navigate();
         }
 
