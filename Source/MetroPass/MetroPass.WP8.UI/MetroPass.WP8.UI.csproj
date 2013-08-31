@@ -124,6 +124,7 @@
     <Compile Include="ViewModels\DatabaseListViewModel.cs" />
     <Compile Include="ViewModels\DesignTime\DatabaseListDesignTimeViewModel.cs" />
     <Compile Include="ViewModels\DesignTime\EntriesListDesignTimeViewModel.cs" />
+    <Compile Include="ViewModels\DropboxAccessViewModel.cs" />
     <Compile Include="ViewModels\EntriesListViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IDatabaseListViewModel.cs" />
     <Compile Include="Utils\ObservableEx.cs" />
@@ -141,6 +142,9 @@
     </Compile>
     <Compile Include="Views\DatabaseListView.xaml.cs">
       <DependentUpon>DatabaseListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DropboxAccessView.xaml.cs">
+      <DependentUpon>DropboxAccessView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\EntriesListView.xaml.cs">
       <DependentUpon>EntriesListView.xaml</DependentUpon>
@@ -182,6 +186,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\DatabaseListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DropboxAccessView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -278,6 +286,9 @@
     <Reference Include="Coding4Fun.Toolkit.Controls">
       <HintPath>..\packages\Coding4Fun.Toolkit.Controls.2.0.7\lib\windowsphone8\Coding4Fun.Toolkit.Controls.dll</HintPath>
     </Reference>
+    <Reference Include="DropNetRT">
+      <HintPath>..\packages\DropNetRT.1.0\lib\portable-win+net45+sl40+wp71\DropNetRT.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Live">
       <HintPath>..\packages\LiveSDK.5.4\lib\WindowsPhone8\Microsoft.Live.dll</HintPath>
     </Reference>
@@ -329,6 +340,15 @@
     </Reference>
     <Reference Include="ReactiveUI.Xaml">
       <HintPath>..\packages\reactiveui-platforms.5.1.2\lib\WP8\ReactiveUI.Xaml.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.13\lib\sl4-windowsphone71\System.Net.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Extensions">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.13\lib\sl4-windowsphone71\System.Net.Http.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Primitives">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.13\lib\sl4-windowsphone71\System.Net.Http.Primitives.dll</HintPath>
     </Reference>
     <Reference Include="System.Reactive.Core">
       <HintPath>..\packages\Rx-Core.2.1.30214.0\lib\WP8\System.Reactive.Core.dll</HintPath>

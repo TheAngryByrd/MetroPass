@@ -29,7 +29,7 @@ namespace MetroPass.WP8.UI.ViewModels
 
         private void NavigateToDropbox(object obj)
         {
- 	       
+            _navigationService.UriFor<DropboxAccessViewModel>().Navigate();
         }
 
         private void NavigateToSkyDrive(object obj)
