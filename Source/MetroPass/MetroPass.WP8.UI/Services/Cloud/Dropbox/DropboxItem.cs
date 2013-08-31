@@ -22,7 +22,7 @@ namespace MetroPass.WP8.UI.Services.Cloud.Dropbox
             get
             {
                 return !string.IsNullOrEmpty(this.ItemType) &&
-                        (this.ItemType.Equals("folder") || this.ItemType.Equals("album"));
+                        (this.ItemType.Contains("folder"));
             }
         }
 
