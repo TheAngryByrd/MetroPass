@@ -1,10 +1,10 @@
 using System.Windows;
-using MetroPass.WP8.UI.ViewModels;
 using MyToolkit.UI;
+using MetroPass.WP8.UI.Services;
 
 namespace MetroPass.WP8.UI.Common
 {
-    public class SkydriveItemTemplateSelector : DataTemplateSelector
+    public class CloudItemTemplateSelector : DataTemplateSelector
     {
         public DataTemplate Folder { get; set; }
 
@@ -14,7 +14,7 @@ namespace MetroPass.WP8.UI.Common
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
-            var skyDriveItem = item as SkyDriveItem;
+            var skyDriveItem = item as ICloudItem;
             if (skyDriveItem.IsFolder)            
                 return Folder;            
             else if (skyDriveItem.IsKeePassItem)

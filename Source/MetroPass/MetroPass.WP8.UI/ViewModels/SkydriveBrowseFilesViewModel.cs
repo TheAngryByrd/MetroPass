@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using MetroPass.WP8.UI.Services.UI;
 using MetroPass.WP8.UI.Utils;
 using MetroPass.WP8.UI.ViewModels.ReactiveCaliburn;
 using Microsoft.Live;
@@ -13,17 +14,21 @@ using MetroPass.WP8.UI.Services;
 
 namespace MetroPass.WP8.UI.ViewModels
 {
+
     public class SkydriveBrowseFilesViewModel : ReactiveScreen
     {
         private readonly INavigationService _navigationService;
         private readonly IDialogService _dialogService;
         private readonly IDatabaseInfoRepository _databaseInfoRepository;       
 
+        private readonly ICloudProviderFactory _cloudFactory;
+        private ICloudProviderAdapter _cloudProvider;
+
         public SkydriveBrowseFilesViewModel()
         {
             if (Execute.InDesignMode)
             {
-                SkyDriveItems = new ObservableCollection<SkyDriveItem>();
+                SkyDriveItems = new ObservableCollection<ICloudItem>();
                 SkyDriveItems.Add(new SkyDriveItem("Id","Documents", "folder"));
                 SkyDriveItems.Add(new SkyDriveItem("Id","Pictures", "folder"));
                 SkyDriveItems.Add(new SkyDriveItem("Id","Downloads", "folder"));
@@ -38,28 +43,28 @@ namespace MetroPass.WP8.UI.ViewModels
         public SkydriveBrowseFilesViewModel(
             INavigationService navigationService, 
             IDialogService dialogService,
-            IDatabaseInfoRepository databaseInfoRepository)
+            IDatabaseInfoRepository databaseInfoRepository,
+            ICloudProviderFactory factory)
         {
+            _cloudFactory = factory;
             _navigationService = navigationService;
             _dialogService = dialogService;
             _databaseInfoRepository = databaseInfoRepository;
             ProgressIsVisible = true;
             
-            SkyDriveItems = new ObservableCollection<SkyDriveItem>();
+            SkyDriveItems = new ObservableCollection<ICloudItem>();
 
             this.ObservableForPropertyNotNull(vm => vm.SelectedSkyDriveItem).Subscribe(SkydriveItemSelected);            
         }
 
-        private string _navigationUrl = "/me/skydrive/files";
+        private string _navigationUrl = "/me/skydrive";
         public string NavigationUrl
         {
             get { return _navigationUrl; }
             set { _navigationUrl = value; }
         }
 
-        private LiveConnectClient _liveClient;
-
-        public ObservableCollection<SkyDriveItem> SkyDriveItems { get; set; }
+        public ObservableCollection<ICloudItem> SkyDriveItems { get; set; }
 
         private SkyDriveItem _selectedSkyDriveItem;
         public SkyDriveItem SelectedSkyDriveItem
@@ -74,6 +79,8 @@ namespace MetroPass.WP8.UI.ViewModels
             get { return _progressIsVisible; }
             set { this.RaiseAndSetIfChanged(ref _progressIsVisible, value); }
         }
+
+        public CloudProvider CloudProvider { get; set; }
 
        
 
@@ -99,15 +106,15 @@ namespace MetroPass.WP8.UI.ViewModels
         }
 
   
-        private async Task AttemptDownload(SkyDriveItem skyDriveItem)
+        private async Task AttemptDownload(ICloudItem cloudItem)
         {
             ProgressIsVisible = true;
-            var operationResult = await _liveClient.DownloadAsync(skyDriveItem.ID + "/content");
-            using (var downloadStream = operationResult.Stream)
+            
+            using (var downloadStream = await _cloudProvider.DownloadItem(cloudItem.ID))
             { 
                 if (downloadStream != null)
                 {
-                    await _databaseInfoRepository.SaveDatabaseFromDatasouce(skyDriveItem.Name, downloadStream);
+                    await _databaseInfoRepository.SaveDatabaseFromDatasouce(cloudItem.Name, downloadStream);
                 }
             }
             ProgressIsVisible = false;
@@ -116,7 +123,7 @@ namespace MetroPass.WP8.UI.ViewModels
                               .Navigate();
         }
   
-        private void NavigateToBrowseFolders(SkyDriveItem value)
+        private void NavigateToBrowseFolders(ICloudItem value)
         {
             _navigationService.UriFor<SkydriveBrowseFilesViewModel>()
                               .WithParam(vm => vm.NavigationUrl, value.ID + "/files")
@@ -125,101 +132,19 @@ namespace MetroPass.WP8.UI.ViewModels
 
         protected async override void OnActivate()
         {
+            _cloudProvider = _cloudFactory.GetCloudProvider(CloudProvider);
+
             SelectedSkyDriveItem = null;
-            _liveClient = new LiveConnectClient(Cache.Instance.SkydriveSession);
             
-            LiveOperationResult operationResult = await _liveClient.GetAsync(NavigationUrl);
-            TryLoadItems(operationResult);
+            var items = await _cloudProvider.GetItems(NavigationUrl);
+
+            SkyDriveItems.AddRange(items);
             ProgressIsVisible = false;
         }
 
         protected override void OnDeactivate(bool close)
         {
-            SkyDriveItems = new ObservableCollection<SkyDriveItem>();                
-        }
-
-        private void TryLoadItems(LiveOperationResult operationResult)
-        {
-            dynamic result = operationResult.Result;
-            if (result.data == null)
-            {
-                //this.ShowError("Server did not return a valid response.");
-                return;
-            }
-
-            dynamic items = result.data;
-            LoadItems(items);
-        }
-
-        private void LoadItems(dynamic items)
-        {           
-            var resultList = new List<SkyDriveItem>();            
-            foreach (dynamic item in items)
-            {
-               resultList.Add(new SkyDriveItem(item));    
-            }
-
-            SkyDriveItems.AddRange(resultList);
+            SkyDriveItems = new ObservableCollection<ICloudItem>();                
         }    
     }
-
-    public class SkyDriveItem
-    {
-        public SkyDriveItem(IDictionary<string, object> properties)
-        {
-            if (properties.ContainsKey("id"))
-            {
-                this.ID = properties["id"] as string;
-            }
-
-            if (properties.ContainsKey("name"))
-            {
-                this.Name = properties["name"] as string;
-            }
-
-            if (properties.ContainsKey("type"))
-            {
-                this.ItemType = properties["type"] as string;
-            }
-        }
-
-        public SkyDriveItem(string Id, string name, string itemType)
-        {
-            ID = Id;
-            Name = name;
-            ItemType = itemType;
-        }
-
-        public string ID { get; private set; }
-
-        public string Name { get; private set; }
-
-        public string ItemType { get; private set; }
-
-        public bool IsFolder
-        {
-            get
-            {
-                return !string.IsNullOrEmpty(this.ItemType) &&
-                       (this.ItemType.Equals("folder") || this.ItemType.Equals("album"));
-            }
-        }
-
-        private string[] knownFileTypes = new[] { "kdbx", "key" };
-
-        public bool IsKeePassItem
-        {
-            get
-            {
-                var filetype = Name.Split('.').Last();
-                return knownFileTypes.Contains(filetype);
-            }
-        }
-
-        public override string ToString()
-        {
-            return this.Name;
-        }
-    }
-
 }

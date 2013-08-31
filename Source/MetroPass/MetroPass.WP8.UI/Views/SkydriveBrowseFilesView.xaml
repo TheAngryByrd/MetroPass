@@ -152,9 +152,9 @@
 			<ListBox x:Name="SkyDriveItems" ItemContainerStyle="{StaticResource SkydriveItemListBoxStyle}">
 				<ListBox.ItemTemplate>
 					<DataTemplate>
-						<common:SkydriveItemTemplateSelector Content="{Binding}" KeepassFile="{StaticResource KeeFileTemplate}" File="{StaticResource FileTemplate}" Folder="{StaticResource FolderTemplate}">
+						<common:CloudItemTemplateSelector Content="{Binding}" KeepassFile="{StaticResource KeeFileTemplate}" File="{StaticResource FileTemplate}" Folder="{StaticResource FolderTemplate}">
 						
-						</common:SkydriveItemTemplateSelector>
+						</common:CloudItemTemplateSelector>
 					</DataTemplate>
 				</ListBox.ItemTemplate>
 			</ListBox>

@@ -99,7 +99,7 @@
     </Compile>
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Common\PwCommonTemplateSelector.cs" />
-    <Compile Include="Common\SkydriveItemTemplateSelector.cs" />
+    <Compile Include="Common\CloudItemTemplateSelector.cs" />
     <Compile Include="Controls\ProtectedTextBox.xaml.cs">
       <DependentUpon>ProtectedTextBox.xaml</DependentUpon>
     </Compile>
@@ -109,8 +109,14 @@
     <Compile Include="DataModel\PwDatabaseDataSource.cs" />
     <Compile Include="LocalizedStrings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\DialogService.cs" />
-    <Compile Include="Services\IDialogService.cs" />
+    <Compile Include="Services\CloudProviderFactory.cs" />
+    <Compile Include="Services\ICloudItem.cs" />
+    <Compile Include="Services\ICloudProviderAdapter.cs" />
+    <Compile Include="Services\ICloudProviderFactory.cs" />
+    <Compile Include="Services\SkydriveClient.cs" />
+    <Compile Include="Services\SkyDriveItem.cs" />
+    <Compile Include="Services\UI\DialogService.cs" />
+    <Compile Include="Services\UI\IDialogService.cs" />
     <Compile Include="Utils\Cache.cs" />
     <Compile Include="Utils\PropertySupport.cs" />
     <Compile Include="Utils\ReactiveUINavigateExtentions.cs" />
@@ -373,6 +379,9 @@
     <Reference Include="Xamarin.Mobile">
       <HintPath>..\packages\reactiveui-mobile.5.1.2\lib\WP8\Xamarin.Mobile.dll</HintPath>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Services\Cloud\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).CSharp.targets" />

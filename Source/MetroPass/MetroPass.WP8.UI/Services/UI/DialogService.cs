@@ -1,7 +1,7 @@
 using System;
 using Microsoft.Phone.Controls;
 
-namespace MetroPass.WP8.UI.Services
+namespace MetroPass.WP8.UI.Services.UI
 {
     public class DialogService : IDialogService
     {
