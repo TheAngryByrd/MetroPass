@@ -115,7 +115,10 @@ namespace MetroPass.WP8.UI.ViewModels
             { 
                 if (downloadStream != null)
                 {
-                    await _databaseInfoRepository.SaveDatabaseFromDatasouce(cloudItem.Name, downloadStream);
+                    await _databaseInfoRepository.SaveDatabaseFromDatasouce(cloudItem.Name,
+                        CloudProvider.ToString(),
+                        cloudItem.ID,
+                        downloadStream);
                 }
             }
             ProgressIsVisible = false;

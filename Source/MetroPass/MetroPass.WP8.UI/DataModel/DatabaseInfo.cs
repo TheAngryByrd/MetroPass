@@ -41,16 +41,28 @@ namespace MetroPass.WP8.UI.DataModel
 
         public readonly XDocument Document;
 
+        private const string INFO = "Info";
+        private const string DATABASE_PATH = "DatabasePath";
+        private const string CLOUD_PROVIDER = "CloudProvider";
+        private const string CLOUD_PATH = "CloudPath";
+        private const string KEY_FILE_PATH = "KeyFilePath";
+
+
         public Info(XDocument document)
         {
             Document = document;
 
-            XElement element = document.Element("Info");
-            if(element == null)
+            XElement element = document.Element(INFO);
+            if (element == null)
             {
-                var info = new XElement("Info");
-                info.Add(new XElement("DatabasePath"));
-                info.Add(new XElement("KeyFilePath"));
+                var info = new XElement(INFO);
+                var database = new XElement(DATABASE_PATH);
+                database.SetAttributeValue(CLOUD_PROVIDER, "");
+                database.SetAttributeValue(CLOUD_PATH, "");
+
+                info.Add(database);
+                var keyfile = new XElement(KEY_FILE_PATH);
+                info.Add(keyfile);
 
                 document.Add(info);
             }
@@ -58,19 +70,37 @@ namespace MetroPass.WP8.UI.DataModel
 
         public XElement XInfo
         {
-            get { return Document.Element("Info"); }
+            get { return Document.Element(INFO); }
         }
 
         public string DatabasePath
         {
-            get { return XInfo.Element("DatabasePath").Value; }
-            set { XInfo.SetElementValue("DatabasePath", value); }
+            get { return GetDatabaseElement().Value; }
+            set { XInfo.SetElementValue(DATABASE_PATH, value); }
+        }
+  
+        private XElement GetDatabaseElement()
+        {
+            return XInfo.Element(DATABASE_PATH);
+        }
+
+        public string DatabaseCloudProvider
+        {
+            get { return GetDatabaseElement().Attribute(CLOUD_PATH).Value; }
+            set { GetDatabaseElement().SetAttributeValue(CLOUD_PATH, value); }
+        }
+
+        public string DatabaseCloudPath
+        {
+
+            get { return GetDatabaseElement().Attribute(CLOUD_PROVIDER).Value; }
+            set { GetDatabaseElement().SetAttributeValue(CLOUD_PROVIDER, value); }
         }
 
         public string KeyFilePath
         {
-            get { return XInfo.Element("KeyFilePath").Value; }
-            set { XInfo.SetElementValue("KeyFilePath", value); }
+            get { return XInfo.Element(KEY_FILE_PATH).Value; }
+            set { XInfo.SetElementValue(KEY_FILE_PATH, value); }
         }
 
     }

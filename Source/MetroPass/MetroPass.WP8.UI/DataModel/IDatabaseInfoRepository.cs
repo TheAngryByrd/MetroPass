@@ -12,7 +12,7 @@ namespace MetroPass.WP8.UI.DataModel
     {
         Task<IEnumerable<DatabaseInfo>> GetDatabaseInfo();
 
-        Task SaveDatabaseFromDatasouce(string databaseName, Stream database);
+        Task SaveDatabaseFromDatasouce(string databaseName, string cloudprovider, string path, Stream database);
 
         Task SaveKeyFileFromDatasouce(string databaseName,string keyFileName, Stream keyFile);
     }

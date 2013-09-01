@@ -19,6 +19,8 @@ namespace MetroPass.WP8.UI.DataModel
 	    }
         
 
+      
+
         private async Task SaveInfo(IStorageFolder folder, Info info)
         { 
             Stream stream = new MemoryStream();
@@ -78,19 +80,20 @@ namespace MetroPass.WP8.UI.DataModel
             return DatabaseItems;
         }
 
-        public async Task SaveDatabaseFromDatasouce(string databaseName, Stream database)
+        public async Task SaveDatabaseFromDatasouce(string databaseName, string cloudprovider, string cloudPath, Stream database)
         {
             var root = await _installedFolder.CreateFolderAsync("Databases", CreationCollisionOption.OpenIfExists);
             var folder = await root.CreateFolderAsync(databaseName, CreationCollisionOption.OpenIfExists);
             var info = await GetInfo(folder);
 
             info.DatabasePath = databaseName;
+            info.DatabaseCloudProvider = cloudprovider;
+            info.DatabaseCloudPath = cloudPath;
             await SaveInfo(folder, info);
 
             await WriteFile(databaseName, folder, database);
-        } 
-
-
+        }
+ 
         public async Task SaveKeyFileFromDatasouce(string databaseName, string keyFileName, Stream keyFile)
         {
             var root = await _installedFolder.CreateFolderAsync("Databases", CreationCollisionOption.OpenIfExists);
