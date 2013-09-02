@@ -15,13 +15,14 @@ namespace MetroPass.WP8.UI.DataModel
 
         public DatabaseInfoRepository ()
 	    {
+            
             _installedFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
 	    }
         
 
       
 
-        private async Task SaveInfo(IStorageFolder folder, Info info)
+        public async Task SaveInfo(IStorageFolder folder, Info info)
         { 
             Stream stream = new MemoryStream();
             info.Document.Save(stream);
@@ -31,7 +32,7 @@ namespace MetroPass.WP8.UI.DataModel
             await WriteFile("Info.info", folder, stream);
         }
 
-        private async Task<Info> GetInfo(IStorageFolder folder)
+        public async Task<Info> GetInfo(IStorageFolder folder)
         {
 
             Info retval = null;
