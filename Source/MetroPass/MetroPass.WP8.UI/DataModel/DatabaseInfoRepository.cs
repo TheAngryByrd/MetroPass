@@ -81,7 +81,11 @@ namespace MetroPass.WP8.UI.DataModel
             return DatabaseItems;
         }
 
-        public async Task SaveDatabaseFromDatasouce(string databaseName, string cloudprovider, string cloudPath, Stream database)
+        public async Task SaveDatabaseFromDatasouce(
+            string databaseName, 
+            string cloudprovider, 
+            string cloudPath, 
+            Stream database)
         {
             var root = await _installedFolder.CreateFolderAsync("Databases", CreationCollisionOption.OpenIfExists);
             var folder = await root.CreateFolderAsync(databaseName, CreationCollisionOption.OpenIfExists);

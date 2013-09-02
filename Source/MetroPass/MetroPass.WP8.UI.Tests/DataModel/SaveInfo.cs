@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using MetroPass.WP8.UI.DataModel;
@@ -53,6 +55,19 @@ namespace MetroPass.WP8.UI.Tests.DataModel
             Assert.AreEqual("", info.DatabaseCloudPath);
             Assert.AreEqual("", info.DatabaseCloudProvider);
             Assert.AreEqual("", info.KeyFilePath);
+        }
+
+        [TestMethod]
+        public async Task SaveDatabaseFromDatasouce()
+        {
+            var bytes = new byte[100];
+            new Random().NextBytes(bytes);
+            var memoryStream = new MemoryStream(bytes);
+            await _databaseInfoRepository.SaveDatabaseFromDatasouce("Name", "Provider", "CloudPath", memoryStream);
+
+            var databases = await _databaseInfoRepository.GetDatabaseInfo();
+
+            Assert.AreEqual(1, databases.Count());
         }
 
         [TestCleanup]
