@@ -75,7 +75,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DataModel\SaveInfo.cs" />
+    <Compile Include="DataModel\DatabaseRepositoryTests.cs" />
     <Compile Include="LocalizedStrings.cs" />
     <Compile Include="UnitTest1.cs" />
     <Compile Include="MainPage.xaml.cs">

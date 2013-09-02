@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Navigation;
 using Caliburn.Micro;
 using Caliburn.Micro.BindableAppBar;
 using MetroPass.WP8.UI.Services.Cloud;
@@ -26,6 +27,25 @@ namespace MetroPass.WP8.UI
             _container.RegisterPhoneServices(RootFrame);
             
             AddCustomConventions();
+
+            RootFrame.Navigated += RootFrame_Navigated;
+        }
+
+        void RootFrame_Navigated(object sender, System.Windows.Navigation.NavigationEventArgs e)
+        {
+            if (e.NavigationMode == NavigationMode.Reset)
+            {
+                RootFrame.Navigating += RootFrame_Navigating;
+            }
+        }
+
+        private void RootFrame_Navigating(object sender, NavigatingCancelEventArgs e)
+        {
+            if (e.NavigationMode == NavigationMode.New)
+            {
+                e.Cancel = true;
+                RootFrame.Navigating -= RootFrame_Navigating;
+            }
         }
 
         void AddCustomConventions()
