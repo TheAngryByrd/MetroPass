@@ -23,6 +23,9 @@ namespace MetroPass.WP8.UI.ViewModels
             _navService = navService;
             DatabaseItems = new ObservableCollection<DatabaseItemViewModel>();   
 
+            DeleteDatabaseCommand = new ReactiveCommand();
+            DeleteDatabaseCommand.Subscribe(DeleteDatabase);
+
 
             this.ObservableForPropertyNotNull(vm => vm.SelectedDatabaseItem).Subscribe(NavigateToOpenDatabase);
         }
@@ -50,8 +53,6 @@ namespace MetroPass.WP8.UI.ViewModels
         {
             _navService.UriFor<ChooseCloudViewModel>().Navigate();
         }
-        
-  
 
         protected async override void OnActivate()
         {          
@@ -67,7 +68,14 @@ namespace MetroPass.WP8.UI.ViewModels
             DatabaseItems = new ObservableCollection<DatabaseItemViewModel>();
         }
 
-
+        public ReactiveCommand DeleteDatabaseCommand { get; set; }
+        public async void DeleteDatabase(object obj)
+        {
+            var databaseItem = obj as DatabaseItemViewModel;
+            
+            await databaseItem.DatabaseInfo.Folder.DeleteAsync();
+            DatabaseItems.Remove(databaseItem);
+        }
     }
 
 

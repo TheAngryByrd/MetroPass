@@ -8,11 +8,11 @@ namespace MetroPass.WP8.UI.DataModel
 {
     public class DatabaseInfo
     {
-        private readonly IStorageFolder _folder;
+        public readonly IStorageFolder Folder;
 
         public DatabaseInfo(IStorageFolder folder, Info info)
         {
-            _folder = folder;
+            Folder = folder;
             Info = info;
         }
 
@@ -23,7 +23,7 @@ namespace MetroPass.WP8.UI.DataModel
             if (string.IsNullOrWhiteSpace(Info.KeyFilePath))
                 return null;
 
-            return await _folder.GetFileAsync(Info.KeyFilePath);
+            return await Folder.GetFileAsync(Info.KeyFilePath);
         }
 
         public async Task<IStorageFile> GetDatabase()
@@ -31,7 +31,7 @@ namespace MetroPass.WP8.UI.DataModel
             if (string.IsNullOrWhiteSpace(Info.DatabasePath))
                 return null;
 
-            return await _folder.GetFileAsync(Info.DatabasePath);
+            return await Folder.GetFileAsync(Info.DatabasePath);
         }
 
     }

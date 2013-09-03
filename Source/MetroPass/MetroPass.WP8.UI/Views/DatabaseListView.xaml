@@ -83,7 +83,13 @@
                             <StackPanel Grid.Row="1" Margin="10,5" VerticalAlignment="Bottom">
                                 <TextBlock FontSize="30" Foreground="White" Text="{Binding Name}"/>
                             </StackPanel>
+                            <toolkit:ContextMenuService.ContextMenu>
+                                <toolkit:ContextMenu>
+                                    <toolkit:MenuItem Command="{Binding DataContext.DeleteDatabaseCommand, ElementName=DatabaseItems}" CommandParameter="{Binding}"  Header="Delete"></toolkit:MenuItem>
+                                </toolkit:ContextMenu>
+                            </toolkit:ContextMenuService.ContextMenu>
                         </Grid>
+                      
                     </DataTemplate>
                 </ListBox.ItemTemplate>
                 <ListBox.ItemContainerStyle>
