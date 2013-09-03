@@ -41,7 +41,7 @@ namespace MetroPass.WP8.UI
 
         private void RootFrame_Navigating(object sender, NavigatingCancelEventArgs e)
         {
-            if (e.NavigationMode == NavigationMode.New)
+            if (e.NavigationMode == NavigationMode.New  && e.Uri.OriginalString == "/Views/DatabaseListView.xaml")
             {
                 e.Cancel = true;
                 RootFrame.Navigating -= RootFrame_Navigating;
