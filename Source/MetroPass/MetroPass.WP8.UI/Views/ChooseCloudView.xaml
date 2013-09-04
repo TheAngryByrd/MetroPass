@@ -93,7 +93,13 @@
         <!--TitlePanel contains the name of the application and page title-->
         <StackPanel Grid.Row="0" Margin="12,17,0,28">
             <TextBlock Text="{StaticResource AppName}" Style="{StaticResource PhoneTextNormalStyle}"/>
-            <TextBlock Text="add database" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+            <TextBlock 
+                
+                Margin="9,-7,0,0" 
+                Style="{StaticResource PhoneTextTitle1Style}">
+                <Run>add </Run>
+                <Run Text="{Binding AddType}"></Run>
+            </TextBlock>
         </StackPanel>
 
         <!--ContentPanel - place additional content here-->

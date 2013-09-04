@@ -59,6 +59,14 @@ namespace MetroPass.WP8.UI.ViewModels
             DemoButtonIsVisible = Cache.Instance.DownloadFileNavigationCache.DownloadType == DownloadType.Database;
         }
 
+        public string AddType 
+        { 
+            get
+            {
+                return Cache.Instance.DownloadFileNavigationCache.DownloadType.ToString().ToLower();
+            }
+        }
+
         private bool _demoButtonIsVisible;
         public bool DemoButtonIsVisible
         {
