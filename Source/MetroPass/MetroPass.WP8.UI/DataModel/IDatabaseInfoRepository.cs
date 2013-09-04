@@ -6,6 +6,8 @@ namespace MetroPass.WP8.UI.DataModel
 {
     public interface IDatabaseInfoRepository
     {
+        Task DeleteKeyFile(DatabaseInfo databaseInfo);
+
         Task<IEnumerable<DatabaseInfo>> GetDatabaseInfo();
 
         Task<DatabaseInfo> GetDatabaseInfo(string databaseName);

@@ -19,6 +19,18 @@ namespace MetroPass.WP8.UI.DataModel
             _installedFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
 	    }
 
+        public async Task DeleteKeyFile(DatabaseInfo databaseInfo)
+        {         
+            IStorageFile keyFile = await databaseInfo.GetKeyfile();
+            await keyFile.DeleteAsync();
+
+            databaseInfo.Info.KeyFilePath = "";
+            await SaveInfo(databaseInfo.Folder, databaseInfo.Info);
+
+        }
+
+     
+
         public async Task<DatabaseInfo> GetDatabaseInfo(string databaseName)
         {
             var root = await GetDatabaseRoot();

@@ -14,7 +14,7 @@ namespace MetroPass.WP8.UI.ViewModels
     public class SkydriveAccessViewModel : ReactiveScreen
     {      
         private LiveAuthClient authClient;
-        private string Scopes = "wl.signin wl.basic wl.skydrive_update wl.offline_access";
+        private string Scopes = "wl.signin wl.skydrive_update wl.offline_access";
         private LiveLoginResult _liveLoginResult;
         private readonly INavigationService _navigationService;
 
@@ -28,7 +28,7 @@ namespace MetroPass.WP8.UI.ViewModels
             get { return _liveLoginResult; }
             set { this.RaiseAndSetIfChanged(ref _liveLoginResult, value); }
         }
-
+        
         public SkydriveAccessViewModel(INavigationService navigationService)
         {
             _navigationService = navigationService;

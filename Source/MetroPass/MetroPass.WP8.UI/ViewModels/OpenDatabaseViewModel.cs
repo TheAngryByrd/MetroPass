@@ -114,9 +114,10 @@ namespace MetroPass.WP8.UI.ViewModels
 
         public ReactiveCommand ClearKeyFileCommand { get; private set; }
 
-        private void ClearKeyFile(object obj)
-        {
+        private async void ClearKeyFile(object obj)
+        {           
             KeyFileName = string.Empty;
+            await _databaseInfoRepository.DeleteKeyFile(_databaseInfo);
         }
 
 
