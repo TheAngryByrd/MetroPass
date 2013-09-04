@@ -17,7 +17,7 @@ namespace MetroPass.WP8.UI.ViewModels
 
         public DatabaseListViewModel(INavigationService navService, 
             IDatabaseInfoRepository databaseInfoRepository)
-        { 
+        {
             _databaseInfoRepository = databaseInfoRepository;
 
             _navService = navService;
@@ -26,7 +26,6 @@ namespace MetroPass.WP8.UI.ViewModels
             DeleteDatabaseCommand = new ReactiveCommand();
             DeleteDatabaseCommand.Subscribe(DeleteDatabase);
 
-
             this.ObservableForPropertyNotNull(vm => vm.SelectedDatabaseItem).Subscribe(NavigateToOpenDatabase);
         }
 
@@ -34,7 +33,7 @@ namespace MetroPass.WP8.UI.ViewModels
         {
             Cache.Instance.DatabaseName = obj.Value.DatabaseInfo.Info.DatabasePath;
             _navService.UriFor<OpenDatabaseViewModel>()
-                .Navigate();            
+                .Navigate();
         }
 
         private DatabaseItemViewModel _selectedDatabaseItem;
@@ -61,13 +60,12 @@ namespace MetroPass.WP8.UI.ViewModels
         }
 
         protected async override void OnActivate()
-        {          
+        {
             SelectedDatabaseItem = null;
 
             var info = await _databaseInfoRepository.GetDatabaseInfo();
 
-            DatabaseItems.AddRange(info.Select(i => new DatabaseItemViewModel(i)));
-           
+            DatabaseItems.AddRange(info.Select(i => new DatabaseItemViewModel(i)));           
         }
 
         protected override void OnDeactivate(bool close)
@@ -85,13 +83,10 @@ namespace MetroPass.WP8.UI.ViewModels
             {
                 DatabaseItems.Remove(single);
                 await databaseItem.DatabaseInfo.Folder.DeleteAsync();
-            }     
-            
+            }
         }
     }
-
-
-
+    
     public class DatabaseItemViewModel
     {
         public readonly DatabaseInfo DatabaseInfo;
