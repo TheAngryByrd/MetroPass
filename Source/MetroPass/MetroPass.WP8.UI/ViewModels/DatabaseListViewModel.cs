@@ -32,8 +32,9 @@ namespace MetroPass.WP8.UI.ViewModels
 
         private void NavigateToOpenDatabase(IObservedChange<DatabaseListViewModel, DatabaseItemViewModel> obj)
         {
-            Cache.Instance.DatabaseInfo = obj.Value.DatabaseInfo;
-            _navService.UriFor<OpenDatabaseViewModel>().Navigate();            
+            Cache.Instance.DatabaseName = obj.Value.DatabaseInfo.Info.DatabasePath;
+            _navService.UriFor<OpenDatabaseViewModel>()
+                .Navigate();            
         }
 
         private DatabaseItemViewModel _selectedDatabaseItem;
@@ -51,6 +52,11 @@ namespace MetroPass.WP8.UI.ViewModels
 
         public void AddDatabase()
         {
+            Cache.Instance.DownloadFileNavigationCache = new DownloadFileNavigationCache
+            {                
+                DownloadType = DownloadType.Database,
+                ReturnUrl = this.GetType().FullName
+            };
             _navService.UriFor<ChooseCloudViewModel>().Navigate();
         }
 

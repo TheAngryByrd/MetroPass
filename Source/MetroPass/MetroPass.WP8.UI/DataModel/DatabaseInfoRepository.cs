@@ -18,9 +18,14 @@ namespace MetroPass.WP8.UI.DataModel
             
             _installedFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
 	    }
-        
 
-      
+        public async Task<DatabaseInfo> GetDatabaseInfo(string databaseName)
+        {
+            var root = await GetDatabaseRoot();
+            var folder = await root.GetFolderAsync(databaseName);
+
+            return await CreateDatabaseInfo(folder);
+        }
 
         public async Task SaveInfo(IStorageFolder folder, Info info)
         { 
@@ -69,16 +74,28 @@ namespace MetroPass.WP8.UI.DataModel
 
         public async Task<IEnumerable<DatabaseInfo>> GetDatabaseInfo()
         { 
-            var root = await _installedFolder.CreateFolderAsync("Databases", CreationCollisionOption.OpenIfExists);
+            var root = await GetDatabaseRoot();
             var databsesFolders = await root.GetFoldersAsync();
             var DatabaseItems = new List<DatabaseInfo>();
             foreach (var folder in databsesFolders)
             {
-                var databaseInfo = new DatabaseInfo(folder, await GetInfo(folder));
+                var databaseInfo = await CreateDatabaseInfo(folder);
                 DatabaseItems.Add(databaseInfo);
             }
 
             return DatabaseItems;
+        }
+  
+        private async Task<DatabaseInfo> CreateDatabaseInfo(StorageFolder folder)
+        {
+            var databaseInfo = new DatabaseInfo(folder, await GetInfo(folder));
+            return databaseInfo;
+        }
+  
+        private async Task<StorageFolder> GetDatabaseRoot()
+        {
+            var root = await _installedFolder.CreateFolderAsync("Databases", CreationCollisionOption.OpenIfExists);
+            return root;
         }
 
         public async Task SaveDatabaseFromDatasouce(

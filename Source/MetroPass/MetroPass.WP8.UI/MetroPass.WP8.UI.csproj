@@ -163,6 +163,7 @@
     <Compile Include="ViewModels\DatabaseListViewModel.cs" />
     <Compile Include="ViewModels\DesignTime\DatabaseListDesignTimeViewModel.cs" />
     <Compile Include="ViewModels\DesignTime\EntriesListDesignTimeViewModel.cs" />
+    <Compile Include="Utils\DownloadType.cs" />
     <Compile Include="ViewModels\DropboxAccessViewModel.cs" />
     <Compile Include="ViewModels\EntriesListViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IDatabaseListViewModel.cs" />

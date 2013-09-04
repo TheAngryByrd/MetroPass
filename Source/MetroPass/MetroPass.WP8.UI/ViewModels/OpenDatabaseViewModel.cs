@@ -14,12 +14,15 @@ namespace MetroPass.WP8.UI.ViewModels
     public class OpenDatabaseViewModel : ReactiveScreen
     {
         private readonly INavigationService _navigationService;
-        private readonly ICanSHA256Hash _hasher;   
+        private readonly ICanSHA256Hash _hasher;
+        private readonly IDatabaseInfoRepository _databaseInfoRepository;
 
         public OpenDatabaseViewModel(
             INavigationService navigationService,
+            IDatabaseInfoRepository databaseInfoRepository,
             ICanSHA256Hash hasher)
         {
+            _databaseInfoRepository = databaseInfoRepository;
             _hasher = hasher;
             _navigationService = navigationService;
 
@@ -42,20 +45,24 @@ namespace MetroPass.WP8.UI.ViewModels
             keyFileNameChanged.Subscribe(v => GetKeyFileButtonIsVisible = string.IsNullOrWhiteSpace(v));
         }
 
-        protected override void OnActivate()
+        private DatabaseInfo _databaseInfo;
+
+        protected async override void OnActivate()
         {
-            DatabaseName = Cache.Instance.DatabaseInfo.Info.DatabasePath;
-            if(!string.IsNullOrWhiteSpace(Cache.Instance.DatabaseInfo.Info.KeyFilePath))
+            _databaseInfo = await _databaseInfoRepository.GetDatabaseInfo(Cache.Instance.DatabaseName);
+
+            DatabaseName = _databaseInfo.Info.DatabasePath;
+            if (!string.IsNullOrWhiteSpace(_databaseInfo.Info.KeyFilePath))
             {
-                KeyFileName = Cache.Instance.DatabaseInfo.Info.KeyFilePath;
+                KeyFileName = _databaseInfo.Info.KeyFilePath;
             }
         }
 
         public ReactiveCommand OpenCommand { get; set; }
         private async void OpenDatabase(object obj)
         {
-            
-            var file = await Cache.Instance.DatabaseInfo.GetDatabase();
+
+            var file = await _databaseInfo.GetDatabase();
             var listOfKeys = new List<IUserKey>();
 
             if (!string.IsNullOrEmpty(Password))
@@ -66,7 +73,7 @@ namespace MetroPass.WP8.UI.ViewModels
                 
             if(!string.IsNullOrWhiteSpace(KeyFileName))
             {
-                var keyFile = await Cache.Instance.DatabaseInfo.GetKeyfile();
+                var keyFile = await _databaseInfo.GetKeyfile();
                 var kcpKeyFile = await KcpKeyFile.Create(new WP8File(keyFile), _hasher);
                 listOfKeys.Add(kcpKeyFile);
             }
@@ -89,7 +96,13 @@ namespace MetroPass.WP8.UI.ViewModels
         public ReactiveCommand GetKeyFileCommand { get; private set; }
         private void GetKeyFile(object obj)
         {
-            KeyFileName = "h";
+            Cache.Instance.DownloadFileNavigationCache = new DownloadFileNavigationCache
+            {
+                DatabaseName = DatabaseName,
+                DownloadType = DownloadType.KeyFile,
+                ReturnUrl = this.GetType().FullName
+            };
+            _navigationService.UriFor<ChooseCloudViewModel>().Navigate();           
         }
 
         private bool _clearKeyFileButtonIsVisible;
