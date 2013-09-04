@@ -12,10 +12,10 @@ using System.Threading.Tasks;
 using ReactiveUI;
 using Caliburn.Micro;
 using MetroPass.WP8.UI.DataModel;
+using ReactiveUI;
 
 namespace MetroPass.WP8.UI.ViewModels
 {
-
     public class BrowseCloudFilesViewModel : ReactiveScreen
     {
         private readonly INavigationService _navigationService;
@@ -55,7 +55,9 @@ namespace MetroPass.WP8.UI.ViewModels
             
             SkyDriveItems = new ObservableCollection<ICloudItem>();
 
-            this.ObservableForPropertyNotNull(vm => vm.SelectedSkyDriveItem).Subscribe(SkydriveItemSelected);            
+            this.ObservableForPropertyNotNull(vm => vm.SelectedSkyDriveItem)
+                .Subscribe(SkydriveItemSelected);
+
         }
 
         private string _navigationUrl;
@@ -64,6 +66,8 @@ namespace MetroPass.WP8.UI.ViewModels
             get { return _navigationUrl; }
             set { _navigationUrl = value; }
         }
+
+        public string DatabaseName { get; set; }
 
         public ObservableCollection<ICloudItem> SkyDriveItems { get; set; }
 
@@ -107,6 +111,8 @@ namespace MetroPass.WP8.UI.ViewModels
         }
 
   
+        
+
         private async Task AttemptDownload(ICloudItem cloudItem)
         {
             ProgressIsVisible = true;
@@ -115,16 +121,24 @@ namespace MetroPass.WP8.UI.ViewModels
             { 
                 if (downloadStream != null)
                 {
-                    await _databaseInfoRepository.SaveDatabaseFromDatasouce(cloudItem.Name,
-                        CloudProvider.ToString(),
-                        cloudItem.ID,
-                        downloadStream);
+                    if (Cache.Instance.DownloadFileNavigationCache.DownloadType == DownloadType.Database)
+                        await _databaseInfoRepository
+                            .SaveDatabaseFromDatasouce(
+                            cloudItem.Name,
+                            CloudProvider.ToString(),
+                            cloudItem.ID,
+                            downloadStream);
+                    else if (Cache.Instance.DownloadFileNavigationCache.DownloadType == DownloadType.KeyFile)
+                        await _databaseInfoRepository
+                            .SaveKeyFileFromDatasouce(
+                            Cache.Instance.DownloadFileNavigationCache.DatabaseName, 
+                            cloudItem.Name,
+                            downloadStream);
                 }
             }
-            ProgressIsVisible = false;
-
-            _navigationService.UriFor<DatabaseListViewModel>()                             
-                              .Navigate();
+            ProgressIsVisible = false;           
+            Type returnNavigation = Type.GetType(Cache.Instance.DownloadFileNavigationCache.ReturnUrl);
+            _navigationService.Navigate(GetUri(returnNavigation));
         }
   
         private void NavigateToBrowseFolders(ICloudItem cloudItem)
@@ -132,6 +146,7 @@ namespace MetroPass.WP8.UI.ViewModels
             _navigationService.UriFor<BrowseCloudFilesViewModel>()
                               .WithParam(vm => vm.CloudProvider, CloudProvider)
                               .WithParam(vm => vm.NavigationUrl, cloudItem.ID)
+                              .WithParam(vm => vm.DatabaseName, DatabaseName)
                               .Navigate();
         }
 
@@ -146,11 +161,24 @@ namespace MetroPass.WP8.UI.ViewModels
             SkyDriveItems.AddRange(items);
 
             ProgressIsVisible = false;
+            
         }
 
         protected override void OnDeactivate(bool close)
         {
             SkyDriveItems = new ObservableCollection<ICloudItem>();                
         }    
+
+        public Uri GetUri(Type t)
+        {
+            Type viewType = Caliburn.Micro.ViewLocator.LocateTypeForModelType.Invoke(t, null, null);
+            if (viewType == null)
+            {
+                throw new InvalidOperationException(string.Format("No view was found for {0}. See the log for searched views.", t.FullName));
+            }
+            string packUri = Caliburn.Micro.ViewLocator.DeterminePackUriFromType.Invoke(t, viewType);
+ 
+            return new Uri(packUri, UriKind.Relative);
+        }
     }
 }
