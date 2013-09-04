@@ -61,16 +61,12 @@ namespace MetroPass.WP8.UI.ViewModels
 
         protected async override void OnActivate()
         {
+            DatabaseItems.Clear();
             SelectedDatabaseItem = null;
 
             var info = await _databaseInfoRepository.GetDatabaseInfo();
 
             DatabaseItems.AddRange(info.Select(i => new DatabaseItemViewModel(i)));           
-        }
-
-        protected override void OnDeactivate(bool close)
-        {
-            DatabaseItems.Clear();
         }
 
         public ReactiveCommand DeleteDatabaseCommand { get; set; }

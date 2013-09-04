@@ -13,6 +13,8 @@
     xmlns:mytoolkitpaging="clr-namespace:MyToolkit.Paging;assembly=MyToolkit.Extended"
     xmlns:common="clr-namespace:MetroPass.WP8.UI.Common"
     xmlns:telerikCore="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Core"
+    xmlns:bindableAppBar="clr-namespace:Caliburn.Micro.BindableAppBar;assembly=Caliburn.Micro.BindableAppBar"
+    xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro"
     x:Class="MetroPass.WP8.UI.Views.EntriesListView"
     SupportedOrientations="Portrait" Orientation="Portrait"
     mc:Ignorable="d" d:DesignHeight="800" d:DesignWidth="480"
@@ -115,20 +117,6 @@
 		<StaticResource ResourceKey="PhoneForegroundBrush"/>
 	</phone:PhoneApplicationPage.Foreground>
 
-    <phone:PhoneApplicationPage.ApplicationBar>
-        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
-            <shell:ApplicationBar.MenuItems>
-                <shell:ApplicationBarMenuItem Text="MenuItem 1"/>
-                <shell:ApplicationBarMenuItem Text="MenuItem 2"/>
-            </shell:ApplicationBar.MenuItems>
-            <shell:ApplicationBarIconButton IconUri="/Images/appbar_button1.png" Text="Button 1"/>
-            <shell:ApplicationBarIconButton IconUri="/Images/appbar_button2.png" Text="Button 2"/>
-            <shell:ApplicationBarIconButton IconUri="/Images/appbar_button3.png" Text="Button 3"/>
-            <shell:ApplicationBarIconButton IconUri="/Images/appbar_button4.png" Text="Button 4"/>
-        </shell:ApplicationBar>
-    </phone:PhoneApplicationPage.ApplicationBar>
-    
-
 	<Grid x:Name="LayoutRoot" Background="Transparent">
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto"/>
@@ -189,8 +177,13 @@
                   </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-	
-		</Grid>
+            <bindableAppBar:BindableAppBar x:Name="ItemView1_AppBar1" >
+                <bindableAppBar:BindableAppBarButton 
+                           cal:Message.Attach="[Event Click] = [Action AddEntry()]"
+                            
+                            Text="New Entry" IconUri="/Images/add.png" />
+            </bindableAppBar:BindableAppBar>
+        </Grid>
 	</Grid>
 
 </phone:PhoneApplicationPage>

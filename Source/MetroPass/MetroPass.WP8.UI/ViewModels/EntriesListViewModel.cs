@@ -17,9 +17,9 @@ namespace MetroPass.WP8.UI.ViewModels
 
         public EntriesListViewModel(INavigationService navigationService)
         {
-            _navigationService = navigationService;
+            _navigationService = navigationService;   
             this.ObservableForProperty(vm => vm.GroupId)
-                .Subscribe(GetGroup);
+                .Subscribe(x => GetGroup(x.Value));
             this.ObservableForProperty(vm => vm.SelectedItem)                
                 .Subscribe(NavigateToEntriesListView);
             Items = new ObservableCollection<PwCommon>();
@@ -42,6 +42,14 @@ namespace MetroPass.WP8.UI.ViewModels
             }
         }
 
+        public void AddEntry()
+        {
+            _navigationService
+                   .UriFor<AddOrEditEntryViewModel>()
+                   .WithParam(vm => vm.ParentGroupUuid, Group.UUID)
+                   .Navigate();
+        }
+
         public ObservableCollection<PwCommon> Items
         {
             get;
@@ -56,17 +64,19 @@ namespace MetroPass.WP8.UI.ViewModels
 
         protected override void OnActivate()
         {
+            Items.Clear();
             SelectedItem = null;
+            GetGroup(GroupId);
             Items.AddRange(Group.SubGroupsAndEntries);        
         }
         protected override void OnDeactivate(bool close)
         {            
-            Items = new ObservableCollection<PwCommon>();
+           
         }
 
-        private void GetGroup(IObservedChange<EntriesListViewModel, string> obj)
+        private void GetGroup(string groupId)
         {            
-            Group = PWDatabaseDataSource.Instance.PwDatabase.Tree.FindGroupByUuid(obj.Value);                     
+            Group = PWDatabaseDataSource.Instance.PwDatabase.Tree.FindGroupByUuid(groupId);                     
         }    
 
         const string Key = "\uE192";

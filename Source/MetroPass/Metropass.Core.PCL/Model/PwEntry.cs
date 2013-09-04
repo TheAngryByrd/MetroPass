@@ -169,7 +169,10 @@ namespace Metropass.Core.PCL.Model
                 Sanitize("Notes"));
 
             var element = XElement.Parse(entryTemplate);
-            return new PwEntry(element,parent);        
+            var pwEntry = new PwEntry(element,parent);
+            parent.AddEntryToDocument(pwEntry);
+           
+            return pwEntry;
         }
 
         private static string Sanitize(string text)

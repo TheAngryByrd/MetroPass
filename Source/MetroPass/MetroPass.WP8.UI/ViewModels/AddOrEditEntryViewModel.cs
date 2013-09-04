@@ -18,6 +18,7 @@ namespace MetroPass.WP8.UI.ViewModels
 
         protected override void OnActivate()
         {
+            CustomFields = new ObservableCollection<FieldViewModel>();
             GetEntry();
         }
 
@@ -66,23 +67,19 @@ namespace MetroPass.WP8.UI.ViewModels
             set { this.RaiseAndSetIfChanged(ref _pwEntry, value); }
         }
 
-        public async Task GetEntry()
+        public void GetEntry()
         {
-            
-                PwGroup = PWDatabaseDataSource.Instance.PwDatabase.Tree.FindGroupByUuid(ParentGroupUuid);
-                if (EntryUuid != null)
-                {
-                    PwEntry = PwGroup.Entries.SingleOrDefault(e => e.UUID == EntryUuid);
-                    Title = PwEntry.Title;
-                    Username = PwEntry.Username;
-                    Password = PwEntry.Password;
-                    Url = PwEntry.Url;
-                    Notes = PwEntry.Notes;
-                    CustomFields = new ObservableCollection<FieldViewModel>(
-                        PwEntry.CustomFields.
-                        Select(cf => new FieldViewModel(cf)));
-                }
-         
+            PwGroup = PWDatabaseDataSource.Instance.PwDatabase.Tree.FindGroupByUuid(ParentGroupUuid);
+            if (EntryUuid != null)
+            {
+                PwEntry = PwGroup.Entries.SingleOrDefault(e => e.UUID == EntryUuid);
+                Title = PwEntry.Title;
+                Username = PwEntry.Username;
+                Password = PwEntry.Password;
+                Url = PwEntry.Url;
+                Notes = PwEntry.Notes;
+                CustomFields.AddRange(PwEntry.CustomFields.Select(cf => new FieldViewModel(cf)));
+            }
             
         }
 
@@ -142,11 +139,16 @@ namespace MetroPass.WP8.UI.ViewModels
 
             var fields = CustomFields.Select(f => f._field);
 
-            PwEntry.Title = Title;
-            PwEntry.Username = Username;
-            PwEntry.Password = Password;
-            PwEntry.Url = Url;
-            PwEntry.Notes = Notes;
+            if(PwEntry == null)
+            {
+                PwEntry = PwEntry.New(PwGroup);
+            }
+
+            PwEntry.Title = Title.EmptyIfNull();
+            PwEntry.Username = Username.EmptyIfNull();
+            PwEntry.Password = Password.EmptyIfNull();
+            PwEntry.Url = Url.EmptyIfNull();
+            PwEntry.Notes = Notes.EmptyIfNull();
             PwEntry.AddCustomFields(fields);
 
             PWDatabaseDataSource.Instance.SavePwDatabase();
@@ -180,8 +182,16 @@ namespace MetroPass.WP8.UI.ViewModels
 
         public void Persist()
         {
-            _field.Name = Name;
-            _field.Value = Value;
+            _field.Name = Name.EmptyIfNull();
+            _field.Value = Value.EmptyIfNull();
+        }
+    }
+
+    public static class StringEx
+    {
+        public static string EmptyIfNull(this string str)
+        {
+            return str ?? string.Empty;
         }
     }
 }
