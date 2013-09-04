@@ -50,6 +50,10 @@ namespace MetroPass.WP8.UI.ViewModels
                    .Navigate();
         }
 
+        public void AddGroup()
+        {
+            
+        }
         public ObservableCollection<PwCommon> Items
         {
             get;

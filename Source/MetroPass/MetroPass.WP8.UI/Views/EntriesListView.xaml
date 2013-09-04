@@ -124,6 +124,7 @@
 		</Grid.RowDefinitions>
 
 		<StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
+            <TextBlock FontFamily="Segoe UI Symbol"  Text="&#xE1DA;" Style="{StaticResource PhoneTextNormalStyle}"/>
             <TextBlock x:Name="ApplicationTitle" Text="{StaticResource AppName}" Style="{StaticResource PhoneTextNormalStyle}"/>
             <TextBlock x:Name="PageTitle" Text="Entries" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
 		</StackPanel>
@@ -179,9 +180,14 @@
             </ListBox>
             <bindableAppBar:BindableAppBar x:Name="ItemView1_AppBar1" >
                 <bindableAppBar:BindableAppBarButton 
+                            cal:Message.Attach="[Event Click] = [Action AddGroup()]"
+                            
+                            Text="New Folder" IconUri="/Images/AddFolder.png" />
+                <bindableAppBar:BindableAppBarButton 
                            cal:Message.Attach="[Event Click] = [Action AddEntry()]"
                             
-                            Text="New Entry" IconUri="/Images/add.png" />
+                            Text="New Entry" IconUri="/Images/add.png" />              
+    
             </bindableAppBar:BindableAppBar>
         </Grid>
 	</Grid>
