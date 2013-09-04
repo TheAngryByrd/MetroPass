@@ -259,6 +259,7 @@
     </None>
     <Content Include="Images\add.png" />
     <Content Include="Images\AddFolder.png" />
+    <Content Include="Images\appbar.cloud.download.png" />
     <Content Include="Images\Logos\dropbox.png" />
     <Content Include="Images\Logos\skydrive.png" />
     <Content Include="Images\save.png" />
