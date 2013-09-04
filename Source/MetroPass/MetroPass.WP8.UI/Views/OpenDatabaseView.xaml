@@ -62,10 +62,13 @@
                              />                
             </StackPanel>
             <StackPanel Grid.Row="1">
-                <TextBlock Text=""
+                <TextBlock Text="Key File"
                                Style="{StaticResource PhoneTextNormalStyle}" />
-                <Button Content="Key File"/>
-                <Button Content="Clear Key File" Visibility="Collapsed"></Button>
+
+                <TextBlock x:Name="KeyFileName"
+                               Style="{StaticResource PhoneTextNormalStyle}" />
+                <Button x:Name="GetKeyFileButton" Content="Get Key File" Command="{Binding GetKeyFileCommand}"/>
+                <Button x:Name="ClearKeyFileButton" Content="Clear Key File" Command="{Binding ClearKeyFileCommand}"></Button>
             </StackPanel>
             <StackPanel Grid.Row="2" Margin="0,50,0,0">
                 <Button Content="Open" Command="{Binding OpenCommand}"></Button>

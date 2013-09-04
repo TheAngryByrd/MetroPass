@@ -16,7 +16,8 @@ namespace MetroPass.WP8.UI.ViewModels
         private readonly INavigationService _navigationService;
         private readonly ICanSHA256Hash _hasher;   
 
-        public OpenDatabaseViewModel(INavigationService navigationService,
+        public OpenDatabaseViewModel(
+            INavigationService navigationService,
             ICanSHA256Hash hasher)
         {
             _hasher = hasher;
@@ -29,6 +30,16 @@ namespace MetroPass.WP8.UI.ViewModels
 
             OpenCommand = new ReactiveCommand(canHitOpen);
             OpenCommand.Subscribe(OpenDatabase);
+
+            GetKeyFileCommand = new ReactiveCommand();
+            GetKeyFileCommand.Subscribe(GetKeyFile); 
+            
+            ClearKeyFileCommand = new ReactiveCommand();
+            ClearKeyFileCommand.Subscribe(ClearKeyFile);
+
+            IObservable<string> keyFileNameChanged = this.WhenAny(vm => vm.KeyFileName, kf => kf.Value);
+            keyFileNameChanged.Subscribe(v => ClearKeyFileButtonIsVisible = !string.IsNullOrWhiteSpace(v));
+            keyFileNameChanged.Subscribe(v => GetKeyFileButtonIsVisible = string.IsNullOrWhiteSpace(v));
         }
 
         protected override void OnActivate()
@@ -67,6 +78,36 @@ namespace MetroPass.WP8.UI.ViewModels
             _navigationService.UriFor<EntriesListViewModel>().
                 WithParam(p => p.GroupId, rootUUID).Navigate();
         }
+
+        private bool _getKeyFileButtonIsVisible;
+        public bool GetKeyFileButtonIsVisible
+        {
+            get { return _getKeyFileButtonIsVisible; }
+            set { this.RaiseAndSetIfChanged(ref _getKeyFileButtonIsVisible, value); }
+        }
+
+        public ReactiveCommand GetKeyFileCommand { get; private set; }
+        private void GetKeyFile(object obj)
+        {
+            KeyFileName = "h";
+        }
+
+        private bool _clearKeyFileButtonIsVisible;
+        public bool ClearKeyFileButtonIsVisible
+        {
+            get { return _clearKeyFileButtonIsVisible; }
+            set { this.RaiseAndSetIfChanged(ref _clearKeyFileButtonIsVisible, value); }
+        }
+
+        public ReactiveCommand ClearKeyFileCommand { get; private set; }
+
+        private void ClearKeyFile(object obj)
+        {
+            KeyFileName = string.Empty;
+        }
+
+
+
 
         private string _databaseName;
         public string DatabaseName

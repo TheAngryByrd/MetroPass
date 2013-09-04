@@ -98,10 +98,6 @@ namespace MetroPass.WP8.UI
         {         
             ConventionManager.AddElementConvention<UIElement>(UIElement.VisibilityProperty, "Visibility", "VisibilityChanged");
 
-            ConventionManager.AddElementConvention<Control>(
-                Control.IsEnabledProperty,
-                "IsEnabled",
-                "IsEnabledChanged");
 
             ConventionManager.AddElementConvention<BindableAppBarButton>(
             Control.IsEnabledProperty, "DataContext", "Click");
@@ -113,7 +109,6 @@ namespace MetroPass.WP8.UI
                 (frameWorkElements, viewModel) =>
                 {
                     BindVisiblityProperties(frameWorkElements, viewModel);
-                    BindEnabledProperties(frameWorkElements, viewModel);
                     return baseBindProperties(frameWorkElements, viewModel);
                 };
 
@@ -122,9 +117,7 @@ namespace MetroPass.WP8.UI
             var baseBindActions = ViewModelBinder.BindActions;
             ViewModelBinder.BindActions =
                 (frameWorkElements, viewModel) =>
-                {
-                  
-                    BindEnabledProperties(frameWorkElements, viewModel);
+                {                  
                     BindVisiblityProperties(frameWorkElements, viewModel);
                     return baseBindActions(frameWorkElements, viewModel);
                 };
@@ -151,27 +144,8 @@ namespace MetroPass.WP8.UI
                         convention.GetBindableProperty(frameworkElement));
                 }
             }
-        }  
-        void BindEnabledProperties(IEnumerable<FrameworkElement> frameWorkElements, Type viewModel)
-        {
-            foreach (var frameworkElement in frameWorkElements)
-            {
-                var propertyName = frameworkElement.Name + "IsEnabled";
-                var property = viewModel.GetPropertyCaseInsensitive(propertyName);
-                if (property != null)
-                {
-                    var convention = ConventionManager
-                        .GetElementConvention(typeof(FrameworkElement));
-                    ConventionManager.SetBindingWithoutBindingOverwrite(
-                        viewModel,
-                        propertyName,
-                        property,
-                        frameworkElement,
-                        convention,
-                        convention.GetBindableProperty(frameworkElement));
-                }
-            }
         }
+       
     }
 
 }
