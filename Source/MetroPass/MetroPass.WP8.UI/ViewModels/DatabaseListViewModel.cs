@@ -67,20 +67,26 @@ namespace MetroPass.WP8.UI.ViewModels
             var info = await _databaseInfoRepository.GetDatabaseInfo();
 
             DatabaseItems.AddRange(info.Select(i => new DatabaseItemViewModel(i)));
+           
         }
 
         protected override void OnDeactivate(bool close)
         {
-            DatabaseItems = new ObservableCollection<DatabaseItemViewModel>();
+            DatabaseItems.Clear();
         }
 
         public ReactiveCommand DeleteDatabaseCommand { get; set; }
         public async void DeleteDatabase(object obj)
         {
-            var databaseItem = obj as DatabaseItemViewModel;
+            var databaseItem = obj as DatabaseItemViewModel;            
+            DatabaseItemViewModel single = DatabaseItems.SingleOrDefault(d => databaseItem.Name == d.Name);
+
+            if (single != null)
+            {
+                DatabaseItems.Remove(single);
+                await databaseItem.DatabaseInfo.Folder.DeleteAsync();
+            }     
             
-            await databaseItem.DatabaseInfo.Folder.DeleteAsync();
-            DatabaseItems.Remove(databaseItem);
         }
     }
 

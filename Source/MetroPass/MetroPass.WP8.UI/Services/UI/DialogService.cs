@@ -1,10 +1,16 @@
 using System;
+using System.Windows;
 using Microsoft.Phone.Controls;
 
 namespace MetroPass.WP8.UI.Services.UI
 {
     public class DialogService : IDialogService
     {
+        public void ShowDialogBox(string title, string text)
+        {
+            MessageBox.Show(text, title, MessageBoxButton.OK);
+        }
+
         public void ShowDialogBox(string caption, string message, string leftbuttonContent, string rightButtonContent, Action leftButtonAction, Action rightButtonAction)
         {
             var messagebox = new CustomMessageBox()
@@ -32,6 +38,5 @@ namespace MetroPass.WP8.UI.Services.UI
 
             messagebox.Show();
         }
-  
     }
 }

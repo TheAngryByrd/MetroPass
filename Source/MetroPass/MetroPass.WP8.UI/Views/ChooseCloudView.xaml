@@ -150,6 +150,37 @@
                 
                     </Button.Content>
                 </Button>
+
+                <Button 
+                    x:Name="DemoButton"
+                    Margin="0,20,0,0"
+                    Command="{Binding NavigateToCreateDemoCommand}"
+                    HorizontalContentAlignment="Stretch" 
+                    Style="{StaticResource ButtonStyle1}"
+                    >
+                    <Button.Content>
+                        <Grid HorizontalAlignment="Stretch" >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"></RowDefinition>
+                                <RowDefinition Height="auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Border Grid.RowSpan="2" Height="180" Background="{StaticResource MainAppColor}">
+                                <Viewbox>
+                                    <TextBlock HorizontalAlignment="Center" FontFamily="Segoe UI Symbol" >&#xE192;</TextBlock>
+                                </Viewbox>
+                                
+                            </Border>
+                            <Border Grid.Row="1" VerticalAlignment="Stretch" Background="Black" Opacity="0.7"/>
+                            <StackPanel Grid.Row="1" Margin="10,5" VerticalAlignment="Bottom">
+                                <TextBlock FontSize="30" Foreground="White" Text="Demo"/>
+                            </StackPanel>
+                        </Grid>
+
+                    </Button.Content>
+                </Button>
             </StackPanel>
 
         </Grid>

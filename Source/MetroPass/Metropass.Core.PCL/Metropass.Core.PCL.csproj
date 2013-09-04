@@ -53,6 +53,7 @@
     <Compile Include="Compression\IGZipStreamFactory.cs" />
     <Compile Include="Encryption\EncryptionEngineBase.cs" />
     <Compile Include="Exceptions\GroupNotFoundException.cs" />
+    <Compile Include="GenerateDatabase.cs" />
     <Compile Include="Hashing\HashedBlockStream.cs" />
     <Compile Include="Hashing\ICanSHA256Hash.cs" />
     <Compile Include="Helpers\DateTimeExtensions.cs" />
