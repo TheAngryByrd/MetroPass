@@ -1,0 +1,6 @@
+<MarketplaceDetails>
+  <SmallAppTile>PhoneLogo.png</SmallAppTile>
+  <ScreenShots>EntryList.png;DatabaseList.png;EditEntry.png;CustomField.png;;;;;</ScreenShots>
+  <ScreenShotsWXGA>EntryListWXGA.png;DatabaseListWXGA.png;EditEntryWXGA.png;CustomFieldWXGA.png;;;;;</ScreenShotsWXGA>
+  <ScreenShots720P>EntryList720.png;DatabaseList720.png;EditEntry720.png;CustomField720.png;;;;;</ScreenShots720P>
+</MarketplaceDetails>
