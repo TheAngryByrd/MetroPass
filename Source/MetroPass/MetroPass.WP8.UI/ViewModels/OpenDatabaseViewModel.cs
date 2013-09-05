@@ -1,5 +1,6 @@
 ﻿using Caliburn.Micro;
 using MetroPass.WP8.UI.DataModel;
+using MetroPass.WP8.UI.Services.UI;
 using MetroPass.WP8.UI.ViewModels.ReactiveCaliburn;
 using Metropass.Core.PCL.Model.Kdb4.Keys;
 using ReactiveUI;
@@ -17,15 +18,20 @@ namespace MetroPass.WP8.UI.ViewModels
         private readonly ICanSHA256Hash _hasher;
         private readonly IDatabaseInfoRepository _databaseInfoRepository;
 
+        private readonly IDialogService _dialogService;
+
+       
+
         public OpenDatabaseViewModel(
             INavigationService navigationService,
             IDatabaseInfoRepository databaseInfoRepository,
-            ICanSHA256Hash hasher)
+            ICanSHA256Hash hasher,
+            IDialogService dialogService)
         {
+            _dialogService = dialogService;
             _databaseInfoRepository = databaseInfoRepository;
             _hasher = hasher;
             _navigationService = navigationService;
-
             var canHitOpen = this.WhenAny(
                 vm => vm.Password, 
                 vm => vm.KeyFileName,
@@ -45,6 +51,13 @@ namespace MetroPass.WP8.UI.ViewModels
             keyFileNameChanged.Subscribe(v => GetKeyFileButtonIsVisible = string.IsNullOrWhiteSpace(v));
         }
 
+        private bool _progressIsVisible = false;
+        public bool ProgressIsVisible
+        {
+            get { return _progressIsVisible; }
+            set { this.RaiseAndSetIfChanged(ref _progressIsVisible, value); }
+        }
+
         private DatabaseInfo _databaseInfo;
 
         protected async override void OnActivate()
@@ -61,7 +74,7 @@ namespace MetroPass.WP8.UI.ViewModels
         public ReactiveCommand OpenCommand { get; set; }
         private async void OpenDatabase(object obj)
         {
-
+            ProgressIsVisible = true;
             var file = await _databaseInfo.GetDatabase();
             var listOfKeys = new List<IUserKey>();
 
@@ -78,12 +91,26 @@ namespace MetroPass.WP8.UI.ViewModels
                 listOfKeys.Add(kcpKeyFile);
             }
 
-            await PWDatabaseDataSource.Instance.LoadPwDatabase(file, listOfKeys);
+            try
+            {
+                await PWDatabaseDataSource.Instance.LoadPwDatabase(file, listOfKeys);
 
-            var rootUUID = PWDatabaseDataSource.Instance.PwDatabase.Tree.Group.UUID;
+                var rootUUID = PWDatabaseDataSource.Instance.PwDatabase.Tree.Group.UUID;
 
-            _navigationService.UriFor<EntriesListViewModel>().
-                WithParam(p => p.GroupId, rootUUID).Navigate();
+                
+
+                _navigationService.UriFor<EntriesListViewModel>().
+                    WithParam(p => p.GroupId, rootUUID).Navigate();
+            }
+            catch(Exception e)
+            {
+                _dialogService.ShowDialogBox("Error", "The password may be incorrect or the database may be corrupt.");
+            }
+            finally
+            {
+                ProgressIsVisible = false;
+            }
+         
         }
 
         private bool _getKeyFileButtonIsVisible;
