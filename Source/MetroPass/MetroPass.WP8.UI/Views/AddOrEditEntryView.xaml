@@ -74,7 +74,7 @@
 
                             <TextBlock Text="Password"
                                Style="{StaticResource PhoneTextNormalStyle}" />
-                            <uc:ProtectedTextBox x:Name="Password"
+                            <uc:ProtectedTextBox x:Name="PasswordBox"
                                          MonoSpaced="True"
                                          Text="{Binding Password, Mode=TwoWay}"
                                          c4f:TextBinding.UpdateSourceOnChange="True" />
