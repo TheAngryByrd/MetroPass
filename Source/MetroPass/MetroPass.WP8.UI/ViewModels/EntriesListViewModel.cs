@@ -52,7 +52,10 @@ namespace MetroPass.WP8.UI.ViewModels
 
         public void AddGroup()
         {
-            
+            _navigationService
+                   .UriFor<AddOrEditGroupViewModel>()
+                   .WithParam(vm => vm.ParentGroupUuid, Group.UUID)
+                   .Navigate();
         }
         public ObservableCollection<PwCommon> Items
         {

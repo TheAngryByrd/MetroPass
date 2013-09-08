@@ -155,5 +155,38 @@ namespace Metropass.Core.PCL.Model
                 return new PwGroup(emptyGroup, false);
             }
         }
+
+        public static PwGroup GetNewGroupElement()
+        {
+            var groupTemplate = @"
+                <Group>
+                    <UUID>{0}</UUID>
+                    <Name>{2}</Name>
+                    <IconID>0</IconID>
+                    <Times>
+                        <LastModificationTime>{1}</LastModificationTime>
+                        <CreationTime>{1}</CreationTime>
+                        <LastAccessTime>{1}</LastAccessTime>
+                        <ExpiryTime>{1}</ExpiryTime>
+                        <LocationChanged>{1}</LocationChanged>
+                        <Expires>False</Expires>
+                        <UsageCount>0</UsageCount>
+                    </Times>
+                    <IsExpanded>True</IsExpanded>
+                    <DefaultAutoTypeSequence />
+                    <EnableAutoType>null</EnableAutoType>
+                    <EnableSearching>null</EnableSearching>
+                </Group>
+            ";
+            var uuid = new PwUuid(true);
+            groupTemplate = String.Format(
+                groupTemplate, 
+                Convert.ToBase64String(uuid.UuidBytes), 
+                DateTime.Now.ToFormattedUtcTime(),
+                string.Empty);
+
+            var element = XElement.Parse(groupTemplate);
+            return new PwGroup(element);
+        }
     }
 }
