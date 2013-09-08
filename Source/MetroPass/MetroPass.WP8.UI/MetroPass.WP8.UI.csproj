@@ -159,6 +159,7 @@
       <DependentUpon>AppResources.resx</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\AddOrEditEntryViewModel.cs" />
+    <Compile Include="ViewModels\AddOrEditGroupViewModel.cs" />
     <Compile Include="ViewModels\ChooseCloudViewModel.cs" />
     <Compile Include="ViewModels\DatabaseListViewModel.cs" />
     <Compile Include="ViewModels\DesignTime\DatabaseListDesignTimeViewModel.cs" />
@@ -176,6 +177,9 @@
     <Compile Include="ViewModels\BrowseCloudFilesViewModel.cs" />
     <Compile Include="Views\AddOrEditEntryView.xaml.cs">
       <DependentUpon>AddOrEditEntryView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AddOrEditGroupView.xaml.cs">
+      <DependentUpon>AddOrEditGroupView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ChooseCloudView.xaml.cs">
       <DependentUpon>ChooseCloudView.xaml</DependentUpon>
@@ -218,6 +222,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\AddOrEditEntryView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AddOrEditGroupView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
