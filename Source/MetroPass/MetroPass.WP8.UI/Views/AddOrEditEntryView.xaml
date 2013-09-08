@@ -167,9 +167,9 @@
             </phone:PivotItem>
 
 
-            <phone:PivotItem Header="history">
+            <!--<phone:PivotItem Header="history">
                 <Grid/>
-            </phone:PivotItem>
+            </phone:PivotItem>-->
         </phone:Pivot>
 
 
