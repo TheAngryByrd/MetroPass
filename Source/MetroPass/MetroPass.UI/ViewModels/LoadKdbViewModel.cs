@@ -380,16 +380,16 @@ namespace MetroPass.UI.ViewModels
             {
                 await PWDatabaseDataSource.Instance.LoadPwDatabase(Database, userKeys, progress);
                 OpeningDatabase = false;
-                var encodedUUID = WebUtility.UrlEncode(PWDatabaseDataSource.Instance.PwDatabase.Tree.Group.UUID);
+                var groupUUID = PWDatabaseDataSource.Instance.PwDatabase.Tree.Group.UUID;
 
                 if (ShouldRedirectToSearch)
                 {
-                    _navigationService.UriFor<EntryGroupListViewModel>().WithParam(vm => vm.GroupId, encodedUUID).Navigate();
+                    _navigationService.UriFor<EntryGroupListViewModel>().WithParam(vm => vm.GroupId, groupUUID).Navigate();
                     _navigationService.UriFor<SearchResultsViewModel>().WithParam(vm => vm.QueryText, SearchText).Navigate();
                 }
                 else
                 {
-                    _navigationService.UriFor<EntryGroupListViewModel>().WithParam(vm => vm.GroupId, encodedUUID).Navigate();
+                    _navigationService.UriFor<EntryGroupListViewModel>().WithParam(vm => vm.GroupId, groupUUID).Navigate();
                 }
             }
             catch (SecurityException se)

@@ -31,7 +31,7 @@ namespace MetroPass.UI.ViewModels
                 if (value is PwGroup)
                 {
                     ShowAppBar = false;
-                    var encodedUUID = WebUtility.UrlEncode(value.UUID);
+                    var encodedUUID =value.UUID;
                     _navigationService.UriFor<EntryGroupListViewModel>().WithParam(vm => vm.GroupId, encodedUUID).Navigate();
                 }
                 else if (value != null)
@@ -68,7 +68,7 @@ namespace MetroPass.UI.ViewModels
 
         public void EditEntry()
         {
-            var encodedUUID = WebUtility.UrlEncode(SelectedPasswordItem.UUID);
+            var encodedUUID = SelectedPasswordItem.UUID;
             _navigationService.UriFor<EntryEditViewModel>().WithParam(vm => vm.EntryID, encodedUUID).Navigate();
         }
 
