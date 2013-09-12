@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Net;
 using Caliburn.Micro;
 using MetroPass.UI.Services;
 using Metropass.Core.PCL.Model;

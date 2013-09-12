@@ -161,7 +161,7 @@ namespace MetroPass.UI.ViewModels
                 if (_dbTree.MetaData.RecycleBinEnabled && !PasswordIsInRecycleBin)
                 {
                     //Move the element to the recycle bin in the document
-                    var recycleBinGroupElement = _dbTree.FindGroupByUuid(_dbTree.MetaData.RecycleBinUUID);
+                    var recycleBinGroupElement = _dbTree.GetRecycleBin();
                     var clonedElement = new XElement(SelectedPasswordItem.Element);
                     recycleBinGroupElement.AddEntryToDocument(new PwEntry((clonedElement), recycleBinGroupElement));
 
@@ -208,7 +208,7 @@ namespace MetroPass.UI.ViewModels
                 if (_dbTree.MetaData.RecycleBinEnabled)
                 {
                     //Move the folder to the recycle bin in the document
-                    var recycleBinGroupElement = _dbTree.FindGroupByUuid(_dbTree.MetaData.RecycleBinUUID);
+                    var recycleBinGroupElement = _dbTree.GetRecycleBin();
                     var clonedElement = new XElement(Root.Element);
                     recycleBinGroupElement.AddGroupToDocument(new PwGroup(clonedElement));
                 }
