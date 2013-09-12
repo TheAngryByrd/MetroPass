@@ -255,7 +255,8 @@ namespace MetroPass.UI.ViewModels
             if (_dbTree.MetaData.RecycleBinEnabled) {
                 try
                 {
-                    var recycleBinGroupElement = _dbTree.FindGroupByUuid(_dbTree.MetaData.RecycleBinUUID);
+
+                    var recycleBinGroupElement = _dbTree.GetRecycleBin();
                 }
                 catch (Exception)
                 {

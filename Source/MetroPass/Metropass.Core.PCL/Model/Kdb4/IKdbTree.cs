@@ -9,6 +9,7 @@ namespace Metropass.Core.PCL.Model.Kdb4
          PwGroup Group { get; set; }
          PwEntry FindEntryByUuid(string entryId);
          PwGroup FindGroupByUuid(string groupId);
-         PwGroup GetRecycleBin(string groupId);
+
+         PwGroup GetRecycleBin();
     }
 }
