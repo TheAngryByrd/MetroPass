@@ -18,6 +18,32 @@ namespace Metropass.Core.PCL.Model.Kdb4
 
         public Kdb4TreeMetaData MetaData { get; set; }
 
+        public PwGroup GetRecycleBin()
+        {
+            PwGroup retVal = null;
+            bool recycleBinExists = true;
+            try
+            {
+                var group = FindGroupByUuid(MetaData.RecycleBinUUID);
+            }
+           catch(Exception)
+            {
+                recycleBinExists = false;
+            }
+
+            if (recycleBinExists)
+                return retVal;
+
+            retVal = PwGroup.GetNewGroupElement();
+            retVal.Name = "Recycle Bin";
+
+            Group.AddGroupToDocument(retVal);            
+            MetaData.RecycleBinUUID = retVal.UUID;
+
+            return retVal;
+            
+        }
+
         public PwEntry FindEntryByUuid(string entryId)
         {
             var source = new List<PwGroup>() { Group };
