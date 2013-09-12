@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Runtime.CompilerServices;
 using System.Xml.Linq;
 
@@ -11,22 +11,24 @@ namespace Metropass.Core.PCL.Model
     {
         private readonly PwGroup _parentGroup;
 
+        private string[] knownFields = new[]
+        {
+            "Title","UserName","Password","URL","Notes"
+        };
+
+        private IDictionary<string, Field> _fields;
+
         public PwEntry(XElement element, PwGroup parentGroup)
         {
             _parentGroup = parentGroup;
             Element = element;
 
-            CustomFields = Meta.ToDictionary(m => m.Element("Key"), m=> m.Element("Value"));
-
-            try
-            {
-                CustomFields.Remove(GetElementKey("title"));
-                CustomFields.Remove(GetElementKey("username"));
-                CustomFields.Remove(GetElementKey("password"));
-                CustomFields.Remove(GetElementKey("url"));
-                CustomFields.Remove(GetElementKey("notes"));
-            }
-            catch { }
+            SetupFields();       
+        }
+  
+        private void SetupFields()
+        {
+            _fields = Meta.ToDictionary(m => m.Element("Key").Value, m => new Field(m));
         }
 
         public IEnumerable<XElement> Meta
@@ -97,10 +99,85 @@ namespace Metropass.Core.PCL.Model
             set { GetElementValue().Value = value; }
         }
 
-        public IDictionary<XElement, XElement> CustomFields
+        public IEnumerable<Field> CustomFields
         {
-            get;
-            set;
+            get
+            {
+                return _fields.Keys.Except(knownFields).
+                    Select(key => _fields[key]).
+                    ToList();
+            }
+        }
+
+        public void AddCustomFields(IEnumerable<Field> customFields)
+        {
+            var parents = Meta.Elements("Key").Where(e => !knownFields.Contains(e.Value)).Select(e => e.Parent);
+            parents.Remove();
+            foreach(var item in customFields)
+            {
+                Element.Add(item.Element);
+            }
+            SetupFields();
+        }
+
+        public static PwEntry New(PwGroup parent)     
+        {
+            var entryTemplate = @"
+                <Entry>
+                    <UUID>{0}</UUID>
+                    <IconID>0</IconID>
+                    <Times>
+                        <LastModificationTime>{1}</LastModificationTime>
+                        <CreationTime>{1}</CreationTime>
+                        <LastAccessTime>{1}</LastAccessTime>
+                        <ExpiryTime>{1}</ExpiryTime>
+                        <LocationChanged>{1}</LocationChanged>
+                        <Expires>False</Expires>
+                        <UsageCount>0</UsageCount>
+                    </Times>
+                    <String>
+                        <Key>Title</Key>
+                        <Value>{2}</Value>
+                    </String>
+                    <String>
+                        <Key>UserName</Key>
+                        <Value>{3}</Value>
+                    </String>
+                    <String>
+                        <Key>Password</Key>
+                        <Value Protected=""True"">{4}</Value>
+                    </String>
+                    <String>
+                        <Key>URL</Key>
+                        <Value>{5}</Value>
+                    </String>
+                    <String>
+                        <Key>Notes</Key>
+                        <Value>{6}</Value>
+                    </String>
+                </Entry>
+            ";
+            var uuid = new PwUuid(true);
+
+            entryTemplate = String.Format(entryTemplate, 
+                Convert.ToBase64String(uuid.UuidBytes), 
+                DateTime.Now.ToFormattedUtcTime(), 
+                Sanitize("Title"), 
+                Sanitize("Username"), 
+                Sanitize("Password") ,
+                Sanitize("Url") , 
+                Sanitize("Notes"));
+
+            var element = XElement.Parse(entryTemplate);
+            var pwEntry = new PwEntry(element,parent);
+            parent.AddEntryToDocument(pwEntry);
+           
+            return pwEntry;
+        }
+
+        private static string Sanitize(string text)
+        {
+            return WebUtility.HtmlEncode(WebUtility.HtmlDecode(text));
         }
     }
 }

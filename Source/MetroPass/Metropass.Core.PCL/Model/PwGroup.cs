@@ -1,14 +1,33 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Xml.Linq;
 
 namespace Metropass.Core.PCL.Model
 {
-    public class PwGroup : Metropass.Core.PCL.Model.PwCommon, Metropass.Core.PCL.Model.IGroup
-    { 
-        private readonly IEnumerable<XElement> _entries;
-        private readonly IEnumerable<XElement> _subGroups;
+    public class PwGroup : PwCommon, IGroup
+    {
+        //private ObservableCollection<PwEntry> _entries
+        //{
+        //    get
+        //    {
+        //        return _entriesLazy.Value;
+        //    }
+        //}
+        //private ObservableCollection<PwGroup> _subGroups
+        //{
+        //    get
+        //    {
+        //        return _subGroupsLazy.Value;
+        //    }
+        //}
+        private readonly Lazy<ObservableCollection<PwEntry>> _entriesLazy;
+        private readonly Lazy<ObservableCollection<PwGroup>> _subGroupsLazy;        
+        
+        private readonly ObservableCollection<PwEntry> _entries;
+        private readonly ObservableCollection<PwGroup> _subGroups;
 
         public PwGroup(XElement element) : this(element, true) { }
 
@@ -17,20 +36,43 @@ namespace Metropass.Core.PCL.Model
             Element = element;
             if (element != null)
             {
-                _entries = element.Elements("Entry");
-
+                //_entriesLazy = new Lazy<ObservableCollection<PwEntry>>(() => IndexEntries(element));
+                _entries = IndexEntries(element);
+               
                 if (includeSubGroups)
                 {
-                    _subGroups = element.Elements("Group");
+                    _subGroups = IndexGroups(element);
+                    //_subGroupsLazy = new Lazy<ObservableCollection<PwGroup>>(() =>IndexGroups(element));
                 }
                 else
                 {
-                    _subGroups = new XElement[0];
+                    _subGroups = new ObservableCollection<PwGroup>();
+                    //_subGroupsLazy = new Lazy<ObservableCollection<PwGroup>>(() => new ObservableCollection<PwGroup>());
                 }
-                _subGroupsAndEntries = new ObservableCollection<Metropass.Core.PCL.Model.PwCommon>(this.SubGroups.Union(this.Entries.Cast<PwCommon>()));
+
+                _subGroupsAndEntries = GetSubGroupsAndEntries();
             }
     
         }
+
+        private ObservableCollection<PwEntry> IndexEntries(XElement element)
+        {
+            return new ObservableCollection<PwEntry>(element.Elements("Entry").Select(entry => new PwEntry(entry, this)));
+        }
+
+        private ObservableCollection<PwGroup> IndexGroups(XElement element)
+        {
+            return new ObservableCollection<PwGroup>(element.Elements("Group").Select(@group => new PwGroup(@group)));
+        }
+
+        private  ObservableCollection<PwCommon> GetSubGroupsAndEntries()
+        {
+            var x = new List<PwCommon>();
+            x.AddRange(SubGroups);
+            x.AddRange(Entries);
+            return new ObservableCollection<PwCommon>(x);          
+        }
+        
 
         public string Name 
         { 
@@ -46,8 +88,8 @@ namespace Metropass.Core.PCL.Model
 
         public IEnumerable<PwEntry> Entries
         {
-            get { 
-                return _entries.Select(e => new PwEntry(e, this)).OrderBy(e => e.Title);
+            get {
+                return _entries.OrderBy(a => a.Title);
             }
         }
 
@@ -56,31 +98,23 @@ namespace Metropass.Core.PCL.Model
             get { return _entries.Count(); }
         }
 
+
         public IEnumerable<PwGroup> SubGroups
         {
             get {
-                int i = 0, subGroupCount = _subGroups.Count();
-                return _subGroups
-                    .OrderBy(e => e.Element("Name").Value)
-                    .Select(e =>
-                        new
-                        {
-                            Group = new PwGroup(e),
-                            SortKey = e.Element("Name").Value == "Backup" ? ++subGroupCount : e.Element("Name").Value == "Recycle Bin" ? ++subGroupCount : ++i
-                        })
-                    .OrderBy(g => g.SortKey)
-                    .Select(g => g.Group);
+               return _subGroups;
             }
-        }
+        }  
+     
 
         public int SubGroupCount
         {
             get { return _subGroups.Count(); }
         }
 
-        private readonly ObservableCollection<Metropass.Core.PCL.Model.PwCommon> _subGroupsAndEntries;
+        private readonly ObservableCollection<PwCommon> _subGroupsAndEntries;
 
-        public ObservableCollection<Metropass.Core.PCL.Model.PwCommon> SubGroupsAndEntries
+        public ObservableCollection<PwCommon> SubGroupsAndEntries
         {
             get
             {
@@ -99,11 +133,13 @@ namespace Metropass.Core.PCL.Model
             {
                 Element.Add(entry.Element);
             }
+            _entries.Add(entry);
         }
 
         public void AddGroupToDocument(PwGroup group)
         {
             Element.Add(group.Element);
+            _subGroups.Add(group);
         }
 
         public static PwGroup NullGroup
@@ -118,6 +154,39 @@ namespace Metropass.Core.PCL.Model
 
                 return new PwGroup(emptyGroup, false);
             }
+        }
+
+        public static PwGroup GetNewGroupElement()
+        {
+            var groupTemplate = @"
+                <Group>
+                    <UUID>{0}</UUID>
+                    <Name>{2}</Name>
+                    <IconID>0</IconID>
+                    <Times>
+                        <LastModificationTime>{1}</LastModificationTime>
+                        <CreationTime>{1}</CreationTime>
+                        <LastAccessTime>{1}</LastAccessTime>
+                        <ExpiryTime>{1}</ExpiryTime>
+                        <LocationChanged>{1}</LocationChanged>
+                        <Expires>False</Expires>
+                        <UsageCount>0</UsageCount>
+                    </Times>
+                    <IsExpanded>True</IsExpanded>
+                    <DefaultAutoTypeSequence />
+                    <EnableAutoType>null</EnableAutoType>
+                    <EnableSearching>null</EnableSearching>
+                </Group>
+            ";
+            var uuid = new PwUuid(true);
+            groupTemplate = String.Format(
+                groupTemplate, 
+                Convert.ToBase64String(uuid.UuidBytes), 
+                DateTime.Now.ToFormattedUtcTime(),
+                string.Empty);
+
+            var element = XElement.Parse(groupTemplate);
+            return new PwGroup(element);
         }
     }
 }

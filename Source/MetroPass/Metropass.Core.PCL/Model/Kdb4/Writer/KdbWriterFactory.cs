@@ -7,7 +7,7 @@ namespace Metropass.Core.PCL.Model.Kdb4.Writer
 {
     public class KdbWriterFactory
     {
-        private readonly IEncryptionEngine _databaseEncryptor;
+           private readonly IEncryptionEngine _databaseEncryptor;
 
         private readonly IEncryptionEngine _keyEncryptor;
 
@@ -29,19 +29,17 @@ namespace Metropass.Core.PCL.Model.Kdb4.Writer
             {
 
                 return new Kdb4Writer(new Kdb4HeaderWriter(),
-                    _databaseEncryptor,
-                    _keyEncryptor,
-                    _hasher,
+                    _databaseEncryptor, 
+                    _keyEncryptor, 
+                    _hasher, 
                     _gzipFactory);
-
+              
             }
             else
             {
                 throw new NotSupportedException();
             }
-
+      
         }
     }
 }
-
-

@@ -4,7 +4,10 @@ using System.Threading.Tasks;
 using Metropass.Core.PCL.Cipher;
 using Metropass.Core.PCL.Encryption;
 using Metropass.Core.PCL.Hashing;
+using Metropass.Core.PCL.Model;
+using Metropass.Core.PCL.Model.Kdb4;
 using Metropass.Core.PCL.Model.Kdb4.Keys;
+using Metropass.Core.PCL.Model.Kdb4.Writer;
 using Metropass.Core.PCL.Model.Kdb4.Reader;
 using Metropass.Core.PCL.Compression;
 using PCLStorage;
@@ -65,7 +68,16 @@ namespace Metropass.Core.PCL.Model.Kdb4.Writer
 
             var persister = new Kdb4Persister(new CryptoRandomStream(CrsAlgorithm.Salsa20, kdb4File.pbProtectedStreamKey, _hasher));
             var data = persister.Persist(databaseData.Tree, hashOfHeader);
-            await configuredStream.WriteAsync(data, 0, data.Length);
+            try
+            {
+                await Task.Run(() =>
+                    configuredStream.Write(data, 0, data.Length));
+            }
+            catch(Exception e)
+            {
+                
+            }
+         
 
             configuredStream.Dispose();
             var compressed = outStream.ToArray();
@@ -76,13 +88,15 @@ namespace Metropass.Core.PCL.Model.Kdb4.Writer
                 databaseData.MasterKey, 
                 databaseData.MasterKey.PercentComplete);
             var aesKey = await keyGenerator.GenerateHashedKeyAsync(kdb4File.pbMasterSeed, kdb4File.pbTransformSeed, (int)databaseData.KeyEncryptionRounds);
-
-            var encrypted = await EncryptDatabase(compressed, aesKey);
+            var encrypted = await _databaseEncryptor.Encrypt(compressed, aesKey, kdb4File.pbEncryptionIV, 1, new NullableProgress<double>());
+            
             writer.Write(encrypted);
 
             var streamToWriteToFile = writer.BaseStream;
             streamToWriteToFile.Position = 0;
+
             var bytesToWrite = streamToWriteToFile.ToArray();
+
 
             var databaseStream = await databaseFile.OpenAsync(FileAccess.ReadAndWrite);
             databaseStream.SetLength(0);
@@ -117,10 +131,5 @@ namespace Metropass.Core.PCL.Model.Kdb4.Writer
             return inputStream;
         }
 
-        public async Task<byte[]> EncryptDatabase(byte[] source, byte[] aesKey)
-        {
-            return await _databaseEncryptor.Encrypt(source, aesKey, kdb4File.pbEncryptionIV, 1, new NullableProgress<double>());
-            //var symKeyProvider = SymmetricKeyAlgorithmProvider.OpenAlgorithm(SymmetricAlgorithmNames.AesCbcPkcs7);
-        }
     }
 }

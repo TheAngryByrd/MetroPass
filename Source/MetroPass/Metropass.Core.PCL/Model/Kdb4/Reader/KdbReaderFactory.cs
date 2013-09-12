@@ -31,27 +31,24 @@ namespace Metropass.Core.PCL.Model.Kdb4.Reader
         {
             return LoadAsync(database, userKeys, new NullableProgress<double>());
         }
-
+ 
         public async Task<PwDatabase> LoadAsync(Stream kdbDatabase, IList<IUserKey> userKeys, IProgress<double> percentComplete)
         {
-
+        
             var versionInfo = ReadVersionInfo(kdbDatabase);
             IKdbReader reader = null;
             var compositeKey = new CompositeKey(userKeys, percentComplete);
             var pwDatabase = new PwDatabase(compositeKey);
-
+          
             if (IsKdb4(versionInfo))
             {
-                var kdb4File = new Kdb4File(pwDatabase);
+                  var kdb4File = new Kdb4File(pwDatabase);
 
-                reader = new Kdb4Reader(kdb4File,
-                    _databaseDecryptor,
-                    _keyDecryptor,
-                    _hasher,
-                    _gzipFactory);
-
-
-
+                  reader = new Kdb4Reader(kdb4File,
+                      _databaseDecryptor, 
+                      _keyDecryptor,
+                      _hasher,
+                      _gzipFactory);     
             }
             else
             {
@@ -64,15 +61,16 @@ namespace Metropass.Core.PCL.Model.Kdb4.Reader
 
         private static bool IsKdb4(VersionInfo versionInfo)
         {
-            return versionInfo.FileSignature1 == KdbConstants.FileSignature1 && versionInfo.FileSignature2 == KdbConstants.FileSignature2;
+            return versionInfo.FileSignature1 == KdbConstants.FileSignature1 
+                && versionInfo.FileSignature2 == KdbConstants.FileSignature2;
         }
 
         public VersionInfo ReadVersionInfo(Stream kdbReader)
         {
             var versionInfo = new VersionInfo();
             var readerBytes = new byte[4];
-
-
+            
+            
 
             kdbReader.ReadBytes(readerBytes);
             versionInfo.FileSignature1 = BitConverter.ToUInt32(readerBytes, 0);
@@ -87,9 +85,9 @@ namespace Metropass.Core.PCL.Model.Kdb4.Reader
 
     public class VersionInfo
     {
-        public UInt32 FileSignature1 { get; set; }
-        public UInt32 FileSignature2 { get; set; }
-        public UInt32 Version { get; set; }
+        public UInt32 FileSignature1 {get;set;}
+        public UInt32 FileSignature2 {get;set;}
+        public UInt32 Version {get;set;}
 
     }
 }

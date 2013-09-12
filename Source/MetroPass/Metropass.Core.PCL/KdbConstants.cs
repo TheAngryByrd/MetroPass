@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Metropass.Core.PCL
+﻿namespace Metropass.Core.PCL
 {
     public class KdbConstants
     {
