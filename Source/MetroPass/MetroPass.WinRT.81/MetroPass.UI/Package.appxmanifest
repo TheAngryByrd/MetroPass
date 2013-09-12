@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest">
+  <Identity Name="49783TheAngryByrd.MetroPass" Publisher="CN=0177370B-9B3C-4000-B690-0EAE70085CFD" Version="1.1.6.17" />
+  <Properties>
+    <DisplayName>MetroPass</DisplayName>
+    <PublisherDisplayName>TheAngryByrd</PublisherDisplayName>
+    <Logo>Assets\StoreLogo.png</Logo>
+  </Properties>
+  <Prerequisites>
+    <OSMinVersion>6.3.0</OSMinVersion>
+    <OSMaxVersionTested>6.3.0</OSMaxVersionTested>
+  </Prerequisites>
+  <Resources>
+    <Resource Language="x-generate" />
+  </Resources>
+  <Applications>
+    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="MetroPass.UI.App">
+      <Extensions>
+        <Extension Category="windows.search" />
+        <Extension Category="windows.fileTypeAssociation" Executable="MetroPass.UI.exe" EntryPoint="MetroPass.UI.App">
+          <FileTypeAssociation Name=".kdbx">
+            <DisplayName>Keepass 2.x</DisplayName>
+            <Logo>Assets\Logo.png</Logo>
+            <SupportedFileTypes>
+              <FileType>.kdbx</FileType>
+            </SupportedFileTypes>
+          </FileTypeAssociation>
+        </Extension>
+      </Extensions>
+      <m2:VisualElements DisplayName="MetroPass" Description="MetroPass" BackgroundColor="#006E87" ForegroundText="light" ToastCapable="true" Square150x150Logo="Assets\Logo.png" Square30x30Logo="Assets\SmallLogo.png">
+        <m2:DefaultTile Wide310x150Logo="Assets\WideLogo.png">
+          <m2:ShowNameOnTiles>
+            <m2:ShowOn Tile="square150x150Logo" />
+            <m2:ShowOn Tile="wide310x150Logo" />
+          </m2:ShowNameOnTiles>
+        </m2:DefaultTile>
+        <m2:InitialRotationPreference>
+          <m2:Rotation Preference="landscape" />
+          <m2:Rotation Preference="landscapeFlipped" />
+        </m2:InitialRotationPreference>
+        <m2:SplashScreen BackgroundColor="#006E87" Image="Assets\SplashScreen.png" />
+      </m2:VisualElements>
+    </Application>
+  </Applications>
+  <Capabilities>
+    <Capability Name="internetClient" />
+  </Capabilities>
+</Package>

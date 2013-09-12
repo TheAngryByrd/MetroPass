@@ -1,0 +1,29 @@
+﻿<caliburn:CaliburnApplication
+    x:Class="MetroPass.UI.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MetroPass.UI"
+    xmlns:common="using:MetroPass.UI.Common"
+    xmlns:converters="using:MetroPass.UI.Common.Converters"
+    xmlns:caliburn="using:Caliburn.Micro"
+    >
+
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <!-- 
+                    Styles that define common aspects of the platform look and feel
+                    Required by Visual Studio project and item templates
+                 -->
+                <ResourceDictionary Source="Common/StandardStyles.xaml"/>
+                <ResourceDictionary Source="Common/Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <!-- Application-specific resources -->
+            <x:String x:Key="AppName">MetroPass</x:String>
+            <caliburn:BooleanToVisibilityConverter x:Key="BoolVisibilityConverter" />
+            <converters:StringFormatConverter x:Key="StringFormatConverter"/>
+            <converters:HasValueToVisibilityCoverter x:Key="HasValueToVisibilityCoverter"/>
+        </ResourceDictionary>
+    </Application.Resources>
+</caliburn:CaliburnApplication>
