@@ -315,7 +315,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Metropass.Core.PCL\Metropass.Core.PCL.csproj">
+    <ProjectReference Include="..\..\MetroPass.Core\Metropass.Core.PCL\Metropass.Core.PCL.csproj">
       <Project>{40AC1A3B-9796-4F90-8903-108C86CFBD15}</Project>
       <Name>Metropass.Core.PCL</Name>
     </ProjectReference>
