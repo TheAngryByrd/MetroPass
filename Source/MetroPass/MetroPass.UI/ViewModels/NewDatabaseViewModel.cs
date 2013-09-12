@@ -154,7 +154,7 @@ namespace MetroPass.UI.ViewModels
       <ProtectURL>False</ProtectURL>
       <ProtectNotes>False</ProtectNotes>
     </MemoryProtection>
-    <RecycleBinEnabled>True</RecycleBinEnabled>
+    <RecycleBinEnabled>False</RecycleBinEnabled>
     <RecycleBinUUID>AAAAAAAAAAAAAAAAAAAAAA==</RecycleBinUUID>
     <RecycleBinChanged>2012-10-26T01:36:46Z</RecycleBinChanged>
     <EntryTemplatesGroup>AAAAAAAAAAAAAAAAAAAAAA==</EntryTemplatesGroup>

@@ -18,6 +18,12 @@ namespace Metropass.Core.PCL.Model.Kdb4
 
         public Kdb4TreeMetaData MetaData { get; set; }
 
+        public PwGroup GetRecycleBin(string groupId)
+        {
+            // TODO: Implement this method
+            throw new NotImplementedException();
+        }
+
         public PwEntry FindEntryByUuid(string entryId)
         {
             var source = new List<PwGroup>() { Group };
