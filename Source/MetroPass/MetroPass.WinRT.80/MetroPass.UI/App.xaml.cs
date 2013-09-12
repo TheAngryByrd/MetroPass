@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Caliburn.Micro;
-using MetroPass.Core.Security;
 using MetroPass.UI.Common;
 using MetroPass.UI.DataModel;
 using MetroPass.UI.Services;
