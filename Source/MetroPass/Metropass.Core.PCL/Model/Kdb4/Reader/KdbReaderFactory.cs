@@ -2,12 +2,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Metropass.Core.PCL.Encryption;
-using Metropass.Core.PCL.Model;
-using Metropass.Core.PCL.Model.Kdb4;
 using Metropass.Core.PCL.Model.Kdb4.Keys;
-using Metropass.Core.PCL;
 using System.IO;
-using Metropass.Core.PCL.Model.Kdb4.Reader;
 using Metropass.Core.PCL.Hashing;
 using Metropass.Core.PCL.Compression;
 
@@ -53,9 +49,6 @@ namespace Metropass.Core.PCL.Model.Kdb4.Reader
                       _keyDecryptor,
                       _hasher,
                       _gzipFactory);     
-                
-       
-               
             }
             else
             {
@@ -68,7 +61,8 @@ namespace Metropass.Core.PCL.Model.Kdb4.Reader
 
         private static bool IsKdb4(VersionInfo versionInfo)
         {
-            return versionInfo.FileSignature1 == KdbConstants.FileSignature1 && versionInfo.FileSignature2 == KdbConstants.FileSignature2;
+            return versionInfo.FileSignature1 == KdbConstants.FileSignature1 
+                && versionInfo.FileSignature2 == KdbConstants.FileSignature2;
         }
 
         public VersionInfo ReadVersionInfo(Stream kdbReader)

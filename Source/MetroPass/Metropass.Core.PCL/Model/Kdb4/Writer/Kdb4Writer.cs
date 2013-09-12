@@ -68,7 +68,16 @@ namespace Metropass.Core.PCL.Model.Kdb4.Writer
 
             var persister = new Kdb4Persister(new CryptoRandomStream(CrsAlgorithm.Salsa20, kdb4File.pbProtectedStreamKey, _hasher));
             var data = persister.Persist(databaseData.Tree, hashOfHeader);
-            await configuredStream.WriteAsync(data, 0, data.Length);
+            try
+            {
+                await Task.Run(() =>
+                    configuredStream.Write(data, 0, data.Length));
+            }
+            catch(Exception e)
+            {
+                
+            }
+         
 
             configuredStream.Dispose();
             var compressed = outStream.ToArray();

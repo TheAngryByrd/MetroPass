@@ -49,8 +49,7 @@ namespace MetroPass.UI.ViewModels
             {
                 _groupId = value;
                 try {
-                    var groupElement = _dbTree.FindGroupByUuid(value);
-                    Root = new PwGroup(groupElement);
+                    Root = _dbTree.FindGroupByUuid(value);                    
                 }
                 catch (GroupNotFoundException) {
                     Root = PwGroup.NullGroup;
@@ -165,7 +164,7 @@ namespace MetroPass.UI.ViewModels
                     //Move the element to the recycle bin in the document
                     var recycleBinGroupElement = _dbTree.FindGroupByUuid(_dbTree.MetaData.RecycleBinUUID);
                     var clonedElement = new XElement(SelectedPasswordItem.Element);
-                    recycleBinGroupElement.Add(clonedElement);
+                    recycleBinGroupElement.AddEntryToDocument(new PwEntry((clonedElement),recycleBinGroupElement));
 
                     var recycleBinGroup = TopLevelGroups.FirstOrDefault(g => g.UUID == _dbTree.MetaData.RecycleBinUUID);
                     if (recycleBinGroup != null)
@@ -185,7 +184,7 @@ namespace MetroPass.UI.ViewModels
         {
             var folder = _dbTree.FindGroupByUuid(UUID);
             var clonedElement = new XElement(selectedItem.Element);
-            folder.Add(clonedElement);
+            folder.AddEntryToDocument(new PwEntry((clonedElement), folder));
             var UIFolder = TopLevelGroups.FirstOrDefault(g => g.UUID == UUID);
             if (UIFolder != null)
             {
@@ -212,7 +211,7 @@ namespace MetroPass.UI.ViewModels
                     //Move the folder to the recycle bin in the document
                     var recycleBinGroupElement = _dbTree.FindGroupByUuid(_dbTree.MetaData.RecycleBinUUID);
                     var clonedElement = new XElement(Root.Element);
-                    recycleBinGroupElement.Add(clonedElement);
+                    recycleBinGroupElement.AddGroupToDocument(new PwGroup(clonedElement));
                 }
                 Root.Element.Remove();
                 await PWDatabaseDataSource.Instance.SavePwDatabase();

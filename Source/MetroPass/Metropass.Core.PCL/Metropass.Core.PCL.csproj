@@ -34,6 +34,15 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DebugAnyCPU|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\DebugAnyCPU\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .NET Framework is automatically included -->
     <None Include="packages.config" />
@@ -44,6 +53,7 @@
     <Compile Include="Compression\IGZipStreamFactory.cs" />
     <Compile Include="Encryption\EncryptionEngineBase.cs" />
     <Compile Include="Exceptions\GroupNotFoundException.cs" />
+    <Compile Include="GenerateDatabase.cs" />
     <Compile Include="Hashing\HashedBlockStream.cs" />
     <Compile Include="Hashing\ICanSHA256Hash.cs" />
     <Compile Include="Helpers\DateTimeExtensions.cs" />
@@ -53,6 +63,8 @@
     <Compile Include="Helpers\StringExtensions.cs" />
     <Compile Include="Helpers\StrUtil.cs" />
     <Compile Include="Helpers\TaskHelper.cs" />
+    <Compile Include="LazyAsync.cs" />
+    <Compile Include="Model\Field.cs" />
     <Compile Include="Model\IGroup.cs" />
     <Compile Include="KdbConstants.cs" />
     <Compile Include="Helpers\MemUtil.cs" />
