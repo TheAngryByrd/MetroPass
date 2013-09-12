@@ -6,6 +6,12 @@ namespace MetroPass.UI.Tests.Mocks
     {
         public object Message { get; set; }
 
+        public bool HandlerExistsFor(Type messageType)
+        {
+            // TODO: Implement this method
+            throw new NotImplementedException();
+        }
+
         public void Subscribe(object instance)
         {
             // TODO: Implement this method

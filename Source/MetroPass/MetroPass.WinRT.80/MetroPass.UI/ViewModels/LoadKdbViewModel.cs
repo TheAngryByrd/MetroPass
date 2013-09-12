@@ -379,7 +379,7 @@ namespace MetroPass.UI.ViewModels
             {
                 await PWDatabaseDataSource.Instance.LoadPwDatabase(Database, userKeys, progress);
                 OpeningDatabase = false;
-                var encodedUUID = WebUtility.UrlEncode(PWDatabaseDataSource.Instance.PwDatabase.Tree.Group.UUID);
+                var encodedUUID =PWDatabaseDataSource.Instance.PwDatabase.Tree.Group.UUID;
 
                 if (ShouldRedirectToSearch)
                 {

@@ -121,7 +121,7 @@ namespace MetroPass.UI.ViewModels
                     PWDatabaseDataSource.Instance.PwDatabase = pwDatabase;
                     PWDatabaseDataSource.Instance.StorageFile = storageFile;
                     await PWDatabaseDataSource.Instance.SavePwDatabase();
-                    var encodedUUID = WebUtility.UrlEncode(PWDatabaseDataSource.Instance.PwDatabase.Tree.Group.UUID);
+                    var encodedUUID = PWDatabaseDataSource.Instance.PwDatabase.Tree.Group.UUID;
                     _navigationService.UriFor<EntryGroupListViewModel>().WithParam(vm => vm.GroupId, encodedUUID).Navigate();
                 }
             }
