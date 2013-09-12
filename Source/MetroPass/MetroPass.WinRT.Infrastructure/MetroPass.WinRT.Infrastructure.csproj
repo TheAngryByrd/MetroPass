@@ -124,8 +124,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="WinRTBouncyCastle">
-      <HintPath>..\packages\WinRTBouncyCastle.0.1.0\lib\windows8\WinRTBouncyCastle.dll</HintPath>
+    <Reference Include="WinRTBouncyCastle, Version=0.1.1.1, Culture=neutral, PublicKeyToken=7e600c1efa0d4230, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\WinRTBouncyCastle.0.1.1.1\lib\windows8\WinRTBouncyCastle.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

@@ -129,15 +129,16 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="WinRTBouncyCastle">
-      <HintPath>..\packages\WinRTBouncyCastle.0.1.0\lib\windows8\WinRTBouncyCastle.dll</HintPath>
+    <Folder Include="Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="WinRTBouncyCastle, Version=0.1.1.1, Culture=neutral, PublicKeyToken=7e600c1efa0d4230, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\WinRTBouncyCastle.0.1.1.1\lib\windows8\WinRTBouncyCastle.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Services\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
     <VisualStudioVersion>12.0</VisualStudioVersion>
