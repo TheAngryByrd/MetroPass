@@ -170,9 +170,9 @@
     <Compile Include="ViewModels\Interfaces\IDatabaseListViewModel.cs" />
     <Compile Include="Utils\ObservableEx.cs" />
     <Compile Include="ViewModels\OpenDatabaseViewModel.cs" />
-    <Compile Include="ViewModels\ReactiveCaliburn\ReactivePropertyChangedBase.cs" />
-    <Compile Include="ViewModels\ReactiveCaliburn\ReactiveScreen.cs" />
-    <Compile Include="ViewModels\ReactiveCaliburn\ReactiveViewAware.cs" />
+    <Compile Include="ReactiveCaliburn\ReactivePropertyChangedBase.cs" />
+    <Compile Include="ReactiveCaliburn\ReactiveScreen.cs" />
+    <Compile Include="ReactiveCaliburn\ReactiveViewAware.cs" />
     <Compile Include="ViewModels\SkydriveAccessViewModel.cs" />
     <Compile Include="ViewModels\BrowseCloudFilesViewModel.cs" />
     <Compile Include="Views\AddOrEditEntryView.xaml.cs">

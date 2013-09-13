@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Windows;
 using Caliburn.Micro;
 
-namespace MetroPass.WP8.UI.ViewModels.ReactiveCaliburn
+namespace ReactiveCaliburn
 {
     public class ReactiveViewAware : ReactivePropertyChangedBase, IViewAware
     {

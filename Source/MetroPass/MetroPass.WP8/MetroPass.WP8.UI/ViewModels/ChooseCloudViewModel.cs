@@ -1,13 +1,10 @@
 ﻿using Caliburn.Micro;
-using MetroPass.WP8.UI.ViewModels.ReactiveCaliburn;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Metropass.Core.PCL.Model;
 using Metropass.Core.PCL.Model.Kdb4.Keys;
 using Metropass.Core.PCL.Model.Kdb4.Reader;
+using ReactiveCaliburn;
 using ReactiveUI;
 using Metropass.Core.PCL;
 using Metropass.Core.PCL.Hashing;

@@ -4,7 +4,7 @@ using System.Windows;
 using Caliburn.Micro;
 using ReactiveUI;
 
-namespace MetroPass.WP8.UI.ViewModels.ReactiveCaliburn
+namespace ReactiveCaliburn
 {
     public class ReactiveScreen : ReactiveViewAware, Caliburn.Micro.IScreen, IChild
     {

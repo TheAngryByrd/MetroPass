@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MetroPass.WP8.UI.DataModel;
-using MetroPass.WP8.UI.ViewModels.ReactiveCaliburn;
 using MetroPass.WP8.UI.Utils;
-
 using Metropass.Core.PCL.Model;
+using ReactiveCaliburn;
 using ReactiveUI;
 using Caliburn.Micro;
 

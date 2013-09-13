@@ -2,12 +2,12 @@
 using DropNetRT;
 using MetroPass.WP8.UI.Services.Cloud;
 using MetroPass.WP8.UI.Utils;
-using MetroPass.WP8.UI.ViewModels.ReactiveCaliburn;
 using MetroPass.WP8.UI.Views;
 using Microsoft.Phone.Controls;
 using System;
 using System.Threading.Tasks;
 using System.Windows;
+using ReactiveCaliburn;
 
 namespace MetroPass.WP8.UI.ViewModels
 {

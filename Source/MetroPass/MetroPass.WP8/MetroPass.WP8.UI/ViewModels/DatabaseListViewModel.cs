@@ -4,7 +4,7 @@ using System.Linq;
 using Caliburn.Micro;
 using MetroPass.WP8.UI.DataModel;
 using MetroPass.WP8.UI.ViewModels.Interfaces;
-using MetroPass.WP8.UI.ViewModels.ReactiveCaliburn;
+using ReactiveCaliburn;
 using ReactiveUI;
 using MetroPass.WP8.UI.Utils;
 

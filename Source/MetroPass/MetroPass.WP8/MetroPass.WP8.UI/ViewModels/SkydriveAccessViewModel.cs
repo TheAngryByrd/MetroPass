@@ -1,9 +1,9 @@
 ﻿using System.Threading.Tasks;
 using MetroPass.WP8.UI.Services.Cloud;
-using MetroPass.WP8.UI.ViewModels.ReactiveCaliburn;
 using Microsoft.Live;
 using System;
 using System.Collections.Generic;
+using ReactiveCaliburn;
 using ReactiveUI;
 using MetroPass.WP8.UI.Utils;
 using Caliburn.Micro;

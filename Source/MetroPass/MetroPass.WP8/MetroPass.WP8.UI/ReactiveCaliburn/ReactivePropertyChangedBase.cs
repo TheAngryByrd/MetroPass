@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 using Caliburn.Micro;
 using ReactiveUI;
 
-namespace MetroPass.WP8.UI.ViewModels.ReactiveCaliburn
+namespace ReactiveCaliburn
 {
     public class ReactivePropertyChangedBase : ReactiveObject, INotifyPropertyChangedEx
     {
