@@ -85,7 +85,7 @@ namespace Metropass.Core.PCL.Model.Kdb4.Writer
                 databaseData.MasterKey, 
                 databaseData.MasterKey.PercentComplete);
             var aesKey = await keyGenerator.GenerateHashedKeyAsync(kdb4File.pbMasterSeed, kdb4File.pbTransformSeed, (int)databaseData.KeyEncryptionRounds);
-            var encrypted = await _databaseEncryptor.Encrypt(compressed, aesKey, kdb4File.pbEncryptionIV, 1, new NullableProgress<double>());
+            var encrypted = await _databaseEncryptor.Encrypt(compressed, aesKey, kdb4File.pbEncryptionIV);
             
             writer.Write(encrypted);
 

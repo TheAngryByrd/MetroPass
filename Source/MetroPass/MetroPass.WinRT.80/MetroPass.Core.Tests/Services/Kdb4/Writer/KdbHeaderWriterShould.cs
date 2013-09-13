@@ -59,7 +59,7 @@ namespace MetroPass.Core.Tests.Services.Kdb4.Writer
             var stream = dataWriter.BaseStream;
             stream.Position = 0;
             var factory = new KdbReaderFactory(
-                          new WinRTCrypto(CryptoAlgoritmType.AES_CBC_PKCS7),
+                          new WinRTCrypto(),
                           new MultiThreadedBouncyCastleCrypto(),
                           new SHA256HasherRT(),
                           new GZipFactoryRT());

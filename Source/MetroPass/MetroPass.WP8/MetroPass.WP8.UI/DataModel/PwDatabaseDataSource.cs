@@ -41,7 +41,7 @@ namespace MetroPass.WP8.UI.DataModel
         {
             StorageFile = pwDatabaseFile;
             var factory = new KdbReaderFactory(
-                new ManagedCrypto(CryptoAlgoritmType.AES_CBC_PKCS7),
+                new ManagedCrypto(),
                 new MultithreadedManagedCrypto(),
                 new SHA256HahserWP8(),
                 new GZipFactoryWP8());
@@ -55,7 +55,7 @@ namespace MetroPass.WP8.UI.DataModel
 
         public async Task SavePwDatabase()
         {
-            var factory = new KdbWriterFactory(new ManagedCrypto(CryptoAlgoritmType.AES_CBC_PKCS7),
+            var factory = new KdbWriterFactory(new ManagedCrypto(),
                       new MultithreadedManagedCrypto(),
                       new SHA256HahserWP8(),
                       new GZipFactoryWP8());

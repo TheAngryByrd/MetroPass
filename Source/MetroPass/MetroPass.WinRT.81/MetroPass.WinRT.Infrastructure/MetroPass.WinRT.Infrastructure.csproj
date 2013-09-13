@@ -119,9 +119,6 @@
     <Compile Include="..\..\MetroPass.WinRT.80\MetroPass.WinRT.Infrastructure\Encryption\BouncyCastleCrypto.cs">
       <Link>Encryption\BouncyCastleCrypto.cs</Link>
     </Compile>
-    <Compile Include="..\..\MetroPass.WinRT.80\MetroPass.WinRT.Infrastructure\Encryption\BouncyCastleCryptoBase.cs">
-      <Link>Encryption\BouncyCastleCryptoBase.cs</Link>
-    </Compile>
     <Compile Include="..\..\MetroPass.WinRT.80\MetroPass.WinRT.Infrastructure\Encryption\MultiThreadedBouncyCastleCrypto.cs">
       <Link>Encryption\MultiThreadedBouncyCastleCrypto.cs</Link>
     </Compile>

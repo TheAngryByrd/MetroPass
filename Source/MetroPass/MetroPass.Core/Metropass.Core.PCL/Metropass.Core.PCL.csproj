@@ -47,7 +47,8 @@
     <Compile Include="Cipher\CryptoRandomStream.cs" />
     <Compile Include="Cipher\Salsa20Cipher.cs" />
     <Compile Include="Compression\IGZipStreamFactory.cs" />
-    <Compile Include="Encryption\EncryptionEngineBase.cs" />
+    <Compile Include="Encryption\IEncryptionEngine.cs" />
+    <Compile Include="Encryption\IKeyTransformer.cs" />
     <Compile Include="Exceptions\GroupNotFoundException.cs" />
     <Compile Include="GenerateDatabase.cs" />
     <Compile Include="Hashing\HashedBlockStream.cs" />

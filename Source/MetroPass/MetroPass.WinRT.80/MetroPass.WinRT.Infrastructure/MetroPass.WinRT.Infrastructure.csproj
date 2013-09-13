@@ -111,7 +111,6 @@
     <Compile Include="BufferHelpers.cs" />
     <Compile Include="Compression\GZipFactoryRT.cs" />
     <Compile Include="Encryption\BouncyCastleCrypto.cs" />
-    <Compile Include="Encryption\BouncyCastleCryptoBase.cs" />
     <Compile Include="Encryption\MultiThreadedBouncyCastleCrypto.cs" />
     <Compile Include="Encryption\WinRTCrypto.cs" />
     <Compile Include="Hashing\SHA256HasherRT.cs" />

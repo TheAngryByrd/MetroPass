@@ -7,47 +7,45 @@ using System.Threading.Tasks;
 
 namespace MetroPass.WinRT.Infrastructure.Encryption
 {
-    public class BouncyCastleCrypto : BouncyCastleCryptoBase
-    {
-        public BouncyCastleCrypto(CryptoAlgoritmType algorithmType) : base(algorithmType)
+    public class BouncyCastleCrypto : IEncryptionEngine
+    {      
+
+        protected IBufferedCipher GetCipher(bool encrypt, byte[] key)
         {
+            IBufferedCipher cipher = null;
+
+            cipher = CipherUtilities.GetCipher("AES/CBC/PKCS7");                 
+           
+            cipher.Init(encrypt, new KeyParameter(key));
+
+            return cipher;
         }
 
         public CryptoAlgoritmType AlgorithmType { get; set; }
 
-        public async override Task<byte[]> Encrypt(byte[] data, byte[] key, byte[] iv, double rounds, IProgress<double> percentComplete)
+        public async Task<byte[]> Encrypt(byte[] data, byte[] key, byte[] iv)
         {
             IBufferedCipher cipher = GetCipher(true, key);
 
-            return await Process(data, rounds, percentComplete, cipher);
+            return await Process(data, cipher);
         }
 
-        public async override Task<byte[]> Decrypt(byte[] data, byte[] key, byte[] iv, double rounds, IProgress<double> percentComplete)
+        public async Task<byte[]> Decrypt(byte[] data, byte[] key, byte[] iv)
         {
             IBufferedCipher cipher = GetCipher(false, key);
 
 
-            return await Process(data, rounds, percentComplete, cipher);
+            return await Process(data, cipher);
         }
 
-        private Task<byte[]> Process(byte[] data, double rounds, IProgress<double> percentComplete, IBufferedCipher cipher)
+        private Task<byte[]> Process(byte[] data, IBufferedCipher cipher)
         {
 
             return Task.Run<byte[]>(() =>
             {
                 var byteCompositeKey = data;
-
-                for (var i = 0; i < rounds; ++i)
-                {
-                    if (i % 5000 == 0)
-                    {
-                        percentComplete.Report(i / rounds * 100);
-
-                    }
-                    byteCompositeKey = cipher.ProcessBytes(byteCompositeKey);
-
-                }
-                percentComplete.Report(100);
+            
+                byteCompositeKey = cipher.ProcessBytes(byteCompositeKey);  
 
                 return byteCompositeKey;
 

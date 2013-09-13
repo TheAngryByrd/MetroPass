@@ -1,30 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Security.Cryptography;
-using System.Text;
 using System.Threading.Tasks;
 using Metropass.Core.PCL.Encryption;
-using Org.BouncyCastle.Crypto;
 
 namespace MetroPass.WP8.Infrastructure.Cryptography
 {
-    public class ManagedCrypto : BouncyCastleCryptoBase
+    public class ManagedCrypto : IEncryptionEngine
     {
-
-        public ManagedCrypto(CryptoAlgoritmType AlgorithmType)
-            : base(AlgorithmType)
-        {
-
-        }
         public CryptoAlgoritmType AlgorithmType
         {
             get;
             set;
         }
 
-        public override Task<byte[]> Encrypt(byte[] data, byte[] key, byte[] iv, double rounds, IProgress<double> percentComplete) {
+        public Task<byte[]> Encrypt(byte[] data, byte[] key, byte[] iv) {
            return Task.Run(() =>
                {
                    var eas = new AesManaged
@@ -36,11 +25,10 @@ namespace MetroPass.WP8.Infrastructure.Cryptography
                    };
 
                    return eas.CreateEncryptor().TransformFinalBlock(data, 0, data.Length);
-
                });            
         }
 
-        public override Task<byte[]> Decrypt(byte[] data, byte[] key, byte[] iv, double rounds, IProgress<double> percentComplete)
+        public Task<byte[]> Decrypt(byte[] data, byte[] key, byte[] iv)
         {
              return Task.Run(() =>
                {
@@ -51,7 +39,6 @@ namespace MetroPass.WP8.Infrastructure.Cryptography
                        IV = iv                     
                        
                    };
-
                   return eas.CreateDecryptor().TransformFinalBlock(data, 0, data.Length);
                });         
         }

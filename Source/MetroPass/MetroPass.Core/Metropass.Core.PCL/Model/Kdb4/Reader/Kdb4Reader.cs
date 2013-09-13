@@ -76,7 +76,7 @@ namespace Metropass.Core.PCL.Model.Kdb4.Reader
             try
             {
                 _encryptionEngine.AlgorithmType = CryptoAlgoritmType.AES_CBC_PKCS7;
-                decryptedDatabase = await _encryptionEngine.Decrypt(source, aesKey, file.pbEncryptionIV, 1, new NullableProgress<double>());
+                decryptedDatabase = await _encryptionEngine.Decrypt(source, aesKey, file.pbEncryptionIV);
 
             }
             catch (Exception e)

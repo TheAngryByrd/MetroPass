@@ -16,7 +16,7 @@ namespace MetroPass.Core.Tests.Services
        [TestMethod]
        public void CanCreateKdb4Writer()
        {
-           KdbWriterFactory factory = new KdbWriterFactory(new WinRTCrypto(CryptoAlgoritmType.AES_CBC_PKCS7),
+           KdbWriterFactory factory = new KdbWriterFactory(new WinRTCrypto(),
                       new MultiThreadedBouncyCastleCrypto(),
                       new SHA256HasherRT(),
                       new GZipFactoryRT());
@@ -28,7 +28,7 @@ namespace MetroPass.Core.Tests.Services
        [TestMethod]
        public void CantCreateAnyOtherType()
        {
-           KdbWriterFactory factory = new KdbWriterFactory(new WinRTCrypto(CryptoAlgoritmType.AES_CBC_PKCS7),
+           KdbWriterFactory factory = new KdbWriterFactory(new WinRTCrypto(),
                       new MultiThreadedBouncyCastleCrypto(),
                       new SHA256HasherRT(),
                       new GZipFactoryRT());
