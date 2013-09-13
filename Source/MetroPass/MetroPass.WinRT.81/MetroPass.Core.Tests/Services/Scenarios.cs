@@ -42,7 +42,7 @@ namespace MetroPass.Core.Tests.Services
 
 
             var factory = new KdbReaderFactory(new WinRTCrypto(CryptoAlgoritmType.AES_CBC_PKCS7),
-                    new MultiThreadedBouncyCastleCrypto(CryptoAlgoritmType.AES_ECB),
+                    new MultiThreadedBouncyCastleCrypto(),
                     new SHA256HasherRT(),
                     new GZipFactoryRT());
 

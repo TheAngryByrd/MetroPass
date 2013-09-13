@@ -39,7 +39,7 @@ namespace MetroPass.UI.DataModel
             StorageFile = pwDatabaseFile;
             var factory = new KdbReaderFactory(
                 new WinRTCrypto(CryptoAlgoritmType.AES_CBC_PKCS7), 
-                new MultiThreadedBouncyCastleCrypto(CryptoAlgoritmType.AES_ECB), 
+                new MultiThreadedBouncyCastleCrypto(), 
                 new SHA256HasherRT(), 
                 new GZipFactoryRT());
 
@@ -52,7 +52,7 @@ namespace MetroPass.UI.DataModel
         public async Task SavePwDatabase()
         {
             var factory = new KdbWriterFactory(new WinRTCrypto(CryptoAlgoritmType.AES_CBC_PKCS7),
-                      new MultiThreadedBouncyCastleCrypto(CryptoAlgoritmType.AES_ECB),
+                      new MultiThreadedBouncyCastleCrypto(),
                       new SHA256HasherRT(),
                       new GZipFactoryRT());
 

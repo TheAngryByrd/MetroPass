@@ -3,24 +3,29 @@ using System.Linq;
 using Metropass.Core.PCL.Encryption;
 using Org.BouncyCastle.Crypto;
 using System.Threading.Tasks;
+using Org.BouncyCastle.Security;
+using Org.BouncyCastle.Crypto.Parameters;
 
 namespace MetroPass.WinRT.Infrastructure.Encryption
 {
-    public class MultiThreadedBouncyCastleCrypto : BouncyCastleCryptoBase
+    public class MultiThreadedBouncyCastleCrypto : IKeyTransformer
     {
-        public MultiThreadedBouncyCastleCrypto(CryptoAlgoritmType algorithmType) : base(algorithmType)           
-        {
-        }
 
-        public override async Task<byte[]> Encrypt(byte[] data, byte[] key, byte[] iv, double rounds, IProgress<double> percentComplete)
+        public async Task<byte[]> Transform(byte[] data, byte[] key, byte[] iv, double rounds, IProgress<double> percentComplete)
         {
             return await ProcessMultiThreaded(true, data, key, rounds, percentComplete);
         }
 
-        public override async Task<byte[]> Decrypt(byte[] data, byte[] key, byte[] iv, double rounds, IProgress<double> percentComplete)
+        private IBufferedCipher GetCipher(bool encrypt, byte[] key)
         {
-            return await ProcessMultiThreaded(false, data, key, rounds, percentComplete);
+            IBufferedCipher cipher = null;         
+            cipher = CipherUtilities.GetCipher("AES/ECB/NOPADDING");
+     
+            cipher.Init(encrypt, new KeyParameter(key));
+
+            return cipher;
         }
+
 
         private async Task<byte[]> ProcessMultiThreaded(bool encrypt, byte[] data, byte[] key, double rounds, IProgress<double> percentComplete)
         {

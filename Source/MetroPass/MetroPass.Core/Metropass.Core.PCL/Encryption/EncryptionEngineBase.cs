@@ -15,4 +15,9 @@ namespace Metropass.Core.PCL.Encryption
         AES_ECB,
         AES_CBC_PKCS7
     }
+
+    public interface IKeyTransformer
+    {
+        Task<byte[]> Transform(byte[] data, byte[] key, byte[] iv, double rounds, IProgress<double> percentComplete);
+    }
 }

@@ -85,7 +85,7 @@ namespace MetroPass.Core.Tests.Services
 
             var writer = new Kdb4Writer(new Kdb4HeaderWriter(),
                       new WinRTCrypto(CryptoAlgoritmType.AES_CBC_PKCS7),
-                      new MultiThreadedBouncyCastleCrypto(CryptoAlgoritmType.AES_ECB),
+                      new MultiThreadedBouncyCastleCrypto(),
                       new SHA256HasherRT(),
                       new GZipFactoryRT());
 

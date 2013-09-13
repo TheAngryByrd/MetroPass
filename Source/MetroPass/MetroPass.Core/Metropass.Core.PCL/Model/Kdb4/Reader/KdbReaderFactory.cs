@@ -12,18 +12,18 @@ namespace Metropass.Core.PCL.Model.Kdb4.Reader
     public class KdbReaderFactory
     {
         private readonly IEncryptionEngine _databaseDecryptor;
-
-        private readonly IEncryptionEngine _keyDecryptor;
-
+        private readonly IKeyTransformer _keyTransformer;
         private readonly ICanSHA256Hash _hasher;
-
         private readonly IGZipStreamFactory _gzipFactory;
 
-        public KdbReaderFactory(IEncryptionEngine databaseDecryptor, IEncryptionEngine keyDecryptor, ICanSHA256Hash hasher, IGZipStreamFactory gzipFactory)
+        public KdbReaderFactory(IEncryptionEngine databaseDecryptor,
+            IKeyTransformer keyTransformer, 
+            ICanSHA256Hash hasher, 
+            IGZipStreamFactory gzipFactory)
         {
             _gzipFactory = gzipFactory;
             _hasher = hasher;
-            _keyDecryptor = keyDecryptor;
+            _keyTransformer = keyTransformer;
             _databaseDecryptor = databaseDecryptor;
         }
 
@@ -45,8 +45,8 @@ namespace Metropass.Core.PCL.Model.Kdb4.Reader
                   var kdb4File = new Kdb4File(pwDatabase);
 
                   reader = new Kdb4Reader(kdb4File,
-                      _databaseDecryptor, 
-                      _keyDecryptor,
+                      _databaseDecryptor,
+                      _keyTransformer,
                       _hasher,
                       _gzipFactory);     
             }

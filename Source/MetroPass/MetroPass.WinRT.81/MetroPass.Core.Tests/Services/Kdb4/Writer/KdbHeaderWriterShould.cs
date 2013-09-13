@@ -8,18 +8,17 @@ namespace Metropass.Core.PCL.Model.Kdb4.Writer
     public class KdbWriterFactory
     {
         private readonly IEncryptionEngine _databaseEncryptor;
-
-        private readonly IEncryptionEngine _keyEncryptor;
-
+        private readonly IKeyTransformer _keyTransformer;
         private readonly ICanSHA256Hash _hasher;
-
         private readonly IGZipStreamFactory _gzipFactory;
-
-        public KdbWriterFactory(IEncryptionEngine databaseEncryptor, IEncryptionEngine keyEncryptor, ICanSHA256Hash hasher, IGZipStreamFactory gzipFactory)
+        public KdbWriterFactory(IEncryptionEngine databaseEncryptor, 
+            IKeyTransformer keyTransformer, 
+            ICanSHA256Hash hasher, 
+            IGZipStreamFactory gzipFactory)
         {
             _gzipFactory = gzipFactory;
             _hasher = hasher;
-            _keyEncryptor = keyEncryptor;
+            _keyTransformer = keyTransformer;
             _databaseEncryptor = databaseEncryptor;
         }
 
@@ -30,7 +29,7 @@ namespace Metropass.Core.PCL.Model.Kdb4.Writer
 
                 return new Kdb4Writer(new Kdb4HeaderWriter(),
                     _databaseEncryptor,
-                    _keyEncryptor,
+                    _keyTransformer,
                     _hasher,
                     _gzipFactory);
 

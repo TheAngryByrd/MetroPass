@@ -13,24 +13,21 @@ namespace Metropass.Core.PCL.Model.Kdb4.Reader
     public class Kdb4Reader : IKdbReader
     {
         private readonly ICanSHA256Hash _hasher;
-
         private readonly IEncryptionEngine _encryptionEngine;
-
-        private readonly IEncryptionEngine _keyDecryptor;
-
+        private readonly IKeyTransformer _keyTransformer;
         private readonly IGZipStreamFactory _gZipFactory;
 
         public Kdb4File file { get; set; }
 
         public Kdb4Reader(Kdb4File kdb4File, 
-            IEncryptionEngine databaseDecryptor, 
-            IEncryptionEngine keyDecryptor, 
+            IEncryptionEngine databaseDecryptor,
+            IKeyTransformer keyTransformer, 
             ICanSHA256Hash hasher,
             IGZipStreamFactory gZipFactory)
         {            
             file = kdb4File;
             _encryptionEngine = databaseDecryptor;
-            _keyDecryptor = keyDecryptor;
+            _keyTransformer = keyTransformer;
             _hasher = hasher;
             _gZipFactory = gZipFactory;
         }
@@ -104,7 +101,7 @@ namespace Metropass.Core.PCL.Model.Kdb4.Reader
             var pwDatabase = file.pwDatabase;
             var keyGenerator = new KeyGenerator(
                _hasher,
-               _keyDecryptor,
+               _keyTransformer,
                pwDatabase.MasterKey,
                pwDatabase.MasterKey.PercentComplete);
             var aesKey = await keyGenerator.GenerateHashedKeyAsync(file.pbMasterSeed, file.pbTransformSeed, (int)pwDatabase.KeyEncryptionRounds);

@@ -63,7 +63,7 @@ namespace MetroPass.Core.Tests.Services
             var database = await Scenarios.LoadDatabase(PasswordDatabasePath, PasswordDatabasePassword, null);
             var writer = new Kdb4Writer(new Kdb4HeaderWriter(),
                       new WinRTCrypto(CryptoAlgoritmType.AES_CBC_PKCS7),
-                      new MultiThreadedBouncyCastleCrypto(CryptoAlgoritmType.AES_ECB),
+                      new MultiThreadedBouncyCastleCrypto(),
                       new SHA256HasherRT(),
                       new GZipFactoryRT());
          //   .database.var file = await Package.Current.InstalledLocation.GetFileAsync(PasswordDatabasePath);

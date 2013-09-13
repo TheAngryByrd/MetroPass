@@ -9,15 +9,18 @@ namespace Metropass.Core.PCL.Model.Kdb4.Keys
     public class KeyGenerator : IKeyGenerator
     {
         private readonly ICanSHA256Hash _hasher;
-        private readonly IEncryptionEngine _encryptionEngine; 
+        private readonly IKeyTransformer _keyTransformer; 
         private readonly IProgress<double> _progress;
 
         private readonly CompositeKey _compositeKey;
 
-        public KeyGenerator(ICanSHA256Hash hasher, IEncryptionEngine encryptionEngine, CompositeKey compositeKey, IProgress<double> progress)
+        public KeyGenerator(ICanSHA256Hash hasher, 
+            IKeyTransformer keyTransformer, 
+            CompositeKey compositeKey, 
+            IProgress<double> progress)
         {             
             _hasher = hasher;
-            _encryptionEngine = encryptionEngine;
+            _keyTransformer = keyTransformer;
             _compositeKey = compositeKey;
             _progress = progress;
         }
@@ -36,7 +39,7 @@ namespace Metropass.Core.PCL.Model.Kdb4.Keys
         {
             byte[] rawCompositeKey = CreateRawCompositeKey32();
 
-            var data = await _encryptionEngine.Encrypt(rawCompositeKey, transformSeed, null, rounds, _progress);
+            var data = await _keyTransformer.Transform(rawCompositeKey, transformSeed, null, rounds, _progress);
 
             return _hasher.Hash(data);
         }
