@@ -129,6 +129,30 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\MetroPass.WinRT.80\MetroPass.UI\DataModel\KdbDatasource.cs">
+      <Link>DataModel\KdbDatasource.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MetroPass.WinRT.80\MetroPass.UI\DataModel\SettingsModel.cs">
+      <Link>DataModel\SettingsModel.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MetroPass.WinRT.80\MetroPass.UI\Services\IClipboard.cs">
+      <Link>Services\IClipboard.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MetroPass.WinRT.80\MetroPass.UI\Services\ILockingService.cs">
+      <Link>Services\ILockingService.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MetroPass.WinRT.80\MetroPass.UI\Services\IPageServices.cs">
+      <Link>Services\IPageServices.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MetroPass.WinRT.80\MetroPass.UI\Services\LockingService.cs">
+      <Link>Services\LockingService.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MetroPass.WinRT.80\MetroPass.UI\Services\MetroClipboard.cs">
+      <Link>Services\MetroClipboard.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MetroPass.WinRT.80\MetroPass.UI\Services\PageServices.cs">
+      <Link>Services\PageServices.cs</Link>
+    </Compile>
     <Compile Include="..\..\MetroPass.WinRT.80\MetroPass.UI\ViewModels\AboutSettingsViewModel.cs">
       <Link>ViewModels\AboutSettingsViewModel.cs</Link>
     </Compile>
@@ -192,18 +216,11 @@
     <Compile Include="Common\NinjectContainer.cs" />
     <Compile Include="Common\Converters\StringFormatConverter.cs" />
     <Compile Include="Common\TypedTemplateSelector.cs" />
-    <Compile Include="DataModel\KdbDatasource.cs" />
     <Compile Include="Common\EnumerableExtensions.cs" />
-    <Compile Include="DataModel\SettingsModel.cs" />
     <Compile Include="Dialogs\DialogService.cs" />
-    <Compile Include="Services\ILockingService.cs" />
-    <Compile Include="Services\LockingService.cs" />
     <Compile Include="UserControls\NumberBox.cs" />
     <Compile Include="ViewModels\EntryEditViewModel.cs" />
     <Compile Include="ViewModels\GroupEditViewModel.cs" />
-    <Compile Include="Services\MetroClipboard.cs" />
-    <Compile Include="Services\IClipboard.cs" />
-    <Compile Include="Services\IPageServices.cs" />
     <Compile Include="ViewModels\BaseScreen.cs" />
     <Compile Include="Views\AddEntryView.xaml.cs">
       <DependentUpon>AddEntryView.xaml</DependentUpon>
@@ -241,7 +258,6 @@
     <Compile Include="Common\LayoutAwarePage.cs" />
     <Compile Include="Common\RichTextColumns.cs" />
     <Compile Include="Common\SuspensionManager.cs" />
-    <Compile Include="Services\PageServices.cs" />
     <Compile Include="Views\NewDatabaseView.xaml.cs">
       <DependentUpon>NewDatabaseView.xaml</DependentUpon>
     </Compile>
