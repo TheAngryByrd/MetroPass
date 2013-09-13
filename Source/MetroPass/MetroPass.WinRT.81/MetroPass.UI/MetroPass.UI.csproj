@@ -129,6 +129,60 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\MetroPass.WinRT.80\MetroPass.UI\ViewModels\AboutSettingsViewModel.cs">
+      <Link>ViewModels\AboutSettingsViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MetroPass.WinRT.80\MetroPass.UI\ViewModels\AddEntryViewModel.cs">
+      <Link>ViewModels\AddEntryViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MetroPass.WinRT.80\MetroPass.UI\ViewModels\AddGroupViewModel.cs">
+      <Link>ViewModels\AddGroupViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MetroPass.WinRT.80\MetroPass.UI\ViewModels\AdGroup.cs">
+      <Link>ViewModels\AdGroup.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MetroPass.WinRT.80\MetroPass.UI\ViewModels\AdItem.cs">
+      <Link>ViewModels\AdItem.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MetroPass.WinRT.80\MetroPass.UI\ViewModels\AppSettingsViewModel.cs">
+      <Link>ViewModels\AppSettingsViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MetroPass.WinRT.80\MetroPass.UI\ViewModels\DatabaseClosedSettingsViewModel.cs">
+      <Link>ViewModels\DatabaseClosedSettingsViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MetroPass.WinRT.80\MetroPass.UI\ViewModels\DatabaseSettingsViewModel.cs">
+      <Link>ViewModels\DatabaseSettingsViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MetroPass.WinRT.80\MetroPass.UI\ViewModels\EntryGroupListViewModel.cs">
+      <Link>ViewModels\EntryGroupListViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MetroPass.WinRT.80\MetroPass.UI\ViewModels\FolderPickerViewModel.cs">
+      <Link>ViewModels\FolderPickerViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MetroPass.WinRT.80\MetroPass.UI\ViewModels\LoadKdbViewModel.cs">
+      <Link>ViewModels\LoadKdbViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MetroPass.WinRT.80\MetroPass.UI\ViewModels\Messages\FolderSelectedMessage.cs">
+      <Link>ViewModels\Messages\FolderSelectedMessage.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MetroPass.WinRT.80\MetroPass.UI\ViewModels\Messages\PasswordGenerateMessage.cs">
+      <Link>ViewModels\Messages\PasswordGenerateMessage.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MetroPass.WinRT.80\MetroPass.UI\ViewModels\NewDatabaseViewModel.cs">
+      <Link>ViewModels\NewDatabaseViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MetroPass.WinRT.80\MetroPass.UI\ViewModels\PasswordEntryScreen.cs">
+      <Link>ViewModels\PasswordEntryScreen.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MetroPass.WinRT.80\MetroPass.UI\ViewModels\PasswordGeneratorViewModel.cs">
+      <Link>ViewModels\PasswordGeneratorViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MetroPass.WinRT.80\MetroPass.UI\ViewModels\SearchResultsViewModel.cs">
+      <Link>ViewModels\SearchResultsViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MetroPass.WinRT.80\MetroPass.UI\ViewModels\StartPageViewModel.cs">
+      <Link>ViewModels\StartPageViewModel.cs</Link>
+    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
@@ -145,28 +199,12 @@
     <Compile Include="Services\ILockingService.cs" />
     <Compile Include="Services\LockingService.cs" />
     <Compile Include="UserControls\NumberBox.cs" />
-    <Compile Include="ViewModels\AddEntryViewModel.cs" />
-    <Compile Include="ViewModels\AddGroupViewModel.cs" />
-    <Compile Include="ViewModels\AdGroup.cs" />
-    <Compile Include="ViewModels\AdItem.cs" />
-    <Compile Include="ViewModels\AboutSettingsViewModel.cs" />
-    <Compile Include="ViewModels\AppSettingsViewModel.cs" />
-    <Compile Include="ViewModels\DatabaseClosedSettingsViewModel.cs" />
     <Compile Include="ViewModels\EntryEditViewModel.cs" />
-    <Compile Include="ViewModels\FolderPickerViewModel.cs" />
-    <Compile Include="ViewModels\Messages\FolderSelectedMessage.cs" />
-    <Compile Include="ViewModels\NewDatabaseViewModel.cs" />
-    <Compile Include="ViewModels\PasswordEntryScreen.cs" />
-    <Compile Include="ViewModels\Messages\PasswordGenerateMessage.cs" />
-    <Compile Include="ViewModels\PasswordGeneratorViewModel.cs" />
-    <Compile Include="ViewModels\SearchResultsViewModel.cs" />
+    <Compile Include="ViewModels\GroupEditViewModel.cs" />
     <Compile Include="Services\MetroClipboard.cs" />
     <Compile Include="Services\IClipboard.cs" />
     <Compile Include="Services\IPageServices.cs" />
     <Compile Include="ViewModels\BaseScreen.cs" />
-    <Compile Include="ViewModels\GroupEditViewModel.cs" />
-    <Compile Include="ViewModels\DatabaseSettingsViewModel.cs" />
-    <Compile Include="ViewModels\StartPageViewModel.cs" />
     <Compile Include="Views\AddEntryView.xaml.cs">
       <DependentUpon>AddEntryView.xaml</DependentUpon>
     </Compile>
@@ -204,8 +242,6 @@
     <Compile Include="Common\RichTextColumns.cs" />
     <Compile Include="Common\SuspensionManager.cs" />
     <Compile Include="Services\PageServices.cs" />
-    <Compile Include="ViewModels\EntryGroupListViewModel.cs" />
-    <Compile Include="ViewModels\LoadKdbViewModel.cs" />
     <Compile Include="Views\NewDatabaseView.xaml.cs">
       <DependentUpon>NewDatabaseView.xaml</DependentUpon>
     </Compile>
