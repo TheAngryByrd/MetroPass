@@ -1,7 +1,7 @@
-﻿using Framework;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using MetroPass.WinRT.Infrastructure;
 using Metropass.Core.PCL.Model;
 using Metropass.Core.PCL.Model.Kdb4.Keys;
 using Metropass.Core.PCL.Model.Kdb4.Reader;

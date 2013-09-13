@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Framework;
 using Metropass.Core.PCL.Encryption;
 using Windows.Security.Cryptography.Core;
 using Windows.Storage.Streams;

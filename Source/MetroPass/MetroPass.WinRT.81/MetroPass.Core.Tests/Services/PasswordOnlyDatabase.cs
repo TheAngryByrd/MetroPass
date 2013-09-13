@@ -1,11 +1,11 @@
 ﻿using MetroPass.Core.Tests.Helpers;
+using MetroPass.WinRT.Infrastructure;
 using MetroPass.WinRT.Infrastructure.Hashing;
 using Metropass.Core.PCL.Cipher;
 using Metropass.Core.PCL.Hashing;
 using Metropass.Core.PCL.Model;
 using Metropass.Core.PCL.Model.Kdb4.Writer;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-using Framework;
 using System;
 using System.Linq;
 using System.Security;

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Caliburn.Micro;
-using Framework;
 using MetroPass.UI.ViewModels.Messages;
 using Metropass.Core.PCL.Model.Kdb4;
 

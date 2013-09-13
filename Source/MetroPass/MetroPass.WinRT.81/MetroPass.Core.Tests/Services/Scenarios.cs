@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using Framework;
+using MetroPass.WinRT.Infrastructure;
 using MetroPass.WinRT.Infrastructure.Compression;
 using MetroPass.WinRT.Infrastructure.Encryption;
 using MetroPass.WinRT.Infrastructure.Hashing;

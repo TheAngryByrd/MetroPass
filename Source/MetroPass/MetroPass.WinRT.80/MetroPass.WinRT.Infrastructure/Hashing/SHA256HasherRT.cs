@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using Framework;
 using Metropass.Core.PCL.Hashing;
 
 namespace MetroPass.WinRT.Infrastructure.Hashing
@@ -8,7 +7,7 @@ namespace MetroPass.WinRT.Infrastructure.Hashing
     {
         public byte[] Hash(params byte[][] bytesToHash)
         {
-            return Framework.SHA256Hasher.Hash(bytesToHash.Select(b => b.AsBuffer()).ToArray()).AsBytes();
+            return SHA256Hasher.Hash(bytesToHash.Select(b => b.AsBuffer()).ToArray()).AsBytes();
         }
     }
 }

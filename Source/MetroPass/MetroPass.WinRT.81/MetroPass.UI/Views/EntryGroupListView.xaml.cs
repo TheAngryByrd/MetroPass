@@ -1,6 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using Framework;
+﻿using System.Threading.Tasks;
 using MetroPass.UI.ViewModels;
 using Windows.System;
 using Windows.UI.ViewManagement;

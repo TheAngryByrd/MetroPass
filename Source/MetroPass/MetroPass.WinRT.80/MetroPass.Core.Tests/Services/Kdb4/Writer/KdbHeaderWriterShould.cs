@@ -1,4 +1,4 @@
-﻿using Framework;
+﻿using MetroPass.WinRT.Infrastructure;
 using MetroPass.WinRT.Infrastructure.Compression;
 using MetroPass.WinRT.Infrastructure.Encryption;
 using MetroPass.WinRT.Infrastructure.Hashing;
