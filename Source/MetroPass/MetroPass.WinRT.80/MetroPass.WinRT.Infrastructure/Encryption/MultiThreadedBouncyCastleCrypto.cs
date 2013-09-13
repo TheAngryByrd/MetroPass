@@ -36,7 +36,7 @@ namespace MetroPass.WinRT.Infrastructure.Encryption
             {
                 IBufferedCipher cipher = GetCipher(encrypt, key);
 
-                return Process(bData.Take(16).ToArray(), rounds, percentComplete, cipher);
+                return Process(bData.Take(16).ToArray(), rounds, percentComplete, cipher, true);
             });
             var t2 = Task.Run(() =>
             {
@@ -50,19 +50,18 @@ namespace MetroPass.WinRT.Infrastructure.Encryption
             return t1.Result.Concat(t2.Result).ToArray();
         } 
 
-        private byte[] Process(byte[] data, double rounds, IProgress<double> percentComplete, IBufferedCipher cipher)
+        private byte[] Process(byte[] data, double rounds, IProgress<double> percentComplete, IBufferedCipher cipher, bool track = false)
         {
             var byteCompositeKey = data;
 
             for (var i = 0; i < rounds; ++i)
-            {
-                if (i % 5000 == 0)
+            {                
+                if (track && i % 5000 == 0)
                 {
                     percentComplete.Report(i / rounds * 100);
 
                 }
                 byteCompositeKey = cipher.ProcessBytes(byteCompositeKey);
-
             }
             percentComplete.Report(100);
 
