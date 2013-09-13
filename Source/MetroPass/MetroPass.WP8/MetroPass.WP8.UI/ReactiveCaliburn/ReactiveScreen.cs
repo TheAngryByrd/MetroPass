@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
 using Caliburn.Micro;
@@ -197,7 +198,7 @@ namespace ReactiveCaliburn
             foreach (var contextualView in Views.Values)
             {
                 var viewType = contextualView.GetType();
-#if WinRT
+#if NETFX_CORE
                 var closeMethod = viewType.GetRuntimeMethod("Close", new Type[0]);
 #else
                 var closeMethod = viewType.GetMethod("Close");
@@ -205,7 +206,7 @@ namespace ReactiveCaliburn
                 if (closeMethod != null)
                     return () =>
                     {
-#if !SILVERLIGHT && !WinRT
+#if !SILVERLIGHT && !NETFX_CORE
                         var isClosed = false;
                         if (dialogResult != null)
                         {
@@ -228,7 +229,7 @@ namespace ReactiveCaliburn
                     };
 
 
-#if WinRT
+#if NETFX_CORE
                 var isOpenProperty = viewType.GetRuntimeProperty("IsOpen");
 #else
                 var isOpenProperty = viewType.GetProperty("IsOpen");
@@ -250,15 +251,6 @@ namespace ReactiveCaliburn
         public void TryClose()
         {
             GetViewCloseAction(null).OnUIThread();
-        }
-
-        protected static Task RunAsync<T>(Func<T> asyncFunc, Action<T> dispatcher)
-        {
-            return Task.Run(async () =>
-            {
-                var val = asyncFunc();
-                Deployment.Current.Dispatcher.BeginInvoke(() => dispatcher(val));
-            });
         }
 
 #if !SILVERLIGHT

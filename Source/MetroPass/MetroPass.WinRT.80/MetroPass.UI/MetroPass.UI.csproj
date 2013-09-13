@@ -123,6 +123,15 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\MetroPass.WP8\MetroPass.WP8.UI\ReactiveCaliburn\ReactivePropertyChangedBase.cs">
+      <Link>ReactiveCaliburn\ReactivePropertyChangedBase.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MetroPass.WP8\MetroPass.WP8.UI\ReactiveCaliburn\ReactiveScreen.cs">
+      <Link>ReactiveCaliburn\ReactiveScreen.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MetroPass.WP8\MetroPass.WP8.UI\ReactiveCaliburn\ReactiveViewAware.cs">
+      <Link>ReactiveCaliburn\ReactiveViewAware.cs</Link>
+    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>

@@ -258,7 +258,7 @@ namespace MetroPass.UI.ViewModels
             get { return CanPickDatabase && CanPickKeyFile && !OpeningDatabase; }
         }
 
-        protected async override void OnViewLoaded(object view)
+        protected internal async override void OnViewLoaded(object view)
         {
             base.OnViewLoaded(view);
 

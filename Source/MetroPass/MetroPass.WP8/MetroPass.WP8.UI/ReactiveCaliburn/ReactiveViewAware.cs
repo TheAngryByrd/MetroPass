@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows;
 using Caliburn.Micro;
+#if NETFX_CORE
+using Windows.UI.Xaml;
+#else
+using System.Windows;
+#endif
 
 namespace ReactiveCaliburn
 {
@@ -107,7 +111,7 @@ namespace ReactiveCaliburn
         protected internal virtual void OnViewLoaded(object view) { }
 
 
-#if WINDOWS_PHONE || WinRT
+#if WINDOWS_PHONE || NETFX_CORE
         void IViewAware.OnViewReady(object view)
         {
             OnViewReady(view);

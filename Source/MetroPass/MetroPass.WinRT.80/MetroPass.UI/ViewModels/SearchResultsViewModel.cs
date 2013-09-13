@@ -32,7 +32,7 @@ namespace MetroPass.UI.ViewModels
 
         public ObservableCollection<PwEntry> Results { get; private set; }
 
-        protected override void OnViewLoaded(object view)
+        protected internal override void OnViewLoaded(object view)
         {
             base.OnViewLoaded(view);
             SearchEntries();

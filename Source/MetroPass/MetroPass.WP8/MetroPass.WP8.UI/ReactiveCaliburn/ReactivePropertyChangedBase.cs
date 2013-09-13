@@ -8,7 +8,7 @@ namespace ReactiveCaliburn
 {
     public class ReactivePropertyChangedBase : ReactiveObject, INotifyPropertyChangedEx
     {
-#if !WinRT
+#if !NETFX_CORE
         [Browsable(false)]
 #endif
         public bool IsNotifying

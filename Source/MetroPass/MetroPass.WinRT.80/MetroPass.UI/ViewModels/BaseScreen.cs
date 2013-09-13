@@ -7,10 +7,11 @@ using Metropass.Core.PCL.Model;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using ReactiveCaliburn;
 
 namespace MetroPass.UI.ViewModels
 {
-    public class BaseScreen : Screen
+    public class BaseScreen : ReactiveScreen
     {
         private readonly INavigationService _navigationService;
         private readonly IEventAggregator _eventAggregator;
@@ -73,7 +74,7 @@ namespace MetroPass.UI.ViewModels
             set { }
         }
 
-        protected override void OnViewAttached(object view, object context)
+        protected internal override void OnViewAttached(object view, object context)
         {
             base.OnViewAttached(view, context);
             View = (Page)view;
