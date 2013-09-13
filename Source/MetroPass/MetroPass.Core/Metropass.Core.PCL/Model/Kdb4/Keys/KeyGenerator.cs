@@ -39,7 +39,7 @@ namespace Metropass.Core.PCL.Model.Kdb4.Keys
         {
             byte[] rawCompositeKey = CreateRawCompositeKey32();
 
-            var data = await _keyTransformer.Transform(rawCompositeKey, transformSeed, null, rounds, _progress);
+            var data = await _keyTransformer.Transform(rawCompositeKey, transformSeed, rounds, _progress);
 
             return _hasher.Hash(data);
         }

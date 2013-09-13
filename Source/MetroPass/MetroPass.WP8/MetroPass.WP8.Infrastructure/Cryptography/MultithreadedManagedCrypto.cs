@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Cryptography;
-using System.Text;
 using System.Threading.Tasks;
 using Metropass.Core.PCL.Encryption;
 
@@ -10,7 +7,7 @@ namespace MetroPass.WP8.Infrastructure.Cryptography
 {
     public class MultithreadedManagedCrypto : IKeyTransformer
     {
-        public async Task<byte[]> Transform(byte[] data, byte[] key, byte[] iv, double rounds, IProgress<double> percentComplete)
+        public async Task<byte[]> Transform(byte[] data, byte[] key, double rounds, IProgress<double> percentComplete)
         {
             var aes = new AesManaged
             {

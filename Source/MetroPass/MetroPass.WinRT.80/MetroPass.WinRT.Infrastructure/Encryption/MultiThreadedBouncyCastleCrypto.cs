@@ -11,7 +11,7 @@ namespace MetroPass.WinRT.Infrastructure.Encryption
     public class MultiThreadedBouncyCastleCrypto : IKeyTransformer
     {
 
-        public async Task<byte[]> Transform(byte[] data, byte[] key, byte[] iv, double rounds, IProgress<double> percentComplete)
+        public async Task<byte[]> Transform(byte[] data, byte[] key, double rounds, IProgress<double> percentComplete)
         {
             return await ProcessMultiThreaded(true, data, key, rounds, percentComplete);
         }
