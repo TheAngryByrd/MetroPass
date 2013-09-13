@@ -1,17 +1,15 @@
-﻿using System.Net;
+﻿using System;
+using System.Collections.Generic;
 using Caliburn.Micro;
 using MetroPass.UI.DataModel;
 using MetroPass.UI.Services;
 using MetroPass.UI.Views;
-using System;
-using System.Collections.Generic;
-using System.Xml.Linq;
 using MetroPass.WinRT.Infrastructure.Hashing;
+using Metropass.Core.PCL;
 using Metropass.Core.PCL.Model;
 using Metropass.Core.PCL.Model.Kdb4.Keys;
 using Metropass.Core.PCL.Model.Kdb4.Reader;
 using Windows.Storage.Pickers;
-using Metropass.Core.PCL;
 
 namespace MetroPass.UI.ViewModels
 {
