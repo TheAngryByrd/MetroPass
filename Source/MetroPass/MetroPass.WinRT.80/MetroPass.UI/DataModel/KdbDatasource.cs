@@ -1,18 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using MetroPass.WinRT.Infrastructure;
+using MetroPass.WinRT.Infrastructure.Compression;
+using MetroPass.WinRT.Infrastructure.Encryption;
+using MetroPass.WinRT.Infrastructure.Hashing;
 using Metropass.Core.PCL.Model;
 using Metropass.Core.PCL.Model.Kdb4.Keys;
 using Metropass.Core.PCL.Model.Kdb4.Reader;
 using Metropass.Core.PCL.Model.Kdb4.Writer;
-using Windows.Storage;
 using PCLStorage;
-using MetroPass.WinRT.Infrastructure.Encryption;
-using Metropass.Core.PCL.Encryption;
-using MetroPass.WinRT.Infrastructure.Hashing;
-using MetroPass.WinRT.Infrastructure.Compression;
-using System.IO;
+using Windows.Storage;
 
 namespace MetroPass.UI.DataModel
 {
