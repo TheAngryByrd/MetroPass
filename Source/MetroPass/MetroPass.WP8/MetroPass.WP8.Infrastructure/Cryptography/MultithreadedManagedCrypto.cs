@@ -23,19 +23,12 @@ namespace MetroPass.WP8.Infrastructure.Cryptography
 
                 for (var i = 0; i < rounds; ++i)
                 {
-                    if (i % 5000 == 0)
-                    {
-                        percentComplete.Report(i / rounds * 100);
-
-                    }
                     aes.CreateEncryptor().TransformBlock(bData, 0, 16, bData, 0);
-
                 }
             });
 
             var t2 = Task.Run(() =>
             {
-
                 for (var i = 0; i < rounds; ++i)
                 {
                     if (i % 5000 == 0)
@@ -44,7 +37,6 @@ namespace MetroPass.WP8.Infrastructure.Cryptography
 
                     }
                     aes.CreateEncryptor().TransformBlock(bData, 16, 16, bData, 16);
-
                 }
             });
 

@@ -22,6 +22,8 @@ namespace MetroPass.WP8.UI.ViewModels
 
        
 
+        
+
         public OpenDatabaseViewModel(
             INavigationService navigationService,
             IDatabaseInfoRepository databaseInfoRepository,
@@ -71,6 +73,13 @@ namespace MetroPass.WP8.UI.ViewModels
             }
         }
 
+        private double _progress;
+        public double Progress
+        {
+            get { return _progress; }
+            set { this.RaiseAndSetIfChanged(ref _progress, value); }
+        }
+
         public ReactiveCommand OpenCommand { get; set; }
         private async void OpenDatabase(object obj)
         {
@@ -93,11 +102,9 @@ namespace MetroPass.WP8.UI.ViewModels
 
             try
             {
-                await PWDatabaseDataSource.Instance.LoadPwDatabase(file, listOfKeys);
+                await PWDatabaseDataSource.Instance.LoadPwDatabase(file, listOfKeys,new Progress<double>(v => Progress = v));
 
-                var rootUUID = PWDatabaseDataSource.Instance.PwDatabase.Tree.Group.UUID;
-
-                
+                var rootUUID = PWDatabaseDataSource.Instance.PwDatabase.Tree.Group.UUID;                
 
                 _navigationService.UriFor<EntriesListViewModel>().
                     WithParam(p => p.GroupId, rootUUID).Navigate();
