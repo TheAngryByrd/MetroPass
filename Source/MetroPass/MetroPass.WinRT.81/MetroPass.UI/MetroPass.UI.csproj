@@ -125,6 +125,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\MetroPass.WinRT.80\MetroPass.UI\Bootstrapper.cs">
+      <Link>Bootstrapper.cs</Link>
+    </Compile>
     <Compile Include="..\..\MetroPass.WinRT.80\MetroPass.UI\Common\Converters\GridViewGroupHeaderStyleConverter.cs">
       <Link>Common\Converters\GridViewGroupHeaderStyleConverter.cs</Link>
     </Compile>
