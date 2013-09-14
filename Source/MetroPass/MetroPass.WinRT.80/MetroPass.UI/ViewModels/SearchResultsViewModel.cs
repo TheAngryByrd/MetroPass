@@ -9,13 +9,17 @@ namespace MetroPass.UI.ViewModels
 {
     public class SearchResultsViewModel : PasswordEntryScreen
     {
+        private readonly IPWDatabaseDataSource _dataSource;
+
         public SearchResultsViewModel(
             INavigationService navigationService,
             IEventAggregator eventAggregator,
             IClipboard clipboard,
-            IPageServices pageServices)
+            IPageServices pageServices,
+            IPWDatabaseDataSource dataSource)
             : base(navigationService, eventAggregator, clipboard, pageServices)
         {
+            _dataSource = dataSource;
             Results = new ObservableCollection<PwEntry>();
         }
 
@@ -40,7 +44,7 @@ namespace MetroPass.UI.ViewModels
 
         private void SearchEntries()
         {
-            var root = PWDatabaseDataSource.Instance.PwDatabase.Tree.Group;
+            var root = _dataSource.PwDatabase.Tree.Group;
 
             var matchingEntries = root.AllEntries()
                 .Where(e => e.Title.ContainsInsensitive(QueryText) || e.Notes.ContainsInsensitive(QueryText) || e.Username.ContainsInsensitive(QueryText));

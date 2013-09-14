@@ -1,6 +1,7 @@
 ﻿using Caliburn.Micro;
 using System.Collections.Generic;
 using System.Linq;
+using MetroPass.UI.DataModel;
 using MetroPass.UI.ViewModels.Messages;
 using Metropass.Core.PCL.Model;
 using Metropass.Core.PCL.Model.Kdb4;
@@ -15,16 +16,19 @@ namespace MetroPass.UI.ViewModels
 
     public class FolderPickerViewModel : Screen
     {
-        private readonly IKdbTree dbTree;
+
         private readonly IEventAggregator _eventAggregator;
         
-        public FolderPickerViewModel(IKdbTree dbTree, IEventAggregator eventAggregator)
+        private readonly IPWDatabaseDataSource _dataSource;
+
+        public FolderPickerViewModel(IEventAggregator eventAggregator,
+            IPWDatabaseDataSource dataSource)
         {
+            _dataSource = dataSource;
             _eventAggregator = eventAggregator;
-            this.dbTree = dbTree;
 
             Mode = FolderPickerMode.Move;
-            FillGroups(dbTree.Group, 0);
+            FillGroups(_dataSource.PwDatabase.Tree.Group, 0);
         }
 
         public FolderPickerMode Mode { get; set; }

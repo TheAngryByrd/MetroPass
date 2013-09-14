@@ -15,14 +15,10 @@ using PCLStorage;
 namespace MetroPass.UI.DataModel
 {
     public sealed class PWDatabaseDataSource : IPWDatabaseDataSource
-    {
-       
+    {       
         private readonly IEncryptionEngine _encryptionEngine;
-
         private readonly IKeyTransformer _keyTransformer;
-
         private readonly IGZipStreamFactory _gzipStreamFactory;
-
         private readonly ICanSHA256Hash _hasher;
 
         public PWDatabaseDataSource(IEncryptionEngine encryptionEngine,
@@ -72,9 +68,14 @@ namespace MetroPass.UI.DataModel
                       _hasher,
                       _gzipStreamFactory);
 
-            var writer = factory.CreateWriter(PwDatabase.Tree);            
+            var writer = factory.CreateWriter(PwDatabase.Tree);  
             
-            await writer.Write(PwDatabase, new WP8File(StorageFile));
+#if NETFX_CORE
+            IFile file = new WinRTFile(StorageFile);
+#elif WP8
+            IFile file = new WP8File(StorageFile);
+#endif
+            await writer.Write(PwDatabase, file);
         }
     } 
 }

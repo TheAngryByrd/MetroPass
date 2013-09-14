@@ -15,15 +15,18 @@ namespace MetroPass.UI.ViewModels
     public class AddEntryViewModel : BaseScreen, IHandle<PasswordGenerateMessage>
     {
         private readonly INavigationService _navigationService;
-        private readonly IKdbTree _dbTree;
 
-        public AddEntryViewModel(IKdbTree dbTree,
+
+        private readonly IPWDatabaseDataSource _dataSource;
+
+        public AddEntryViewModel(
             INavigationService navigationService,
             IPageServices pageServices,
-            IEventAggregator eventAggregator)
+            IEventAggregator eventAggregator,
+            IPWDatabaseDataSource dataSource)
             : base(navigationService, eventAggregator, pageServices)
         {
-            _dbTree = dbTree;
+            _dataSource = dataSource;
             _navigationService = navigationService;
         }
 
@@ -34,7 +37,7 @@ namespace MetroPass.UI.ViewModels
             set
             {
                 _parentGroupID = value;
-                ParentGroup = _dbTree.FindGroupByUuid(value);               
+                ParentGroup = _dataSource.PwDatabase.Tree.FindGroupByUuid(value);               
             }
         }
 
@@ -168,7 +171,7 @@ namespace MetroPass.UI.ViewModels
             var entryElement = GetNewEntryElement();
             var entry = new PwEntry(entryElement, ParentGroup);
             ParentGroup.AddEntryToDocument(entry);
-            await PWDatabaseDataSource.Instance.SavePwDatabase();
+            await _dataSource.SavePwDatabase();
             _navigationService.GoBack();
         }
 

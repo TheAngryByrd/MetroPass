@@ -19,12 +19,16 @@ namespace MetroPass.UI.ViewModels
 
         private readonly IPageServices _pageServices;
 
+        private readonly IPWDatabaseDataSource _dataSource;
+
         public NewDatabaseViewModel(
             INavigationService navigationService,
             IEventAggregator eventAggregator,
-            IPageServices pageServices) :
+            IPageServices pageServices,
+            IPWDatabaseDataSource dataSource) :
             base(navigationService, eventAggregator, pageServices)
         {
+            _dataSource = dataSource;
             this._pageServices = pageServices;
             _navigationService = navigationService;
         }
@@ -117,10 +121,10 @@ namespace MetroPass.UI.ViewModels
                 if (storageFile != null)
                 {
 
-                    PWDatabaseDataSource.Instance.PwDatabase = pwDatabase;
-                    PWDatabaseDataSource.Instance.StorageFile = storageFile;
-                    await PWDatabaseDataSource.Instance.SavePwDatabase();
-                    var encodedUUID = PWDatabaseDataSource.Instance.PwDatabase.Tree.Group.UUID;
+                    _dataSource.PwDatabase = pwDatabase;
+                    _dataSource.StorageFile = storageFile;
+                    await _dataSource.SavePwDatabase();
+                    var encodedUUID = _dataSource.PwDatabase.Tree.Group.UUID;
                     _navigationService.UriFor<EntryGroupListViewModel>().WithParam(vm => vm.GroupId, encodedUUID).Navigate();
                 }
             }

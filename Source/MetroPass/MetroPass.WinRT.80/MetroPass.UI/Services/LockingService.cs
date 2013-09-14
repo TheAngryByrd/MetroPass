@@ -13,15 +13,19 @@ namespace MetroPass.UI.Services
     {
         private readonly INavigationService navigationService;
 
-        public LockingService(INavigationService navigationService)
+        private readonly IPWDatabaseDataSource _dataSource;
+
+        public LockingService(INavigationService navigationService,
+            IPWDatabaseDataSource dataSource)
         {
+            _dataSource = dataSource;
             this.navigationService = navigationService;
         }
 
         public void Lock()
         {
-            PWDatabaseDataSource.Instance.PwDatabase = null;
-            PWDatabaseDataSource.Instance.StorageFile = null;
+            _dataSource.PwDatabase = null;
+            _dataSource.StorageFile = null;
             navigationService.UriFor<StartPageViewModel>().Navigate();
         }
 

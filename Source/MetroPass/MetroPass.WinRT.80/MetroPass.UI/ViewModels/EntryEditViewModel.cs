@@ -15,15 +15,16 @@ namespace MetroPass.UI.ViewModels
         private readonly INavigationService _navigationService;
         private bool _loadingData = true;
 
-        private readonly IKdbTree _dbTree;
+        private readonly IPWDatabaseDataSource _dataSource;
 
-        public EntryEditViewModel(IKdbTree dbTree,
+        public EntryEditViewModel(
             INavigationService navigationService,
             IPageServices pageServices,
-            IEventAggregator eventAggregator) :
+            IEventAggregator eventAggregator,
+            IPWDatabaseDataSource dataSource) :
             base(navigationService, eventAggregator, pageServices)
         {
-            _dbTree = dbTree;
+            _dataSource = dataSource;
             _navigationService = navigationService;
         }
 
@@ -34,7 +35,7 @@ namespace MetroPass.UI.ViewModels
             set
             {
                 _entryID = value;
-                var entryElement = _dbTree.FindEntryByUuid(value);
+                var entryElement = _dataSource.PwDatabase.Tree.FindEntryByUuid(value);
                 Entry = entryElement;
             }
         }
@@ -224,7 +225,7 @@ namespace MetroPass.UI.ViewModels
             Entry.Password = Password;
             Entry.Url = Url;
             Entry.Notes = Notes;
-            await PWDatabaseDataSource.Instance.SavePwDatabase();
+            await _dataSource.SavePwDatabase();
             _navigationService.GoBack();
         }
 

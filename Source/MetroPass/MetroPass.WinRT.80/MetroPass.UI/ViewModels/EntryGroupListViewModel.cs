@@ -24,16 +24,18 @@ namespace MetroPass.UI.ViewModels
     {
         private readonly INavigationService _navigationService;
         private readonly ObservableCollection<IGroup> _topLevelGroups;
-        private readonly IKdbTree _dbTree;
         
-        public EntryGroupListViewModel(IKdbTree dbTree,
+        private readonly IPWDatabaseDataSource _dataSource;
+
+        public EntryGroupListViewModel(
             INavigationService navigationService,
             IEventAggregator eventAggregator,
             IClipboard clipboard,
-            IPageServices pageServices)
+            IPageServices pageServices,
+            IPWDatabaseDataSource dataSource)
             : base(navigationService, eventAggregator, clipboard, pageServices)
         {
-            _dbTree = dbTree;
+            _dataSource = dataSource;
             _navigationService = navigationService;
             _topLevelGroups = new ObservableCollection<IGroup>();
         }
@@ -46,7 +48,7 @@ namespace MetroPass.UI.ViewModels
             {
                 _groupId = value;
                 try {
-                    Root = _dbTree.FindGroupByUuid(value);                    
+                    Root = _dataSource.PwDatabase.Tree.FindGroupByUuid(value);                    
                 }
                 catch (GroupNotFoundException) {
                     Root = PwGroup.NullGroup;
@@ -145,7 +147,7 @@ namespace MetroPass.UI.ViewModels
             get 
             {
                 return SelectedPasswordItem != null &&
-                    ((PwEntry)SelectedPasswordItem).ParentGroup.UUID == _dbTree.MetaData.RecycleBinUUID;
+                    ((PwEntry)SelectedPasswordItem).ParentGroup.UUID == _dataSource.PwDatabase.Tree.MetaData.RecycleBinUUID;
             }
         }
 
@@ -156,14 +158,14 @@ namespace MetroPass.UI.ViewModels
                 await VerifyRecylceBinAvailable()
             )
             {
-                if (_dbTree.MetaData.RecycleBinEnabled && !PasswordIsInRecycleBin)
+                if (_dataSource.PwDatabase.Tree.MetaData.RecycleBinEnabled && !PasswordIsInRecycleBin)
                 {
                     //Move the element to the recycle bin in the document
-                    var recycleBinGroupElement = _dbTree.GetRecycleBin();
+                    var recycleBinGroupElement = _dataSource.PwDatabase.Tree.GetRecycleBin();
                     var clonedElement = new XElement(SelectedPasswordItem.Element);
                     recycleBinGroupElement.AddEntryToDocument(new PwEntry((clonedElement),recycleBinGroupElement));
 
-                    var recycleBinGroup = TopLevelGroups.FirstOrDefault(g => g.UUID == _dbTree.MetaData.RecycleBinUUID);
+                    var recycleBinGroup = TopLevelGroups.FirstOrDefault(g => g.UUID == _dataSource.PwDatabase.Tree.MetaData.RecycleBinUUID);
                     if (recycleBinGroup != null)
                     {
                         //Move the entry into the Recycle Bin group that's visible in the grid view
@@ -173,13 +175,13 @@ namespace MetroPass.UI.ViewModels
                 }
                 SelectedPasswordItem.Element.Remove();
                 ((PwEntry)SelectedPasswordItem).Remove();
-                await PWDatabaseDataSource.Instance.SavePwDatabase();
+                await _dataSource.SavePwDatabase();
             }
         }
 
         public async Task MoveItem(string UUID, PwCommon selectedItem)
         {
-            var folder = _dbTree.FindGroupByUuid(UUID);
+            var folder = _dataSource.PwDatabase.Tree.FindGroupByUuid(UUID);
             var clonedElement = new XElement(selectedItem.Element);
             folder.AddEntryToDocument(new PwEntry((clonedElement), folder));
             var UIFolder = TopLevelGroups.FirstOrDefault(g => g.UUID == UUID);
@@ -192,7 +194,7 @@ namespace MetroPass.UI.ViewModels
             selectedItem.Element.Remove();
             ((PwEntry)selectedItem).Remove();
 
-            await PWDatabaseDataSource.Instance.SavePwDatabase();
+            await _dataSource.SavePwDatabase();
         }
 
         public async void DeleteGroup()
@@ -203,28 +205,28 @@ namespace MetroPass.UI.ViewModels
                 await VerifyRecylceBinAvailable() &&
                 await ConfirmDeleteFolder())
             {
-                if (_dbTree.MetaData.RecycleBinEnabled)
+                if (_dataSource.PwDatabase.Tree.MetaData.RecycleBinEnabled)
                 {
                     //Move the folder to the recycle bin in the document
-                    var recycleBinGroupElement = _dbTree.GetRecycleBin();
+                    var recycleBinGroupElement = _dataSource.PwDatabase.Tree.GetRecycleBin();
                     var clonedElement = new XElement(Root.Element);
                     recycleBinGroupElement.AddGroupToDocument(new PwGroup(clonedElement));
                 }
                 Root.Element.Remove();
-                await PWDatabaseDataSource.Instance.SavePwDatabase();
+                await _dataSource.SavePwDatabase();
                 _navigationService.GoBack();
             }
         }
 
         public void GoHome()
         {
-            var dbRootUUID = _dbTree.Group.UUID;
+            var dbRootUUID = _dataSource.PwDatabase.Tree.Group.UUID;
             _navigationService.UriFor<EntryGroupListViewModel>().WithParam(vm => vm.GroupId, dbRootUUID).Navigate();
         }
 
         private async Task<bool> VerifyNotTopFolder()
         {
-            if (Root.UUID == _dbTree.Group.UUID)
+            if (Root.UUID == _dataSource.PwDatabase.Tree.Group.UUID)
             {
                 var rootMessage = String.Format("{0} is the top folder in your database, which you cannot delete.{1}Doing so would delete the entire database.{1}To delete your database simply delete the database file from your system.", Root.Name, Environment.NewLine);
                 var rootDialog = new MessageDialog(rootMessage, "Can not delete database");
@@ -236,7 +238,7 @@ namespace MetroPass.UI.ViewModels
 
         private async Task<bool> VerifyNotDeletingRecycleBin()
         {
-            if (_dbTree.MetaData.RecycleBinEnabled && Root.UUID == _dbTree.MetaData.RecycleBinUUID)
+            if (_dataSource.PwDatabase.Tree.MetaData.RecycleBinEnabled && Root.UUID == _dataSource.PwDatabase.Tree.MetaData.RecycleBinUUID)
             {
                 var recycleMessage = String.Format("The folder you are trying to delete is set as your Recycle Bin.{0}To delete this folder either choose another folder as your Recycle Bin,{0}or disable the Recycle Bin setting in your database options.", Environment.NewLine);
                 var recycleDialog = new MessageDialog(recycleMessage, "Can not delete recycle bin");
@@ -250,10 +252,11 @@ namespace MetroPass.UI.ViewModels
         {
             var recycleBinFound = true;
 
-            if (_dbTree.MetaData.RecycleBinEnabled) {
+            if (_dataSource.PwDatabase.Tree.MetaData.RecycleBinEnabled)
+            {
                 try
                 {
-                    var recycleBinGroupElement = _dbTree.GetRecycleBin();
+                    var recycleBinGroupElement = _dataSource.PwDatabase.Tree.GetRecycleBin();
                 }
                 catch (Exception)
                 {

@@ -3,22 +3,23 @@ using MetroPass.UI.DataModel;
 using MetroPass.UI.Services;
 using System.ComponentModel.DataAnnotations;
 using Metropass.Core.PCL.Model;
-using Metropass.Core.PCL.Model.Kdb4;
 
 namespace MetroPass.UI.ViewModels
 {
     public class GroupEditViewModel : BaseScreen
     {
-        private readonly IKdbTree _dbTree;
         private readonly INavigationService _navigationService;
 
-        public GroupEditViewModel(IKdbTree dbTree,
+        private readonly IPWDatabaseDataSource _dataSource;
+
+        public GroupEditViewModel(
             INavigationService navigationService,
             IEventAggregator eventAggregator,
-            IPageServices pageServices)
+            IPageServices pageServices,
+            IPWDatabaseDataSource dataSource)
             : base(navigationService, eventAggregator, pageServices)
         {
-            _dbTree = dbTree;
+            _dataSource = dataSource;
             _navigationService = navigationService;
         }
 
@@ -29,7 +30,7 @@ namespace MetroPass.UI.ViewModels
             set
             {
                 _groupId = value;
-                Group = _dbTree.FindGroupByUuid(value);               
+                Group = _dataSource.PwDatabase.Tree.FindGroupByUuid(value);               
             }
         }
 
@@ -94,7 +95,7 @@ namespace MetroPass.UI.ViewModels
             CanSave = false;
             canGoBack = false;
             IsProgressEnabled = true;
-            await PWDatabaseDataSource.Instance.SavePwDatabase();
+            await _dataSource.SavePwDatabase();
             _navigationService.GoBack();
         }
     }

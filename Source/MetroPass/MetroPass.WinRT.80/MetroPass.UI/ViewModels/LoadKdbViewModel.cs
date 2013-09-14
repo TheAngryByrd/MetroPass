@@ -22,12 +22,16 @@ namespace MetroPass.UI.ViewModels
         private readonly IPageServices _pageServices;
         private readonly INavigationService _navigationService;
 
+        private readonly IPWDatabaseDataSource _dataSource;
+
         public LoadKdbViewModel(
             INavigationService navigationService,
             IEventAggregator eventAggregator,
-            IPageServices pageServices)
+            IPageServices pageServices,
+            IPWDatabaseDataSource dataSource)
             : base(navigationService, eventAggregator, pageServices)
         {
+            _dataSource = dataSource;
             _pageServices = pageServices;
             _navigationService = navigationService;
         }
@@ -297,10 +301,10 @@ namespace MetroPass.UI.ViewModels
         {
             var pickDatabase = true;
 
-            if (PWDatabaseDataSource.Instance.StorageFile != null)
+            if (_dataSource.StorageFile != null)
             {
-                Database = PWDatabaseDataSource.Instance.StorageFile;
-                PWDatabaseDataSource.Instance.StorageFile = null;
+                Database = _dataSource.StorageFile;
+                _dataSource.StorageFile = null;
     
                 pickDatabase = false;
             }
@@ -377,9 +381,9 @@ namespace MetroPass.UI.ViewModels
 
             try
             {
-                await PWDatabaseDataSource.Instance.LoadPwDatabase(Database, userKeys, progress);
+                await _dataSource.LoadPwDatabase(Database, userKeys, progress);
                 OpeningDatabase = false;
-                var encodedUUID =PWDatabaseDataSource.Instance.PwDatabase.Tree.Group.UUID;
+                var encodedUUID = _dataSource.PwDatabase.Tree.Group.UUID;
 
                 if (ShouldRedirectToSearch)
                 {

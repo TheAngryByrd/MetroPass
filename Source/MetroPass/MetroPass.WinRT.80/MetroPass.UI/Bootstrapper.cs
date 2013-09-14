@@ -41,8 +41,8 @@ namespace MetroPass.UI
             _ninjectContainer.Kernel.Bind<IEncryptionEngine>().To<WinRTCrypto>();
             _ninjectContainer.Kernel.Bind<IKeyTransformer>().To<MultiThreadedBouncyCastleCrypto>();
             _ninjectContainer.Kernel.Bind<IGZipStreamFactory>().To<GZipFactoryRT>();
+            _ninjectContainer.Kernel.Bind<IPWDatabaseDataSource>().To<PWDatabaseDataSource>().InSingletonScope();
 
-            _ninjectContainer.Kernel.Bind<IKdbTree>().ToMethod(c => PWDatabaseDataSource.Instance.PwDatabase.Tree);
         }
 
         public object GetInstance(Type service, string key)
@@ -53,6 +53,11 @@ namespace MetroPass.UI
                 _ninjectContainer.Kernel.Get<IEventAggregator>().Subscribe(instance);
             }
             return instance;
+        }
+
+        public T GetInstance<T>(string key = null)
+        {
+            return (T)GetInstance(typeof(T), key);
         }
 
          public  IEnumerable<object> GetAllInstances(Type service)

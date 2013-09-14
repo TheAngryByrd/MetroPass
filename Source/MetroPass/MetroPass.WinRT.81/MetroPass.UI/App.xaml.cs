@@ -53,9 +53,10 @@ namespace MetroPass.UI
             var aboutCommand = new SettingsCommand("about", "About MetroPass", a => DialogService.ShowSettingsFlyout<AboutSettingsViewModel>(headerBrush: settingsColor));
             args.Request.ApplicationCommands.Add(aboutCommand);
 
+            var dataSource = _bootstrapper.GetInstance<IPWDatabaseDataSource>();
             var dbOptionsCommand = new SettingsCommand("databaseOptions", "Database Options", h =>
             {
-                if (PWDatabaseDataSource.Instance.PwDatabase != null)
+                if (dataSource.PwDatabase != null)
                 {
                     DialogService.ShowSettingsFlyout<DatabaseSettingsViewModel>( onClosed: SettingsClosed, headerBrush: settingsColor);
                 }
@@ -84,8 +85,9 @@ namespace MetroPass.UI
 
         private void SaveSettings(DatabaseSettingsViewModel settingsViewModel, UIElement _)
         {
+            var dataSource = _bootstrapper.GetInstance<IPWDatabaseDataSource>();
             //The settings view model sets the properties directly on the IKdbTree, so we just need to save the database here
-            PWDatabaseDataSource.Instance.SavePwDatabase();
+            dataSource.SavePwDatabase();
         }
 
         private async void LaunchUrl(string url)
@@ -144,7 +146,8 @@ namespace MetroPass.UI
 
         protected override void OnSearchActivated(Windows.ApplicationModel.Activation.SearchActivatedEventArgs args)
         {
-            if (PWDatabaseDataSource.Instance.PwDatabase == null)
+            var dataSource = _bootstrapper.GetInstance<IPWDatabaseDataSource>();
+            if (dataSource.PwDatabase == null)
             {
                 Initialise();
                 DisplayRootView<LoadKdbView>(args.QueryText);
@@ -157,8 +160,9 @@ namespace MetroPass.UI
         }
 
         protected override void OnFileActivated(FileActivatedEventArgs args)
-        {           
-            PWDatabaseDataSource.Instance.StorageFile = args.Files[0] as StorageFile;
+        {
+            var dataSource = _bootstrapper.GetInstance<IPWDatabaseDataSource>();
+            dataSource.StorageFile = args.Files[0] as StorageFile;
             DisplayRootView<LoadKdbView>();
         }
 

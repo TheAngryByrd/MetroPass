@@ -2,27 +2,31 @@
 using System.Collections.Generic;
 using System.Linq;
 using Caliburn.Micro;
+using MetroPass.UI.DataModel;
 using MetroPass.UI.ViewModels.Messages;
-using Metropass.Core.PCL.Model.Kdb4;
 
 namespace MetroPass.UI.ViewModels
 {
     public class DatabaseSettingsViewModel : Screen, IHandle<RecycleBinSelectedMessage>
     {
-        private readonly IKdbTree _dbTree;
         private readonly IEventAggregator _eventAggregator;
         private readonly List<PwGroupLevels> _availablRecycleBinGroups = new List<PwGroupLevels>();
+        private readonly IPWDatabaseDataSource _dataSource;
+
         public FolderPickerViewModel FolderPickerViewModel { get; set; }
 
-        public DatabaseSettingsViewModel(IKdbTree dbTree, IEventAggregator eventAggregator, FolderPickerViewModel folderPicker)
+        public DatabaseSettingsViewModel(
+            IEventAggregator eventAggregator, 
+            FolderPickerViewModel folderPicker,
+            IPWDatabaseDataSource dataSource)
         {
+            _dataSource = dataSource;
             _eventAggregator = eventAggregator;
-            _dbTree = dbTree;
             this.FolderPickerViewModel = folderPicker;
             this.DisplayName = "Database Options";
 
             folderPicker.Mode = FolderPickerMode.RecycleBin;
-            var recycleBin = FolderPickerViewModel.AvailableGroups.FirstOrDefault(g => g.Group.UUID == _dbTree.MetaData.RecycleBinUUID);
+            var recycleBin = FolderPickerViewModel.AvailableGroups.FirstOrDefault(g => g.Group.UUID == _dataSource.PwDatabase.Tree.MetaData.RecycleBinUUID);
             if (recycleBin.Group != null)
             {
                 FolderPickerViewModel.CurrentFolderUUID = recycleBin.Group.UUID;
@@ -37,21 +41,23 @@ namespace MetroPass.UI.ViewModels
 
         public void Handle(RecycleBinSelectedMessage message)
         {
-            if (_dbTree.MetaData.RecycleBinUUID != message.FolderUUID)
+            var tree = _dataSource.PwDatabase.Tree;
+            if (tree.MetaData.RecycleBinUUID != message.FolderUUID)
             {
-                _dbTree.MetaData.RecycleBinUUID = message.FolderUUID;
-                _dbTree.MetaData.RecycleBinChanged = DateTime.Now.ToFormattedUtcTime();
+                tree.MetaData.RecycleBinUUID = message.FolderUUID;
+                tree.MetaData.RecycleBinChanged = DateTime.Now.ToFormattedUtcTime();
             }
         }
 
         public bool RecycleBinEnabled
         {
-            get { return _dbTree.MetaData.RecycleBinEnabled; }
+
+            get { return _dataSource.PwDatabase.Tree.MetaData.RecycleBinEnabled; }
             set
             {
-                if (_dbTree.MetaData.RecycleBinEnabled != value)
+                if (_dataSource.PwDatabase.Tree.MetaData.RecycleBinEnabled != value)
                 {
-                    _dbTree.MetaData.RecycleBinEnabled = value;
+                    _dataSource.PwDatabase.Tree.MetaData.RecycleBinEnabled = value;
                     NotifyOfPropertyChange(() => RecycleBinEnabled);
                 }
             }

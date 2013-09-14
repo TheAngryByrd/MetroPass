@@ -4,22 +4,23 @@ using Caliburn.Micro;
 using MetroPass.UI.DataModel;
 using MetroPass.UI.Services;
 using Metropass.Core.PCL.Model;
-using Metropass.Core.PCL.Model.Kdb4;
 
 namespace MetroPass.UI.ViewModels
 {
     public class AddGroupViewModel : BaseScreen
     {
         private readonly INavigationService _navigationService;
-        private readonly IKdbTree _dbTree;
 
-        public AddGroupViewModel(IKdbTree dbTree,
+        private readonly IPWDatabaseDataSource _dataSource;
+
+        public AddGroupViewModel(
             INavigationService navigationService,
             IEventAggregator eventAggregator,
-            IPageServices pageServices)
+            IPageServices pageServices,
+            IPWDatabaseDataSource dataSource)
             : base(navigationService, eventAggregator, pageServices)
         {
-            _dbTree = dbTree;
+            _dataSource = dataSource;
             _navigationService = navigationService;
         }
 
@@ -30,7 +31,7 @@ namespace MetroPass.UI.ViewModels
             set
             {
                 _parentGroupID = value;
-                ParentGroup = _dbTree.FindGroupByUuid(value);                
+                ParentGroup = _dataSource.PwDatabase.Tree.FindGroupByUuid(value);                
             }
         }
 
@@ -74,7 +75,7 @@ namespace MetroPass.UI.ViewModels
             var groupElement = GetNewGroupElement();
             var group = new PwGroup(groupElement);
             ParentGroup.AddGroupToDocument(group);
-            await PWDatabaseDataSource.Instance.SavePwDatabase();
+            await _dataSource.SavePwDatabase();
             _navigationService.GoBack();
         }
   
