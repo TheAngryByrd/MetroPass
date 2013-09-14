@@ -21,12 +21,9 @@ namespace MetroPass.WP8.UI.ViewModels
         private readonly INavigationService _navigationService;
         private readonly IPWDatabaseDataSource _databaseSource;
         private readonly ICloudProviderFactory _cloudProvider;
-
         private readonly ICache _cache;
-
         private readonly IDatabaseInfoRepository _databaseInfoRepository;
-
-        private readonly IDialogService _dialogService;
+        private readonly IDialogService _dialogService;        
 
         public EntriesListViewModel(INavigationService navigationService,
             IPWDatabaseDataSource databaseSource,
@@ -46,6 +43,13 @@ namespace MetroPass.WP8.UI.ViewModels
             this.ObservableForProperty(vm => vm.SelectedItem)                
                 .Subscribe(NavigateToEntriesListView);
             Items = new ObservableCollection<PwCommon>();
+        }
+
+        private bool _progressIsVisible = false;
+        public bool ProgressIsVisible
+        {
+            get { return _progressIsVisible; }
+            set { this.RaiseAndSetIfChanged(ref _progressIsVisible, value); }
         }
 
         private void NavigateToEntriesListView(IObservedChange<EntriesListViewModel, PwCommon> obj)
@@ -83,6 +87,7 @@ namespace MetroPass.WP8.UI.ViewModels
 
         public async void Upload()
         {
+            ProgressIsVisible = true;
             var info = await _databaseInfoRepository.GetDatabaseInfo(_cache.DatabaseName);
             var cloudProviderEnum = info.Info.DatabaseCloudProvider;
             if(!string.IsNullOrWhiteSpace(cloudProviderEnum))
@@ -97,7 +102,7 @@ namespace MetroPass.WP8.UI.ViewModels
             {
                 _dialogService.ShowDialogBox("I'm sorry Dave, I'm afraid I can't do that", "You can only upload a file that has been previously downloaded from skydrive or dropbox");
             }
-            
+            ProgressIsVisible = false;
         }
 
         public ObservableCollection<PwCommon> Items
