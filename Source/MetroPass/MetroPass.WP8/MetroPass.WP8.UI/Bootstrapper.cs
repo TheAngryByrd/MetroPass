@@ -11,6 +11,7 @@ using MetroPass.UI.DataModel;
 using MetroPass.WP8.Infrastructure.Compression;
 using MetroPass.WP8.UI.Services.Cloud;
 using MetroPass.WP8.UI.Services.UI;
+using MetroPass.WP8.UI.Utils;
 using Metropass.Core.PCL.Compression;
 using Metropass.Core.PCL.Hashing;
 using MetroPass.WP8.Infrastructure.Hashing;
@@ -66,6 +67,7 @@ namespace MetroPass.WP8.UI
             _container.PerRequest<IKeyTransformer, MultiThreadedBouncyCastleCrypto>();
             _container.PerRequest<IGZipStreamFactory, GZipFactoryWP8>();
             _container.Singleton<IPWDatabaseDataSource, PWDatabaseDataSource>();
+            _container.Singleton<ICache, Cache>();
         }
   
         private void AddViewModels() {

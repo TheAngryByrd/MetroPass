@@ -15,13 +15,18 @@ namespace MetroPass.WP8.UI.Services.Cloud.Dropbox
 
         private DropNetClient _client;
 
-        public DropboxClient()
+        public DropboxClient(ICache cache)
         {
             _client = new DropNetClient(
               ApiKeys.DropBoxKey, 
               ApiKeys.DropBoxSecret,
-              Cache.Instance.DropboxUserToken,
-              Cache.Instance.DropboxUserSecret);
+              cache.DropboxUserToken,
+              cache.DropboxUserSecret);
+        }
+
+        public async Task Upload(string path, string fileName, Stream file)
+        {
+            await _client.Upload(path, fileName, file);
         }
 
         public async Task<IEnumerable<ICloudItem>> GetItems(string path)
@@ -42,7 +47,7 @@ namespace MetroPass.WP8.UI.Services.Cloud.Dropbox
         }
 
         public async Task<Stream> DownloadItem(string path)
-        {
+        {            
             var bytes = await _client.GetFile(path);
             return new MemoryStream(bytes);
         }

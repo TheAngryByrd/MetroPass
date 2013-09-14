@@ -18,18 +18,19 @@ namespace MetroPass.WP8.UI.ViewModels
         private readonly INavigationService _navigationService;
         private readonly ICanSHA256Hash _hasher;
         private readonly IDatabaseInfoRepository _databaseInfoRepository;
-
         private readonly IDialogService _dialogService;
-
         private readonly IPWDatabaseDataSource _databaseSource;
+        private readonly ICache _cache;
 
         public OpenDatabaseViewModel(
             INavigationService navigationService,
             IDatabaseInfoRepository databaseInfoRepository,
             ICanSHA256Hash hasher,
             IDialogService dialogService,
-            IPWDatabaseDataSource databaseSource)
+            IPWDatabaseDataSource databaseSource,
+            ICache cache)
         {
+            _cache = cache;
             _databaseSource = databaseSource;
             _dialogService = dialogService;
             _databaseInfoRepository = databaseInfoRepository;
@@ -65,7 +66,7 @@ namespace MetroPass.WP8.UI.ViewModels
 
         protected async override void OnActivate()
         {
-            _databaseInfo = await _databaseInfoRepository.GetDatabaseInfo(Cache.Instance.DatabaseName);
+            _databaseInfo = await _databaseInfoRepository.GetDatabaseInfo(_cache.DatabaseName);
 
             DatabaseName = _databaseInfo.Info.DatabasePath;
             if (!string.IsNullOrWhiteSpace(_databaseInfo.Info.KeyFilePath))
@@ -131,7 +132,7 @@ namespace MetroPass.WP8.UI.ViewModels
         public ReactiveCommand GetKeyFileCommand { get; private set; }
         private void GetKeyFile(object obj)
         {
-            Cache.Instance.DownloadFileNavigationCache = new DownloadFileNavigationCache
+            _cache.DownloadFileNavigationCache = new DownloadFileNavigationCache
             {
                 DatabaseName = DatabaseName,
                 DownloadType = DownloadType.KeyFile,

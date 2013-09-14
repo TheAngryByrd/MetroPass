@@ -21,6 +21,8 @@ namespace MetroPass.WP8.UI.ViewModels
         private readonly ICloudProviderFactory _cloudFactory;
         private ICloudProviderAdapter _cloudProvider;
 
+        private readonly ICache _cache;
+
         public BrowseCloudFilesViewModel()
         {
             if (Execute.InDesignMode)
@@ -41,8 +43,10 @@ namespace MetroPass.WP8.UI.ViewModels
             INavigationService navigationService, 
             IDialogService dialogService,
             IDatabaseInfoRepository databaseInfoRepository,
-            ICloudProviderFactory factory)
+            ICloudProviderFactory factory,
+            ICache cache)
         {
+            _cache = cache;
             _cloudFactory = factory;
             _navigationService = navigationService;
             _dialogService = dialogService;
@@ -117,23 +121,23 @@ namespace MetroPass.WP8.UI.ViewModels
             { 
                 if (downloadStream != null)
                 {
-                    if (Cache.Instance.DownloadFileNavigationCache.DownloadType == DownloadType.Database)
+                    if (_cache.DownloadFileNavigationCache.DownloadType == DownloadType.Database)
                         await _databaseInfoRepository
                             .SaveDatabaseFromDatasouce(
                             cloudItem.Name,
                             CloudProvider.ToString(),
                             cloudItem.ID,
                             downloadStream);
-                    else if (Cache.Instance.DownloadFileNavigationCache.DownloadType == DownloadType.KeyFile)
+                    else if (_cache.DownloadFileNavigationCache.DownloadType == DownloadType.KeyFile)
                         await _databaseInfoRepository
                             .SaveKeyFileFromDatasouce(
-                            Cache.Instance.DownloadFileNavigationCache.DatabaseName, 
+                            _cache.DownloadFileNavigationCache.DatabaseName, 
                             cloudItem.Name,
                             downloadStream);
                 }
             }
-            ProgressIsVisible = false;           
-            Type returnNavigation = Type.GetType(Cache.Instance.DownloadFileNavigationCache.ReturnUrl);
+            ProgressIsVisible = false;
+            Type returnNavigation = Type.GetType(_cache.DownloadFileNavigationCache.ReturnUrl);
             _navigationService.Navigate(GetUri(returnNavigation));
         }
   

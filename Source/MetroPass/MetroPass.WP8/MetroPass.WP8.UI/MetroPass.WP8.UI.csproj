@@ -152,6 +152,7 @@
     <Compile Include="Services\UI\DialogService.cs" />
     <Compile Include="Services\UI\IDialogService.cs" />
     <Compile Include="Utils\Cache.cs" />
+    <Compile Include="Utils\ICache.cs" />
     <Compile Include="Utils\PropertySupport.cs" />
     <Compile Include="Utils\ReactiveUINavigateExtentions.cs" />
     <Compile Include="Resources\AppResources.Designer.cs">
@@ -270,6 +271,7 @@
     <Content Include="Images\add.png" />
     <Content Include="Images\AddFolder.png" />
     <Content Include="Images\appbar.cloud.download.png" />
+    <Content Include="Images\appbar.cloud.upload.png" />
     <Content Include="Images\Logos\dropbox.png" />
     <Content Include="Images\Logos\skydrive.png" />
     <Content Include="Images\save.png" />

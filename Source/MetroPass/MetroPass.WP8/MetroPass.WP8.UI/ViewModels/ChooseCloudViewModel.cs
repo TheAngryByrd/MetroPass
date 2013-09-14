@@ -24,6 +24,8 @@ namespace MetroPass.WP8.UI.ViewModels
         private readonly IDialogService _dialogService;        
         private readonly IPWDatabaseDataSource _databaseSource;
 
+        private readonly ICache _cache;
+
         public ReactiveCommand NavigateToSkyDriveCommand { get; set; }
 
         public ReactiveCommand NavigateToDropboxCommand { get; set; }
@@ -35,8 +37,10 @@ namespace MetroPass.WP8.UI.ViewModels
             IDatabaseInfoRepository databaseInfoRepository,
             ICanSHA256Hash hasher,
             IDialogService dialogService,
-            IPWDatabaseDataSource databaseSource)
+            IPWDatabaseDataSource databaseSource,
+            ICache cache)
         {
+            _cache = cache;
             _databaseSource = databaseSource;
             _dialogService = dialogService;
             _databaseInfoRepository = databaseInfoRepository;
@@ -55,14 +59,14 @@ namespace MetroPass.WP8.UI.ViewModels
 
         protected override void OnActivate()
         {
-            DemoButtonIsVisible = Cache.Instance.DownloadFileNavigationCache.DownloadType == DownloadType.Database;
+            DemoButtonIsVisible = _cache.DownloadFileNavigationCache.DownloadType == DownloadType.Database;
         }
 
         public string AddType 
         { 
             get
             {
-                return Cache.Instance.DownloadFileNavigationCache.DownloadType.ToString().ToLower();
+                return _cache.DownloadFileNavigationCache.DownloadType.ToString().ToLower();
             }
         }
 

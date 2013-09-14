@@ -19,6 +19,8 @@ namespace MetroPass.WP8.UI.ViewModels
         private readonly INavigationService _navigationService;
 
 
+        private readonly ICache _cache;
+
         public LiveConnectSession Session { get; internal set; }
 
         public ReactiveCommand LoginCommand { get; set; }
@@ -29,8 +31,10 @@ namespace MetroPass.WP8.UI.ViewModels
             set { this.RaiseAndSetIfChanged(ref _liveLoginResult, value); }
         }
         
-        public SkydriveAccessViewModel(INavigationService navigationService)
+        public SkydriveAccessViewModel(INavigationService navigationService,
+            ICache cache)
         {
+            _cache = cache;
             _navigationService = navigationService;
             this.ObservableForProperty(vm => vm.LiveLoginResult).Subscribe(LiveLoginResultChanged); 
             
@@ -90,7 +94,7 @@ namespace MetroPass.WP8.UI.ViewModels
 
             if (loginResult.Status == LiveConnectSessionStatus.Connected)
             {
-                Cache.Instance.SkydriveSession = loginResult.Session;
+                _cache.SkydriveSession = loginResult.Session;
                 _navigationService.UriFor<BrowseCloudFilesViewModel>()
                     .WithParam(vm => vm.CloudProvider, CloudProvider.SkyDrive)
                     .WithParam(vm => vm.NavigationUrl, "/me/skydrive")
@@ -98,7 +102,7 @@ namespace MetroPass.WP8.UI.ViewModels
             }
             else
             {
-                Cache.Instance.SkydriveSession = null;
+                _cache.SkydriveSession = null;
                 SignInIsEnabled = true;
             }        
         }

@@ -16,11 +16,13 @@ namespace MetroPass.WP8.UI.ViewModels
         string CallBack = "http://metropass.azurewebsites.net/";
 
         private DropNetClient _client;
-
         private readonly INavigationService _navigationService;
+        private readonly ICache _cache;
 
-        public DropboxAccessViewModel(INavigationService navigationService)
+        public DropboxAccessViewModel(INavigationService navigationService,
+            ICache cache)
         {
+            _cache = cache;
             _navigationService = navigationService;
             _client = new DropNetClient(
                 ApiKeys.DropBoxKey, ApiKeys.DropBoxSecret);
@@ -71,8 +73,8 @@ namespace MetroPass.WP8.UI.ViewModels
         {
             var accessToken = await _client.GetAccessToken();
 
-            Cache.Instance.DropboxUserToken = accessToken.Token;
-            Cache.Instance.DropboxUserSecret = accessToken.Secret;
+            _cache.DropboxUserToken = accessToken.Token;
+            _cache.DropboxUserSecret = accessToken.Secret;
 
             _navigationService.UriFor<BrowseCloudFilesViewModel>()
                     .WithParam(vm => vm.CloudProvider, CloudProvider.Dropbox)

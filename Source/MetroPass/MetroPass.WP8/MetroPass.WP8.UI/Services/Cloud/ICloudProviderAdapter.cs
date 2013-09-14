@@ -8,5 +8,6 @@ namespace MetroPass.WP8.UI.Services.Cloud
     {
         Task<IEnumerable<ICloudItem>> GetItems(string path);
         Task<Stream> DownloadItem(string path);
+        Task Upload(string path, string fileName, Stream file);
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
@@ -10,9 +11,14 @@ namespace MetroPass.WP8.UI.Services.Cloud.Skydrive
     {
         private LiveConnectClient _liveClient;
 
-        public SkyDriveClient()
+        public SkyDriveClient(ICache cache)
         {
-            _liveClient = new LiveConnectClient(Cache.Instance.SkydriveSession);
+            _liveClient = new LiveConnectClient(cache.SkydriveSession);
+        }
+
+        public async Task Upload(string path, string fileName, Stream file)
+        {
+            await _liveClient.UploadAsync(path, fileName, file, OverwriteOption.Overwrite);
         }
 
         public async Task<IEnumerable<ICloudItem>> GetItems(string path)
@@ -23,6 +29,7 @@ namespace MetroPass.WP8.UI.Services.Cloud.Skydrive
 
         public async Task<Stream> DownloadItem(string path)
         {
+           
             var operationResult= await _liveClient.DownloadAsync(path + "/content");
             return operationResult.Stream;
         }

@@ -1,25 +1,29 @@
 ﻿using System.Collections.ObjectModel;
 using MetroPass.UI.DataModel;
+using MetroPass.WP8.UI.Services.Cloud;
 using Metropass.Core.PCL.Model;
 using ReactiveCaliburn;
 using ReactiveUI;
 using Caliburn.Micro;
 using System;
+using MetroPass.WP8.UI.Utils;
 
 namespace MetroPass.WP8.UI.ViewModels
 {
    
 
     public class EntriesListViewModel : ReactiveScreen
-    {      
+    {
 
         private readonly INavigationService _navigationService;
-
         private readonly IPWDatabaseDataSource _databaseSource;
+        private readonly ICloudProviderFactory _cloudProvider;
 
         public EntriesListViewModel(INavigationService navigationService,
-            IPWDatabaseDataSource databaseSource)
+            IPWDatabaseDataSource databaseSource,
+            ICloudProviderFactory cloudProvider)
         {
+            _cloudProvider = cloudProvider;
             _databaseSource = databaseSource;
             _navigationService = navigationService;   
             this.ObservableForProperty(vm => vm.GroupId)
@@ -61,6 +65,12 @@ namespace MetroPass.WP8.UI.ViewModels
                    .WithParam(vm => vm.ParentGroupUuid, Group.UUID)
                    .Navigate();
         }
+
+        public void Upload()
+        {
+            //_cloudProvider.GetCloudProvider()
+        }
+
         public ObservableCollection<PwCommon> Items
         {
             get;

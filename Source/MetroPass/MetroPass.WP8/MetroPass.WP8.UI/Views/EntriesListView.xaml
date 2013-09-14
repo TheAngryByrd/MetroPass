@@ -185,7 +185,11 @@
                 <bindableAppBar:BindableAppBarButton 
                            cal:Message.Attach="[Event Click] = [Action AddEntry()]"
                             
-                            Text="New Entry" IconUri="/Images/add.png" />              
+                            Text="New Entry" IconUri="/Images/add.png" />      
+                <bindableAppBar:BindableAppBarButton 
+                           cal:Message.Attach="[Event Click] = [Action Upload()]"
+                            
+                            Text="New Entry" IconUri="/Images/appbar.cloud.upload.png" />              
     
             </bindableAppBar:BindableAppBar>
         </Grid>

@@ -15,9 +15,13 @@ namespace MetroPass.WP8.UI.ViewModels
         private readonly INavigationService _navService;
         private readonly IDatabaseInfoRepository _databaseInfoRepository;
 
-        public DatabaseListViewModel(INavigationService navService, 
-            IDatabaseInfoRepository databaseInfoRepository)
+        private readonly ICache _cache;
+
+        public DatabaseListViewModel(INavigationService navService,
+            IDatabaseInfoRepository databaseInfoRepository,
+            ICache cache)
         {
+            _cache = cache;
             _databaseInfoRepository = databaseInfoRepository;
 
             _navService = navService;
@@ -31,7 +35,7 @@ namespace MetroPass.WP8.UI.ViewModels
 
         private void NavigateToOpenDatabase(IObservedChange<DatabaseListViewModel, DatabaseItemViewModel> obj)
         {
-            Cache.Instance.DatabaseName = obj.Value.DatabaseInfo.Info.DatabasePath;
+            _cache.DatabaseName = obj.Value.DatabaseInfo.Info.DatabasePath;
             _navService.UriFor<OpenDatabaseViewModel>()
                 .Navigate();
         }
@@ -51,7 +55,7 @@ namespace MetroPass.WP8.UI.ViewModels
 
         public void AddDatabase()
         {
-            Cache.Instance.DownloadFileNavigationCache = new DownloadFileNavigationCache
+            _cache.DownloadFileNavigationCache = new DownloadFileNavigationCache
             {                
                 DownloadType = DownloadType.Database,
                 ReturnUrl = this.GetType().FullName
