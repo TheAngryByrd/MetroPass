@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using MetroPass.UI.DataModel;
+using MetroPass.WP8.UI.DataModel;
 using MetroPass.WP8.UI.Services.Cloud;
 using Metropass.Core.PCL.Model;
 using ReactiveCaliburn;
@@ -7,6 +8,8 @@ using ReactiveUI;
 using Caliburn.Micro;
 using System;
 using MetroPass.WP8.UI.Utils;
+using System.IO;
+using MetroPass.WP8.UI.Services.UI;
 
 namespace MetroPass.WP8.UI.ViewModels
 {
@@ -19,10 +22,22 @@ namespace MetroPass.WP8.UI.ViewModels
         private readonly IPWDatabaseDataSource _databaseSource;
         private readonly ICloudProviderFactory _cloudProvider;
 
+        private readonly ICache _cache;
+
+        private readonly IDatabaseInfoRepository _databaseInfoRepository;
+
+        private readonly IDialogService _dialogService;
+
         public EntriesListViewModel(INavigationService navigationService,
             IPWDatabaseDataSource databaseSource,
-            ICloudProviderFactory cloudProvider)
+            ICloudProviderFactory cloudProvider,
+            ICache cache,
+            IDatabaseInfoRepository databaseInfoRepository,
+            IDialogService dialogService)
         {
+            _dialogService = dialogService;
+            _databaseInfoRepository = databaseInfoRepository;
+            _cache = cache;
             _cloudProvider = cloudProvider;
             _databaseSource = databaseSource;
             _navigationService = navigationService;   
@@ -66,9 +81,23 @@ namespace MetroPass.WP8.UI.ViewModels
                    .Navigate();
         }
 
-        public void Upload()
+        public async void Upload()
         {
-            //_cloudProvider.GetCloudProvider()
+            var info = await _databaseInfoRepository.GetDatabaseInfo(_cache.DatabaseName);
+            var cloudProviderEnum = info.Info.DatabaseCloudProvider;
+            if(!string.IsNullOrWhiteSpace(cloudProviderEnum))
+            {
+                var cloudProvider = _cloudProvider.GetCloudProvider(cloudProviderEnum);
+                using (var fileToWrite = await _databaseSource.StorageFile.OpenStreamForReadAsync())
+                {
+                    await cloudProvider.Upload(info.Info.DatabaseCloudPath, _cache.DatabaseName, fileToWrite);
+                }
+            }
+            else
+            {
+                _dialogService.ShowDialogBox("I'm sorry Dave, I'm afraid I can't do that", "You can only upload a file that has been previously downloaded from skydrive or dropbox");
+            }
+            
         }
 
         public ObservableCollection<PwCommon> Items

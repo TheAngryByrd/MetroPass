@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using MetroPass.WP8.UI.Services.Cloud.Skydrive;
 using MetroPass.WP8.UI.Services.Cloud.Dropbox;
 using MetroPass.WP8.UI.Utils;
@@ -9,9 +10,21 @@ namespace MetroPass.WP8.UI.Services.Cloud
     {
         private readonly ICache _cache;
 
+        private Dictionary<string, CloudProvider> enums = new Dictionary<string, CloudProvider>
+        {
+            { CloudProvider.Dropbox.ToString(), CloudProvider.Dropbox },
+            { CloudProvider.SkyDrive.ToString(), CloudProvider.SkyDrive }
+        };
+
         public CloudProviderFactory(ICache cache)
         {
             _cache = cache;
+        }
+
+
+        public ICloudProviderAdapter GetCloudProvider(string cloudProvider)
+        {
+            return GetCloudProvider(enums[cloudProvider]);
         }
 
         public ICloudProviderAdapter GetCloudProvider(CloudProvider cloudProvider)
