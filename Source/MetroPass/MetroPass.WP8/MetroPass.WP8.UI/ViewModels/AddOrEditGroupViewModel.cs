@@ -11,11 +11,12 @@ namespace MetroPass.WP8.UI.ViewModels
     public class AddOrEditGroupViewModel : ReactiveScreen
     {
         private readonly INavigationService _navigationService;
+        private readonly IPWDatabaseDataSource _databaseSource;
 
-        
-
-        public AddOrEditGroupViewModel(INavigationService navigationService)
-        {            
+        public AddOrEditGroupViewModel(INavigationService navigationService,
+            IPWDatabaseDataSource databaseSource)
+        { 
+            _databaseSource = databaseSource;
             _navigationService = navigationService;
             this.ObservableForPropertyNotNull(vm => vm.GroupUuid).Subscribe(GetGroup);
             this.ObservableForPropertyNotNull(vm => vm.ParentGroupUuid).Subscribe(GetParentGroup);
@@ -59,12 +60,12 @@ namespace MetroPass.WP8.UI.ViewModels
 
         private void GetGroup(IObservedChange<AddOrEditGroupViewModel, string> obj)
         {
-            PwGroup = PWDatabaseDataSource.Instance.PwDatabase.Tree.FindGroupByUuid(GroupUuid);
+            PwGroup = _databaseSource.PwDatabase.Tree.FindGroupByUuid(GroupUuid);
         }
 
         private void GetParentGroup(IObservedChange<AddOrEditGroupViewModel, string> obj)
         {
-            ParentGroup = PWDatabaseDataSource.Instance.PwDatabase.Tree.FindGroupByUuid(ParentGroupUuid);
+            ParentGroup = _databaseSource.PwDatabase.Tree.FindGroupByUuid(ParentGroupUuid);
         }
 
         private string _groupName;
@@ -99,7 +100,7 @@ namespace MetroPass.WP8.UI.ViewModels
 
             PwGroup.Name = GroupName;
 
-            await PWDatabaseDataSource.Instance.SavePwDatabase();
+            await _databaseSource.SavePwDatabase();
             _navigationService.GoBack();
         }
     }

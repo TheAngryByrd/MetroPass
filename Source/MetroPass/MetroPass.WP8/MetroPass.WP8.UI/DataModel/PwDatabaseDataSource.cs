@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 using MetroPass.WP8.Infrastructure.Compression;
 using MetroPass.WP8.Infrastructure.Cryptography;
 using MetroPass.WP8.Infrastructure.Hashing;
+using Metropass.Core.PCL.Compression;
 using Metropass.Core.PCL.Encryption;
+using Metropass.Core.PCL.Hashing;
 using Metropass.Core.PCL.Model;
 using Metropass.Core.PCL.Model.Kdb4.Keys;
 using Metropass.Core.PCL.Model.Kdb4.Reader;
@@ -15,16 +17,43 @@ using PCLStorage;
 
 namespace MetroPass.WP8.UI.DataModel
 {
-    public sealed class PWDatabaseDataSource
+    public interface IPWDatabaseDataSource
     {
-        private static PWDatabaseDataSource instance = new PWDatabaseDataSource();
-        private PWDatabaseDataSource()
+        IStorageFile StorageFile { get; set; }
+
+        PwDatabase PwDatabase { get; set; }
+
+        Task LoadPwDatabase(IStorageFile pwDatabaseFile, IList<IUserKey> userKeys);
+
+        Task LoadPwDatabase(IStorageFile pwDatabaseFile, IList<IUserKey> userKeys, IProgress<double> percentComplete);
+
+        Task SavePwDatabase();
+    }
+
+    public sealed class PWDatabaseDataSource : IPWDatabaseDataSource
+    {
+       
+        private readonly IEncryptionEngine _encryptionEngine;
+
+        private readonly IKeyTransformer _keyTransformer;
+
+        private readonly IGZipStreamFactory _gzipStreamFactory;
+
+        private readonly ICanSHA256Hash _hasher;
+
+        public PWDatabaseDataSource(IEncryptionEngine encryptionEngine,
+            IKeyTransformer keyTransformer,
+            IGZipStreamFactory gzipStreamFactory,
+            ICanSHA256Hash hasher)
         {
-
+            _hasher = hasher;
+            _gzipStreamFactory = gzipStreamFactory;
+            _keyTransformer = keyTransformer;
+            _encryptionEngine = encryptionEngine;
         }
-        public static PWDatabaseDataSource Instance { get { return instance; } }
 
-        public IStorageFile StorageFile;
+        public IStorageFile StorageFile { get; set; }
+
         private PwDatabase _pwDatabase;
         public PwDatabase PwDatabase
         {
@@ -40,11 +69,10 @@ namespace MetroPass.WP8.UI.DataModel
         public async Task LoadPwDatabase(IStorageFile pwDatabaseFile, IList<IUserKey> userKeys, IProgress<double> percentComplete)
         {
             StorageFile = pwDatabaseFile;
-            var factory = new KdbReaderFactory(
-                new ManagedCrypto(),
-                new MultithreadedManagedCrypto(),
-                new SHA256HahserWP8(),
-                new GZipFactoryWP8());
+            var factory = new KdbReaderFactory(_encryptionEngine,
+                      _keyTransformer,
+                      _hasher,
+                      _gzipStreamFactory);
 
             var file = await pwDatabaseFile.OpenAsync(FileAccessMode.Read);
 
@@ -55,15 +83,14 @@ namespace MetroPass.WP8.UI.DataModel
 
         public async Task SavePwDatabase()
         {
-            var factory = new KdbWriterFactory(new ManagedCrypto(),
-                      new MultithreadedManagedCrypto(),
-                      new SHA256HahserWP8(),
-                      new GZipFactoryWP8());
+            var factory = new KdbWriterFactory(_encryptionEngine,
+                      _keyTransformer,
+                      _hasher,
+                      _gzipStreamFactory);
 
             var writer = factory.CreateWriter(PwDatabase.Tree);            
             
             await writer.Write(PwDatabase, new WP8File(StorageFile));
-
         }
     } 
 }

@@ -20,10 +20,9 @@ namespace MetroPass.WP8.UI.ViewModels
         private readonly INavigationService _navigationService;
         private readonly ICanSHA256Hash _hasher;
         private readonly IDatabaseInfoRepository _databaseInfoRepository;
+        private readonly IDialogService _dialogService;        
+        private readonly IPWDatabaseDataSource _databaseSource;
 
-        private readonly IDialogService _dialogService;
-
-        
         public ReactiveCommand NavigateToSkyDriveCommand { get; set; }
 
         public ReactiveCommand NavigateToDropboxCommand { get; set; }
@@ -34,8 +33,10 @@ namespace MetroPass.WP8.UI.ViewModels
             INavigationService navigationService,
             IDatabaseInfoRepository databaseInfoRepository,
             ICanSHA256Hash hasher,
-            IDialogService dialogService)
+            IDialogService dialogService,
+            IPWDatabaseDataSource databaseSource)
         {
+            _databaseSource = databaseSource;
             _dialogService = dialogService;
             _databaseInfoRepository = databaseInfoRepository;
             _hasher = hasher;
@@ -88,13 +89,13 @@ namespace MetroPass.WP8.UI.ViewModels
 						0xBE, 0x58, 0x05, 0x21, 0x6A, 0xFC, 0x5A, 0xFF });
 
 
-            PWDatabaseDataSource.Instance.PwDatabase = pwDatabase;
+            _databaseSource.PwDatabase = pwDatabase;
 
             await _databaseInfoRepository.SaveDatabaseFromDatasouce("demo.kdbx", "", "", new MemoryStream());
             var databaseInfo = await _databaseInfoRepository.GetDatabaseInfo("demo.kdbx");
 
-            PWDatabaseDataSource.Instance.StorageFile = await databaseInfo.GetDatabase();
-            await PWDatabaseDataSource.Instance.SavePwDatabase();
+            _databaseSource.StorageFile = await databaseInfo.GetDatabase();
+            await _databaseSource.SavePwDatabase();
 
             _dialogService.ShowDialogBox("Demo information", "The password to the database is 'demo'");
 

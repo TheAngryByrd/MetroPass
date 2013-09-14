@@ -11,8 +11,11 @@ namespace MetroPass.WP8.UI.ViewModels
     {
         private PwGroup _pwGroup;
 
-        public AddOrEditEntryViewModel()
+        private readonly IPWDatabaseDataSource _databaserSource;
+
+        public AddOrEditEntryViewModel(IPWDatabaseDataSource databaserSource)
         {
+            _databaserSource = databaserSource;
         }
 
         protected override void OnActivate()
@@ -68,7 +71,7 @@ namespace MetroPass.WP8.UI.ViewModels
 
         public void GetEntry()
         {
-            PwGroup = PWDatabaseDataSource.Instance.PwDatabase.Tree.FindGroupByUuid(ParentGroupUuid);
+            PwGroup = _databaserSource.PwDatabase.Tree.FindGroupByUuid(ParentGroupUuid);
             if (EntryUuid != null)
             {
                 PwEntry = PwGroup.Entries.SingleOrDefault(e => e.UUID == EntryUuid);
@@ -150,7 +153,7 @@ namespace MetroPass.WP8.UI.ViewModels
             PwEntry.Notes = Notes.EmptyIfNull();
             PwEntry.AddCustomFields(fields);
 
-            PWDatabaseDataSource.Instance.SavePwDatabase();
+            _databaserSource.SavePwDatabase();
         }
     }
 

@@ -20,16 +20,16 @@ namespace MetroPass.WP8.UI.ViewModels
 
         private readonly IDialogService _dialogService;
 
-       
-
-        
+        private readonly IPWDatabaseDataSource _databaseSource;
 
         public OpenDatabaseViewModel(
             INavigationService navigationService,
             IDatabaseInfoRepository databaseInfoRepository,
             ICanSHA256Hash hasher,
-            IDialogService dialogService)
+            IDialogService dialogService,
+            IPWDatabaseDataSource databaseSource)
         {
+            _databaseSource = databaseSource;
             _dialogService = dialogService;
             _databaseInfoRepository = databaseInfoRepository;
             _hasher = hasher;
@@ -102,9 +102,9 @@ namespace MetroPass.WP8.UI.ViewModels
 
             try
             {
-                await PWDatabaseDataSource.Instance.LoadPwDatabase(file, listOfKeys,new Progress<double>(v => Progress = v));
+                await _databaseSource.LoadPwDatabase(file, listOfKeys, new Progress<double>(v => Progress = v));
 
-                var rootUUID = PWDatabaseDataSource.Instance.PwDatabase.Tree.Group.UUID;                
+                var rootUUID = _databaseSource.PwDatabase.Tree.Group.UUID;                
 
                 _navigationService.UriFor<EntriesListViewModel>().
                     WithParam(p => p.GroupId, rootUUID).Navigate();
