@@ -27,6 +27,8 @@ namespace MetroPass.UI
         private const string PrivacyPolicyUrl = "http://metropass.azurewebsites.net/Privacy-Policy";
         private const string SupportUrl = "https://metropasswin8.uservoice.com";
 
+        private Bootstrapper _bootstrapper;
+
         public App()
         {
             this.InitializeComponent();
@@ -106,42 +108,28 @@ namespace MetroPass.UI
 
         protected override void Configure()
         {
-            base.Configure();
-
-            _ninjectContainer = new NinjectContainer();
-            _ninjectContainer.RegisterWinRTServices();
-
-            _ninjectContainer.Kernel.Bind<IPageServices>().To<PageServices>();
-            _ninjectContainer.Kernel.Bind<IPasswordGenerator>().To<PasswordGeneratorRT>();
-  
-            _ninjectContainer.Kernel.Bind<ILockingService>().To<LockingService>();
-            _ninjectContainer.Kernel.Bind<IClipboard>().To<MetroClipboard>();
-            _ninjectContainer.Kernel.Bind<IKdbTree>().ToMethod(c => PWDatabaseDataSource.Instance.PwDatabase.Tree);
+            _bootstrapper = new Bootstrapper();
+            _bootstrapper.Configure();
         }
 
         protected override object GetInstance(Type service, string key)
         {    
-            var instance = _ninjectContainer.Kernel.Get(service, key);
-            if (instance is IHandle)
-            {
-                _ninjectContainer.Kernel.Get<IEventAggregator>().Subscribe(instance);
-            }
-            return instance;
+            return _bootstrapper.GetInstance(service, key);
         }
 
         protected override IEnumerable<object> GetAllInstances(Type service)
         {
-            return _ninjectContainer.Kernel.GetAll(service);
+            return _bootstrapper.GetAllInstances(service);
         }
 
         protected override void BuildUp(object instance)
         {
-            _ninjectContainer.Kernel.Inject(instance);
+            _bootstrapper.BuildUp(instance);
         }
 
         protected override void PrepareViewFirst(Frame rootFrame)
         {
-            _ninjectContainer.RegisterNavigationService(rootFrame);
+            _bootstrapper.PrepareViewFirst(rootFrame);
         }
 
         protected override void OnLaunched(LaunchActivatedEventArgs args)

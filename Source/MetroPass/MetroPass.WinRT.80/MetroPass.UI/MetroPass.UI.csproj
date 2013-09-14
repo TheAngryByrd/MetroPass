@@ -138,6 +138,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Bootstrapper.cs" />
     <Compile Include="Common\Converters\GridViewGroupHeaderStyleConverter.cs" />
     <Compile Include="Common\Converters\HasValueToVisibilityCoverter.cs" />
     <Compile Include="Common\EntryGroupListViewHeaderTemplateSelector.cs" />
