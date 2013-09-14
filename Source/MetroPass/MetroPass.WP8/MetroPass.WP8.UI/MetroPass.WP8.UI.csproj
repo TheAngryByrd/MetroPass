@@ -136,6 +136,7 @@
     <Compile Include="DataModel\DatabaseInfo.cs" />
     <Compile Include="DataModel\DatabaseInfoRepository.cs" />
     <Compile Include="DataModel\IDatabaseInfoRepository.cs" />
+    <Compile Include="DataModel\IPWDatabaseDataSource.cs" />
     <Compile Include="DataModel\PwDatabaseDataSource.cs" />
     <Compile Include="LocalizedStrings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

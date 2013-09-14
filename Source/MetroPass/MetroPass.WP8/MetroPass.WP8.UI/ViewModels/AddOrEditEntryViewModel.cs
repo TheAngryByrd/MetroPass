@@ -1,6 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Linq;
-using MetroPass.WP8.UI.DataModel;
+using MetroPass.UI.DataModel;
 using Metropass.Core.PCL.Model;
 using ReactiveCaliburn;
 using ReactiveUI;

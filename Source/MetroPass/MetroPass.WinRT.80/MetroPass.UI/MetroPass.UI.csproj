@@ -123,6 +123,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\MetroPass.WP8\MetroPass.WP8.UI\DataModel\IPWDatabaseDataSource.cs">
+      <Link>DataModel\IPWDatabaseDataSource.cs</Link>
+    </Compile>
     <Compile Include="..\..\MetroPass.WP8\MetroPass.WP8.UI\ReactiveCaliburn\ReactivePropertyChangedBase.cs">
       <Link>ReactiveCaliburn\ReactivePropertyChangedBase.cs</Link>
     </Compile>
@@ -141,7 +144,7 @@
     <Compile Include="Common\NinjectContainer.cs" />
     <Compile Include="Common\Converters\StringFormatConverter.cs" />
     <Compile Include="Common\TypedTemplateSelector.cs" />
-    <Compile Include="DataModel\KdbDatasource.cs" />
+    <Compile Include="DataModel\PWDatabaseDataSource.cs" />
     <Compile Include="Common\EnumerableExtensions.cs" />
     <Compile Include="DataModel\SettingsModel.cs" />
     <Compile Include="Dialogs\DialogService.cs" />

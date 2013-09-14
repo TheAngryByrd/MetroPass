@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Navigation;
 using Caliburn.Micro;
 using Caliburn.Micro.BindableAppBar;
+using MetroPass.UI.DataModel;
 using MetroPass.WP8.Infrastructure.Compression;
 using MetroPass.WP8.UI.Services.Cloud;
 using MetroPass.WP8.UI.Services.UI;

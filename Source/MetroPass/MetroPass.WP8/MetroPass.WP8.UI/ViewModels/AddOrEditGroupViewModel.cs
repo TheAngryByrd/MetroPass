@@ -1,5 +1,5 @@
 ﻿using System;
-using MetroPass.WP8.UI.DataModel;
+using MetroPass.UI.DataModel;
 using MetroPass.WP8.UI.Utils;
 using Metropass.Core.PCL.Model;
 using ReactiveCaliburn;

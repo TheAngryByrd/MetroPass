@@ -15,7 +15,6 @@ using Windows.Storage;
 
 namespace MetroPass.UI.DataModel
 {
-
     public sealed class PWDatabaseDataSource
     {
         private static PWDatabaseDataSource instance = new PWDatabaseDataSource();

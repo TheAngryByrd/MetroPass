@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using MetroPass.WP8.Infrastructure.Compression;
-using MetroPass.WP8.Infrastructure.Cryptography;
-using MetroPass.WP8.Infrastructure.Hashing;
 using Metropass.Core.PCL.Compression;
 using Metropass.Core.PCL.Encryption;
 using Metropass.Core.PCL.Hashing;
@@ -15,21 +12,8 @@ using Metropass.Core.PCL.Model.Kdb4.Writer;
 using Windows.Storage;
 using PCLStorage;
 
-namespace MetroPass.WP8.UI.DataModel
+namespace MetroPass.UI.DataModel
 {
-    public interface IPWDatabaseDataSource
-    {
-        IStorageFile StorageFile { get; set; }
-
-        PwDatabase PwDatabase { get; set; }
-
-        Task LoadPwDatabase(IStorageFile pwDatabaseFile, IList<IUserKey> userKeys);
-
-        Task LoadPwDatabase(IStorageFile pwDatabaseFile, IList<IUserKey> userKeys, IProgress<double> percentComplete);
-
-        Task SavePwDatabase();
-    }
-
     public sealed class PWDatabaseDataSource : IPWDatabaseDataSource
     {
        

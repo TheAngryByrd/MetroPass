@@ -1,4 +1,5 @@
 ﻿using Caliburn.Micro;
+using MetroPass.UI.DataModel;
 using MetroPass.WP8.UI.DataModel;
 using MetroPass.WP8.UI.Services.UI;
 using Metropass.Core.PCL.Model.Kdb4.Keys;
