@@ -19,10 +19,8 @@ namespace MetroPass.WinRT.Infrastructure.Encryption
         private IBufferedCipher GetCipher(bool encrypt, byte[] key)
         {
             IBufferedCipher cipher = null;         
-            cipher = CipherUtilities.GetCipher("AES/ECB/NOPADDING");
-     
+            cipher = CipherUtilities.GetCipher("AES/ECB/NOPADDING");     
             cipher.Init(encrypt, new KeyParameter(key));
-
             return cipher;
         }
 
@@ -54,9 +52,11 @@ namespace MetroPass.WinRT.Infrastructure.Encryption
         {
             var byteCompositeKey = data;
 
+            int x = (int)rounds / 100;
+
             for (var i = 0; i < rounds; ++i)
             {                
-                if (track && i % 5000 == 0)
+                if (track && i % x == 0)
                 {
                     percentComplete.Report(i / rounds * 100);
 
