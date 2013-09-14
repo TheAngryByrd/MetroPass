@@ -152,8 +152,8 @@
     <Compile Include="..\..\MetroPass.WinRT.80\MetroPass.UI\Common\TypedTemplateSelector.cs">
       <Link>Common\TypedTemplateSelector.cs</Link>
     </Compile>
-    <Compile Include="..\..\MetroPass.WinRT.80\MetroPass.UI\DataModel\KdbDatasource.cs">
-      <Link>DataModel\KdbDatasource.cs</Link>
+    <Compile Include="..\..\MetroPass.WinRT.80\MetroPass.UI\DataModel\PWDatabaseDataSource.cs">
+      <Link>DataModel\PWDatabaseDataSource.cs</Link>
     </Compile>
     <Compile Include="..\..\MetroPass.WinRT.80\MetroPass.UI\DataModel\SettingsModel.cs">
       <Link>DataModel\SettingsModel.cs</Link>
@@ -229,6 +229,9 @@
     </Compile>
     <Compile Include="..\..\MetroPass.WinRT.80\MetroPass.UI\ViewModels\StartPageViewModel.cs">
       <Link>ViewModels\StartPageViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MetroPass.WP8\MetroPass.WP8.UI\DataModel\IPWDatabaseDataSource.cs">
+      <Link>DataModel\IPWDatabaseDataSource.cs</Link>
     </Compile>
     <Compile Include="..\..\MetroPass.WP8\MetroPass.WP8.UI\ReactiveCaliburn\ReactivePropertyChangedBase.cs">
       <Link>ReactiveCaliburn\ReactivePropertyChangedBase.cs</Link>
