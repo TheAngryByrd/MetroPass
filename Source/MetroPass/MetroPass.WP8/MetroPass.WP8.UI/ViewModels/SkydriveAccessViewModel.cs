@@ -17,10 +17,7 @@ namespace MetroPass.WP8.UI.ViewModels
         private string Scopes = "wl.signin wl.skydrive_update wl.offline_access";
         private LiveLoginResult _liveLoginResult;
         private readonly INavigationService _navigationService;
-
-
         private readonly ICache _cache;
-
         public LiveConnectSession Session { get; internal set; }
 
         public ReactiveCommand LoginCommand { get; set; }
@@ -83,7 +80,7 @@ namespace MetroPass.WP8.UI.ViewModels
                 catch (Exception exception)
                 {
                     //this.RaiseSessionChangedEvent(new LiveConnectSessionChangedEventArgs(exception));
-                }               
+                }
             }
         }
 

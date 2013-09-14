@@ -96,7 +96,7 @@ namespace MetroPass.WP8.UI.ViewModels
 
             _databaseSource.PwDatabase = pwDatabase;
 
-            await _databaseInfoRepository.SaveDatabaseFromDatasouce("demo.kdbx", "", "", new MemoryStream());
+            await _databaseInfoRepository.SaveDatabaseFromDatasouce("demo.kdbx", "", "", "", new MemoryStream());
             var databaseInfo = await _databaseInfoRepository.GetDatabaseInfo("demo.kdbx");
 
             _databaseSource.StorageFile = await databaseInfo.GetDatabase();

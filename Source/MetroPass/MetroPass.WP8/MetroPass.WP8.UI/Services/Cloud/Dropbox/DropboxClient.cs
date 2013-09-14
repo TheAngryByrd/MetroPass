@@ -12,16 +12,22 @@ namespace MetroPass.WP8.UI.Services.Cloud.Dropbox
 {
     public class DropboxClient : ICloudProviderAdapter
     {
-
         private DropNetClient _client;
 
+        private readonly ICache _cache;
+
         public DropboxClient(ICache cache)
+        { 
+            _cache = cache;
+        }
+
+        public async Task Activate()
         {
             _client = new DropNetClient(
-              ApiKeys.DropBoxKey, 
-              ApiKeys.DropBoxSecret,
-              cache.DropboxUserToken,
-              cache.DropboxUserSecret);
+               ApiKeys.DropBoxKey,
+               ApiKeys.DropBoxSecret,
+               _cache.DropboxUserToken,
+               _cache.DropboxUserSecret);
         }
 
         public async Task Upload(string path, string fileName, Stream file)

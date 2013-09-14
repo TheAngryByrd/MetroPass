@@ -1,8 +1,9 @@
+using System.Threading.Tasks;
 namespace MetroPass.WP8.UI.Services.Cloud
 {
     public interface ICloudProviderFactory
     {
-        ICloudProviderAdapter GetCloudProvider(CloudProvider cloudProvider);
-        ICloudProviderAdapter GetCloudProvider(string cloudProvider);
+        Task<ICloudProviderAdapter> GetCloudProvider(CloudProvider cloudProvider);
+        Task<ICloudProviderAdapter> GetCloudProvider(string cloudProvider);
     }
 }

@@ -63,7 +63,7 @@ namespace MetroPass.WP8.UI.Tests.DataModel
             var bytes = new byte[100];
             new Random().NextBytes(bytes);
             var memoryStream = new MemoryStream(bytes);
-            await _databaseInfoRepository.SaveDatabaseFromDatasouce("Name", "Provider", "CloudPath", memoryStream);
+            await _databaseInfoRepository.SaveDatabaseFromDatasouce("Name", "Provider", "CloudPath", "CloudUploadPath", memoryStream);
 
             var databases = await _databaseInfoRepository.GetDatabaseInfo();
 

@@ -123,10 +123,11 @@ namespace MetroPass.WP8.UI.ViewModels
                 {
                     if (_cache.DownloadFileNavigationCache.DownloadType == DownloadType.Database)
                         await _databaseInfoRepository
-                            .SaveDatabaseFromDatasouce(
+                                                     .SaveDatabaseFromDatasouce(
                             cloudItem.Name,
                             CloudProvider.ToString(),
                             cloudItem.ID,
+                            cloudItem.UploadPath,
                             downloadStream);
                     else if (_cache.DownloadFileNavigationCache.DownloadType == DownloadType.KeyFile)
                         await _databaseInfoRepository
@@ -152,7 +153,7 @@ namespace MetroPass.WP8.UI.ViewModels
 
         protected async override void OnActivate()
         {
-            _cloudProvider = _cloudFactory.GetCloudProvider(CloudProvider);
+            _cloudProvider = await _cloudFactory.GetCloudProvider(CloudProvider);
 
             SelectedSkyDriveItem = null;
             

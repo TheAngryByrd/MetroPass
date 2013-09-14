@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 namespace MetroPass.WP8.UI.Services.Cloud.Dropbox
 {
@@ -16,6 +17,16 @@ namespace MetroPass.WP8.UI.Services.Cloud.Dropbox
         public string Name { get; private set; }
 
         public string ItemType { get; private set; }
+
+        public string UploadPath
+        {
+            get
+            {
+                var path = ID;
+
+                return path.Substring(path.LastIndexOf('/'));
+            }
+        }
 
         public bool IsFolder
         {

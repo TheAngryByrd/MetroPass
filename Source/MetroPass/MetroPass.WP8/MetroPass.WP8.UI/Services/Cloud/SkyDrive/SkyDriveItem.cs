@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace MetroPass.WP8.UI.Services.Cloud.Skydrive
@@ -35,6 +36,14 @@ namespace MetroPass.WP8.UI.Services.Cloud.Skydrive
         public string Name { get; private set; }
 
         public string ItemType { get; private set; }
+
+        public string UploadPath
+        {
+            get
+            {
+            return ID;
+            }
+        }
 
         public bool IsFolder
         {

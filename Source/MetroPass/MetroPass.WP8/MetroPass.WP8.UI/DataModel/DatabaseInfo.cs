@@ -97,6 +97,13 @@ namespace MetroPass.WP8.UI.DataModel
             set { GetDatabaseElement().SetAttributeValue(CLOUD_PROVIDER, value); }
         }
 
+        public string DatabaseUploadCloudPath
+        {
+
+            get { return GetDatabaseElement().Attribute(CLOUD_PROVIDER).Value; }
+            set { GetDatabaseElement().SetAttributeValue(CLOUD_PROVIDER, value); }
+        }
+
         public string KeyFilePath
         {
             get { return XInfo.Element(KEY_FILE_PATH).Value; }

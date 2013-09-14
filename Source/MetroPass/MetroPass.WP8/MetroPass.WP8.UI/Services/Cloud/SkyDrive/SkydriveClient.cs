@@ -10,10 +10,28 @@ namespace MetroPass.WP8.UI.Services.Cloud.Skydrive
     public class SkyDriveClient : ICloudProviderAdapter
     {
         private LiveConnectClient _liveClient;
+        private readonly ICache _cache;
 
         public SkyDriveClient(ICache cache)
         {
-            _liveClient = new LiveConnectClient(cache.SkydriveSession);
+            _cache = cache;
+        }
+
+        public async Task Activate()
+        {
+            var session = _cache.SkydriveSession;
+            if (session == null)
+            {
+                var authClient = new LiveAuthClient(ApiKeys.SkyDriveClientId);
+                var x = await authClient.InitializeAsync();
+                session = x.Session;
+            }
+            _liveClient = new LiveConnectClient(session);
+        }
+
+        private IEnumerable<string> ParseScopeString(string scopesString)
+        {
+            return new List<string>(scopesString.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries));
         }
 
         public async Task Upload(string path, string fileName, Stream file)

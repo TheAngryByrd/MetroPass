@@ -92,10 +92,10 @@ namespace MetroPass.WP8.UI.ViewModels
             var cloudProviderEnum = info.Info.DatabaseCloudProvider;
             if(!string.IsNullOrWhiteSpace(cloudProviderEnum))
             {
-                var cloudProvider = _cloudProvider.GetCloudProvider(cloudProviderEnum);
+                var cloudProvider = await _cloudProvider.GetCloudProvider(cloudProviderEnum);
                 using (var fileToWrite = await _databaseSource.StorageFile.OpenStreamForReadAsync())
                 {
-                    await cloudProvider.Upload(info.Info.DatabaseCloudPath, _cache.DatabaseName, fileToWrite);
+                    await cloudProvider.Upload(info.Info.DatabaseUploadCloudPath, _cache.DatabaseName, fileToWrite);
                 }
             }
             else
