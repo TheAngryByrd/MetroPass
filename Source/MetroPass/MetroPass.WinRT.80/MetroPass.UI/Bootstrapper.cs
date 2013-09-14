@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Caliburn.Micro;
 using MetroPass.UI.Common;
 using MetroPass.UI.DataModel;
 using MetroPass.UI.Services;
+using MetroPass.WinRT.Infrastructure.Compression;
+using MetroPass.WinRT.Infrastructure.Encryption;
+using MetroPass.WinRT.Infrastructure.Hashing;
 using MetroPass.WinRT.Infrastructure.PasswordGeneration;
+using Metropass.Core.PCL.Compression;
+using Metropass.Core.PCL.Encryption;
+using Metropass.Core.PCL.Hashing;
 using Metropass.Core.PCL.Model.Kdb4;
 using Metropass.Core.PCL.PasswordGeneration;
 using Ninject;
@@ -33,6 +36,12 @@ namespace MetroPass.UI
 
             _ninjectContainer.Kernel.Bind<ILockingService>().To<LockingService>();
             _ninjectContainer.Kernel.Bind<IClipboard>().To<MetroClipboard>();
+
+            _ninjectContainer.Kernel.Bind<ICanSHA256Hash>().To<SHA256HasherRT>();
+            _ninjectContainer.Kernel.Bind<IEncryptionEngine>().To<WinRTCrypto>();
+            _ninjectContainer.Kernel.Bind<IKeyTransformer>().To<MultiThreadedBouncyCastleCrypto>();
+            _ninjectContainer.Kernel.Bind<IGZipStreamFactory>().To<GZipFactoryRT>();
+
             _ninjectContainer.Kernel.Bind<IKdbTree>().ToMethod(c => PWDatabaseDataSource.Instance.PwDatabase.Tree);
         }
 
