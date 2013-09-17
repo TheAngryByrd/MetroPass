@@ -28,6 +28,7 @@ namespace MetroPass.WP8.UI.Services.Cloud.Dropbox
                ApiKeys.DropBoxSecret,
                _cache.DropboxUserToken,
                _cache.DropboxUserSecret);
+            _client.UseSandbox = true;
         }
 
         public async Task Upload(string path, string fileName, Stream file)
