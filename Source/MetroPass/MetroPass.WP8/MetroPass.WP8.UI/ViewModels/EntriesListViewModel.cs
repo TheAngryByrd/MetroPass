@@ -93,11 +93,7 @@ namespace MetroPass.WP8.UI.ViewModels
             if (string.IsNullOrWhiteSpace(cloudProviderEnum))
             {
                 _dialogService.ShowDialogBox("I'm sorry Dave, I'm afraid I can't do that", "You can only upload a file that has been previously downloaded from skydrive or dropbox");
-            }
-            else if(string.IsNullOrWhiteSpace(info.Info.DatabaseUploadCloudPath))
-            {
-                
-            }
+            }  
             else
             {
                 var cloudProvider = await _cloudProvider.GetCloudProvider(cloudProviderEnum);
