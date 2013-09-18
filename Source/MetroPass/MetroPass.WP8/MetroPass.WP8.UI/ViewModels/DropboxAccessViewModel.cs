@@ -1,6 +1,7 @@
 ﻿using Caliburn.Micro;
 using DropNetRT;
 using MetroPass.WP8.UI.Services.Cloud;
+using MetroPass.WP8.UI.Services.UI;
 using MetroPass.WP8.UI.Utils;
 using MetroPass.WP8.UI.Views;
 using Microsoft.Phone.Controls;
@@ -19,9 +20,13 @@ namespace MetroPass.WP8.UI.ViewModels
         private readonly INavigationService _navigationService;
         private readonly ICache _cache;
 
+        private readonly IDialogService _dialogService;
+
         public DropboxAccessViewModel(INavigationService navigationService,
-            ICache cache)
+            ICache cache,
+            IDialogService dialogService)
         {
+            _dialogService = dialogService;
             _cache = cache;
             _navigationService = navigationService;
             _client = new DropNetClient(
@@ -50,6 +55,8 @@ namespace MetroPass.WP8.UI.ViewModels
 
             Deployment.Current.Dispatcher.BeginInvoke(() =>
                 view.browser.Navigate(new Uri(url)));
+
+            
         }
 
         protected override void OnDeactivate(bool close)
@@ -72,7 +79,7 @@ namespace MetroPass.WP8.UI.ViewModels
         private async Task CheckToken()
         {
             var accessToken = await _client.GetAccessToken();
-
+            _dialogService.ShowDialogBox("Note", "Due to Dropbox policy, you will need to move your database to the Apps/MetroPass folder using the dropbox website or a dropbox app before you can access your files.");
             _cache.DropboxUserToken = accessToken.Token;
             _cache.DropboxUserSecret = accessToken.Secret;
 
