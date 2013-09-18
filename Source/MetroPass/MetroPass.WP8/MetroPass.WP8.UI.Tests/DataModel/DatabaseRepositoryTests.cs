@@ -29,7 +29,7 @@ namespace MetroPass.WP8.UI.Tests.DataModel
         [TestMethod]
         public async Task SaveInfo()
         {
-            var info = new Info(new XDocument());
+            var info = Info.New();
             info.DatabaseCloudPath = "CloudPath";
             info.DatabaseCloudProvider = "CloudProvider";
             info.DatabasePath = "DatabasePath";
@@ -63,7 +63,7 @@ namespace MetroPass.WP8.UI.Tests.DataModel
             var bytes = new byte[100];
             new Random().NextBytes(bytes);
             var memoryStream = new MemoryStream(bytes);
-            await _databaseInfoRepository.SaveDatabaseFromDatasouce("Name", "Provider", "CloudPath", "CloudUploadPath", memoryStream);
+            await _databaseInfoRepository.SaveDatabaseFromDatasouce("Name", "Provider", "CloudPath", memoryStream);
 
             var databases = await _databaseInfoRepository.GetDatabaseInfo();
 

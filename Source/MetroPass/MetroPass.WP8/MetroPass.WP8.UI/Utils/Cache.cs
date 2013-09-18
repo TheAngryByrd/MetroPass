@@ -19,14 +19,32 @@ namespace MetroPass.WP8.UI.Utils
         public LiveConnectSession SkydriveSession { get; set; }
         public string DropboxUserToken
         {
-            get { return _localSettings["DropboxUserToken"].ToString(); }
-            set { _localSettings["DropboxUserToken"] = value; }
+            get
+            {
+                if (!_localSettings.Contains("DropboxUserToken"))
+                    return null;
+                return  _localSettings["DropboxUserToken"].ToString();                    
+            }
+            set
+            {
+                _localSettings["DropboxUserToken"] = value;
+                _localSettings.Save();
+            }
         }
 
         public string DropboxUserSecret
         {
-            get { return _localSettings["DropboxUserSecret"].ToString(); }
-            set { _localSettings["DropboxUserSecret"] = value; }
+            get
+            {
+                if (!_localSettings.Contains("DropboxUserSecret"))
+                    return null;
+                return _localSettings["DropboxUserSecret"].ToString();
+            }
+            set
+            {
+                _localSettings["DropboxUserSecret"] = value;
+                _localSettings.Save();
+            }
         }
 
         public DownloadFileNavigationCache DownloadFileNavigationCache { get; set; }

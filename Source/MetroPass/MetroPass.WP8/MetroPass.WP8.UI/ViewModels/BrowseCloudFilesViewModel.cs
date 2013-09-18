@@ -123,11 +123,10 @@ namespace MetroPass.WP8.UI.ViewModels
                 {
                     if (_cache.DownloadFileNavigationCache.DownloadType == DownloadType.Database)
                         await _databaseInfoRepository
-                                                     .SaveDatabaseFromDatasouce(
+                            .SaveDatabaseFromDatasouce(
                             cloudItem.Name,
                             CloudProvider.ToString(),
                             cloudItem.ID,
-                            cloudItem.UploadPath,
                             downloadStream);
                     else if (_cache.DownloadFileNavigationCache.DownloadType == DownloadType.KeyFile)
                         await _databaseInfoRepository

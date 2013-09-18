@@ -23,11 +23,22 @@ namespace MetroPass.WP8.UI.Services.Cloud.Dropbox
 
         public async Task Activate()
         {
-            _client = new DropNetClient(
+            if(string.IsNullOrEmpty(_cache.DropboxUserSecret) || string.IsNullOrEmpty(_cache.DropboxUserToken))
+            {
+                _client = new DropNetClient(ApiKeys.DropBoxKey,
+                    ApiKeys.DropBoxSecret);
+                var tokens = await _client.GetAccessToken();
+                _cache.DropboxUserSecret = tokens.Secret;
+                _cache.DropboxUserToken = tokens.Token;
+            }
+            else
+            {
+                _client = new DropNetClient(
                ApiKeys.DropBoxKey,
                ApiKeys.DropBoxSecret,
                _cache.DropboxUserToken,
-               _cache.DropboxUserSecret);
+               _cache.DropboxUserSecret);              
+            }
             _client.UseSandbox = true;
         }
 

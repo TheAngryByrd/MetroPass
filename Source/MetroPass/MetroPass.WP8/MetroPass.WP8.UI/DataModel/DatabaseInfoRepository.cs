@@ -14,8 +14,7 @@ namespace MetroPass.WP8.UI.DataModel
         private StorageFolder _installedFolder;
 
         public DatabaseInfoRepository ()
-	    {
-            
+	    {            
             _installedFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
 	    }
 
@@ -65,9 +64,8 @@ namespace MetroPass.WP8.UI.DataModel
             }
 
             if (!found)
-            {
-                var doc = new XDocument();                
-                retval = new Info(doc);     
+            {                             
+                retval = Info.New(); 
                 await SaveInfo(folder, retval);
             }
             else
@@ -114,7 +112,6 @@ namespace MetroPass.WP8.UI.DataModel
             string databaseName, 
             string cloudprovider, 
             string cloudPath, 
-            string cloudUploadPath,
             Stream database)
         {
             var root = await _installedFolder.CreateFolderAsync("Databases", CreationCollisionOption.OpenIfExists);
@@ -124,7 +121,6 @@ namespace MetroPass.WP8.UI.DataModel
             info.DatabasePath = databaseName;
             info.DatabaseCloudProvider = cloudprovider;
             info.DatabaseCloudPath = cloudPath;
-            info.DatabaseCloudPath = cloudUploadPath;
             await SaveInfo(folder, info);
 
             await WriteFile(databaseName, folder, database);

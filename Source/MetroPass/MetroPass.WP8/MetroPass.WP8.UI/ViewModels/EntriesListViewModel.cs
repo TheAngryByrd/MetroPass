@@ -90,17 +90,21 @@ namespace MetroPass.WP8.UI.ViewModels
             ProgressIsVisible = true;
             var info = await _databaseInfoRepository.GetDatabaseInfo(_cache.DatabaseName);
             var cloudProviderEnum = info.Info.DatabaseCloudProvider;
-            if(!string.IsNullOrWhiteSpace(cloudProviderEnum))
+            if (string.IsNullOrWhiteSpace(cloudProviderEnum))
+            {
+                _dialogService.ShowDialogBox("I'm sorry Dave, I'm afraid I can't do that", "You can only upload a file that has been previously downloaded from skydrive or dropbox");
+            }
+            else if(string.IsNullOrWhiteSpace(info.Info.DatabaseUploadCloudPath))
+            {
+                
+            }
+            else
             {
                 var cloudProvider = await _cloudProvider.GetCloudProvider(cloudProviderEnum);
                 using (var fileToWrite = await _databaseSource.StorageFile.OpenStreamForReadAsync())
                 {
                     await cloudProvider.Upload(info.Info.DatabaseUploadCloudPath, _cache.DatabaseName, fileToWrite);
                 }
-            }
-            else
-            {
-                _dialogService.ShowDialogBox("I'm sorry Dave, I'm afraid I can't do that", "You can only upload a file that has been previously downloaded from skydrive or dropbox");
             }
             ProgressIsVisible = false;
         }

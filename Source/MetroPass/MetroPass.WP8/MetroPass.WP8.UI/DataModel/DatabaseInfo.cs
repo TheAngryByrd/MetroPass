@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using MetroPass.WP8.UI.Services.Cloud;
 using Windows.Storage;
 
 namespace MetroPass.WP8.UI.DataModel
@@ -51,21 +52,23 @@ namespace MetroPass.WP8.UI.DataModel
         public Info(XDocument document)
         {
             Document = document;
+        }
 
-            XElement element = document.Element(INFO);
-            if (element == null)
-            {
-                var info = new XElement(INFO);
-                var database = new XElement(DATABASE_PATH);
-                database.SetAttributeValue(CLOUD_PROVIDER, "");
-                database.SetAttributeValue(CLOUD_PATH, "");
+        public static Info New()
+        {
+            var document = new XDocument();
+            var info = new XElement(INFO);
+            var database = new XElement(DATABASE_PATH);
+            database.SetAttributeValue(CLOUD_PROVIDER, "");
+            database.SetAttributeValue(CLOUD_PATH, "");
+            info.Add(database);
 
-                info.Add(database);
-                var keyfile = new XElement(KEY_FILE_PATH);
-                info.Add(keyfile);
+            var keyfile = new XElement(KEY_FILE_PATH);
+            info.Add(keyfile);
 
-                document.Add(info);
-            }
+            document.Add(info);
+
+            return new Info(document);
         }
 
         public XElement XInfo
@@ -99,9 +102,23 @@ namespace MetroPass.WP8.UI.DataModel
 
         public string DatabaseUploadCloudPath
         {
+            get
+            {
+                if (string.IsNullOrWhiteSpace(DatabaseCloudProvider))
+                    return string.Empty;
+                string path = GetDatabaseElement().Attribute(CLOUD_PROVIDER).Value;
+                if (DatabaseCloudProvider == CloudProvider.SkyDrive.ToString())
+                {                    
+                    return path;
+                }
+                else if (DatabaseCloudProvider == CloudProvider.Dropbox.ToString())
+                {
+                    return path.Remove(path.LastIndexOf('/')+1);
+                }     
+        
+                return string.Empty;
+            }
 
-            get { return GetDatabaseElement().Attribute(CLOUD_PROVIDER).Value; }
-            set { GetDatabaseElement().SetAttributeValue(CLOUD_PROVIDER, value); }
         }
 
         public string KeyFilePath
