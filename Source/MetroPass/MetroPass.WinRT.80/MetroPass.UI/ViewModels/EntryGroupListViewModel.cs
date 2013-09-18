@@ -165,6 +165,12 @@ namespace MetroPass.UI.ViewModels
                     var clonedElement = new XElement(SelectedPasswordItem.Element);
                     recycleBinGroupElement.AddEntryToDocument(new PwEntry((clonedElement),recycleBinGroupElement));
 
+                    if (!TopLevelGroups.Select(g => g.UUID).Contains(recycleBinGroupElement.UUID))
+                    {
+                        TopLevelGroups.Add(recycleBinGroupElement);
+                        NotifyOfPropertyChange(() => TopLevelGroups);
+                    }
+
                     var recycleBinGroup = TopLevelGroups.FirstOrDefault(g => g.UUID == _dataSource.PwDatabase.Tree.MetaData.RecycleBinUUID);
                     if (recycleBinGroup != null)
                     {
@@ -172,6 +178,7 @@ namespace MetroPass.UI.ViewModels
                         var clonedEntry = new PwEntry(clonedElement, (PwGroup)recycleBinGroup);
                         recycleBinGroup.SubGroupsAndEntries.Add(clonedEntry);
                     }
+                  
                 }
                 SelectedPasswordItem.Element.Remove();
                 ((PwEntry)SelectedPasswordItem).Remove();

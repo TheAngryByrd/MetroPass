@@ -51,6 +51,7 @@ namespace Metropass.Core.PCL.Model
                 }
 
                 _subGroupsAndEntries = GetSubGroupsAndEntries();
+                
             }
     
         }

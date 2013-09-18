@@ -24,7 +24,7 @@ namespace Metropass.Core.PCL.Model.Kdb4
             bool recycleBinExists = true;
             try
             {
-                var group = FindGroupByUuid(MetaData.RecycleBinUUID);
+                retVal = FindGroupByUuid(MetaData.RecycleBinUUID);
             }
            catch(Exception)
             {
