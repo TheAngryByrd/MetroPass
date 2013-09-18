@@ -65,6 +65,7 @@
     <Compile Include="Model\IGroup.cs" />
     <Compile Include="KdbConstants.cs" />
     <Compile Include="Helpers\MemUtil.cs" />
+    <Compile Include="Model\Kdb4\ColletionExtensions.cs" />
     <Compile Include="Model\Kdb4\IKdbTree.cs" />
     <Compile Include="Model\Kdb4\Kdb4File.cs" />
     <Compile Include="Model\Kdb4\Reader\Kdb4Parser.cs" />
