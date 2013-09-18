@@ -119,7 +119,7 @@
             <bindableAppBar:BindableAppBarButton 
                            cal:Message.Attach="[Event Click] = [Action AddDatabase()]"
                             
-                            Text="Add Database" IconUri="/Images/appbar.cloud.download.png" />
+                            Text="Download" IconUri="/Images/appbar.cloud.download.png" />
         </bindableAppBar:BindableAppBar>
     </Grid>
 

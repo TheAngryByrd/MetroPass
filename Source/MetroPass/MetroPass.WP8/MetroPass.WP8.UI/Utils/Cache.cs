@@ -47,6 +47,21 @@ namespace MetroPass.WP8.UI.Utils
             }
         }
 
+        public bool ShowIntroDropboxMessage
+        {
+            get
+            {
+                if (!_localSettings.Contains("ShowIntroDropboxMessage"))
+                    return true;
+                return bool.Parse(_localSettings["ShowIntroDropboxMessage"].ToString());
+            }
+            set
+            {
+                _localSettings["ShowIntroDropboxMessage"] = value;
+                _localSettings.Save();
+            }
+        }
+
         public DownloadFileNavigationCache DownloadFileNavigationCache { get; set; }
     }
 

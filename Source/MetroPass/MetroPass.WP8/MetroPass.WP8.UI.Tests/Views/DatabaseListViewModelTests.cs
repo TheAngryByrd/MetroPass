@@ -18,7 +18,7 @@ namespace MetroPass.WP8.UI.Tests.Views
 
 
             
-            var viewModel = new DatabaseListViewModel(null,null,null);
+            var viewModel = new DatabaseListViewModel(null,null,null,null);
 
             
             viewModel.DeleteDatabase(null);

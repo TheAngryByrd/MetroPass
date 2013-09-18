@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using Caliburn.Micro;
 using MetroPass.WP8.UI.DataModel;
+using MetroPass.WP8.UI.Services.UI;
 using MetroPass.WP8.UI.ViewModels.Interfaces;
 using ReactiveCaliburn;
 using ReactiveUI;
@@ -17,10 +18,14 @@ namespace MetroPass.WP8.UI.ViewModels
 
         private readonly ICache _cache;
 
+        private readonly IDialogService _dialogService;
+
         public DatabaseListViewModel(INavigationService navService,
             IDatabaseInfoRepository databaseInfoRepository,
-            ICache cache)
+            ICache cache,
+            IDialogService dialogService)
         {
+            _dialogService = dialogService;
             _cache = cache;
             _databaseInfoRepository = databaseInfoRepository;
 
@@ -70,7 +75,13 @@ namespace MetroPass.WP8.UI.ViewModels
 
             var info = await _databaseInfoRepository.GetDatabaseInfo();
 
-            DatabaseItems.AddRange(info.Select(i => new DatabaseItemViewModel(i)));           
+            DatabaseItems.AddRange(info.Select(i => new DatabaseItemViewModel(i)));  
+         
+            if(_cache.ShowIntroDropboxMessage)
+            {
+                _cache.ShowIntroDropboxMessage = false;
+                _dialogService.ShowDialogBox("Dropbox users", "Dropbox has changed usage permissions.  As a result you will have to download your database again. Sorry for the inconvenience.");
+            }
         }
 
         public ReactiveCommand DeleteDatabaseCommand { get; set; }
