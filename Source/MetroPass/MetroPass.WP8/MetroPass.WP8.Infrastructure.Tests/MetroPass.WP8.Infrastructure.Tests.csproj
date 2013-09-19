@@ -128,11 +128,11 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MetroPass.Core\Metropass.Core.PCL\Metropass.Core.PCL.csproj">
+    <ProjectReference Include="..\..\MetroPass.Core\Metropass.Core.PCL\Metropass.Core.PCL.csproj">
       <Project>{40AC1A3B-9796-4F90-8903-108C86CFBD15}</Project>
       <Name>Metropass.Core.PCL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MetroPass.WP8\MetroPass.WP8.Infrastructure\MetroPass.WP8.Infrastructure.csproj">
+    <ProjectReference Include="..\MetroPass.WP8.Infrastructure\MetroPass.WP8.Infrastructure.csproj">
       <Project>{C049B810-F050-4939-ADED-F2BB7711C25F}</Project>
       <Name>MetroPass.WP8.Infrastructure</Name>
     </ProjectReference>

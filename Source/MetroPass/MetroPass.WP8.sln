@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetroPass.WP8.UI.Tests", "M
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{3EA2544C-AD5D-4621-9DE6-0D9EDB5BCC4C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetroPass.WP8.Infrastructure.Tests", "MetroPass.WP8.Infrastructure.Tests\MetroPass.WP8.Infrastructure.Tests.csproj", "{E6DDBEAB-6AD8-42B2-9B9C-93BD7C2D10EE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetroPass.WP8.Infrastructure.Tests", "MetroPass.WP8\MetroPass.WP8.Infrastructure.Tests\MetroPass.WP8.Infrastructure.Tests.csproj", "{E6DDBEAB-6AD8-42B2-9B9C-93BD7C2D10EE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
