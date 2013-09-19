@@ -66,7 +66,6 @@ namespace MetroPass.UI.ViewModels
                 _root = value;
                 _topLevelGroups.Add(new PwGroup(value.Element, false));
                 _topLevelGroups.AddRange(value.SubGroups);
-                _topLevelGroups.Add(new AdGroup());
                 NotifyOfPropertyChange(() => Root);
             }
         }

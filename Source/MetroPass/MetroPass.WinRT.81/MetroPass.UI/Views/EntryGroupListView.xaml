@@ -1,5 +1,4 @@
 ﻿<Page
-    xmlns:UI="using:Microsoft.Advertising.WinRT.UI" 
     x:Name="pageRoot"
     x:Class="MetroPass.UI.Views.EntryGroupListView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -61,7 +60,6 @@
             </Grid>
         </DataTemplate>
         <DataTemplate x:Key="Type:AdItem">
-            <UI:AdControl Grid.Column="2" ApplicationId="f8df6ddc-bc72-41bf-bf1d-676ddf2af726" AdUnitId="10052848" Width="160" Height="600" />
         </DataTemplate>
 
         <DataTemplate x:Key="AdHeader">

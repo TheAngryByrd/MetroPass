@@ -185,12 +185,6 @@
     <Compile Include="..\..\MetroPass.WinRT.80\MetroPass.UI\ViewModels\AddGroupViewModel.cs">
       <Link>ViewModels\AddGroupViewModel.cs</Link>
     </Compile>
-    <Compile Include="..\..\MetroPass.WinRT.80\MetroPass.UI\ViewModels\AdGroup.cs">
-      <Link>ViewModels\AdGroup.cs</Link>
-    </Compile>
-    <Compile Include="..\..\MetroPass.WinRT.80\MetroPass.UI\ViewModels\AdItem.cs">
-      <Link>ViewModels\AdItem.cs</Link>
-    </Compile>
     <Compile Include="..\..\MetroPass.WinRT.80\MetroPass.UI\ViewModels\AppSettingsViewModel.cs">
       <Link>ViewModels\AppSettingsViewModel.cs</Link>
     </Compile>
@@ -462,11 +456,6 @@
     <Reference Include="Windows.UI.Interactivity">
       <HintPath>..\..\packages\Windows.UI.Interactivity.1.3.0.0\lib\win8\Windows.UI.Interactivity.dll</HintPath>
     </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <SDKReference Include="MSAdvertisingXaml, Version=8.1">
-      <Name>Microsoft Advertising SDK for Windows 8.1 %28Xaml%29</Name>
-    </SDKReference>
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
