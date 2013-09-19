@@ -1,0 +1,178 @@
+﻿<phone:PhoneApplicationPage
+    x:Class="MetroPass.WP8.UI.Views.AddOrEditEntryView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    xmlns:c4f="clr-namespace:Coding4Fun.Toolkit.Controls.Binding;assembly=Coding4Fun.Toolkit.Controls"
+    xmlns:uc="clr-namespace:MetroPass.WP8.UI.Controls"
+    xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro"
+    xmlns:bindableAppBar="clr-namespace:Caliburn.Micro.BindableAppBar;assembly=Caliburn.Micro.BindableAppBar"
+    mc:Ignorable="d"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait"  Orientation="Portrait"
+    >
+	<phone:PhoneApplicationPage.Resources>
+
+	</phone:PhoneApplicationPage.Resources>
+
+    <toolkit:TransitionService.NavigationInTransition>
+        <toolkit:NavigationInTransition>
+            <toolkit:NavigationInTransition.Backward>
+                <toolkit:TurnstileTransition Mode="BackwardIn"/>
+            </toolkit:NavigationInTransition.Backward>
+            <toolkit:NavigationInTransition.Forward>
+                <toolkit:TurnstileTransition Mode="ForwardIn"/>
+            </toolkit:NavigationInTransition.Forward>
+        </toolkit:NavigationInTransition>
+    </toolkit:TransitionService.NavigationInTransition>
+    <toolkit:TransitionService.NavigationOutTransition>
+        <toolkit:NavigationOutTransition>
+            <toolkit:NavigationOutTransition.Backward>
+                <toolkit:TurnstileTransition Mode="BackwardOut"/>
+            </toolkit:NavigationOutTransition.Backward>
+            <toolkit:NavigationOutTransition.Forward>
+                <toolkit:TurnstileTransition Mode="ForwardOut"/>
+            </toolkit:NavigationOutTransition.Forward>
+        </toolkit:NavigationOutTransition>
+    </toolkit:TransitionService.NavigationOutTransition>
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Margin="12,17,0,28">
+            <TextBlock Grid.Row="0" Text="{StaticResource AppName}" Style="{StaticResource PhoneTextNormalStyle}"/>
+        </StackPanel>
+        <!--Pivot Control-->
+        <phone:Pivot Grid.Row="1" SelectionChanged="Pivot_SelectionChanged" >
+            <!--Pivot item one-->
+            <phone:PivotItem x:Name="PageTitle" Header="{Binding PageTitle}">
+                <Grid>
+                    <ScrollViewer>
+                        <StackPanel>
+                            <!-- Entry details -->
+                            <TextBlock Text="Title"
+                               Style="{StaticResource PhoneTextNormalStyle}" />
+                            <TextBox x:Name="Title" 
+                                         c4f:TextBinding.UpdateSourceOnChange="True" />
+
+                            <TextBlock Text="Username"
+                               Style="{StaticResource PhoneTextNormalStyle}" />
+                            <TextBox x:Name="Username" 
+                                        
+                                         c4f:TextBinding.UpdateSourceOnChange="True" />
+
+                            <TextBlock Text="Password"
+                               Style="{StaticResource PhoneTextNormalStyle}" />
+                            <uc:ProtectedTextBox x:Name="PasswordBox"
+                                         MonoSpaced="True"
+                                         Text="{Binding Password, Mode=TwoWay}"
+                                         c4f:TextBinding.UpdateSourceOnChange="True" />
+
+                            
+
+                            <!-- URL -->
+                            <TextBlock Text=" " />
+
+                            <TextBlock Text="Url"
+                               Style="{StaticResource PhoneTextNormalStyle}" />
+                            <TextBox x:Name="Url"
+                             c4f:TextBinding.UpdateSourceOnChange="True"
+                             InputScope="Url" 
+                              />
+                            <HyperlinkButton Name="lnkUrl" 
+                                     HorizontalContentAlignment="Left">
+                                <toolkit:ContextMenuService.ContextMenu>
+                                    <toolkit:ContextMenu>
+ 
+                                    </toolkit:ContextMenu>
+                                </toolkit:ContextMenuService.ContextMenu>
+                            </HyperlinkButton>
+
+                            <!-- Notes -->
+                            <TextBlock Text=" " />
+
+                            <TextBlock Text="Notes"
+                               Style="{StaticResource PhoneTextNormalStyle}" />
+                            <TextBox x:Name="Notes" 
+                                     TextWrapping="Wrap" 
+                                     AcceptsReturn="True" 
+                                     Height="250" />
+                        
+                        </StackPanel>
+                    </ScrollViewer>
+                    <bindableAppBar:BindableAppBar x:Name="ItemView1_AppBar1" >
+                        <bindableAppBar:BindableAppBarButton 
+                           cal:Message.Attach="[Event Click] = [Action Save()]"
+                            
+                            Text="Save" IconUri="/Images/save.png" />
+                    </bindableAppBar:BindableAppBar>
+                </Grid>
+
+            </phone:PivotItem>
+            
+            <phone:PivotItem Header="custom fields">
+                <Grid>
+                    <ScrollViewer>
+                        <ItemsControl ItemsSource="{Binding CustomFields}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                            <ColumnDefinition Width="*"></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"></RowDefinition>
+                                            <RowDefinition Height="auto"></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Border Grid.RowSpan="2" 
+                                                Grid.Column="0" 
+                                                Background="{StaticResource MainAppColor}"
+                                                Width="8" 
+                                                Margin="0,8,0,8"
+                                                VerticalAlignment="Stretch"></Border>
+                                        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Name, Mode=TwoWay}" Height="80"
+                                                 c4f:TextBinding.UpdateSourceOnChange="True"/>
+
+                                        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Value, Mode=TwoWay}"  Height="80"
+                                        c4f:TextBinding.UpdateSourceOnChange="True"
+                                        />
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                    <bindableAppBar:BindableAppBar x:Name="ItemView1_AppBar2" >
+                        <bindableAppBar:BindableAppBarButton 
+                            
+                            cal:Message.Attach="[Event Click] = [Action Save()]"
+                            Text="Save" IconUri="/Images/save.png" />
+                        <bindableAppBar:BindableAppBarButton 
+                            x:Name="AddField" 
+                            Text="Add Field" IconUri="/Images/add.png" />
+                        
+                    </bindableAppBar:BindableAppBar>
+                </Grid>
+            </phone:PivotItem>
+
+
+            <!--<phone:PivotItem Header="history">
+                <Grid/>
+            </phone:PivotItem>-->
+        </phone:Pivot>
+
+
+    </Grid>
+    
+</phone:PhoneApplicationPage>
