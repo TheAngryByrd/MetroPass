@@ -1,0 +1,416 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{CE338F45-5EAA-49E1-A6C7-25DC4654C3CE}</ProjectGuid>
+    <OutputType>AppContainerExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MetroPass.UI</RootNamespace>
+    <AssemblyName>MetroPass.UI</AssemblyName>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{BC8A1FFA-BEE3-4634-8014-F334798102B3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <PackageCertificateKeyFile>MetroPass.UI_StoreKey.pfx</PackageCertificateKeyFile>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <PackageCertificateThumbprint>F53B4FE78ED1299F4340DDA007CFEC53BA3D45A4</PackageCertificateThumbprint>
+    <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\ARM\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>ARM</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM'">
+    <OutputPath>bin\ARM\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>ARM</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <ProjectReference Include="..\..\MetroPass.Core\Metropass.Core.PCL\Metropass.Core.PCL.csproj">
+      <Project>{40ac1a3b-9796-4f90-8903-108c86cfbd15}</Project>
+      <Name>Metropass.Core.PCL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MetroPass.WinRT.Infrastructure\MetroPass.WinRT.Infrastructure.csproj">
+      <Project>{49748D29-F9CE-45C6-B807-415BF7A8A3EF}</Project>
+      <Name>MetroPass.WinRT.Infrastructure</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\MetroPass.WP8\MetroPass.WP8.UI\DataModel\IPWDatabaseDataSource.cs">
+      <Link>DataModel\IPWDatabaseDataSource.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MetroPass.WP8\MetroPass.WP8.UI\DataModel\PwDatabaseDataSource.cs">
+      <Link>DataModel\PwDatabaseDataSource.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MetroPass.WP8\MetroPass.WP8.UI\ReactiveCaliburn\ReactivePropertyChangedBase.cs">
+      <Link>ReactiveCaliburn\ReactivePropertyChangedBase.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MetroPass.WP8\MetroPass.WP8.UI\ReactiveCaliburn\ReactiveScreen.cs">
+      <Link>ReactiveCaliburn\ReactiveScreen.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MetroPass.WP8\MetroPass.WP8.UI\ReactiveCaliburn\ReactiveViewAware.cs">
+      <Link>ReactiveCaliburn\ReactiveViewAware.cs</Link>
+    </Compile>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Common\Converters\GridViewGroupHeaderStyleConverter.cs" />
+    <Compile Include="Common\Converters\HasValueToVisibilityCoverter.cs" />
+    <Compile Include="Common\EntryGroupListViewHeaderTemplateSelector.cs" />
+    <Compile Include="Common\NinjectContainer.cs" />
+    <Compile Include="Common\Converters\StringFormatConverter.cs" />
+    <Compile Include="Common\TypedTemplateSelector.cs" />
+    <Compile Include="Common\EnumerableExtensions.cs" />
+    <Compile Include="DataModel\SettingsModel.cs" />
+    <Compile Include="Dialogs\DialogService.cs" />
+    <Compile Include="Services\ILockingService.cs" />
+    <Compile Include="Services\LockingService.cs" />
+    <Compile Include="UserControls\NumberBox.cs" />
+    <Compile Include="ViewModels\AddEntryViewModel.cs" />
+    <Compile Include="ViewModels\AddGroupViewModel.cs" />
+    <Compile Include="ViewModels\AdGroup.cs" />
+    <Compile Include="ViewModels\AdItem.cs" />
+    <Compile Include="ViewModels\AboutSettingsViewModel.cs" />
+    <Compile Include="ViewModels\AppSettingsViewModel.cs" />
+    <Compile Include="ViewModels\DatabaseClosedSettingsViewModel.cs" />
+    <Compile Include="ViewModels\EntryEditViewModel.cs" />
+    <Compile Include="ViewModels\FolderPickerViewModel.cs" />
+    <Compile Include="ViewModels\Messages\FolderSelectedMessage.cs" />
+    <Compile Include="ViewModels\NewDatabaseViewModel.cs" />
+    <Compile Include="ViewModels\PasswordEntryScreen.cs" />
+    <Compile Include="ViewModels\Messages\PasswordGenerateMessage.cs" />
+    <Compile Include="ViewModels\PasswordGeneratorViewModel.cs" />
+    <Compile Include="ViewModels\SearchResultsViewModel.cs" />
+    <Compile Include="Services\MetroClipboard.cs" />
+    <Compile Include="Services\IClipboard.cs" />
+    <Compile Include="Services\IPageServices.cs" />
+    <Compile Include="ViewModels\BaseScreen.cs" />
+    <Compile Include="ViewModels\GroupEditViewModel.cs" />
+    <Compile Include="ViewModels\DatabaseSettingsViewModel.cs" />
+    <Compile Include="ViewModels\StartPageViewModel.cs" />
+    <Compile Include="Views\AddEntryView.xaml.cs">
+      <DependentUpon>AddEntryView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AddGroupView.xaml.cs">
+      <DependentUpon>AddGroupView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AboutSettingsView.xaml.cs">
+      <DependentUpon>AboutSettingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AppSettingsView.xaml.cs">
+      <DependentUpon>AppSettingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DatabaseClosedSettingsView.xaml.cs">
+      <DependentUpon>DatabaseClosedSettingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EntryEditView.xaml.cs">
+      <DependentUpon>EntryEditView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EntryGroupListView.xaml.cs">
+      <DependentUpon>EntryGroupListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FolderPickerView.xaml.cs">
+      <DependentUpon>FolderPickerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\GroupEditView.xaml.cs">
+      <DependentUpon>GroupEditView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\IEntryEditView.cs" />
+    <Compile Include="Views\ILoadKdbView.cs" />
+    <Compile Include="Views\LoadKdbView.xaml.cs">
+      <DependentUpon>LoadKdbView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Common\RichTextColumns.cs" />
+    <Compile Include="Common\SuspensionManager.cs" />
+    <Compile Include="Services\PageServices.cs" />
+    <Compile Include="ViewModels\EntryGroupListViewModel.cs" />
+    <Compile Include="ViewModels\LoadKdbViewModel.cs" />
+    <Compile Include="Views\NewDatabaseView.xaml.cs">
+      <DependentUpon>NewDatabaseView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PasswordGeneratorView.xaml.cs">
+      <DependentUpon>PasswordGeneratorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SearchResultsView.xaml.cs">
+      <DependentUpon>SearchResultsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DatabaseSettingsView.xaml.cs">
+      <DependentUpon>DatabaseSettingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StartPageView.xaml.cs">
+      <DependentUpon>StartPageView.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <AppxManifest Include="Package.appxmanifest">
+      <SubType>Designer</SubType>
+    </AppxManifest>
+    <None Include="Common\ReadMe.txt" />
+    <None Include="MetroPass.UI_StoreKey.pfx" />
+    <None Include="MetroPass.UI_TemporaryKey.pfx" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Logo.png" />
+    <Content Include="Assets\SmallLogo.jpg" />
+    <Content Include="Assets\SmallLogo.png" />
+    <Content Include="Assets\SplashScreen.png" />
+    <Content Include="Assets\StoreLogo.png" />
+    <Content Include="Assets\LightGray.png" />
+    <Content Include="Assets\MediumGray.png" />
+    <Content Include="Assets\DarkGray.png" />
+    <Content Include="Assets\WideLogo.png" />
+    <None Include="Package.StoreAssociation.xml">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Page Include="Common\Styles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="Common\StandardStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\AddEntryView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\AddGroupView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\AboutSettingsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\AppSettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DatabaseClosedSettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EntryEditView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EntryGroupListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\FolderPickerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\GroupEditView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\LoadKdbView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\NewDatabaseView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PasswordGeneratorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SearchResultsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\DatabaseSettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StartPageView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Caliburn.Micro, Version=1.5.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Caliburn.Micro.1.5.2\lib\win8\Caliburn.Micro.dll</HintPath>
+    </Reference>
+    <Reference Include="Caliburn.Micro.Extensions, Version=1.5.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Caliburn.Micro.1.5.2\lib\win8\Caliburn.Micro.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Callisto, Version=1.2.7.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Callisto.1.3.1\lib\winrt45\Callisto.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks">
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.16\lib\win8\Microsoft.Threading.Tasks.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions">
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.16\lib\win8\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject.Common">
+      <HintPath>..\packages\Portable.Ninject.Common.3.0.1.11\lib\Ninject.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject.WinRT">
+      <HintPath>..\..\..\..\Libs\Ninject.WinRT.dll</HintPath>
+    </Reference>
+    <Reference Include="NotificationsExtensions">
+      <HintPath>..\..\..\..\Libs\NotificationsExtensions.winmd</HintPath>
+    </Reference>
+    <Reference Include="PCLStorage">
+      <HintPath>..\packages\PCLStorage.0.2.1-pre\lib\win8\PCLStorage.dll</HintPath>
+    </Reference>
+    <Reference Include="PCLStorage.Abstractions">
+      <HintPath>..\packages\PCLStorage.0.2.1-pre\lib\win8\PCLStorage.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="ReactiveUI">
+      <HintPath>..\..\packages\reactiveui-core.5.1.2\lib\Portable-Net45+WinRT45+WP8\ReactiveUI.dll</HintPath>
+    </Reference>
+    <Reference Include="ReactiveUI.Xaml">
+      <HintPath>..\..\packages\reactiveui-platforms.5.1.2\lib\WinRT45\ReactiveUI.Xaml.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Core">
+      <HintPath>..\..\packages\Rx-Core.2.1.30214.0\lib\NetCore45\System.Reactive.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Interfaces">
+      <HintPath>..\..\packages\Rx-Interfaces.2.1.30214.0\lib\NetCore45\System.Reactive.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Linq">
+      <HintPath>..\..\packages\Rx-Linq.2.1.30214.0\lib\NetCore45\System.Reactive.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.PlatformServices">
+      <HintPath>..\..\packages\Rx-PlatformServices.2.1.30214.0\lib\NetCore45\System.Reactive.PlatformServices.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Windows.Threading">
+      <HintPath>..\..\packages\Rx-XAML.2.1.30214.0\lib\NetCore45\System.Reactive.Windows.Threading.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.WindowsRuntime">
+      <HintPath>..\..\packages\Rx-WinRT.2.1.30214.0\lib\NetCore45\System.Reactive.WindowsRuntime.dll</HintPath>
+    </Reference>
+    <Reference Include="Windows.UI.Interactivity, Version=1.2.0.0, Culture=neutral, PublicKeyToken=2f4cf195f2e6765d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Windows.UI.Interactivity.1.3.0.0\lib\win8\Windows.UI.Interactivity.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <SDKReference Include="MSAdvertisingXaml, Version=6.1">
+      <Name>Microsoft Advertising SDK for Windows 8 %28Xaml%29</Name>
+    </SDKReference>
+  </ItemGroup>
+  <ItemGroup />
+  <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">
+    <VisualStudioVersion>11.0</VisualStudioVersion>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
+  <Import Project="..\..\.nuget\nuget.targets" />
+  <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.8\tools\Microsoft.Bcl.Build.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
