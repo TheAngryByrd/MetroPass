@@ -7,6 +7,7 @@ using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using ReactiveCaliburn;
+using System.Threading.Tasks;
 
 namespace MetroPass.UI.ViewModels
 {
@@ -73,9 +74,9 @@ namespace MetroPass.UI.ViewModels
             set { }
         }
 
-        protected internal override void OnViewAttached(object view, object context)
+        protected internal override async Task OnViewAttached(object view, object context)
         {
-            base.OnViewAttached(view, context);
+            await base.OnViewAttached(view, context);
             View = (Page)view;
 
             Window.Current.SizeChanged += Window_SizeChanged;
@@ -87,9 +88,9 @@ namespace MetroPass.UI.ViewModels
             SetState(_stateQueue.Dequeue());
         }
 
-        protected override void OnDeactivate(bool close)
+        protected override async Task OnDeactivate(bool close)
         {
-            base.OnDeactivate(close);
+            await base.OnDeactivate(close);
             Window.Current.SizeChanged -= Window_SizeChanged;
             _eventAggregator.Unsubscribe(this);
         }

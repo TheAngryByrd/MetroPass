@@ -13,6 +13,7 @@ using MetroPass.WP8.UI.DataModel;
 using System.IO;
 using MetroPass.WP8.UI.Services.UI;
 using MetroPass.WP8.UI.Utils;
+using System.Threading.Tasks;
 
 namespace MetroPass.WP8.UI.ViewModels
 {
@@ -57,7 +58,7 @@ namespace MetroPass.WP8.UI.ViewModels
             NavigateToCreateDemoCommand.Subscribe(NavigateToCreateDemo);
         }
 
-        protected override void OnActivate()
+        protected override async Task OnActivate()
         {
             DemoButtonIsVisible = _cache.DownloadFileNavigationCache.DownloadType == DownloadType.Database;
         }

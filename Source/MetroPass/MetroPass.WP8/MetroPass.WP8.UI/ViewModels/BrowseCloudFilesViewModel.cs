@@ -150,7 +150,7 @@ namespace MetroPass.WP8.UI.ViewModels
                               .Navigate();
         }
 
-        protected async override void OnActivate()
+        protected async override Task OnActivate()
         {
             _cloudProvider = await _cloudFactory.GetCloudProvider(CloudProvider);
 
@@ -164,7 +164,7 @@ namespace MetroPass.WP8.UI.ViewModels
             
         }
 
-        protected override void OnDeactivate(bool close)
+        protected override async Task OnDeactivate(bool close)
         {
             SkyDriveItems = new ObservableCollection<ICloudItem>();                
         }    

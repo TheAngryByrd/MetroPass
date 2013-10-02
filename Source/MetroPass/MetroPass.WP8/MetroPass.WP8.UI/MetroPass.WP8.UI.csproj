@@ -264,7 +264,9 @@
     <None Include="Fonts\LiveSymbol.ttf" />
     <None Include="MetroPass.WP8.UI_2013_09_04_20_16_26.sap" />
     <None Include="packages.config" />
-    <None Include="Properties\AppManifest.xml" />
+    <None Include="Properties\AppManifest.xml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Properties\WMAppManifest.xml">
       <SubType>Designer</SubType>
     </None>

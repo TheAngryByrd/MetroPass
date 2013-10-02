@@ -5,6 +5,7 @@ using Metropass.Core.PCL.Model;
 using ReactiveCaliburn;
 using ReactiveUI;
 using Caliburn.Micro;
+using System.Threading.Tasks;
 
 namespace MetroPass.WP8.UI.ViewModels
 {
@@ -75,7 +76,7 @@ namespace MetroPass.WP8.UI.ViewModels
             set { this.RaiseAndSetIfChanged(ref _groupName, value); }
         }
 
-        protected override void OnActivate()
+        protected override async Task OnActivate()
         {
             if(PwGroup != null)
             {
