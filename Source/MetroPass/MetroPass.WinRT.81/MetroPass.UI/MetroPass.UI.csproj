@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{CE338F45-5EAA-49E1-A6C7-25DC4654C3CE}</ProjectGuid>
+    <ProjectGuid>{C2822844-B96F-4025-981C-B9565C40ADD9}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MetroPass.UI</RootNamespace>

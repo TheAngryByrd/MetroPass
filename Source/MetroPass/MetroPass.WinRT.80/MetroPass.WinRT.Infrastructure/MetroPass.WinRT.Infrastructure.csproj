@@ -120,7 +120,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="WinRTBouncyCastle">
-      <HintPath>..\packages\WinRTBouncyCastle.0.1.0\lib\windows8\WinRTBouncyCastle.dll</HintPath>
+      <HintPath>..\..\packages\WinRTBouncyCastle.0.1.1.1\lib\windows8\WinRTBouncyCastle.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
