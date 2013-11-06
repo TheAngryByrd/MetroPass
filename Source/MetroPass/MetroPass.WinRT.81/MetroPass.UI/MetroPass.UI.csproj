@@ -186,6 +186,12 @@
     <Compile Include="..\..\MetroPass.WinRT.80\MetroPass.UI\ViewModels\AddGroupViewModel.cs">
       <Link>ViewModels\AddGroupViewModel.cs</Link>
     </Compile>
+    <Compile Include="..\..\MetroPass.WinRT.80\MetroPass.UI\ViewModels\AdGroup.cs">
+      <Link>ViewModels\AdGroup.cs</Link>
+    </Compile>
+    <Compile Include="..\..\MetroPass.WinRT.80\MetroPass.UI\ViewModels\AdItem.cs">
+      <Link>ViewModels\AdItem.cs</Link>
+    </Compile>
     <Compile Include="..\..\MetroPass.WinRT.80\MetroPass.UI\ViewModels\AppSettingsViewModel.cs">
       <Link>ViewModels\AppSettingsViewModel.cs</Link>
     </Compile>
