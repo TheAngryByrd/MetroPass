@@ -13,7 +13,7 @@
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{BC8A1FFA-BEE3-4634-8014-F334798102B3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <PackageCertificateKeyFile>MetroPass.UI_StoreKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateKeyFile>MetroPass.UI_TemporaryKey.pfx</PackageCertificateKeyFile>
     <SccProjectName>
     </SccProjectName>
     <SccLocalPath>
@@ -22,12 +22,14 @@
     </SccAuxPath>
     <SccProvider>
     </SccProvider>
-    <PackageCertificateThumbprint>F53B4FE78ED1299F4340DDA007CFEC53BA3D45A4</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>45AF69003E82BD0BBB3B52A7B7EBDB6471B18CE2</PackageCertificateThumbprint>
     <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
     <TargetPlatformVersion>8.1</TargetPlatformVersion>
     <MinimumVisualStudioVersion>12</MinimumVisualStudioVersion>
+    <AppxBundlePlatforms>neutral</AppxBundlePlatforms>
+    <AppxPackageDir>C:\Users\jimmy_000\Documents\GitHub\MetroPass\Source\MetroPass\MetroPass.WinRT.81\MetroPass.UI\PaidAppPackages\</AppxPackageDir>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -309,7 +311,6 @@
     </AppxManifest>
     <Content Include="Assets\Fonts\password.ttf" />
     <None Include="Common\ReadMe.txt" />
-    <None Include="MetroPass.UI_StoreKey.pfx" />
     <None Include="MetroPass.UI_TemporaryKey.pfx" />
     <None Include="packages.config" />
   </ItemGroup>

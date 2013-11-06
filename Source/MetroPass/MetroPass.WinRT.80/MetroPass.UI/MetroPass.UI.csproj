@@ -12,7 +12,7 @@
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{BC8A1FFA-BEE3-4634-8014-F334798102B3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <PackageCertificateKeyFile>MetroPass.UI_StoreKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateKeyFile>MetroPass.UI_TemporaryKey.pfx</PackageCertificateKeyFile>
     <SccProjectName>
     </SccProjectName>
     <SccLocalPath>
@@ -21,7 +21,7 @@
     </SccAuxPath>
     <SccProvider>
     </SccProvider>
-    <PackageCertificateThumbprint>F53B4FE78ED1299F4340DDA007CFEC53BA3D45A4</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>7547F9833C3D97C1F2530C3FFC35C664FBFB3427</PackageCertificateThumbprint>
     <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
@@ -236,7 +236,6 @@
       <SubType>Designer</SubType>
     </AppxManifest>
     <None Include="Common\ReadMe.txt" />
-    <None Include="MetroPass.UI_StoreKey.pfx" />
     <None Include="MetroPass.UI_TemporaryKey.pfx" />
     <None Include="packages.config" />
   </ItemGroup>
