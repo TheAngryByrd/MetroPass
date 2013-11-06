@@ -262,9 +262,9 @@ namespace MetroPass.UI.ViewModels
             get { return CanPickDatabase && CanPickKeyFile && !OpeningDatabase; }
         }
 
-        protected internal async override void OnViewLoaded(object view)
+        protected internal async override Task OnViewLoaded(object view)
         {
-            base.OnViewLoaded(view);
+            await base.OnViewLoaded(view);
 
             if (ShouldRedirectToSearch) {
                 SetState("Searching");
@@ -395,7 +395,7 @@ namespace MetroPass.UI.ViewModels
                     _navigationService.UriFor<EntryGroupListViewModel>().WithParam(vm => vm.GroupId, encodedUUID).Navigate();
                 }
             }
-            catch (SecurityException se)
+            catch (Exception se)
             {
                 OpeningDatabase = false;
                 Progress = 0;

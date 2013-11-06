@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using Metropass.Core.PCL.Hashing;
 using MetroPass.WP8.UI.Utils;
 using PCLStorage;
+using System.Threading.Tasks;
 
 namespace MetroPass.WP8.UI.ViewModels
 {
@@ -64,7 +65,7 @@ namespace MetroPass.WP8.UI.ViewModels
 
         private DatabaseInfo _databaseInfo;
 
-        protected async override void OnActivate()
+        protected async override Task OnActivate()
         {
             _databaseInfo = await _databaseInfoRepository.GetDatabaseInfo(_cache.DatabaseName);
 
@@ -182,3 +183,4 @@ namespace MetroPass.WP8.UI.ViewModels
         }
     }
 }
+

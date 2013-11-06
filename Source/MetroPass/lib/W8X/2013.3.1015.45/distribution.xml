@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<Distribution xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Version>2013.3.1015.45</Version>
+  <Trial>false</Trial>
+  <Dependencies>
+    <Project>c2822844-b96f-4025-981c-b9565c40add9</Project>
+    <Project>ce338f45-5eaa-49e1-a6c7-25dc4654c3ce</Project>
+  </Dependencies>
+  <DistributionType>Binary</DistributionType>
+</Distribution>

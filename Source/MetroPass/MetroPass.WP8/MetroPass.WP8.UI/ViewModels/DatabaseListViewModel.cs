@@ -8,6 +8,7 @@ using MetroPass.WP8.UI.ViewModels.Interfaces;
 using ReactiveCaliburn;
 using ReactiveUI;
 using MetroPass.WP8.UI.Utils;
+using System.Threading.Tasks;
 
 namespace MetroPass.WP8.UI.ViewModels
 {
@@ -68,7 +69,7 @@ namespace MetroPass.WP8.UI.ViewModels
             _navService.UriFor<ChooseCloudViewModel>().Navigate();
         }
 
-        protected async override void OnActivate()
+        protected async override Task OnActivate()
         {
             DatabaseItems.Clear();
             SelectedDatabaseItem = null;
@@ -113,3 +114,4 @@ namespace MetroPass.WP8.UI.ViewModels
         }
     }
 }
+

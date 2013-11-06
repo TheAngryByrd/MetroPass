@@ -4,6 +4,7 @@ using MetroPass.UI.DataModel;
 using Metropass.Core.PCL.Model;
 using ReactiveCaliburn;
 using ReactiveUI;
+using System.Threading.Tasks;
 
 namespace MetroPass.WP8.UI.ViewModels
 {
@@ -18,7 +19,7 @@ namespace MetroPass.WP8.UI.ViewModels
             _databaserSource = databaserSource;
         }
 
-        protected override void OnActivate()
+        protected override async Task OnActivate()
         {
             CustomFields = new ObservableCollection<FieldViewModel>();
             GetEntry();
@@ -197,3 +198,4 @@ namespace MetroPass.WP8.UI.ViewModels
         }
     }
 }
+

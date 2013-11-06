@@ -4,6 +4,7 @@ using Caliburn.Micro;
 using MetroPass.UI.DataModel;
 using MetroPass.UI.Services;
 using Metropass.Core.PCL.Model;
+using System.Threading.Tasks;
 
 namespace MetroPass.UI.ViewModels
 {
@@ -36,9 +37,10 @@ namespace MetroPass.UI.ViewModels
 
         public ObservableCollection<PwEntry> Results { get; private set; }
 
-        protected internal override void OnViewLoaded(object view)
+
+        protected async internal override Task OnViewLoaded(object view)
         {
-            base.OnViewLoaded(view);
+            await base.OnViewLoaded(view);
             SearchEntries();
         }
 

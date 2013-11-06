@@ -64,7 +64,7 @@ namespace MetroPass.WP8.UI.ViewModels
             LiveLoginResult = await authClient.LoginAsync(ParseScopeString(this.Scopes));
         }
 
-        protected async override void OnActivate()
+        protected async override Task OnActivate()
         {
             if (authClient == null)
             {

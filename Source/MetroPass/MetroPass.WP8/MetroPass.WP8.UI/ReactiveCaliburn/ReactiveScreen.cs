@@ -97,7 +97,7 @@ namespace ReactiveCaliburn
         public event EventHandler<DeactivationEventArgs> Deactivated = delegate { };
 
 
-        void IActivate.Activate()
+        async void IActivate.Activate()
         {
             if (IsActive)
             {
@@ -111,13 +111,13 @@ namespace ReactiveCaliburn
             if (!IsInitialized)
             {
                 IsInitialized = initialized = true;
-                OnInitialize();
+                await OnInitialize();
             }
 
 
             IsActive = true;
             Log.Info("Activating {0}.", this);
-            OnActivate();
+            await OnActivate();
 
 
             Activated(this, new ActivationEventArgs
@@ -130,16 +130,16 @@ namespace ReactiveCaliburn
         /// <summary>
         ///   Called when initializing.
         /// </summary>
-        protected virtual void OnInitialize() { }
+        protected virtual async Task OnInitialize() { }
 
 
         /// <summary>
         ///   Called when activating.
         /// </summary>
-        protected virtual void OnActivate() { }
+        protected virtual async Task OnActivate() { }
 
 
-        void IDeactivate.Deactivate(bool close)
+        async void IDeactivate.Deactivate(bool close)
         {
             if (IsActive || (IsInitialized && close))
             {
@@ -151,7 +151,7 @@ namespace ReactiveCaliburn
 
                 IsActive = false;
                 Log.Info("Deactivating {0}.", this);
-                OnDeactivate(close);
+                await OnDeactivate(close);
 
 
                 Deactivated(this, new DeactivationEventArgs
@@ -173,7 +173,7 @@ namespace ReactiveCaliburn
         ///   Called when deactivating.
         /// </summary>
         /// <param name = "close">Inidicates whether this instance will be closed.</param>
-        protected virtual void OnDeactivate(bool close) { }
+        protected virtual async Task OnDeactivate(bool close) { }
 
 
         /// <summary>
