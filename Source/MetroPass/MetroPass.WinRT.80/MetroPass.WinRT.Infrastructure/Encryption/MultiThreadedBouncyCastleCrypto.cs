@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Linq;
 using Metropass.Core.PCL.Encryption;
-using Org.BouncyCastle.Crypto;
 using System.Threading.Tasks;
 using Org.BouncyCastle.Security;
 using Org.BouncyCastle.Crypto.Parameters;
+using Org.BouncyCastle.Crypto;
 
 namespace MetroPass.WinRT.Infrastructure.Encryption
 {

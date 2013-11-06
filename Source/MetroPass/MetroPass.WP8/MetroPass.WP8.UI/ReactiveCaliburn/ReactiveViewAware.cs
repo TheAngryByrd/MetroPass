@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Caliburn.Micro;
+using System.Threading.Tasks;
 #if NETFX_CORE
 using Windows.UI.Xaml;
 #else
@@ -72,7 +73,7 @@ namespace ReactiveCaliburn
         }
 
 
-        void IViewAware.AttachView(object view, object context)
+        async void IViewAware.AttachView(object view, object context)
         {
             if (CacheViews)
             {
@@ -87,11 +88,11 @@ namespace ReactiveCaliburn
             if (element != null && !(bool)element.GetValue(PreviouslyAttachedProperty))
             {
                 element.SetValue(PreviouslyAttachedProperty, true);
-                View.ExecuteOnLoad(element, (s, e) => OnViewLoaded(s));
+                View.ExecuteOnLoad(element, async (s, e) => await OnViewLoaded(s));
             }
 
 
-            OnViewAttached(nonGeneratedView, context);
+            await OnViewAttached(nonGeneratedView, context);
             ViewAttached(this, new ViewAttachedEventArgs { View = nonGeneratedView, Context = context });
         }
 
@@ -101,20 +102,20 @@ namespace ReactiveCaliburn
         /// </summary>
         /// <param name="view">The view.</param>
         /// <param name="context">The context in which the view appears.</param>
-        protected internal virtual void OnViewAttached(object view, object context) { }
+        protected internal virtual async Task OnViewAttached(object view, object context) { }
 
 
         /// <summary>
         ///   Called when an attached view's Loaded event fires.
         /// </summary>
         /// <param name = "view"></param>
-        protected internal virtual void OnViewLoaded(object view) { }
+        protected internal virtual async Task OnViewLoaded(object view) { }
 
 
 #if WINDOWS_PHONE || NETFX_CORE
-        void IViewAware.OnViewReady(object view)
+        async void IViewAware.OnViewReady(object view)
         {
-            OnViewReady(view);
+            await OnViewReady(view);
         }
 
 
@@ -122,7 +123,7 @@ namespace ReactiveCaliburn
         ///   Called the first time the page's LayoutUpdated event fires after it is navigated to.
         /// </summary>
         /// <param name = "view"></param>
-        protected virtual void OnViewReady(object view) { }
+        protected virtual async Task OnViewReady(object view) { }
 #endif
 
 

@@ -22,7 +22,6 @@ namespace MetroPass.UI
 {
     public sealed partial class App
     { 
-        private NinjectContainer _ninjectContainer;
 
         private const string PrivacyPolicyUrl = "http://metropass.azurewebsites.net/Privacy-Policy";
         private const string SupportUrl = "https://metropasswin8.uservoice.com";
@@ -152,7 +151,7 @@ namespace MetroPass.UI
             if (ApplicationData.Current.LocalSettings.Values.ContainsKey("SuspendDate"))
             {
                 DateTime suspendedDate = DateTime.Parse(ApplicationData.Current.LocalSettings.Values["SuspendDate"].ToString());
-                var locker =_ninjectContainer.Kernel.Get<ILockingService>();
+                var locker = _bootstrapper.GetInstance<ILockingService>();
                 locker.OnResumeLock(suspendedDate);
             }
         }
@@ -167,7 +166,7 @@ namespace MetroPass.UI
             }
             else
             {
-                var navigationService = _ninjectContainer.Kernel.Get<INavigationService>();
+                var navigationService = _bootstrapper.GetInstance<INavigationService>();
                 navigationService.UriFor<SearchResultsViewModel>().WithParam(vm => vm.QueryText, args.QueryText).Navigate();
             }
         }

@@ -10,6 +10,7 @@ using System;
 using MetroPass.WP8.UI.Utils;
 using System.IO;
 using MetroPass.WP8.UI.Services.UI;
+using System.Threading.Tasks;
 
 namespace MetroPass.WP8.UI.ViewModels
 {
@@ -117,17 +118,13 @@ namespace MetroPass.WP8.UI.ViewModels
             set { this.RaiseAndSetIfChanged(ref _selectedItem, value); }
         }
 
-        protected override void OnActivate()
+        protected override async Task OnActivate()
         {
             Items.Clear();
             SelectedItem = null;
             GetGroup(GroupId);
             Items.AddRange(Group.SubGroupsAndEntries);        
-        }
-        protected override void OnDeactivate(bool close)
-        {            
-           
-        }
+        }   
 
         private void GetGroup(string groupId)
         {

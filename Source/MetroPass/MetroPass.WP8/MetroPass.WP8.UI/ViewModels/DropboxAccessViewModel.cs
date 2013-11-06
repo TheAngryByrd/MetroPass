@@ -45,7 +45,7 @@ namespace MetroPass.WP8.UI.ViewModels
               }
         }
 
-        protected async override void OnActivate()
+        protected async override Task OnActivate()
         {            
             var view = GetView() as DropboxAccessView;
             view.browser.Visibility = Visibility.Collapsed;
@@ -57,12 +57,7 @@ namespace MetroPass.WP8.UI.ViewModels
                 view.browser.Navigate(new Uri(url)));
 
             
-        }
-
-        protected override void OnDeactivate(bool close)
-        {
-           
-        }
+        }         
 
         public void LoadCompleted()
         {

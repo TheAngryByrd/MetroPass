@@ -5,6 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{CE338F45-5EAA-49E1-A6C7-25DC4654C3CE}</ProjectGuid>
+    <ProjectGuid>{C2822844-B96F-4025-981C-B9565C40ADD9}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MetroPass.UI</RootNamespace>
@@ -453,9 +454,42 @@
     <Reference Include="System.Reactive.WindowsRuntime">
       <HintPath>..\..\packages\Rx-WinRT.2.1.30214.0\lib\NetCore45\System.Reactive.WindowsRuntime.dll</HintPath>
     </Reference>
+    <Reference Include="Telerik.Core">
+      <HintPath>..\..\lib\W8X\2013.3.1015.45\Core\Telerik.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Geospatial">
+      <HintPath>..\..\lib\W8X\2013.3.1015.45\MapUtils\Telerik.Geospatial.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.UI.Xaml.Chart">
+      <HintPath>..\..\lib\W8X\2013.3.1015.45\Chart\Telerik.UI.Xaml.Chart.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.UI.Xaml.DataVisualization">
+      <HintPath>..\..\lib\W8X\2013.3.1015.45\DataVisualization\Telerik.UI.Xaml.DataVisualization.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.UI.Xaml.Grid">
+      <HintPath>..\..\lib\W8X\2013.3.1015.45\Grid\Telerik.UI.Xaml.Grid.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.UI.Xaml.Input">
+      <HintPath>..\..\lib\W8X\2013.3.1015.45\Input\Telerik.UI.Xaml.Input.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.UI.Xaml.Primitives">
+      <HintPath>..\..\lib\W8X\2013.3.1015.45\Primitives\Telerik.UI.Xaml.Primitives.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Windows.UI.Interactivity">
       <HintPath>..\..\packages\Windows.UI.Interactivity.1.3.0.0\lib\win8\Windows.UI.Interactivity.dll</HintPath>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <SDKReference Include="MSAdvertisingXaml, Version=8.1">
+      <Name>Microsoft Advertising SDK for Windows 8.1 %28Xaml%29</Name>
+    </SDKReference>
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
