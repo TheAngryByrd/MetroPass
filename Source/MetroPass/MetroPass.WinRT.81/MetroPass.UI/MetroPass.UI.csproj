@@ -308,6 +308,7 @@
       <SubType>Designer</SubType>
     </AppxManifest>
     <Content Include="Assets\Fonts\password.ttf" />
+    <None Include="Package.StoreAssociation.xml" />
     <None Include="Common\ReadMe.txt" />
     <None Include="MetroPass.UI_StoreKey.pfx" />
     <None Include="MetroPass.UI_TemporaryKey.pfx" />
