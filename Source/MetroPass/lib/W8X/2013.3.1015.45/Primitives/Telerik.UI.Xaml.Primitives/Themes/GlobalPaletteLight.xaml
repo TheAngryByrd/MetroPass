@@ -1,0 +1,18 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Telerik.UI.Xaml.Controls.Primitives">
+    
+    <local:SolidColorBrushToColorConverter x:Key="BrushToColorConverter"/>
+    
+    <SolidColorBrush x:Key="TelerikWatermarkForegroundBrush" Color="#FF666666"/>
+    <SolidColorBrush x:Key="TelerikWatermarkDisabledForegroundBrush" Color="#1F000000"/>
+    <SolidColorBrush x:Key="TelerikForegroundBrush" Color="#FF000000"/>
+    <SolidColorBrush x:Key="TelerikSecondaryForegroundBrush" Color="#99000000"/>
+    
+    <SolidColorBrush x:Key="TelerikSelectedBrush" Color="#FF006AC1"/>
+    <SolidColorBrush x:Key="TelerikDisabledBrush" Color="#66000000"/>
+    <SolidColorBrush x:Key="TelerikSolidColorBlack" Color="#FF000000"/>
+    <SolidColorBrush x:Key="TelerikSolidColorWhite" Color="#FFFFFFFF"/>
+    
+</ResourceDictionary>

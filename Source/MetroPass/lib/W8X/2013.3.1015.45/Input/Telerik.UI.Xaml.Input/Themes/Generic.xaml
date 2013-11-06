@@ -1,0 +1,16 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:inputTheming="using:Telerik.UI.Xaml.Controls.Input.Theming">
+
+    <inputTheming:PaletteInitializer x:Key="PaletteInitializer"/>
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="ms-appx:///Telerik.UI.Xaml.Input/Themes/AutoCompleteBox.xaml"/>
+        <ResourceDictionary Source="ms-appx:///Telerik.UI.Xaml.Input/Themes/Calendar.xaml"/>
+        <ResourceDictionary Source="ms-appx:///Telerik.UI.Xaml.Input/Themes/DateTimePickers.xaml"/>
+        <ResourceDictionary Source="ms-appx:///Telerik.UI.Xaml.Input/Themes/NumericBox.xaml"/>
+        <ResourceDictionary Source="ms-appx:///Telerik.UI.Xaml.Input/Themes/RangeSlider.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+
+</ResourceDictionary>
