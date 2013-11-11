@@ -362,7 +362,12 @@
     <PackageInfo>
       <OsMinVersion>6.2.1.0</OsMinVersion>
       <PackageArchitecture>neutral</PackageArchitecture>
-      <PackageMaxArchitectureVersion>1.0.14.20</PackageMaxArchitectureVersion>
+      <PackageMaxArchitectureVersion>1.0.15.22</PackageMaxArchitectureVersion>
+    </PackageInfo>
+    <PackageInfo>
+      <OsMinVersion>6.3.0.0</OsMinVersion>
+      <PackageArchitecture>neutral</PackageArchitecture>
+      <PackageMaxArchitectureVersion>2.1.15.21</PackageMaxArchitectureVersion>
     </PackageInfo>
   </PackageInfoList>
 </StoreAssociation>
