@@ -140,6 +140,9 @@ namespace MetroPass.UI
 
         private async void OnSuspending(object sender, SuspendingEventArgs e)
         {
+            if (_bootstrapper == null)
+                Configure();
+
             var deferral = e.SuspendingOperation.GetDeferral();
             ApplicationData.Current.LocalSettings.Values["SuspendDate"] = DateTime.Now.ToString();
             await SuspensionManager.SaveAsync();
@@ -148,6 +151,9 @@ namespace MetroPass.UI
         
         protected override void OnResuming(object sender, object e)
         {
+            if (_bootstrapper == null)
+                Configure();
+
             if (ApplicationData.Current.LocalSettings.Values.ContainsKey("SuspendDate"))
             {
                 DateTime suspendedDate = DateTime.Parse(ApplicationData.Current.LocalSettings.Values["SuspendDate"].ToString());
@@ -158,6 +164,9 @@ namespace MetroPass.UI
 
         protected override void OnSearchActivated(Windows.ApplicationModel.Activation.SearchActivatedEventArgs args)
         {
+            if (_bootstrapper == null)
+                Configure();
+
             var dataSource = _bootstrapper.GetInstance<IPWDatabaseDataSource>();
             if (dataSource.PwDatabase == null)
             {
@@ -173,6 +182,9 @@ namespace MetroPass.UI
 
         protected override void OnFileActivated(FileActivatedEventArgs args)
         {
+            if (_bootstrapper == null)
+                Configure();
+
             var dataSource = _bootstrapper.GetInstance<IPWDatabaseDataSource>();
             dataSource.StorageFile = args.Files[0] as StorageFile;
             DisplayRootView<LoadKdbView>();
