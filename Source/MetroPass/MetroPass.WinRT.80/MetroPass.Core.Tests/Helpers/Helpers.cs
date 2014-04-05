@@ -1,14 +1,11 @@
-﻿using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.Storage;
 using Windows.Storage.Streams;
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 
-namespace MetroPass.Core.Tests.Helpers
+namespace MetroPass.Core.W8.Tests.Helpers
 {
     public static class Helpers
     {
@@ -16,9 +13,9 @@ namespace MetroPass.Core.Tests.Helpers
         public static async Task<IDataReader> GetDatabaseAsDatareaderAsync(string path)
         {
             var database = await Package.Current.InstalledLocation.GetFileAsync(path);
-            var buffer = await Windows.Storage.FileIO.ReadBufferAsync(database);
+            var buffer = await FileIO.ReadBufferAsync(database);
             IDataReader reader = DataReader.FromBuffer(buffer);
-            reader.UnicodeEncoding = Windows.Storage.Streams.UnicodeEncoding.Utf8;
+            reader.UnicodeEncoding = UnicodeEncoding.Utf8;
             return reader;
         }
 

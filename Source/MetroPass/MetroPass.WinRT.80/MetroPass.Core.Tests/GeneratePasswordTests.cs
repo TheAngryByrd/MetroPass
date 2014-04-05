@@ -1,40 +1,31 @@
-﻿using System.Threading.Tasks;
-using MetroPass.WinRT.Infrastructure.PasswordGeneration;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Metropass.Core.PCL.PasswordGeneration;
+using MetroPass.WinRT.Infrastructure.PasswordGeneration;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 
-namespace MetroPass.Core.Tests
+namespace MetroPass.Core.W8.Tests
 {
     [TestClass]
     public class GeneratePasswordTests
     {
         bool ContainsCharactersFromFormat(string format, string characterSet)
-        { 
-            foreach (char c in format)
-            {
-                if (!characterSet.Contains(c.ToString()))
-                    return false;
-            }
-            return true;
+        {
+            return format.Cast<char>().All(c => characterSet.Contains(c.ToString()));
         }
 
         bool DoesntContainCharactersFromFormat(string format, string characterSet)
         {
-            foreach (char c in format)
-            {
-                if (characterSet.Contains(c.ToString()))
-                    return false;
-            }
-            return true;
+            return format.Cast<char>().All(c => !characterSet.Contains(c.ToString()));
         }
-  
+
         [TestMethod]
         public void GeneratePasswordFromLengthAndStringTest()
         {
-            var length = 5;
+            const int length = 5;
 
             PasswordGeneratorBase generator = new PasswordGeneratorRT();
-            var characterSet = PasswordGeneratorCharacterSets.Uppercase;
+            const string characterSet = PasswordGeneratorCharacterSets.Uppercase;
             string password = generator.GeneratePassword(length, new string[]{characterSet});
 
             Assert.AreEqual(length, password.Length);
@@ -44,11 +35,11 @@ namespace MetroPass.Core.Tests
         [TestMethod]
         public async Task GeneratePasswordFromLengthAndStringAsyncTest()
         {
-            var length = 5;
+            const int length = 5;
 
             PasswordGeneratorBase generator = new PasswordGeneratorRT();
-            var characterSet = PasswordGeneratorCharacterSets.Uppercase;
-            string password = await generator.GeneratePasswordAsync(length, new string[] { characterSet });
+            const string characterSet = PasswordGeneratorCharacterSets.Uppercase;
+            string password = await generator.GeneratePasswordAsync(length, new[] { characterSet });
 
             Assert.AreEqual(length, password.Length);
             Assert.IsTrue(ContainsCharactersFromFormat(password, characterSet));
@@ -60,7 +51,7 @@ namespace MetroPass.Core.Tests
             var length = 5;
 
             PasswordGeneratorBase generator = new PasswordGeneratorRT();
-            string[] characterSet = new string[] { PasswordGeneratorCharacterSets.Uppercase, PasswordGeneratorCharacterSets.Lowercase, PasswordGeneratorCharacterSets.Digit };
+            string[] characterSet = { PasswordGeneratorCharacterSets.Uppercase, PasswordGeneratorCharacterSets.Lowercase, PasswordGeneratorCharacterSets.Digit };
             string password = await generator.GeneratePasswordAsync(length, characterSet);
 
             Assert.AreEqual(length, password.Length);
@@ -70,9 +61,9 @@ namespace MetroPass.Core.Tests
         [TestMethod]
         public async Task GeneratePasswordExcludingCharacter()
         {
-            var length = 500;
-            string[] characterSet = new string[] { "AB" };
-            var excludeCharacters = "B";
+            const int length = 500;
+            string[] characterSet = { "AB" };
+            const string excludeCharacters = "B";
             PasswordGeneratorBase generator = new PasswordGeneratorRT();
             string password = await generator.GeneratePasswordAsync(length, characterSet, excludeCharacters);
 

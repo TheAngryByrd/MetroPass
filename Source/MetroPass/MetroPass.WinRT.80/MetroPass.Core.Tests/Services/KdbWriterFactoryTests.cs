@@ -1,14 +1,13 @@
-﻿using System.Xml.Linq;
+﻿using System;
+using System.Xml.Linq;
+using Metropass.Core.PCL.Model.Kdb4;
+using Metropass.Core.PCL.Model.Kdb4.Writer;
 using MetroPass.WinRT.Infrastructure.Compression;
 using MetroPass.WinRT.Infrastructure.Encryption;
 using MetroPass.WinRT.Infrastructure.Hashing;
-using Metropass.Core.PCL.Encryption;
-using Metropass.Core.PCL.Model.Kdb4;
-using Metropass.Core.PCL.Model.Kdb4.Writer;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-using System;
 
-namespace MetroPass.Core.Tests.Services
+namespace MetroPass.Core.W8.Tests.Services
 {
    [TestClass]
     public class KdbWriterFactoryTests
@@ -16,7 +15,7 @@ namespace MetroPass.Core.Tests.Services
        [TestMethod]
        public void CanCreateKdb4Writer()
        {
-           KdbWriterFactory factory = new KdbWriterFactory(new WinRTCrypto(),
+           var factory = new KdbWriterFactory(new WinRTCrypto(),
                       new MultiThreadedBouncyCastleCrypto(),
                       new SHA256HasherRT(),
                       new GZipFactoryRT());
@@ -28,7 +27,7 @@ namespace MetroPass.Core.Tests.Services
        [TestMethod]
        public void CantCreateAnyOtherType()
        {
-           KdbWriterFactory factory = new KdbWriterFactory(new WinRTCrypto(),
+           var factory = new KdbWriterFactory(new WinRTCrypto(),
                       new MultiThreadedBouncyCastleCrypto(),
                       new SHA256HasherRT(),
                       new GZipFactoryRT());

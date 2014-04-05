@@ -1,17 +1,16 @@
-﻿using MetroPass.WinRT.Infrastructure;
-using MetroPass.WinRT.Infrastructure.Compression;
-using MetroPass.WinRT.Infrastructure.Encryption;
-using MetroPass.WinRT.Infrastructure.Hashing;
-using Metropass.Core.PCL.Encryption;
+﻿using System.IO;
+using System.Threading.Tasks;
+using Windows.Security.Cryptography;
 using Metropass.Core.PCL.Model.Kdb4;
 using Metropass.Core.PCL.Model.Kdb4.Reader;
 using Metropass.Core.PCL.Model.Kdb4.Writer;
+using MetroPass.WinRT.Infrastructure;
+using MetroPass.WinRT.Infrastructure.Compression;
+using MetroPass.WinRT.Infrastructure.Encryption;
+using MetroPass.WinRT.Infrastructure.Hashing;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-using System.IO;
-using System.Threading.Tasks;
-using Windows.Security.Cryptography;
 
-namespace MetroPass.Core.Tests.Services.Kdb4.Writer
+namespace MetroPass.Core.W8.Tests.Services.Kdb4.Writer
 {
     [TestClass]
     public class KdbHeaderWriterShould
