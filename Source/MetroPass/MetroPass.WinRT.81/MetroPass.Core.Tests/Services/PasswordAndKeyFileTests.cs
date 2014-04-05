@@ -1,11 +1,7 @@
-﻿using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 
-namespace MetroPass.Core.Tests.Services
+namespace MetroPass.W81.Integration.Tests.Services
 {
     [TestClass]
     public class PasswordAndKeyFileTests

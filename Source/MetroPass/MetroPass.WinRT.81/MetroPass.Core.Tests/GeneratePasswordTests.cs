@@ -1,9 +1,9 @@
 ﻿using System.Threading.Tasks;
-using MetroPass.WinRT.Infrastructure.PasswordGeneration;
 using Metropass.Core.PCL.PasswordGeneration;
+using MetroPass.WinRT.Infrastructure.PasswordGeneration;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 
-namespace MetroPass.Core.Tests
+namespace MetroPass.W81.Integration.Tests
 {
     [TestClass]
     public class GeneratePasswordTests

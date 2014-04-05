@@ -9,8 +9,8 @@
     <ProjectGuid>{EDE8AAA4-7F20-4CD3-8B8D-31D639943509}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MetroPass.Core.Tests</RootNamespace>
-    <AssemblyName>MetroPass.Core.Tests</AssemblyName>
+    <RootNamespace>MetroPass.W81.Integration.Tests</RootNamespace>
+    <AssemblyName>MetroPass.W81.Integration.Tests</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{BC8A1FFA-BEE3-4634-8014-F334798102B3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -175,7 +175,7 @@
       <Name>Metropass.Core.PCL</Name>
     </ProjectReference>
     <ProjectReference Include="..\MetroPass.WinRT.Infrastructure\MetroPass.WinRT.Infrastructure.csproj">
-      <Project>{49748D29-F9CE-45C6-B807-415BF7A8A3EF}</Project>
+      <Project>{f1e221f6-6b68-442c-b3ad-3b483bcb9f4c}</Project>
       <Name>MetroPass.WinRT.Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>

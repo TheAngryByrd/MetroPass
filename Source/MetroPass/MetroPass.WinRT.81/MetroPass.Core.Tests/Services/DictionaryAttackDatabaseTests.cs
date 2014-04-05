@@ -1,22 +1,21 @@
-﻿using System.Diagnostics;
-using MetroPass.WinRT.Infrastructure.Compression;
-using MetroPass.WinRT.Infrastructure.Encryption;
-using MetroPass.WinRT.Infrastructure.Hashing;
-using Metropass.Core.PCL.Encryption;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
+using Windows.ApplicationModel;
+using Windows.Storage;
+using Windows.Storage.Search;
 using Metropass.Core.PCL.Model;
 using Metropass.Core.PCL.Model.Kdb4.Keys;
 using Metropass.Core.PCL.Model.Kdb4.Writer;
+using MetroPass.WinRT.Infrastructure.Compression;
+using MetroPass.WinRT.Infrastructure.Encryption;
+using MetroPass.WinRT.Infrastructure.Hashing;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using PCLStorage;
-using Windows.Storage;
-using Windows.ApplicationModel;
-using Windows.Storage.Search;
 
-namespace MetroPass.Core.Tests.Services
+namespace MetroPass.W81.Integration.Tests.Services
 {
     [TestClass]
     public class HighEncryptionRoundDatabaseTests

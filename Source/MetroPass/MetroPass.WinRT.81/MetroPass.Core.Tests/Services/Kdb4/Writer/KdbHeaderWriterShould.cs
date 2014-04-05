@@ -2,8 +2,10 @@
 using Metropass.Core.PCL.Compression;
 using Metropass.Core.PCL.Encryption;
 using Metropass.Core.PCL.Hashing;
+using Metropass.Core.PCL.Model.Kdb4;
+using Metropass.Core.PCL.Model.Kdb4.Writer;
 
-namespace Metropass.Core.PCL.Model.Kdb4.Writer
+namespace MetroPass.W81.Integration.Tests.Services.Kdb4.Writer
 {
     public class KdbWriterFactory
     {

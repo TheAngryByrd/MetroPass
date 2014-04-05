@@ -1,14 +1,14 @@
-﻿using System.Xml.Linq;
+﻿using System;
+using System.Xml.Linq;
+using Metropass.Core.PCL.Model.Kdb4;
+using Metropass.Core.PCL.Model.Kdb4.Writer;
 using MetroPass.WinRT.Infrastructure.Compression;
 using MetroPass.WinRT.Infrastructure.Encryption;
 using MetroPass.WinRT.Infrastructure.Hashing;
-using Metropass.Core.PCL.Encryption;
-using Metropass.Core.PCL.Model.Kdb4;
-using Metropass.Core.PCL.Model.Kdb4.Writer;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-using System;
+using KdbWriterFactory = MetroPass.W81.Integration.Tests.Services.Kdb4.Writer.KdbWriterFactory;
 
-namespace MetroPass.Core.Tests.Services
+namespace MetroPass.W81.Integration.Tests.Services
 {
    [TestClass]
     public class KdbWriterFactoryTests

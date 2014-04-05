@@ -1,28 +1,27 @@
-﻿using MetroPass.Core.Tests.Helpers;
-using MetroPass.WinRT.Infrastructure;
-using MetroPass.WinRT.Infrastructure.Hashing;
-using Metropass.Core.PCL.Cipher;
-using Metropass.Core.PCL.Hashing;
-using Metropass.Core.PCL.Model;
-using Metropass.Core.PCL.Model.Kdb4.Writer;
-using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-using System;
+﻿using System;
+using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Security;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Security.Cryptography;
+using Windows.Security.Cryptography.Core;
 using Windows.Storage;
 using Windows.Storage.Streams;
-using System.IO;
-using System.IO.Compression;
-using Windows.Security.Cryptography.Core;
-using MetroPass.WinRT.Infrastructure.Encryption;
-using Metropass.Core.PCL.Encryption;
+using Metropass.Core.PCL.Cipher;
+using Metropass.Core.PCL.Hashing;
+using Metropass.Core.PCL.Model;
+using Metropass.Core.PCL.Model.Kdb4.Writer;
+using MetroPass.W81.Integration.Tests.Helpers;
+using MetroPass.WinRT.Infrastructure;
 using MetroPass.WinRT.Infrastructure.Compression;
+using MetroPass.WinRT.Infrastructure.Encryption;
+using MetroPass.WinRT.Infrastructure.Hashing;
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using PCLStorage;
 
-namespace MetroPass.Core.Tests.Services
+namespace MetroPass.W81.Integration.Tests.Services
 {
     [TestClass]
     public class PasswordOnlyDatabase

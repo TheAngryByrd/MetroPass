@@ -2,19 +2,18 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using Windows.ApplicationModel;
+using Windows.Storage;
+using Metropass.Core.PCL.Model;
+using Metropass.Core.PCL.Model.Kdb4.Keys;
+using Metropass.Core.PCL.Model.Kdb4.Reader;
 using MetroPass.WinRT.Infrastructure;
 using MetroPass.WinRT.Infrastructure.Compression;
 using MetroPass.WinRT.Infrastructure.Encryption;
 using MetroPass.WinRT.Infrastructure.Hashing;
-using Metropass.Core.PCL.Encryption;
-using Metropass.Core.PCL.Model;
-using Metropass.Core.PCL.Model.Kdb4.Keys;
-using Metropass.Core.PCL.Model.Kdb4.Reader;
-using Windows.ApplicationModel;
-using Windows.Storage;
 using PCLStorage;
 
-namespace MetroPass.Core.Tests.Services
+namespace MetroPass.W81.Integration.Tests.Services
 {
     public class Scenarios
     {
