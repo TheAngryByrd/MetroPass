@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 
-namespace MetroPass.Core.W8.Integration.Tests.Services
+namespace MetroPass.W8.Integration.Tests.Services
 {
     [TestClass]
     public class PasswordAndKeyFileTests

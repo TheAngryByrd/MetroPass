@@ -5,7 +5,7 @@ using Windows.Storage;
 using Windows.Storage.Streams;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 
-namespace MetroPass.Core.W8.Integration.Tests.Helpers
+namespace MetroPass.W8.Integration.Tests.Helpers
 {
     public static class Helpers
     {

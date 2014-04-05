@@ -15,7 +15,7 @@ using MetroPass.WinRT.Infrastructure.Hashing;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using PCLStorage;
 
-namespace MetroPass.Core.W8.Integration.Tests.Services
+namespace MetroPass.W8.Integration.Tests.Services
 {
     [TestClass]
     public class HighEncryptionRoundDatabaseTests
