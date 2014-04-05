@@ -13,7 +13,7 @@ using MetroPass.WinRT.Infrastructure.Encryption;
 using MetroPass.WinRT.Infrastructure.Hashing;
 using PCLStorage;
 
-namespace MetroPass.Core.W8.Tests.Services
+namespace MetroPass.Core.W8.Integration.Tests.Services
 {
     public class Scenarios
     {

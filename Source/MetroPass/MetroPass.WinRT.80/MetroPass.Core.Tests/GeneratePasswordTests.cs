@@ -4,7 +4,7 @@ using Metropass.Core.PCL.PasswordGeneration;
 using MetroPass.WinRT.Infrastructure.PasswordGeneration;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 
-namespace MetroPass.Core.W8.Tests
+namespace MetroPass.Core.W8.Integration.Tests
 {
     [TestClass]
     public class GeneratePasswordTests

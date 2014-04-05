@@ -13,7 +13,7 @@ using Metropass.Core.PCL.Cipher;
 using Metropass.Core.PCL.Hashing;
 using Metropass.Core.PCL.Model;
 using Metropass.Core.PCL.Model.Kdb4.Writer;
-using MetroPass.Core.W8.Tests.Helpers;
+using MetroPass.Core.W8.Integration.Tests.Helpers;
 using MetroPass.WinRT.Infrastructure;
 using MetroPass.WinRT.Infrastructure.Compression;
 using MetroPass.WinRT.Infrastructure.Encryption;
@@ -21,7 +21,7 @@ using MetroPass.WinRT.Infrastructure.Hashing;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using PCLStorage;
 
-namespace MetroPass.Core.W8.Tests.Services
+namespace MetroPass.Core.W8.Integration.Tests.Services
 {
     [TestClass]
     public class PasswordOnlyDatabase

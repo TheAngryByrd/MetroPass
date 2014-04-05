@@ -25,7 +25,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetroPass.WP8.Infrastructur
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetroPass.Core.Tests", "MetroPass.WinRT.81\MetroPass.Core.Tests\MetroPass.Core.Tests.csproj", "{EDE8AAA4-7F20-4CD3-8B8D-31D639943509}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetroPass.Core.W8.Tests", "MetroPass.WinRT.80\MetroPass.Core.Tests\MetroPass.Core.W8.Tests.csproj", "{A6A86310-2AFD-437B-9FD9-0DA30531AE73}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetroPass.Core.W8.Integration.Tests", "MetroPass.WinRT.80\MetroPass.Core.Tests\MetroPass.Core.W8.Integration.Tests.csproj", "{A6A86310-2AFD-437B-9FD9-0DA30531AE73}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

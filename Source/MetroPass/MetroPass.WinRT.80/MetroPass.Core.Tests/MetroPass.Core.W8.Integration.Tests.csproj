@@ -9,8 +9,8 @@
     <ProjectGuid>{A6A86310-2AFD-437B-9FD9-0DA30531AE73}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MetroPass.Core.W8.Tests</RootNamespace>
-    <AssemblyName>MetroPass.Core.W8.Tests</AssemblyName>
+    <RootNamespace>MetroPass.Core.W8.Integration.Tests</RootNamespace>
+    <AssemblyName>MetroPass.Core.W8.Integration.Tests</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{BC8A1FFA-BEE3-4634-8014-F334798102B3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>

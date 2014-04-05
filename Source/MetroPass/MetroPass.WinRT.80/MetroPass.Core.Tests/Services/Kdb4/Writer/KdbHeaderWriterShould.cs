@@ -10,7 +10,7 @@ using MetroPass.WinRT.Infrastructure.Encryption;
 using MetroPass.WinRT.Infrastructure.Hashing;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 
-namespace MetroPass.Core.W8.Tests.Services.Kdb4.Writer
+namespace MetroPass.Core.W8.Integration.Tests.Services.Kdb4.Writer
 {
     [TestClass]
     public class KdbHeaderWriterShould

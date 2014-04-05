@@ -7,7 +7,7 @@ using MetroPass.WinRT.Infrastructure.Encryption;
 using MetroPass.WinRT.Infrastructure.Hashing;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 
-namespace MetroPass.Core.W8.Tests.Services
+namespace MetroPass.Core.W8.Integration.Tests.Services
 {
    [TestClass]
     public class KdbWriterFactoryTests
