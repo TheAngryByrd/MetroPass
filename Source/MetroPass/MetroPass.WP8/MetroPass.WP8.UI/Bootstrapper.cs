@@ -59,7 +59,7 @@ namespace MetroPass.WP8.UI
             AddViewModels();
             AddView();
             ConfigureConvetions();
-            _container.PerRequest<ICanSHA256Hash, SHA256HahserWP8>();
+            _container.PerRequest<ICanSHA256Hash, SHA256HasherWP8>();
             _container.PerRequest<IDatabaseInfoRepository, DatabaseInfoRepository>();
             _container.PerRequest<IDialogService, DialogService>();
             _container.PerRequest<ICloudProviderFactory, CloudProviderFactory>();

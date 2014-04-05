@@ -119,7 +119,7 @@
     <Compile Include="Cryptography\MultiThreadedBouncyCastleCrypto.cs" />
     <Compile Include="Cryptography\ManagedCrypto.cs" />
     <Compile Include="Cryptography\MultithreadedManagedCrypto.cs" />
-    <Compile Include="Hashing\SHA256HahserWP8.cs" />
+    <Compile Include="Hashing\SHA256HasherWP8.cs" />
     <Compile Include="PasswordGeneration\PasswordGeneratorWP8.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

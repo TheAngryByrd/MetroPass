@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+using System.Threading.Tasks;
 
 namespace MetroPass.WP8.Intregration.Tests
 {
@@ -7,8 +8,9 @@ namespace MetroPass.WP8.Intregration.Tests
     public class UnitTest1
     {
         [TestMethod]
-        public void TestMethod1()
+        public async Task TestMethod1()
         {
+            var file = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFileAsync("Data\\Pass.kdbx");
         }
     }
 }
