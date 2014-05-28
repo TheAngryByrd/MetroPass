@@ -273,7 +273,12 @@ namespace MetroPass.UI.ViewModels
             var storageList = StorageApplicationPermissions.MostRecentlyUsedList;
             var roamingSettings = ApplicationData.Current.RoamingSettings;
             var taskList = new List<Task>();
-            taskList.Add(TryLoadLastKeefile(roamingSettings, storageList));
+
+            var databaseRepo= new DatabaseRepository();
+            var databases = await databaseRepo.GetRecentFiles();
+            var temp = databases;
+
+             taskList.Add(TryLoadLastKeefile(roamingSettings, storageList));
             taskList.Add(TryLoadLastDatabase(roamingSettings, storageList));
             Func<Task> loadLastTasks = async () => await Task.WhenAll(taskList);
             await DisableEnableBlock(loadLastTasks);

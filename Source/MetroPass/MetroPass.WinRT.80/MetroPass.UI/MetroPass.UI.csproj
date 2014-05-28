@@ -123,6 +123,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\MetroPass.WinRT.81\MetroPass.UI\IDatabaseRepository.cs">
+      <Link>IDatabaseRepository.cs</Link>
+    </Compile>
     <Compile Include="..\..\MetroPass.WP8\MetroPass.WP8.UI\DataModel\IPWDatabaseDataSource.cs">
       <Link>DataModel\IPWDatabaseDataSource.cs</Link>
     </Compile>
@@ -343,6 +346,9 @@
     </Reference>
     <Reference Include="Microsoft.Threading.Tasks.Extensions">
       <HintPath>..\..\packages\Microsoft.Bcl.Async.1.0.16\lib\win8\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\packages\Newtonsoft.Json.6.0.3\lib\netcore45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Ninject.Common">
       <HintPath>..\..\packages\Portable.Ninject.Common.3.0.1.11\lib\Ninject.Common.dll</HintPath>

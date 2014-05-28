@@ -249,6 +249,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\DialogService.cs" />
+    <Compile Include="IDatabaseRepository.cs" />
     <Compile Include="UserControls\NumberBox.cs" />
     <Compile Include="ViewModels\EntryEditViewModel.cs" />
     <Compile Include="ViewModels\GroupEditViewModel.cs" />
@@ -415,6 +416,9 @@
     </Reference>
     <Reference Include="Microsoft.Threading.Tasks.Extensions">
       <HintPath>..\..\packages\Microsoft.Bcl.Async.1.0.16\lib\win8\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\packages\Newtonsoft.Json.6.0.3\lib\netcore45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Ninject.Common">
       <HintPath>..\..\packages\Portable.Ninject.Common.3.0.1.11\lib\Ninject.Common.dll</HintPath>
