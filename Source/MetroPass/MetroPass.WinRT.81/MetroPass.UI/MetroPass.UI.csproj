@@ -248,6 +248,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\HintBar.xaml.cs" />
     <Compile Include="Dialogs\DialogService.cs" />
     <Compile Include="IDatabaseRepository.cs" />
     <Compile Include="UserControls\NumberBox.cs" />
@@ -335,6 +336,10 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
     <Page Include="Common\StandardStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\HintBar.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

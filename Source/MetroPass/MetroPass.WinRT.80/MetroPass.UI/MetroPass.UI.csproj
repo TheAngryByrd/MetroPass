@@ -92,7 +92,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\x86\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;NETFX_CORE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;NETFX_CORE;W8</DefineConstants>
     <NoWarn>;2008</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
@@ -123,6 +123,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\MetroPass.WinRT.81\MetroPass.UI\Controls\HintBar.xaml.cs">
+      <Link>Controls\HintBar.xaml.cs</Link>
+    </Compile>
     <Compile Include="..\..\MetroPass.WinRT.81\MetroPass.UI\IDatabaseRepository.cs">
       <Link>IDatabaseRepository.cs</Link>
     </Compile>
@@ -258,6 +261,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="..\..\MetroPass.WinRT.81\MetroPass.UI\Controls\HintBar.xaml">
+      <Link>Controls\HintBar.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Common\Styles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
