@@ -248,6 +248,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Common\BooleanToVisibilityConverter.cs" />
     <Compile Include="Controls\HintBar.xaml.cs" />
     <Compile Include="Dialogs\DialogService.cs" />
     <Compile Include="IDatabaseRepository.cs" />
@@ -443,6 +444,9 @@
     </Reference>
     <Reference Include="ReactiveUI">
       <HintPath>..\..\packages\reactiveui-core.5.1.2\lib\Portable-Net45+WinRT45+WP8\ReactiveUI.dll</HintPath>
+    </Reference>
+    <Reference Include="ReactiveUI.Events">
+      <HintPath>..\..\packages\reactiveui-events.5.5.1\lib\winrt45\ReactiveUI.Events.dll</HintPath>
     </Reference>
     <Reference Include="ReactiveUI.Xaml">
       <HintPath>..\..\packages\reactiveui-platforms.5.1.2\lib\WinRT45\ReactiveUI.Xaml.dll</HintPath>

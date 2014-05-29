@@ -123,6 +123,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\MetroPass.WinRT.81\MetroPass.UI\Common\BooleanToVisibilityConverter.cs">
+      <Link>Common\BooleanToVisibilityConverter.cs</Link>
+    </Compile>
     <Compile Include="..\..\MetroPass.WinRT.81\MetroPass.UI\Controls\HintBar.xaml.cs">
       <Link>Controls\HintBar.xaml.cs</Link>
     </Compile>
@@ -150,7 +153,6 @@
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Common\BindableBase.cs" />
     <Compile Include="Common\BooleanNegationConverter.cs" />
-    <Compile Include="Common\BooleanToVisibilityConverter.cs" />
     <Compile Include="Common\Converters\GridViewGroupHeaderStyleConverter.cs" />
     <Compile Include="Common\Converters\HasValueToVisibilityCoverter.cs" />
     <Compile Include="Common\EntryGroupListViewHeaderTemplateSelector.cs" />
@@ -379,6 +381,9 @@
     </Reference>
     <Reference Include="ReactiveUI">
       <HintPath>..\..\packages\reactiveui-core.5.1.2\lib\Portable-Net45+WinRT45+WP8\ReactiveUI.dll</HintPath>
+    </Reference>
+    <Reference Include="ReactiveUI.Events">
+      <HintPath>..\..\packages\reactiveui-events.5.5.1\lib\winrt45\ReactiveUI.Events.dll</HintPath>
     </Reference>
     <Reference Include="ReactiveUI.Xaml">
       <HintPath>..\..\packages\reactiveui-platforms.5.1.2\lib\WinRT45\ReactiveUI.Xaml.dll</HintPath>

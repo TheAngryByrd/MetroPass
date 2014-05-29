@@ -1,14 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.Graphics.Display;
-using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
 
 namespace MetroPass.UI.Common
@@ -21,7 +12,14 @@ namespace MetroPass.UI.Common
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            return (value is bool && (bool)value) ? Visibility.Visible : Visibility.Collapsed;
+            bool b = (value is bool && (bool)value);
+            bool parm = false;
+
+            if (parameter != null && Boolean.TryParse(parameter.ToString(), out parm) && parm)
+                b = !b;
+
+            Visibility visibility = b ? Visibility.Visible : Visibility.Collapsed;
+            return visibility;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

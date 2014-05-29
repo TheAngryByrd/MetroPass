@@ -1,7 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System.Diagnostics;
+using System.Reactive.Linq;
+using System.Threading.Tasks;
 using Caliburn.Micro;
 using MetroPass.UI.Services;
 using ReactiveUI;
+using System;
 
 namespace MetroPass.UI.ViewModels
 {
@@ -10,6 +13,7 @@ namespace MetroPass.UI.ViewModels
         private readonly INavigationService _navigationService;
         private readonly IDatabaseRepository _databaseRepository;
         private ReactiveList<KeepassFilePair> _keepassFilePairs = new ReactiveList<KeepassFilePair>();
+        private KeepassFilePair _selectedKeepassFilePair;
 
         public StartPageViewModel(
             INavigationService navigationService,
@@ -20,7 +24,14 @@ namespace MetroPass.UI.ViewModels
         {
             _navigationService = navigationService;
             _databaseRepository = databaseRepository;
+            NewDatabaseCommand = new ReactiveCommand();
+            NewDatabaseCommand.Subscribe(_ => NewDatabase());
+            OpenDatabaseCommand = new ReactiveCommand();
+            OpenDatabaseCommand.Subscribe(_ => OpenDatabase());
         }
+
+        public ReactiveCommand OpenDatabaseCommand { get; private set; }
+        public ReactiveCommand NewDatabaseCommand { get; private set; }
 
         public void NewDatabase()
         {
@@ -42,8 +53,22 @@ namespace MetroPass.UI.ViewModels
         {
             var recent = await _databaseRepository.GetRecentFiles();
             _keepassFilePairs.AddRange(recent);
+
+            this.WhenAnyValue(x => x.SelectedKeepassFilePair)
+                .Subscribe(_ => ItemSelected = SelectedKeepassFilePair.Database != null);
         }
 
+        private bool _itemSelected;
+        public bool ItemSelected
+        {
+            get { return _itemSelected; }
+            set { this.RaiseAndSetIfChanged(ref _itemSelected, value); }
+        }
 
+        public KeepassFilePair SelectedKeepassFilePair
+        {
+            get { return _selectedKeepassFilePair; }
+            set { this.RaiseAndSetIfChanged(ref _selectedKeepassFilePair, value); }
+        }
     }
 }

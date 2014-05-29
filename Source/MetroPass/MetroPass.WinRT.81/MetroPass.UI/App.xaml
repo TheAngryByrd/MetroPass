@@ -21,7 +21,7 @@
 
             <!-- Application-specific resources -->
             <x:String x:Key="AppName">MetroPass</x:String>
-            <caliburn:BooleanToVisibilityConverter x:Key="BoolVisibilityConverter" />
+            <common:BooleanToVisibilityConverter x:Key="BoolVisibilityConverter" />
             <converters:StringFormatConverter x:Key="StringFormatConverter"/>
             <converters:HasValueToVisibilityCoverter x:Key="HasValueToVisibilityCoverter"/>
         </ResourceDictionary>
