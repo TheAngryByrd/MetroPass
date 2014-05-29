@@ -14,7 +14,7 @@ namespace MetroPass.UI
     public interface IDatabaseRepository
     {
         Task<IEnumerable<KeepassFilePair>> GetRecentFiles();
-        Task SaveRecentFile(KeepassFileTokenPair tokenPair, KeepassFilePair filePair);
+        Task SaveRecentFile(KeepassFilePair filePair);
         Task<KeepassFilePair> GetFilePairFromToken(KeepassFileTokenPair keepassFileTokenPair);
     }
 
@@ -49,21 +49,21 @@ namespace MetroPass.UI
             return keepassFilePairs;
         }
 
-        public async Task SaveRecentFile(KeepassFileTokenPair tokenPair, KeepassFilePair filePair)
+        public async Task SaveRecentFile(KeepassFilePair filePair)
         {
             if (filePair.Database != null)
-                _recentFileList.AddOrReplace(tokenPair.DatabaseFileToken, filePair.Database);
+                _recentFileList.AddOrReplace(filePair.TokenPair.DatabaseFileToken, filePair.Database);
             if(filePair.KeeFile != null)
-                _recentFileList.AddOrReplace(tokenPair.KeeFileToken, filePair.KeeFile);
+                _recentFileList.AddOrReplace(filePair.TokenPair.KeeFileToken, filePair.KeeFile);
 
             var tokens = await GetFileTokenPairs();
             var keepassFileTokenPairs = tokens.ToList();
 
-            if (keepassFileTokenPairs.Any(t => t.DatabaseFileToken == tokenPair.DatabaseFileToken))
+            if (keepassFileTokenPairs.Any(t => t.DatabaseFileToken == filePair.TokenPair.DatabaseFileToken))
                 return;
 
 
-            keepassFileTokenPairs.Add(tokenPair);
+            keepassFileTokenPairs.Add(filePair.TokenPair);
             await SaveFileTokenPairs(keepassFileTokenPairs);
         }
 
@@ -80,7 +80,7 @@ namespace MetroPass.UI
             {
                 keeFile = await _recentFileList.GetFileAsync(keepassFileTokenPair.KeeFileToken);
             }
-            return new KeepassFilePair(database,keeFile);
+            return new KeepassFilePair(database, keeFile, keepassFileTokenPair);
         }
         private async Task<IEnumerable<KeepassFileTokenPair>> GetFileTokenPairs()
         {
@@ -132,18 +132,28 @@ namespace MetroPass.UI
 
     public struct KeepassFilePair
     {
-        public KeepassFilePair(IStorageFile database, IStorageFile keefile)
+        public KeepassFilePair(IStorageFile database, IStorageFile keefile, KeepassFileTokenPair tokenPair)
         {
-            Database = database;
-            KeeFile = keefile;
+            _database = database;
+            _keeFile = keefile;
+            _tokenPair = tokenPair;
         }
 
-        public readonly IStorageFile Database;
-        public readonly IStorageFile KeeFile;
+        private readonly IStorageFile _database;
+        private readonly IStorageFile _keeFile;
+        private readonly KeepassFileTokenPair _tokenPair;
 
-        public IStorageFile Drp
+        public IStorageFile Database
         {
-            get { return Database; }
+            get { return _database; }
+        }  
+        public IStorageFile KeeFile
+        {
+            get { return _keeFile; }
+        }
+        public KeepassFileTokenPair TokenPair
+        {
+            get { return _tokenPair; }
         }
     }
     public struct KeepassFileTokenPair

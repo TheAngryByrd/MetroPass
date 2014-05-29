@@ -34,7 +34,7 @@
             Grid.RowSpan="2"
             Padding="116,136,116,46"
             ItemsSource="{Binding KeepassFilePairs}"
-            SelectionMode="None"
+            SelectionMode="Single"
             IsSwipeEnabled="false">
             <GridView.ItemTemplate>
                 <DataTemplate>
@@ -53,7 +53,7 @@
                         </Grid>
                         <Border Grid.Row="1" VerticalAlignment="Stretch" Background="Black" Opacity="0.7"/>
                         <StackPanel Grid.Row="1" Margin="10,5" VerticalAlignment="Bottom">
-                            <TextBlock FontSize="30" Foreground="White" Text="{Binding Drp.Name}"/>
+                            <TextBlock FontSize="30" Foreground="White" Text="{Binding Database.Name}"/>
                         </StackPanel>
            
                     </Grid>
@@ -68,7 +68,7 @@
                 <ColumnDefinition Width="120"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Button x:Name="backButton" Margin="39,59,39,0" Command="{Binding NavigationHelper.GoBackCommand, ElementName=pageRoot}"
+            <Button x:Name="backButton" Margin="39,59,39,0" IsEnabled="{Binding CanGoBack}"
                         Style="{StaticResource NavigationBackButtonNormalStyle}"
                         VerticalAlignment="Top"
                         AutomationProperties.Name="Back"

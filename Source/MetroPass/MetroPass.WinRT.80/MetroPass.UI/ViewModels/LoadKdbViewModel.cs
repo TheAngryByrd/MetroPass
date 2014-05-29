@@ -194,7 +194,7 @@ namespace MetroPass.UI.ViewModels
                 KeepassFileTokenPairState = new KeepassFileTokenPair(Guid.NewGuid().ToString(), Guid.NewGuid().ToString());
             }
 
-            await _databaseRepository.SaveRecentFile(KeepassFileTokenPairState, new KeepassFilePair(Database, KeyFile));
+            await _databaseRepository.SaveRecentFile(new KeepassFilePair(Database, KeyFile,KeepassFileTokenPairState));
         }
   
 
