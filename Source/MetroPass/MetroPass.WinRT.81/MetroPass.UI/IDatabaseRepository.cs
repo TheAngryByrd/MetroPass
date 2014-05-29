@@ -140,6 +140,11 @@ namespace MetroPass.UI
 
         public readonly IStorageFile Database;
         public readonly IStorageFile KeeFile;
+
+        public IStorageFile Drp
+        {
+            get { return Database; }
+        }
     }
     public struct KeepassFileTokenPair
     {
