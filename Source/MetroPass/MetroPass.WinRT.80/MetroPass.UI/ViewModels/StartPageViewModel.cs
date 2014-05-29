@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Caliburn.Micro;
@@ -12,7 +13,7 @@ namespace MetroPass.UI.ViewModels
     {
         private readonly INavigationService _navigationService;
         private readonly IDatabaseRepository _databaseRepository;
-        private ReactiveList<KeepassFilePair> _keepassFilePairs = new ReactiveList<KeepassFilePair>();
+        private ObservableCollection<KeepassFilePair> _keepassFilePairs = new ObservableCollection<KeepassFilePair>();
         private KeepassFilePair _selectedKeepassFilePair;
 
         public StartPageViewModel(
@@ -43,7 +44,7 @@ namespace MetroPass.UI.ViewModels
             _navigationService.NavigateToViewModel(typeof(LoadKdbViewModel));
         }
 
-        public ReactiveList<KeepassFilePair> KeepassFilePairs
+        public ObservableCollection<KeepassFilePair> KeepassFilePairs
         {
             get { return _keepassFilePairs; }
             set { _keepassFilePairs = value; }
