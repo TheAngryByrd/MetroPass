@@ -82,7 +82,7 @@
 
     <Page.BottomAppBar>
         <CommandBar x:Name="BottomBar" IsOpen="{Binding IsSelected}">
-            <AppBarButton x:Name="NewDatabaseButton" Command="{Binding AddDatabaseCommand}" Icon="Add" Label="New Database" Visibility="{Binding ItemSelected, Converter={StaticResource BoolVisibilityConverter}, ConverterParameter=true}"></AppBarButton>
+            <AppBarButton x:Name="NewDatabaseButton" Command="{Binding NewDatabaseCommand}" Icon="Add" Label="New Database" Visibility="{Binding ItemSelected, Converter={StaticResource BoolVisibilityConverter}, ConverterParameter=true}"></AppBarButton>
             <AppBarButton x:Name="OpenDatabaseButton" Command="{Binding OpenDatabaseCommand}" Icon="OpenFile" Label="Open Database" Visibility="{Binding ItemSelected, Converter={StaticResource BoolVisibilityConverter}, ConverterParameter=true}"></AppBarButton>
         </CommandBar>
     </Page.BottomAppBar>

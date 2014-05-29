@@ -154,7 +154,7 @@
 <common:LayoutAwarePage.BottomAppBar>
         <AppBar x:Name="BottomBar" IsOpen="{Binding IsSelected}" >
             <StackPanel Visibility="{Binding ItemSelected, Converter={StaticResource BoolVisibilityConverter}, ConverterParameter=true}" Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button Command="{Binding AddDatabaseCommand}" Style="{StaticResource AddAppBarButtonStyle}" AutomationProperties.Name="Add Database"></Button>
+                <Button Command="{Binding NewDatabaseCommand}" Style="{StaticResource AddAppBarButtonStyle}" AutomationProperties.Name="Add Database"></Button>
                 <Button Command="{Binding OpenDatabaseCommand}" Style="{StaticResource OpenFileAppBarButtonStyle}" AutomationProperties.Name="Open Database"></Button>
             </StackPanel>
         </AppBar>
