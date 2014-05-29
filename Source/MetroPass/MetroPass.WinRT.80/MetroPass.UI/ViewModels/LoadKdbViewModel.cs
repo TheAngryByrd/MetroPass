@@ -23,17 +23,27 @@ namespace MetroPass.UI.ViewModels
         private readonly INavigationService _navigationService;
 
         private readonly IPWDatabaseDataSource _dataSource;
+        private readonly IDatabaseRepository _databaseRepository;
 
         public LoadKdbViewModel(
             INavigationService navigationService,
             IEventAggregator eventAggregator,
             IPageServices pageServices,
-            IPWDatabaseDataSource dataSource)
+            IPWDatabaseDataSource dataSource,
+            IDatabaseRepository databaseRepository)
             : base(navigationService, eventAggregator, pageServices)
         {
             _dataSource = dataSource;
+            _databaseRepository = databaseRepository;
             _pageServices = pageServices;
             _navigationService = navigationService;
+        }
+
+        private KeepassFileTokenPair _keepassFileTokenPairState;
+        public KeepassFileTokenPair KeepassFileTokenPairState
+        {
+            get { return _keepassFileTokenPairState; }
+            set { _keepassFileTokenPairState = value; }
         }
 
         //This parameter should only be set when the user is trying to search from the Search Charm but MetroPass is not running
@@ -79,7 +89,7 @@ namespace MetroPass.UI.ViewModels
             set
             {
                 _database = value;
-                ResaveRecentFile(mostRecentDatabaseKey, _database);
+                ResaveRecentFile();
                 NotifyOfPropertyChange(() => Database);
                 NotifyOfPropertyChange(() => CanOpenDatabase);
             }
@@ -105,7 +115,7 @@ namespace MetroPass.UI.ViewModels
             set
             {
                 _keyFile = value;
-                ResaveRecentFile(mostRecentKeyFileKey, _keyFile);
+                ResaveRecentFile();
                 NotifyOfPropertyChange(() => KeyFile);
          
             }
@@ -176,28 +186,15 @@ namespace MetroPass.UI.ViewModels
             }
         }
 
-        private const string mostRecentDatabaseKey = "mostRecentDatabase";
-        private const string mostRecentKeyFileKey = "mostRecentKeeFIle";
-
-        private void ResaveRecentFile(string keyValue, IStorageFile file)
+    
+        private async void ResaveRecentFile()
         {
-            var storageList = StorageApplicationPermissions.MostRecentlyUsedList;
-            string token = Guid.NewGuid().ToString();
-
-            if (ApplicationData.Current.RoamingSettings.Values.ContainsKey(keyValue))
+            if (string.IsNullOrWhiteSpace(KeepassFileTokenPairState.DatabaseFileToken))
             {
-                token = ApplicationData.Current.RoamingSettings.Values[keyValue].ToString();
-            }      
-
-            if (file != null)
-            {
-                StorageApplicationPermissions.MostRecentlyUsedList.AddOrReplace(token, file);
-                ApplicationData.Current.RoamingSettings.Values[keyValue] = token;
+                KeepassFileTokenPairState = new KeepassFileTokenPair(Guid.NewGuid().ToString(), Guid.NewGuid().ToString());
             }
-            else if(file == null && StorageApplicationPermissions.MostRecentlyUsedList.ContainsItem(token))
-            {
-                StorageApplicationPermissions.MostRecentlyUsedList.Remove(token);
-            }
+
+            await _databaseRepository.SaveRecentFile(KeepassFileTokenPairState, new KeepassFilePair(Database, KeyFile));
         }
   
 
@@ -247,6 +244,8 @@ namespace MetroPass.UI.ViewModels
         }
 
         private bool _isIndeterminateProgressBarVisible;
+
+
         public bool IsIndeterminateProgressBarVisible
         {
             get { return _isIndeterminateProgressBarVisible; }
@@ -274,12 +273,9 @@ namespace MetroPass.UI.ViewModels
             var roamingSettings = ApplicationData.Current.RoamingSettings;
             var taskList = new List<Task>();
 
-            var databaseRepo= new DatabaseRepository();
-            var databases = await databaseRepo.GetRecentFiles();
-            var temp = databases;
 
-             taskList.Add(TryLoadLastKeefile(roamingSettings, storageList));
-            taskList.Add(TryLoadLastDatabase(roamingSettings, storageList));
+             taskList.Add(TryLoadLastDatabase());
+      
             Func<Task> loadLastTasks = async () => await Task.WhenAll(taskList);
             await DisableEnableBlock(loadLastTasks);
         }
@@ -302,7 +298,7 @@ namespace MetroPass.UI.ViewModels
 
         private const string FileNotFoundMessage = "MetroPass couldn't find your {0}.  It may have moved, been renamed or if it's on skydrive, check your internet connection.";
 
-        private async Task TryLoadLastDatabase(ApplicationDataContainer roamingSettings, StorageItemMostRecentlyUsedList storageList)
+        private async Task TryLoadLastDatabase()
         {
             var pickDatabase = true;
 
@@ -310,56 +306,34 @@ namespace MetroPass.UI.ViewModels
             {
                 Database = _dataSource.StorageFile;
                 _dataSource.StorageFile = null;
-    
+
                 pickDatabase = false;
             }
-            else if (roamingSettings.Values.ContainsKey(mostRecentDatabaseKey))
+            else
             {
                 try
                 {
-                    var databaseToken = roamingSettings.Values[mostRecentDatabaseKey].ToString();
-                    if (storageList.ContainsItem(databaseToken))
+
+                    var file = await _databaseRepository.GetFilePairFromToken(KeepassFileTokenPairState);
+                    if (file.Database != null)
                     {
-                        Database = await storageList.GetFileAsync(databaseToken);
+                        Database = file.Database;
+                        KeyFile = file.KeeFile;
                         pickDatabase = false;
-             
                     }
                 }
                 catch (FileNotFoundException fnf)
                 {
                     _pageServices.Toast(string.Format(FileNotFoundMessage, "database"));
                 }
-               catch(Exception e)
+                catch (Exception e)
                 {
-                    
+
                 }
             }
             if (pickDatabase)
             {
                 PickDatabase();
-            }
-        }
-
-        private async Task TryLoadLastKeefile(ApplicationDataContainer roamingSettings, StorageItemMostRecentlyUsedList storageList)
-        {
-            try
-            {
-                if (roamingSettings.Values.ContainsKey(mostRecentKeyFileKey))
-                {
-                    var keeFileToken = roamingSettings.Values[mostRecentKeyFileKey].ToString();
-                    if (storageList.ContainsItem(keeFileToken))
-                    {
-                        KeyFile = await storageList.GetFileAsync(keeFileToken);
-                    }
-                }
-            }
-            catch (FileNotFoundException fnf)
-            {
-                _pageServices.Toast(string.Format(FileNotFoundMessage, "keyfile"));
-            }
-            catch (Exception e)
-            {
-                
             }
         }
 

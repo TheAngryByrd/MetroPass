@@ -11,16 +11,11 @@ using Newtonsoft.Json;
 
 namespace MetroPass.UI
 {
-
-    public class AsyncLazy<T> : Lazy<Task<T>> 
-{ 
-    public AsyncLazy(Func<T> valueFactory) : 
-        base(() => Task.Factory.StartNew(valueFactory)) { }
-    public AsyncLazy(Func<Task<T>> taskFactory) : 
-        base(() => Task.Factory.StartNew(() => taskFactory()).Unwrap()) { } 
-}
     public interface IDatabaseRepository
     {
+        Task<IEnumerable<KeepassFilePair>> GetRecentFiles();
+        Task SaveRecentFile(KeepassFileTokenPair tokenPair, KeepassFilePair filePair);
+        Task<KeepassFilePair> GetFilePairFromToken(KeepassFileTokenPair keepassFileTokenPair);
     }
 
     public class DatabaseRepository : IDatabaseRepository
@@ -35,8 +30,6 @@ namespace MetroPass.UI
             _reactiveRoamingSettings = reactiveRoamingSettings ?? new ReactiveRoamingSettings<IEnumerable<KeepassFileTokenPair>>("recentFiles");
            
         }
-
- 
 
         public async Task<IEnumerable<KeepassFilePair>> GetRecentFiles()
         {
@@ -56,22 +49,43 @@ namespace MetroPass.UI
             return keepassFilePairs;
         }
 
-        private async Task<KeepassFilePair> GetFilePairFromToken(KeepassFileTokenPair keepassFileTokenPair)
+        public async Task SaveRecentFile(KeepassFileTokenPair tokenPair, KeepassFilePair filePair)
         {
-            var keepassFilePair = new KeepassFilePair();
-            if (_recentFileList.ContainsItem(keepassFileTokenPair.DatabaseFileToken))
+            if (filePair.Database != null)
+                _recentFileList.AddOrReplace(tokenPair.DatabaseFileToken, filePair.Database);
+            if(filePair.KeeFile != null)
+                _recentFileList.AddOrReplace(tokenPair.KeeFileToken, filePair.KeeFile);
+
+            var tokens = await GetFileTokenPairs();
+            var keepassFileTokenPairs = tokens.ToList();
+
+            if (keepassFileTokenPairs.Any(t => t.DatabaseFileToken == tokenPair.DatabaseFileToken))
+                return;
+
+
+            keepassFileTokenPairs.Add(tokenPair);
+            await SaveFileTokenPairs(keepassFileTokenPairs);
+        }
+
+        public async Task<KeepassFilePair> GetFilePairFromToken(KeepassFileTokenPair keepassFileTokenPair)
+        {
+            IStorageFile database = null;
+            IStorageFile keeFile = null;
+
+            if (!string.IsNullOrWhiteSpace(keepassFileTokenPair.DatabaseFileToken) && _recentFileList.ContainsItem(keepassFileTokenPair.DatabaseFileToken))
             {
-                keepassFilePair.Database = await _recentFileList.GetFileAsync(keepassFileTokenPair.DatabaseFileToken);
+                database = await _recentFileList.GetFileAsync(keepassFileTokenPair.DatabaseFileToken);
             }
-            if (_recentFileList.ContainsItem(keepassFileTokenPair.KeeFileToken))
+            if (!string.IsNullOrWhiteSpace(keepassFileTokenPair.KeeFileToken) && _recentFileList.ContainsItem(keepassFileTokenPair.KeeFileToken))
             {
-                keepassFilePair.KeeFile = await _recentFileList.GetFileAsync(keepassFileTokenPair.KeeFileToken);
+                keeFile = await _recentFileList.GetFileAsync(keepassFileTokenPair.KeeFileToken);
             }
-            return keepassFilePair;
+            return new KeepassFilePair(database,keeFile);
         }
         private async Task<IEnumerable<KeepassFileTokenPair>> GetFileTokenPairs()
         {
-            return await _reactiveRoamingSettings.LoadSetting() ?? new List<KeepassFileTokenPair>();
+            IEnumerable<KeepassFileTokenPair> keepassFileTokenPairs = await _reactiveRoamingSettings.LoadSetting() ?? new List<KeepassFileTokenPair>();
+            return keepassFileTokenPairs.Where(k => !string.IsNullOrWhiteSpace(k.DatabaseFileToken));
         }
 
         private async Task SaveFileTokenPairs(IEnumerable<KeepassFileTokenPair> pairs)
@@ -98,34 +112,45 @@ namespace MetroPass.UI
         }
         private IEnumerable<KeepassFileTokenPair> GetOldTokens()
         {
-            var oldToken = new KeepassFileTokenPair();
-            if (ApplicationData.Current.RoamingSettings.Values.ContainsKey(mostRecentDatabaseKey))
-            {
-                oldToken.DatabaseFileToken = ApplicationData.Current.RoamingSettings.Values[mostRecentDatabaseKey].ToString();
-            }
-            else
+            if (!ApplicationData.Current.RoamingSettings.Values.ContainsKey(mostRecentDatabaseKey))
             {
                 return new List<KeepassFileTokenPair>();
             }
 
+            string oldDatabaseToken = ApplicationData.Current.RoamingSettings.Values[mostRecentDatabaseKey].ToString();
+
+            string oldKeeFileToken = null;
+
             if (ApplicationData.Current.RoamingSettings.Values.ContainsKey(mostRecentKeyFileKey))
             {
-                oldToken.KeeFileToken = ApplicationData.Current.RoamingSettings.Values[mostRecentKeyFileKey].ToString();
+                oldKeeFileToken = ApplicationData.Current.RoamingSettings.Values[mostRecentKeyFileKey].ToString();
             }
-            return new[] { oldToken };
+            return new[] { new KeepassFileTokenPair(oldDatabaseToken, oldKeeFileToken) };
         }
         #endregion
     }
 
     public struct KeepassFilePair
     {
-        public IStorageFile Database { get; set; }
-        public IStorageFile KeeFile { get; set; }
+        public KeepassFilePair(IStorageFile database, IStorageFile keefile)
+        {
+            Database = database;
+            KeeFile = keefile;
+        }
+
+        public readonly IStorageFile Database;
+        public readonly IStorageFile KeeFile;
     }
     public struct KeepassFileTokenPair
     {
-        public string DatabaseFileToken { get; set; }
-        public string KeeFileToken { get; set; }
+        public KeepassFileTokenPair(string databaseFileToken, string keeFileToken)
+        {
+            DatabaseFileToken = databaseFileToken;
+            KeeFileToken = keeFileToken;
+        }
+
+        public string DatabaseFileToken;
+        public string KeeFileToken;
     }
 
     public interface ISerializater<T>
@@ -140,7 +165,7 @@ namespace MetroPass.UI
         {
             try
             {
-                return Task.Run(() => JsonConvert.DeserializeObject<T>(item.ToString()));
+                return Task.Run(() => JsonConvert.DeserializeObject<T>(item.ToString(), new JsonSerializerSettings { ObjectCreationHandling = ObjectCreationHandling.Replace }));
             }
             catch (Exception e)
             {
@@ -195,7 +220,7 @@ namespace MetroPass.UI
             if (!container.Values.ContainsKey(_key))
                 return default(T);
 
-            var serializedItem = container.Values[_key];
+            var serializedItem = container.Values[_key].ToString();
             var item = await _serializer.Deserialize(serializedItem);
             return item;
         }

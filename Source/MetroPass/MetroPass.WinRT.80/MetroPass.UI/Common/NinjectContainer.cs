@@ -13,6 +13,7 @@ namespace MetroPass.UI.Common
         {
             var settings = new NinjectSettings();            
             settings.LoadExtensions = false;
+            settings.AllowNullInjection = true;
             Kernel = new StandardKernel(settings);
         }
 

@@ -42,6 +42,7 @@ namespace MetroPass.UI
             _ninjectContainer.Kernel.Bind<IKeyTransformer>().To<MultiThreadedBouncyCastleCrypto>();
             _ninjectContainer.Kernel.Bind<IGZipStreamFactory>().To<GZipFactoryRT>();
             _ninjectContainer.Kernel.Bind<IPWDatabaseDataSource>().To<PWDatabaseDataSource>().InSingletonScope();
+            _ninjectContainer.Kernel.Bind<IDatabaseRepository>().To<DatabaseRepository>().InSingletonScope();
 
         }
 
