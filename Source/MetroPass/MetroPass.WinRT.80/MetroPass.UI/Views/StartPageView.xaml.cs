@@ -19,7 +19,7 @@ namespace MetroPass.UI.Views
     /// <summary>
     /// A basic page that provides characteristics common to most applications.
     /// </summary>
-    public sealed partial class StartPageView : Page
+    public sealed partial class StartPageView 
     {
         public StartPageView()
         {

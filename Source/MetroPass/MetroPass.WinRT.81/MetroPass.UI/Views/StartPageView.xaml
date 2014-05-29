@@ -81,7 +81,10 @@
     </Grid>
 
     <Page.BottomAppBar>
-        <CommandBar x:Name="BottomBar"></CommandBar>
+        <CommandBar x:Name="BottomBar" IsOpen="True">
+            <AppBarButton Icon="Add" Label="New Database"></AppBarButton>
+            <AppBarButton Icon="OpenFile" Label="Open Database"></AppBarButton>
+        </CommandBar>
     </Page.BottomAppBar>
    
 </Page>
