@@ -39,12 +39,25 @@ namespace MetroPass.UI.ViewModels
             _navigationService = navigationService;
         }
 
+
+
         private KeepassFileTokenPair _keepassFileTokenPairState;
         public KeepassFileTokenPair KeepassFileTokenPairState
         {
-            get { return _keepassFileTokenPairState; }
+            get
+            {
+                if (string.IsNullOrWhiteSpace(_keepassFileTokenPairState.DatabaseFileToken) && !string.IsNullOrWhiteSpace(KeepassFileTokenPairDatabase))
+                {
+                    _keepassFileTokenPairState = new KeepassFileTokenPair(KeepassFileTokenPairDatabase, KeepassFileTokenPairKeeFile);
+                }
+                
+                return _keepassFileTokenPairState;
+            }
             set { _keepassFileTokenPairState = value; }
         }
+
+        public string KeepassFileTokenPairDatabase { get; set; }
+        public string KeepassFileTokenPairKeeFile { get; set; }
 
         //This parameter should only be set when the user is trying to search from the Search Charm but MetroPass is not running
         //(or the database has been locked by the timer)
@@ -64,6 +77,8 @@ namespace MetroPass.UI.ViewModels
                 NotifyOfPropertyChange(() => SearchText);
             }
         }
+
+        public KeepassFileTokenPair KeepassFilePair { get; set; }
 
         public bool ShouldRedirectToSearch
         {
@@ -313,7 +328,7 @@ namespace MetroPass.UI.ViewModels
             {
                 try
                 {
-
+                 
                     var file = await _databaseRepository.GetFilePairFromToken(KeepassFileTokenPairState);
                     if (file.Database != null)
                     {

@@ -36,12 +36,16 @@ namespace MetroPass.UI.ViewModels
 
         public void NewDatabase()
         {
-            _navigationService.NavigateToViewModel(typeof(NewDatabaseViewModel));
+            _navigationService.UriFor<NewDatabaseViewModel>().Navigate();
         }
 
         public void OpenDatabase()
         {
-            _navigationService.NavigateToViewModel(typeof(LoadKdbViewModel));
+            _navigationService
+                .UriFor<LoadKdbViewModel>()
+                .WithParam(vm => vm.KeepassFileTokenPairDatabase, SelectedKeepassFilePair.TokenPair.DatabaseFileToken)
+                .WithParam(vm => vm.KeepassFileTokenPairKeeFile, SelectedKeepassFilePair.TokenPair.KeeFileToken)
+                .Navigate();
         }
 
         public ObservableCollection<KeepassFilePair> KeepassFilePairs

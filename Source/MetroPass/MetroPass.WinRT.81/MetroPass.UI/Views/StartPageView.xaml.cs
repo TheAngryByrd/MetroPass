@@ -32,9 +32,7 @@ namespace MetroPass.UI.Views
         void StartPageView_Loaded(object sender, RoutedEventArgs e)
         {
             this.WhenAnyValue(x => x.ViewModel.ItemSelected).Subscribe(x => BottomBar.IsOpen = ViewModel.ItemSelected);
-            
         }
-
 
         public StartPageViewModel ViewModel
         {
