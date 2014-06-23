@@ -153,10 +153,21 @@
     </Grid>
 <common:LayoutAwarePage.BottomAppBar>
         <AppBar x:Name="BottomBar" IsOpen="{Binding IsSelected}" >
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button Command="{Binding NewDatabaseCommand}" Style="{StaticResource AddAppBarButtonStyle}" Visibility="{Binding ItemSelected, Converter={StaticResource BoolVisibilityConverter}, ConverterParameter=true}" AutomationProperties.Name="Add Database"></Button>
-                <Button Command="{Binding OpenDatabaseCommand}" Style="{StaticResource OpenFileAppBarButtonStyle}" AutomationProperties.Name="Open Database"></Button>
-            </StackPanel>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left">
+                    <Button Command="{Binding RemoveDatabaseCommand}" Style="{StaticResource RemoveAppBarButtonStyle}" Visibility="{Binding ItemSelected, Converter={StaticResource BoolVisibilityConverter}}" AutomationProperties.Name="Remove Database"></Button>
+                    <Button Command="{Binding DeleteDatabaseCommand}" Style="{StaticResource DeleteAppBarButtonStyle}" Visibility="{Binding ItemSelected, Converter={StaticResource BoolVisibilityConverter}}" AutomationProperties.Name="Delete Database"></Button>
+                </StackPanel>
+                <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button Command="{Binding NewDatabaseCommand}" Style="{StaticResource AddAppBarButtonStyle}" Visibility="{Binding ItemSelected, Converter={StaticResource BoolVisibilityConverter}, ConverterParameter=true}" AutomationProperties.Name="Add Database"></Button>
+                    <Button Command="{Binding OpenDatabaseCommand}" Style="{StaticResource OpenFileAppBarButtonStyle}" AutomationProperties.Name="Open Database"></Button>
+                </StackPanel>
+            </Grid>
+           
         </AppBar>
 </common:LayoutAwarePage.BottomAppBar>
    

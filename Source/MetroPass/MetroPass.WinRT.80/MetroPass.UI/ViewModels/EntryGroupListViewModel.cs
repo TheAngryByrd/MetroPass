@@ -71,6 +71,12 @@ namespace MetroPass.UI.ViewModels
             }
         }
 
+        public override void GoBack()
+        {
+            _navigationService.GoBack();
+            _navigationService.GoBack();
+        }
+
         public void SelectGroup(PwGroup selectedGroup)
         {
             var encodedUUID =selectedGroup.UUID;

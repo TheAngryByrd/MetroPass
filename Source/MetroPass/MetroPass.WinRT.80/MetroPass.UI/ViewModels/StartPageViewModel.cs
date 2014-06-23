@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Caliburn.Micro;
+using MetroPass.UI.Common;
 using MetroPass.UI.Services;
 using ReactiveUI;
 using System;
@@ -26,13 +27,29 @@ namespace MetroPass.UI.ViewModels
             _navigationService = navigationService;
             _databaseRepository = databaseRepository;
             NewDatabaseCommand = new ReactiveCommand();
+      
             NewDatabaseCommand.Subscribe(_ => NewDatabase());
             OpenDatabaseCommand = new ReactiveCommand();
             OpenDatabaseCommand.Subscribe(_ => OpenDatabase());
+
+            RemoveDatabaseCommand = new ReactiveCommand();
+            RemoveDatabaseCommand.Subscribe(_ => RemoveDatabase());
+
+            DeleteDatabaseCommand = new ReactiveCommand();
+        }
+
+        private async void RemoveDatabase()
+        {
+            await _databaseRepository.Delete(SelectedKeepassFilePair);
+
+            _keepassFilePairs.Remove(SelectedKeepassFilePair);
+            SelectedKeepassFilePair = new KeepassFilePair();
         }
 
         public ReactiveCommand OpenDatabaseCommand { get; private set; }
         public ReactiveCommand NewDatabaseCommand { get; private set; }
+        public ReactiveCommand RemoveDatabaseCommand { get; private set; }
+        public ReactiveCommand DeleteDatabaseCommand { get; private set; }
 
         public void NewDatabase()
         {
@@ -56,11 +73,16 @@ namespace MetroPass.UI.ViewModels
 
         protected async override Task OnActivate()
         {
-            var recent = await _databaseRepository.GetRecentFiles();
-            _keepassFilePairs.AddRange(recent);
+            await PopulateRecentFiles();
 
             this.WhenAnyValue(x => x.SelectedKeepassFilePair)
                 .Subscribe(_ => ItemSelected = SelectedKeepassFilePair.Database != null);
+        }
+
+        private async Task PopulateRecentFiles()
+        {
+            var recent = await _databaseRepository.GetRecentFiles();
+            _keepassFilePairs.AddRange(recent);
         }
 
         private bool _itemSelected;

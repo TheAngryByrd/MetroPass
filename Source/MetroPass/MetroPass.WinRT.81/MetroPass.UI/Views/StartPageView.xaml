@@ -82,9 +82,14 @@
 
     <Page.BottomAppBar>
         <CommandBar x:Name="BottomBar" IsOpen="{Binding IsSelected}">
+            <CommandBar.SecondaryCommands>
+                <AppBarButton x:Name="RemoveDatabaseButton" Command="{Binding RemoveDatabaseCommand}" Icon="Remove" Label="Remove Database" Visibility="{Binding ItemSelected, Converter={StaticResource BoolVisibilityConverter}}"></AppBarButton>
+                <AppBarButton x:Name="DeleteDatabaseButton" Command="{Binding DeleteDatabaseCommand}" Icon="Delete" Label="Delete Database" Visibility="{Binding ItemSelected, Converter={StaticResource BoolVisibilityConverter}}"></AppBarButton>
+            </CommandBar.SecondaryCommands>
             <AppBarButton x:Name="NewDatabaseButton" Command="{Binding NewDatabaseCommand}" Icon="Add" Label="New Database" Visibility="{Binding ItemSelected, Converter={StaticResource BoolVisibilityConverter}, ConverterParameter=true}"></AppBarButton>
             <AppBarButton x:Name="OpenDatabaseButton" Command="{Binding OpenDatabaseCommand}" Icon="OpenFile" Label="Open Database"></AppBarButton>
         </CommandBar>
+        
     </Page.BottomAppBar>
    
 </Page>

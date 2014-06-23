@@ -15,6 +15,7 @@ namespace MetroPass.UI
     {
         Task<IEnumerable<KeepassFilePair>> GetRecentFiles();
         Task SaveRecentFile(KeepassFilePair filePair);
+        Task Delete(KeepassFilePair filePair);
         Task<KeepassFilePair> GetFilePairFromToken(KeepassFileTokenPair keepassFileTokenPair);
     }
 
@@ -64,6 +65,25 @@ namespace MetroPass.UI
 
 
             keepassFileTokenPairs.Add(filePair.TokenPair);
+            await SaveFileTokenPairs(keepassFileTokenPairs);
+        }
+
+        public async Task Delete(KeepassFilePair filePair)
+        {
+            if (filePair.Database != null && filePair.TokenPair.DatabaseFileToken != null)
+                _recentFileList.Remove(filePair.TokenPair.DatabaseFileToken);
+            if (filePair.KeeFile != null && filePair.TokenPair.KeeFileToken != null)
+                _recentFileList.Remove(filePair.TokenPair.KeeFileToken);
+
+            var tokens = await GetFileTokenPairs();
+            var keepassFileTokenPairs = tokens.ToList();
+
+            keepassFileTokenPairs =
+                keepassFileTokenPairs.Where(
+                    k =>
+                        k.DatabaseFileToken != filePair.TokenPair.DatabaseFileToken &&
+                        k.KeeFileToken != filePair.TokenPair.KeeFileToken).ToList();
+
             await SaveFileTokenPairs(keepassFileTokenPairs);
         }
 
