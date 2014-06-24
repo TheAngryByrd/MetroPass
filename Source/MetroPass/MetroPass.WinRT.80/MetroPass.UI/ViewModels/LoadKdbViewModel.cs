@@ -104,7 +104,6 @@ namespace MetroPass.UI.ViewModels
             set
             {
                 _database = value;
-                ResaveRecentFile();
                 NotifyOfPropertyChange(() => Database);
                 NotifyOfPropertyChange(() => CanOpenDatabase);
             }
@@ -130,7 +129,6 @@ namespace MetroPass.UI.ViewModels
             set
             {
                 _keyFile = value;
-                ResaveRecentFile();
                 NotifyOfPropertyChange(() => KeyFile);
          
             }
@@ -204,6 +202,7 @@ namespace MetroPass.UI.ViewModels
     
         private async void ResaveRecentFile()
         {
+
             if (string.IsNullOrWhiteSpace(KeepassFileTokenPairState.DatabaseFileToken))
             {
                 KeepassFileTokenPairState = new KeepassFileTokenPair(Guid.NewGuid().ToString(), Guid.NewGuid().ToString());
@@ -317,15 +316,15 @@ namespace MetroPass.UI.ViewModels
         {
             var pickDatabase = true;
 
-            if (_dataSource.StorageFile != null)
-            {
-                Database = _dataSource.StorageFile;
-                _dataSource.StorageFile = null;
+            //if (_dataSource.StorageFile != null)
+            //{
+            //    Database = _dataSource.StorageFile;
+            //    _dataSource.StorageFile = null;
 
-                pickDatabase = false;
-            }
-            else
-            {
+            //    pickDatabase = false;
+            //}
+            //else
+            //{
                 try
                 {
                  
@@ -345,7 +344,7 @@ namespace MetroPass.UI.ViewModels
                 {
 
                 }
-            }
+            //}
             if (pickDatabase)
             {
                 PickDatabase();
@@ -355,6 +354,8 @@ namespace MetroPass.UI.ViewModels
         public async void OpenDatabase()
         {
             OpeningDatabase = true;
+            ResaveRecentFile();
+
             var userKeys = new List<IUserKey>();
             var sHA256HasherRT = new SHA256HasherRT();
             if (!string.IsNullOrEmpty(Password))

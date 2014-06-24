@@ -60,8 +60,8 @@ namespace MetroPass.UI.ViewModels
         {
             _navigationService
                 .UriFor<LoadKdbViewModel>()
-                .WithParam(vm => vm.KeepassFileTokenPairDatabase, SelectedKeepassFilePair.TokenPair.DatabaseFileToken)
-                .WithParam(vm => vm.KeepassFileTokenPairKeeFile, SelectedKeepassFilePair.TokenPair.KeeFileToken)
+                .WithParam(vm => vm.KeepassFileTokenPairDatabase, SelectedKeepassFilePair.TokenPair.DatabaseFileToken ?? Guid.NewGuid().ToString())
+                .WithParam(vm => vm.KeepassFileTokenPairKeeFile, SelectedKeepassFilePair.TokenPair.KeeFileToken ?? Guid.NewGuid().ToString())
                 .Navigate();
         }
 

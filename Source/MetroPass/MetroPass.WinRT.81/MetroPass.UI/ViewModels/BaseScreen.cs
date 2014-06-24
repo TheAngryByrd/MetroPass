@@ -63,7 +63,7 @@ namespace MetroPass.UI.ViewModels
             return new Uri("");
         }
 
-        public void GoBack()
+        public virtual void GoBack()
         {
             _navigationService.GoBack();
         }
