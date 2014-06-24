@@ -50,7 +50,7 @@ namespace MetroPass.UI.ViewModels
                 {
                     _keepassFileTokenPairState = new KeepassFileTokenPair(KeepassFileTokenPairDatabase, KeepassFileTokenPairKeeFile);
                 }
-                
+
                 return _keepassFileTokenPairState;
             }
             set { _keepassFileTokenPairState = value; }
@@ -92,7 +92,7 @@ namespace MetroPass.UI.ViewModels
             set
             {
                 _path = value;
-              
+
                 NotifyOfPropertyChange(() => Path);
             }
         }
@@ -109,7 +109,7 @@ namespace MetroPass.UI.ViewModels
             }
         }
 
- 
+
 
         private string _password;
         public string Password
@@ -123,18 +123,19 @@ namespace MetroPass.UI.ViewModels
         }
 
         private IStorageFile _keyFile;
-        public IStorageFile KeyFile {
+        public IStorageFile KeyFile
+        {
 
             get { return _keyFile; }
             set
             {
                 _keyFile = value;
                 NotifyOfPropertyChange(() => KeyFile);
-         
+
             }
         }
-  
-        private double _progress;    
+
+        private double _progress;
         public double Progress
         {
             get { return _progress; }
@@ -144,7 +145,7 @@ namespace MetroPass.UI.ViewModels
                 NotifyOfPropertyChange(() => Progress);
             }
         }
-        
+
         public async void PickDatabase()
         {
             if (await _pageServices.EnsureUnsnapped())
@@ -153,12 +154,12 @@ namespace MetroPass.UI.ViewModels
                 openPicker.ViewMode = PickerViewMode.List;
                 openPicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
                 openPicker.FileTypeFilter.Add("*");
-                       
+
                 var file = await openPicker.PickSingleFileAsync();
                 if (file != null)
                 {
                     Database = file;
-                   
+
                 }
             }
         }
@@ -171,7 +172,7 @@ namespace MetroPass.UI.ViewModels
             SearchText = string.Empty;
             SetState("Normal");
         }
-  
+
         private void FocuxPassword()
         {
             var view = View as ILoadKdbView;
@@ -180,7 +181,7 @@ namespace MetroPass.UI.ViewModels
                 view.FocusPassword();
             }
         }
-  
+
         public async void PickKeyFile()
         {
             if (await _pageServices.EnsureUnsnapped())
@@ -193,13 +194,13 @@ namespace MetroPass.UI.ViewModels
                 if (file != null)
                 {
                     KeyFile = file;
-                
+
                     FocuxPassword();
                 }
             }
         }
 
-    
+
         private async void ResaveRecentFile()
         {
 
@@ -208,9 +209,9 @@ namespace MetroPass.UI.ViewModels
                 KeepassFileTokenPairState = new KeepassFileTokenPair(Guid.NewGuid().ToString(), Guid.NewGuid().ToString());
             }
 
-            await _databaseRepository.SaveRecentFile(new KeepassFilePair(Database, KeyFile,KeepassFileTokenPairState));
+            await _databaseRepository.SaveRecentFile(new KeepassFilePair(Database, KeyFile, KeepassFileTokenPairState));
         }
-  
+
 
         public bool CanOpenDatabase
         {
@@ -270,7 +271,7 @@ namespace MetroPass.UI.ViewModels
             }
         }
 
-        public bool CanClearFiles 
+        public bool CanClearFiles
         {
             get { return CanPickDatabase && CanPickKeyFile && !OpeningDatabase; }
         }
@@ -279,19 +280,12 @@ namespace MetroPass.UI.ViewModels
         {
             await base.OnViewLoaded(view);
 
-            if (ShouldRedirectToSearch) {
+            if (ShouldRedirectToSearch)
+            {
                 SetState("Searching");
             }
 
-            var storageList = StorageApplicationPermissions.MostRecentlyUsedList;
-            var roamingSettings = ApplicationData.Current.RoamingSettings;
-            var taskList = new List<Task>();
-
-
-             taskList.Add(TryLoadLastDatabase());
-      
-            Func<Task> loadLastTasks = async () => await Task.WhenAll(taskList);
-            await DisableEnableBlock(loadLastTasks);
+           await DisableEnableBlock(TryLoadLastDatabase);
         }
 
         private async Task DisableEnableBlock(Func<Task> loadLastTasks)
@@ -316,34 +310,25 @@ namespace MetroPass.UI.ViewModels
         {
             var pickDatabase = true;
 
-            //if (_dataSource.StorageFile != null)
-            //{
-            //    Database = _dataSource.StorageFile;
-            //    _dataSource.StorageFile = null;
+            try
+            {
 
-            //    pickDatabase = false;
-            //}
-            //else
-            //{
-                try
+                var file = await _databaseRepository.GetFilePairFromToken(KeepassFileTokenPairState);
+                if (file.Database != null)
                 {
-                 
-                    var file = await _databaseRepository.GetFilePairFromToken(KeepassFileTokenPairState);
-                    if (file.Database != null)
-                    {
-                        Database = file.Database;
-                        KeyFile = file.KeeFile;
-                        pickDatabase = false;
-                    }
+                    Database = file.Database;
+                    KeyFile = file.KeeFile;
+                    pickDatabase = false;
                 }
-                catch (FileNotFoundException fnf)
-                {
-                    _pageServices.Toast(string.Format(FileNotFoundMessage, "database"));
-                }
-                catch (Exception e)
-                {
+            }
+            catch (FileNotFoundException fnf)
+            {
+                _pageServices.Toast(string.Format(FileNotFoundMessage, "database"));
+            }
+            catch (Exception e)
+            {
 
-                }
+            }
             //}
             if (pickDatabase)
             {
@@ -360,14 +345,14 @@ namespace MetroPass.UI.ViewModels
             var sHA256HasherRT = new SHA256HasherRT();
             if (!string.IsNullOrEmpty(Password))
             {
-         
+
                 userKeys.Add(await KcpPassword.Create(Password, sHA256HasherRT));
             }
             if (KeyFile != null)
             {
                 userKeys.Add(await KcpKeyFile.Create(new WinRTFile(KeyFile), sHA256HasherRT));
             }
-           
+
             var progress = new Progress<double>(percent =>
             {
                 percent = Math.Round(percent, 2);
