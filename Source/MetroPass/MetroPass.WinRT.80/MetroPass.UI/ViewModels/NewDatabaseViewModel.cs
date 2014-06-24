@@ -20,15 +20,18 @@ namespace MetroPass.UI.ViewModels
         private readonly IPageServices _pageServices;
 
         private readonly IPWDatabaseDataSource _dataSource;
+        private readonly IDatabaseRepository _databaseRepository;
 
         public NewDatabaseViewModel(
             INavigationService navigationService,
             IEventAggregator eventAggregator,
             IPageServices pageServices,
-            IPWDatabaseDataSource dataSource) :
+            IPWDatabaseDataSource dataSource,
+            IDatabaseRepository databaseRepository) :
             base(navigationService, eventAggregator, pageServices)
         {
             _dataSource = dataSource;
+            _databaseRepository = databaseRepository;
             this._pageServices = pageServices;
             _navigationService = navigationService;
         }
@@ -123,6 +126,7 @@ namespace MetroPass.UI.ViewModels
 
                     _dataSource.PwDatabase = pwDatabase;
                     _dataSource.StorageFile = storageFile;
+                    await _databaseRepository.SaveRecentFile(new KeepassFilePair(storageFile, null, new KeepassFileTokenPair(Guid.NewGuid(), Guid.NewGuid())));
                     await _dataSource.SavePwDatabase();
                     var encodedUUID = _dataSource.PwDatabase.Tree.Group.UUID;
                     _navigationService.UriFor<EntryGroupListViewModel>().WithParam(vm => vm.GroupId, encodedUUID).Navigate();

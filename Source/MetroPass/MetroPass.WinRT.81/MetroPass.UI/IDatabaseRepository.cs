@@ -178,6 +178,11 @@ namespace MetroPass.UI
     }
     public struct KeepassFileTokenPair
     {
+        public KeepassFileTokenPair(Guid databaseFileToken, Guid keeFileToken)
+        {
+            DatabaseFileToken = databaseFileToken.ToString();
+            KeeFileToken = keeFileToken.ToString();
+        }
         public KeepassFileTokenPair(string databaseFileToken, string keeFileToken)
         {
             DatabaseFileToken = databaseFileToken;
